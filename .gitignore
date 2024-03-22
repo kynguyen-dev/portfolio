@@ -31,3 +31,5 @@ package-lock.json
 .eslintcache
 yarn-error.lock
 yarn.lock
+
+*storybook.log
