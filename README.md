@@ -29,8 +29,41 @@ export default {
 - Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
 - Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
 
-# Run project
+# Portfolio
 
-### yarn install
+Install environment
 
-### yarn start
+- node: v20.11.1
+- yarn: 1.22.19
+
+Install package manager (yarn):
+
+    npm install -g yarn
+
+Install package:
+
+    yarn install
+
+Start project
+
+    yarn start
+
+Build
+
+    yarn build
+
+Lint
+
+    yarn lint
+    yarn lint:fix
+
+Prettier
+
+    yarn prettier
+    yarn prettier:fix
+
+Storybook
+
+    yarn storybook
+    yarn build-storybook
+    yarn chromatic
