@@ -34,7 +34,7 @@ export default {
 Install environment
 
 - node: v20.11.1
-- yarn: 1.22.19
+- yarn: 4.1.1
 
 Install package manager (yarn):
 
