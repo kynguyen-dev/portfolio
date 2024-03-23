@@ -27,6 +27,8 @@ export const Light = () => {
     'info',
     'text',
     'grey',
+    'background',
+    'branchBlue',
   ];
 
   const getArrayColors = useCallback(
@@ -58,6 +60,8 @@ export const Light = () => {
     },
     [palette]
   );
+
+  console.log(palette);
 
   return (
     <Stack direction='column' spacing={6}>

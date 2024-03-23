@@ -7,9 +7,9 @@ export const palette: PaletteOptions = {
     dark: '#1565c0',
   },
   secondary: {
-    main: '#9c27b0',
-    light: '#ba68c8',
-    dark: '#7b1fa2',
+    main: '#12F7D6',
+    light: '#98FAEC',
+    contrastText: '#424242',
   },
   error: {
     main: '#d32f2f',
@@ -47,5 +47,13 @@ export const palette: PaletteOptions = {
     '700': '#616161',
     '800': '#424242',
     '900': '#212121',
+  },
+  background: {
+    default: '#292F36',
+    paper: '#1A1E23',
+  },
+  branchBlue: {
+    light: '#98FAEC',
+    main: '#12F7D6',
   },
 };

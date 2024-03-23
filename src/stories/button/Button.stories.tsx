@@ -3,7 +3,7 @@ import { fn } from '@storybook/test';
 import { PFButton } from '@components/core';
 
 const meta = {
-  title: 'Core/Button',
+  title: 'Core/Button/Default',
   component: PFButton,
   parameters: {
     layout: 'centered',

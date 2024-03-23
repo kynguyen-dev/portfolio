@@ -19,7 +19,7 @@ export default defineConfig(_configEnv => {
         '@hooks': resolve(__dirname, 'src/hooks'),
         '@models': resolve(__dirname, 'src/models'),
         '@pages': resolve(__dirname, 'src/pages'),
-        '@routes': resolve(__dirname, 'src/routes'),
+        '@routers': resolve(__dirname, 'src/routers'),
         '@services': resolve(__dirname, 'src/services'),
         '@tests': resolve(__dirname, 'src/tests'),
         '@utils': resolve(__dirname, 'src/utils'),

@@ -40,7 +40,7 @@ Install package manager (yarn):
 
     npm install -g yarn
 
-Install package:
+Install package dependencies (node_module):
 
     yarn install
 
