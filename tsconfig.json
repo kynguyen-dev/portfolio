@@ -18,7 +18,22 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    /* alias import */
+    "baseUrl": ".",
+    "paths": {
+      "@public/*": ["public/*"],
+      "@public": ["src/public"],
+      "@assets/*": ["src/assets/*"],
+      "@assets": ["src/assets"],
+      "@components/*": ["src/components/*"],
+      "@components": ["src/components"],
+      "@models/*": ["src/models/*"],
+      "@models": ["src/models"],
+      "@utils/*": ["src/utils/*"],
+      "@utils": ["src/utils"]
+    }
   },
 
   "include": ["src"],
