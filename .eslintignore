@@ -1,0 +1,14 @@
+/.storybook
+/.vscode
+/buildspec
+/coverage
+/node_modules
+/public
+/dist
+/storybook-static
+index.html
+.eslintrc.cjs
+vite.config.ts
+build-storybook.log
+yarn.lock
+yarn-error.lock

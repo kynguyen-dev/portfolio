@@ -1,4 +1,4 @@
-import { PFTypography } from '@components/core/typography/PFTypography';
+import { PFTypography } from '@components/core/typography';
 import {
   PaletteColorOptions,
   PaletteOptions,

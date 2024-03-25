@@ -1,4 +1,4 @@
-import { muiButtonTheme } from '@components/core/button/PFButton.theme';
+import { muiButtonTheme } from '@components/core/button/index.theme.tsx';
 import { Components, Theme } from '@mui/material';
 
 export const getThemeComponents = (

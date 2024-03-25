@@ -1,4 +1,4 @@
-import { PFTypography } from '@components/core/typography/PFTypography';
+import { PFTypography } from '@components/core/typography';
 import { Stack, Typography } from '@mui/material';
 import { Meta } from '@storybook/react';
 

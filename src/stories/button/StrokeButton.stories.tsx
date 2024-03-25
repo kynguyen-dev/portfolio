@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { PFStrokeButton } from '@components/core/button/PFButton';
+import { PFStrokeButton } from '@components/core/button';
 
 const meta = {
   title: 'Core/Button/Stroke',

@@ -11,7 +11,7 @@ export interface PFTypographyProps extends TypographyProps {
 export const PFTypography = forwardRef<
   HTMLParagraphElement | null,
   PFTypographyProps
->(({ colorVariant, ellipsisLines, sx, ...others }, ref) => {
+>(({ colorVariant, sx, ...others }, ref) => {
   const { palette } = useTheme();
 
   //   const ellipsisStyle: SxProps<Theme> = useMemo(() => {

@@ -3,3 +3,4 @@
 /.yarn
 /.idea
 yarn-error.lock
+/vite.config.ts
