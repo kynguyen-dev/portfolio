@@ -61,8 +61,6 @@ export const Light = () => {
     [palette]
   );
 
-  console.log(palette);
-
   return (
     <Stack direction='column' spacing={6}>
       {groupColor.map(group => {

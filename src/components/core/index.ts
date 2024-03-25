@@ -1,4 +1,9 @@
-export { PFButton, PFSolidButton } from './button';
+export {
+  PFButton,
+  PFSolidButton,
+  PFWhiteButton,
+  PFStrokeButton,
+} from './button';
 export type { PFButtonProps } from './button';
 export { PFTypography } from './typography';
 export type { PFTypographyProps } from './typography';

@@ -74,6 +74,6 @@
     "vite-plugin-mkcert": "^1.14.0"
   },
   "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
+    "**/*": "eslint --fix ."
   }
 }
