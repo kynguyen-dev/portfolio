@@ -14,54 +14,15 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
+import { InputAdornment, InputBase, Stack, useTheme } from '@mui/material';
 import { PFButton, PFTypography } from '..';
-import { InputAdornment, Stack, TextField } from '@mui/material';
-
-// const Search = styled('div')(({ theme }) => ({
-//   position: 'relative',
-//   borderRadius: theme.shape.borderRadius,
-//   backgroundColor: alpha(theme.palette.common.white, 0.15),
-//   '&:hover': {
-//     backgroundColor: alpha(theme.palette.common.white, 0.25),
-//   },
-//   marginRight: theme.spacing(2),
-//   marginLeft: 0,
-//   width: '100%',
-//   [theme.breakpoints.up('sm')]: {
-//     marginLeft: theme.spacing(3),
-//     width: 'auto',
-//   },
-// }));
-
-// const SearchIconWrapper = styled('div')(({ theme }) => ({
-//   padding: theme.spacing(0, 2),
-//   height: '100%',
-//   position: 'absolute',
-//   pointerEvents: 'none',
-//   display: 'flex',
-//   alignItems: 'center',
-//   justifyContent: 'center',
-// }));
-
-// const StyledInputBase = styled(InputBase)(({ theme }) => ({
-//   color: 'inherit',
-//   '& .MuiInputBase-input': {
-//     padding: theme.spacing(1, 1, 1, 0),
-//     // vertical padding + font size from searchIcon
-//     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-//     transition: theme.transitions.create('width'),
-//     width: '100%',
-//     [theme.breakpoints.up('md')]: {
-//       width: '20ch',
-//     },
-//   },
-// }));
 
 export const PFAppBar = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
 
+  const { palette } = useTheme();
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -158,21 +119,27 @@ export const PFAppBar = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position='static'>
+      <AppBar
+        position='static'
+        sx={{
+          background: palette.background.default,
+          boxShadow: 'none',
+          paddingY: '32px',
+        }}
+      >
         <Toolbar sx={{ marginX: '64px' }}>
           <PFTypography
-            variant='h6'
+            variant='h5'
             noWrap
-            component='div'
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            Nguyen Truong Ky
+            {'<JS /> Nguyen Truong Ky'}
           </PFTypography>
 
           <Box sx={{ flexGrow: 1 }} />
-          <Stack gap={'32px'} direction={'row'}>
+          <Stack gap={'48px'} direction={'row'}>
             <Stack gap={'24px'} direction={'row'}>
-              <PFButton variant='text' color='secondary'>
+              <PFButton variant='text'>
                 <PFTypography
                   variant='h6'
                   noWrap
@@ -182,7 +149,7 @@ export const PFAppBar = () => {
                   Home
                 </PFTypography>
               </PFButton>
-              <PFButton variant='text' color='secondary'>
+              <PFButton variant='text'>
                 <PFTypography
                   variant='h6'
                   noWrap
@@ -194,18 +161,24 @@ export const PFAppBar = () => {
               </PFButton>
             </Stack>
 
-            <TextField
-              label='Search...'
-              // sx={{ m: 1, width: '25ch' }}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position='start'>
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
+            <Toolbar
+              style={{
+                minHeight: '48px',
+                display: 'flex',
+                alignItems: 'center',
+                border: '1px solid #fff',
               }}
-              sx={{ paddingY: '16px' }}
-            />
+            >
+              <InputBase
+                placeholder='Search...'
+                endAdornment={
+                  <InputAdornment position='start'>
+                    <SearchIcon color='primary' />
+                  </InputAdornment>
+                }
+                sx={{ flex: 1, marginX: 1, color: palette.primary.main }}
+              />
+            </Toolbar>
 
             <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: '24px' }}>
               <IconButton
@@ -214,9 +187,7 @@ export const PFAppBar = () => {
                 color='inherit'
               >
                 <PhoneIphoneIcon />
-                <PFTypography variant='body2' colorVariant='secondary.main'>
-                  Contact
-                </PFTypography>
+                <PFTypography variant='body2'>Contact</PFTypography>
               </IconButton>
               <IconButton
                 size='large'
@@ -224,9 +195,7 @@ export const PFAppBar = () => {
                 color='inherit'
               >
                 <EmailIcon />
-                <PFTypography colorVariant='secondary.main' variant='body2'>
-                  Email
-                </PFTypography>
+                <PFTypography variant='body2'>Email</PFTypography>
               </IconButton>
               <IconButton
                 size='large'
@@ -238,10 +207,7 @@ export const PFAppBar = () => {
                 color='inherit'
               >
                 <GitHubIcon />
-                <PFTypography colorVariant='secondary.main' variant='body1'>
-                  {' '}
-                  Github
-                </PFTypography>
+                <PFTypography variant='body1'>Github</PFTypography>
               </IconButton>
             </Box>
           </Stack>

@@ -1,12 +1,15 @@
 import { PFAppBar } from '@components/core/header';
-import { PFWhiteButton } from '@components/core/button';
+import { CurriculumVitae } from '@components/pages/cv';
+import { Divider, Stack, useTheme } from '@mui/material';
 
 const Home = () => {
+  const { palette } = useTheme();
   return (
-    <>
+    <Stack paddingX='64px'>
       <PFAppBar />
-      <PFWhiteButton>I'm Home</PFWhiteButton>
-    </>
+      <Divider sx={{ backgroundColor: palette.common.white }} />
+      <CurriculumVitae />
+    </Stack>
   );
 };
 
