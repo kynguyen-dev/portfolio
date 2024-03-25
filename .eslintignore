@@ -12,3 +12,6 @@ vite.config.ts
 build-storybook.log
 yarn.lock
 yarn-error.lock
+docker-compose.yml
+.dockerignore
+Dockerfile

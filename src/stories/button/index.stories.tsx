@@ -1,17 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { PFTypography } from '@components/core';
+import { PFButton } from '@components/core';
 
 const meta = {
   title: 'Core/Button/Default',
-  component: PFTypography,
+  component: PFButton,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
 
   args: { onClick: fn() },
-} satisfies Meta<typeof PFTypography>;
+} satisfies Meta<typeof PFButton>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
