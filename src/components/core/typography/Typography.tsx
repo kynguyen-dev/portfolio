@@ -14,20 +14,6 @@ export const PFTypography = forwardRef<
 >(({ colorVariant, sx, ...others }, ref) => {
   const { palette } = useTheme();
 
-  //   const ellipsisStyle: SxProps<Theme> = useMemo(() => {
-  //     if (!ellipsisLines) {
-  //       return {};
-  //     }
-  //     return {
-  //       overflow: 'hidden',
-  //       textOverflow: 'ellipsis',
-  //       wordBreak: 'break-word',
-  //       display: '-webkit-box',
-  //       WebkitLineClamp: ellipsisLines,
-  //       WebkitBoxOrient: 'vertical',
-  //     };
-  //   }, [ellipsisLines]);
-
   return (
     <Typography
       ref={ref}

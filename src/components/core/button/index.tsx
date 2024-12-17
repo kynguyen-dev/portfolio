@@ -1,4 +1,4 @@
-import { Button, ButtonProps } from '@mui/material';
+import { Button, ButtonProps, styled } from '@mui/material';
 
 export type PFButtonProps = ButtonProps;
 export const PFButton = Button;
@@ -26,3 +26,17 @@ export const PFStrokeButton = ({ ...buttonProps }: PFButtonProps) => {
     </PFButton>
   );
 };
+
+export const StyledButton = styled(PFWhiteButton)`
+  ${({ theme }) => `
+  cursor: pointer;
+  background-color: ${theme.palette.primary.light};
+  transition: ${theme.transitions.create(['background-color', 'transform'], {
+    duration: theme.transitions.duration.standard,
+  })};
+  &:hover {
+    background-color: ${theme.palette.primary.main};
+    transform: scale(1.3);
+  }
+  `}
+`;
