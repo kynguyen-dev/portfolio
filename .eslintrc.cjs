@@ -1,3 +1,5 @@
+const prettierConfig = require('./.prettierrc.cjs');
+
 module.exports = {
   root: true,
   env: { browser: true, es2020: true },
@@ -6,6 +8,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
     'plugin:storybook/recommended',
+    'prettier',
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',

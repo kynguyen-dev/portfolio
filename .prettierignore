@@ -3,3 +3,7 @@
 /.yarn
 /.idea
 yarn-error.lock
+/vite.config.ts
+docker-compose.yml
+.dockerignore
+Dockerfile

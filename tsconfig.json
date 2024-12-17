@@ -32,7 +32,15 @@
       "@models/*": ["src/models/*"],
       "@models": ["src/models"],
       "@utils/*": ["src/utils/*"],
-      "@utils": ["src/utils"]
+      "@utils": ["src/utils"],
+      "@context/*": ["src/context/*"],
+      "@context": ["src/context"],
+      "@constants/*": ["src/constants/*"],
+      "@constants": ["src/constants"],
+      "@pages/*": ["src/pages/*"],
+      "@pages": ["src/pages"],
+      "@routers/*": ["src/routers/*"],
+      "@routers": ["src/routers"]
     }
   },
 

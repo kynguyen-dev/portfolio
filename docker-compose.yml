@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  app:
+    container_name: portfolio-container
+    image: portfolio-image
+    build:
+      context: .
+    ports:
+      - 5173:5432

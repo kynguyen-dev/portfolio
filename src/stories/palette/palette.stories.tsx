@@ -1,4 +1,4 @@
-import { PFTypography } from '@components/core/typography/PFTypography';
+import { PFTypography } from '@components/core/typography';
 import {
   PaletteColorOptions,
   PaletteOptions,
@@ -27,6 +27,8 @@ export const Light = () => {
     'info',
     'text',
     'grey',
+    'background',
+    'branchBlue',
   ];
 
   const getArrayColors = useCallback(
