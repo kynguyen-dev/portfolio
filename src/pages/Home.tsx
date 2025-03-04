@@ -1,27 +1,23 @@
+import { Stack } from '@mui/material';
 import { PFAppBar } from '@components/core/header';
 import { Intro } from '@components/pages/Intro/Intro';
-import { AboutMe } from '@components/pages/about-me/AboutMe';
-import { Contact } from '@components/pages/contacts/Contact';
-import { CurriculumVitae } from '@components/pages/cv/CurriculumVitae';
-import { MyProject } from '@components/pages/project/MyProject';
-import { Skills } from '@components/pages/skills/Skills';
-import { Container, Stack } from '@mui/material';
+import { Profile } from '@components/pages/profile/Profile.tsx';
+import { WorkExperience } from '@components/pages/work-experience/WorkExperience';
+import { Footer } from '@components/pages/footer/Footer.tsx';
 
 const Home = () => {
   return (
-    <Stack paddingX='64px'>
-      <PFAppBar />
-      <Container maxWidth='lg'>
-        <Intro />
-        <CurriculumVitae />
-        <AboutMe />
-        <Skills />
-      </Container>
-      <MyProject />
-      <Container maxWidth='lg'>
-        <Contact />
-      </Container>
-    </Stack>
+    <>
+      <Stack sx={{ paddingX: '20%' }}>
+        <PFAppBar />
+      </Stack>
+      <Intro />
+      <Stack direction={'column'} gap={{ md: 10, xs: 4 }}>
+        <Profile />
+        <WorkExperience />
+        <Footer />
+      </Stack>
+    </>
   );
 };
 

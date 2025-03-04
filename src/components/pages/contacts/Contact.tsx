@@ -1,42 +1,43 @@
-import { PFTypography } from '@components/core';
-import { ContactIconButton } from '@components/customs/icon-button/ContactIconButton';
+import { motion } from 'framer-motion';
 import { Stack, useTheme } from '@mui/material';
-import { common } from '@mui/material/colors';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import SmartphoneIcon from '@mui/icons-material/Smartphone';
 
 export const Contact = () => {
   const { palette } = useTheme();
+
   return (
-    <Stack display={'flex'} alignItems={'center'} py={'128px'} gap={7}>
-      <Stack display={'flex'} alignItems={'center'}>
-        <PFTypography variant='h3' color={palette.primary.main}>
-          Contact
-        </PFTypography>
-        <PFTypography variant='body2' color={common.white}>
-          I’m currently available for freelance work
-        </PFTypography>
-      </Stack>
-      <Stack gap={20} direction={'row'}>
-        <ContactIconButton
-          imageUrl={
-            'https://i.pinimg.com/originals/ce/5c/ee/ce5cee4b4eab5058e858cbf8b65c39a4.png'
-          }
-          title={'Discord'}
-        />
-
-        <ContactIconButton
-          imageUrl={
-            'https://cdn1.iconfinder.com/data/icons/logotypes/32/circle-linkedin-512.png'
-          }
-          title={'LinkIn'}
-        />
-
-        <ContactIconButton
-          imageUrl={
-            'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Github-desktop-logo-symbol.svg/2048px-Github-desktop-logo-symbol.svg.png'
-          }
-          title={'Github'}
-        />
-      </Stack>
+    <Stack gap={10} direction='row'>
+      {[
+        { icon: GitHubIcon, key: 'github' },
+        { icon: MailOutlineIcon, key: 'mail' },
+        { icon: SmartphoneIcon, key: 'phone' },
+      ].map(({ icon: Icon, key }) => (
+        <motion.div
+          key={key}
+          whileHover={{ scale: 1.2 }}
+          whileTap={{ scale: 0.9 }}
+          transition={{ type: 'spring', stiffness: 300 }}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Icon
+            fontSize='large'
+            sx={{
+              color: palette.primary.light,
+              transition: 'color 0.3s ease-in-out, transform 0.3s ease-in-out',
+              '&:hover': {
+                color: palette.text.primary,
+              },
+              cursor: 'pointer',
+            }}
+          />
+        </motion.div>
+      ))}
     </Stack>
   );
 };

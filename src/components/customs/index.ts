@@ -1,1 +1,1 @@
-export { HightLightCard } from './cards/HightLighCard';
+export { GradientCard } from './cards/GradientCard.tsx';

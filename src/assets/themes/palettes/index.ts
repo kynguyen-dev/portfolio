@@ -2,9 +2,9 @@ import { PaletteOptions } from '@mui/material';
 
 export const palette: PaletteOptions = {
   primary: {
-    main: '#12F7D6',
-    light: '#98FAEC',
-    contrastText: '#12F7D6',
+    main: '#68b8d7',
+    light: '#1E90FF',
+    contrastText: '#515A6B',
   },
   secondary: {
     main: '#1976d2',
@@ -32,9 +32,9 @@ export const palette: PaletteOptions = {
     dark: '#1b5e20',
   },
   text: {
-    primary: '#616161',
-    secondary: '#757575',
-    disabled: '#e0e0e0',
+    primary: '#FFF8E1',
+    secondary: '#FFECB3',
+    disabled: '#BCAAA4',
   },
   grey: {
     '50': '#FAFAFA',
@@ -49,7 +49,7 @@ export const palette: PaletteOptions = {
     '900': '#212121',
   },
   background: {
-    default: '#292F36',
+    default: '#F0FFFF',
     paper: '#1A1E23',
   },
   branchBlue: {

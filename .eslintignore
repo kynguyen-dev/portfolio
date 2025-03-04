@@ -15,3 +15,4 @@ yarn-error.lock
 docker-compose.yml
 .dockerignore
 Dockerfile
+/src/assets

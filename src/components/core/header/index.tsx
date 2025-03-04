@@ -15,15 +15,11 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
 interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   window?: () => Window;
 }
 
 const drawerWidth = 240;
-const navItems = ['Home', 'About', 'Contact'];
+const navItems = ['Home', 'Skills', 'Projects', 'Profile', 'Contact'];
 
 export const PFAppBar = (props: Props) => {
   const { window } = props;
@@ -33,16 +29,26 @@ export const PFAppBar = (props: Props) => {
     setMobileOpen(prevState => !prevState);
   };
 
+  const handleScrollTo = (id: string) => {
+    const element = document.getElementById(id.toLowerCase());
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant='h6' sx={{ my: 2 }}>
-        MUI
+        Ky Nguyen
       </Typography>
       <Divider />
       <List>
         {navItems.map(item => (
           <ListItem key={item} disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
+            <ListItemButton
+              onClick={() => handleScrollTo(item)}
+              sx={{ textAlign: 'center' }}
+            >
               <ListItemText primary={item} />
             </ListItemButton>
           </ListItem>
@@ -57,7 +63,7 @@ export const PFAppBar = (props: Props) => {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar component='nav'>
+      <AppBar component='nav' sx={{ px: { md: '20%' } }}>
         <Toolbar>
           <IconButton
             color='inherit'
@@ -68,16 +74,20 @@ export const PFAppBar = (props: Props) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant='h6'
-            component='div'
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-          >
-            MUI
-          </Typography>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
+            <img
+              src='src/assets/icons/dashboard-icon.png'
+              alt='Logo'
+              style={{ height: 40 }}
+            />
+          </Box>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map(item => (
-              <Button key={item} sx={{ color: '#fff' }}>
+              <Button
+                key={item}
+                sx={{ color: '#515A6B' }}
+                onClick={() => handleScrollTo(item)}
+              >
                 {item}
               </Button>
             ))}
