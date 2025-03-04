@@ -5,9 +5,9 @@ export {
   PFStrokeButton,
 } from './button';
 export type { PFButtonProps } from './button';
-export { PFTypography } from './typography/Typography';
+export { PFTypography } from './typography';
 export { PFGradientTypography } from './typography/GradientTypography';
 export { IconTypography } from './typography/IconTypography';
-export type { PFTypographyProps } from './typography/Typography';
-export { PFCard } from './card/Card';
-export type { PFCardProps } from './card/Card';
+export type { PFTypographyProps } from './typography';
+export { PFCard } from './card';
+export type { PFCardProps } from './card';

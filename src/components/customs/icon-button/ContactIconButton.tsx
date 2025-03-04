@@ -1,4 +1,4 @@
-import { PFTypography } from '@components/core';
+import { PFGradientTypography } from '@components/core';
 import { Box, CardMedia, useTheme } from '@mui/material';
 
 interface ContactIconButtonProps {
@@ -20,12 +20,12 @@ export const ContactIconButton = (props: ContactIconButtonProps) => {
         image={props.imageUrl}
         sx={{ width: '96px', height: '96px' }}
       />
-      <PFTypography
+      <PFGradientTypography
         variant='body1'
         color={props.titleColor ?? palette.primary.main}
       >
         {props.title}
-      </PFTypography>
+      </PFGradientTypography>
     </Box>
   );
 };

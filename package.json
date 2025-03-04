@@ -16,14 +16,15 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.4",
-    "@emotion/styled": "^11.11.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "@fontsource/roboto": "^5.0.12",
     "@loadable/component": "^5.16.3",
     "@mui/icons-material": "^5.15.14",
     "@mui/material": "^5.15.14",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "@mui/styles": "^5.15.16",
+    "framer-motion": "^12.4.7",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.4",
     "react": "^18.2.0",
@@ -31,6 +32,8 @@
     "react-router-dom": "^6.22.3",
     "sort-by": "^1.2.0",
     "styled-components": "^6.1.8",
+    "three": "^0.173.0",
+    "vanta": "^0.5.24",
     "yarn": "^1.22.22"
   },
   "devDependencies": {
@@ -49,6 +52,7 @@
     "@types/react": "^18.2.67",
     "@types/react-dom": "^18.2.22",
     "@types/sort-by": "^1",
+    "@types/three": "^0",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
     "@typescript-eslint/parser": "8.18.1",
     "@vitejs/plugin-react": "^4.2.1",

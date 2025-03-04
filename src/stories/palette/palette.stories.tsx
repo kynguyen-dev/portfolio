@@ -1,4 +1,3 @@
-import { PFTypography } from '@components/core/typography';
 import {
   PaletteColorOptions,
   PaletteOptions,
@@ -8,6 +7,7 @@ import {
 } from '@mui/material';
 import { Meta } from '@storybook/react';
 import { useCallback } from 'react';
+import { PFTypography } from '@components/core';
 
 const ThemePalette = () => <Stack>Theme/Palette</Stack>;
 
