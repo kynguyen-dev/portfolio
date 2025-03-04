@@ -15,25 +15,25 @@ const projects: ProjectCardProps[] = [
     title: 'Logistics',
     description:
       'Developed a Comprehensive Driver and Truck Tracking System Collaborated on designing and building a multi-platform application ecosystem to enhance logistics efficiency. Achieved safety accreditation and compliance certification from NHVR.\n',
-    imageUrl: 'src/assets/images/projects/drivalink.jpg',
+    imageUrl: '/images/projects/drivalink.jpg',
   },
   {
     title: 'Medical',
     description:
       'Developing a web application for an epilepsy research center, focused on managing health reports, tracking health conditions, and collecting information from clinics and epilepsy patients.\n',
-    imageUrl: 'src/assets/images/projects/EPI.jpg',
+    imageUrl: '/images/projects/EPI.jpg',
   },
   {
     title: 'Education',
     description:
       'Developing a web application for managing student Credentialate, focusing on skill recognition, badge management, and student progress tracking.\n',
-    imageUrl: 'src/assets/images/projects/learner-dashboard.webp',
+    imageUrl: '/images/projects/learner-dashboard.webp',
   },
   {
     title: 'Hire Service',
     description:
       'Developed a full-stack web application for an air conditioner subscription service using ReactJS and Next.js.\n',
-    imageUrl: 'src/assets/images/projects/airconsub.jpg',
+    imageUrl: '/images/projects/airconsub.jpg',
   },
 ];
 

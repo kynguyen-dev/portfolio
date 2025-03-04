@@ -1,7 +1,7 @@
 {
   "name": "portfolio",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "start": "vite",
@@ -54,8 +54,6 @@
     "@types/react-dom": "^18.2.22",
     "@types/sort-by": "^1",
     "@types/three": "^0",
-    "@typescript-eslint/eslint-plugin": "^6.4.0",
-    "@typescript-eslint/parser": "8.18.1",
     "@vitejs/plugin-react": "^4.2.1",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
@@ -80,7 +78,7 @@
     "vite-plugin-mkcert": "^1.14.0"
   },
   "lint-staged": {
-    "**/*": "eslint --fix ."
+    "**/*": "eslint --fix /src/"
   },
   "packageManager": "yarn@4.7.0"
 }

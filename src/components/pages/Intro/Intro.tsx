@@ -38,7 +38,7 @@ export const Intro = () => {
         </PFTypography>
         <motion.div animate={floatAnimation} whileHover={hoverEffect}>
           <Avatar
-            src='src/assets/images/avatar.png'
+            src='/images/avatar.png'
             alt='Avatar'
             sx={{
               width: { md: 180, xs: 120 },
@@ -50,7 +50,7 @@ export const Intro = () => {
         </motion.div>
         <Box
           component={motion.img}
-          src='src/assets/images/home.svg'
+          src='/images/home.svg'
           alt='Avatar'
           height='auto'
           width={{ xs: '100%', md: '800px' }}
