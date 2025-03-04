@@ -13,7 +13,8 @@
     "prettier": "prettier . --check",
     "prettier:fix": "prettier . --write",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "vercel-build": "npm install -g yarn && yarn install && yarn build"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -81,5 +82,5 @@
   "lint-staged": {
     "**/*": "eslint --fix ."
   },
-  "packageManager": "yarn@1.22.22"
+  "packageManager": "yarn@4.7.0"
 }
