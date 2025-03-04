@@ -76,7 +76,7 @@ export const PFAppBar = (props: Props) => {
           </IconButton>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
             <img
-              src='/assets/icons/dashboard-icon.png'
+              src='/icons/dashboard-icon.png'
               alt='Logo'
               style={{ height: 40 }}
             />

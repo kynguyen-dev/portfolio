@@ -24,7 +24,7 @@ const skills: HorizontalSkillListProps[] = [
         title: 'MUI',
       },
       {
-        imageUrl: '/assets/icons/skills/tailwindcss.png',
+        imageUrl: '/icons/skills/tailwindcss.png',
         title: 'TailwindCSS',
       },
     ],
@@ -57,7 +57,7 @@ const skills: HorizontalSkillListProps[] = [
         title: 'MongoDB',
       },
       {
-        imageUrl: '/assets/icons/skills/postgresql.png',
+        imageUrl: '/icons/skills/postgresql.png',
         title: 'PostgreSQL',
       },
     ],
