@@ -1,6 +1,6 @@
-import { PFTypography } from '@components/core/typography/PFTypography';
 import { Stack, Typography } from '@mui/material';
 import { Meta } from '@storybook/react';
+import { PFTypography } from '@components/core';
 
 const ThemeTypography = () => <Stack>Theme/Typography</Stack>;
 
