@@ -13,13 +13,20 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import { APP_PAGES } from '@constants';
 
 interface Props {
   window?: () => Window;
 }
 
 const drawerWidth = 240;
-const navItems = ['Home', 'Skills', 'Projects', 'Profile', 'Contact'];
+const navItems = [
+  APP_PAGES.HOME,
+  APP_PAGES.SKILLS,
+  APP_PAGES.PROJECTS,
+  APP_PAGES.PROFILE,
+  APP_PAGES.CONTACT,
+];
 
 export const PFAppBar = (props: Props) => {
   const { window } = props;
