@@ -1,6 +1,8 @@
-import { motion } from 'framer-motion';
-import { Avatar, Box, Stack, useTheme } from '@mui/material';
-import { PFGradientTypography, PFTypography } from '@components/core';
+import {motion} from 'framer-motion';
+import {Avatar, Box, Stack, useTheme} from '@mui/material';
+import {PFGradientTypography, PFTypography} from '@components/core';
+import {APP_MESSAGES} from "@utils/core/messages";
+import {APP_PAGES, APP_THEMES, APP_TYPOGRAPHIES, APP_TYPOGRAPHIES_ANIMATION} from "@constants";
 
 export const Intro = () => {
   const { palette } = useTheme();
@@ -20,7 +22,7 @@ export const Intro = () => {
       display='flex'
       justifyContent='center'
       alignItems='center'
-      id='home'
+      id={APP_PAGES.HOME}
       sx={{ px: { xs: 3, md: 0 }, pt: { xs: 20, md: 20 } }}
     >
       <Stack
@@ -29,12 +31,12 @@ export const Intro = () => {
         gap={4}
         textAlign={{ xs: 'center', md: 'left' }}
       >
-        <PFGradientTypography variant='h4' theme='dark'>
-          Software Developer
+        <PFGradientTypography variant={APP_TYPOGRAPHIES.HEADER_PRIMARY} theme={APP_THEMES.DARK} fontWeight='bold'
+                              animations={[APP_TYPOGRAPHIES_ANIMATION.TYPEWRITER, APP_TYPOGRAPHIES_ANIMATION.OUTlINE_TO_SOLID]}>
+          {APP_MESSAGES.intro.title}
         </PFGradientTypography>
-        <PFTypography variant='subtitle1' color={palette.text.disabled}>
-          I craft clean, efficient, and scalable code to bring ideas to life.
-          Building seamless digital experiences is what I love to do.
+        <PFTypography variant={APP_TYPOGRAPHIES.SUBTITLE_PRIMARY} color={palette.text.disabled}>
+          {APP_MESSAGES.intro.description}
         </PFTypography>
         <motion.div animate={floatAnimation} whileHover={hoverEffect}>
           <Avatar

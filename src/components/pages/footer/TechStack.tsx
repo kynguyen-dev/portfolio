@@ -1,17 +1,34 @@
 import { Stack, useTheme } from '@mui/material';
 import { PFTypography } from '@components/core';
+import {APP_MESSAGES} from "@utils/core/messages";
+import {
+  ESLINT_URLS,
+  HUSKY_URLS, MOTION_URLS, MUI_URLS,
+  PRETTIER_URLS, REACTJS_URLS,
+  STORYBOOK_URLS,
+  VANTA_URLS,
+  VERCEL_URLS,
+  VITE_URLS,
+  YARN_URLS
+} from "@constants";
 
-const techStack = [
-  { name: 'ReactJS', link: 'https://react.dev/' },
-  { name: 'Material UI', link: 'https://mui.com/' },
-  { name: 'Motion', link: 'https://www.framer.com/motion/' },
-  { name: 'VantaJS', link: 'https://www.vantajs.com/' },
-  { name: 'Storybook', link: 'https://storybook.js.org/' },
-  { name: 'ESLint', link: 'https://eslint.org/' },
-  { name: 'Prettier', link: 'https://prettier.io/' },
-  { name: 'Husky', link: 'https://typicode.github.io/husky/' },
-  { name: 'Yarn', link: 'https://yarnpkg.com/' },
-  { name: 'Vite', link: 'https://vitejs.dev/' },
+interface TechStackProps {
+  name: string;
+  link: string;
+}
+
+const techStacks: TechStackProps[] = [
+  { name: APP_MESSAGES.profile.skills.react, link: REACTJS_URLS },
+  { name: APP_MESSAGES.profile.skills.mui, link: MUI_URLS },
+  { name: APP_MESSAGES.profile.skills.motion, link: MOTION_URLS },
+  { name: APP_MESSAGES.profile.skills.vanta, link: VANTA_URLS },
+  { name: APP_MESSAGES.profile.skills.storybook, link: STORYBOOK_URLS },
+  { name: APP_MESSAGES.profile.skills.esLint, link: ESLINT_URLS },
+  { name: APP_MESSAGES.profile.skills.prettier, link: PRETTIER_URLS },
+  { name: APP_MESSAGES.profile.skills.husky, link: HUSKY_URLS },
+  { name: APP_MESSAGES.profile.skills.yarn, link: YARN_URLS },
+  { name: APP_MESSAGES.profile.skills.vite, link: VITE_URLS },
+  { name: APP_MESSAGES.profile.skills.vercel, link: VERCEL_URLS },
 ];
 
 export const TechStack = () => {
@@ -25,7 +42,7 @@ export const TechStack = () => {
         textAlign={'center'}
       >
         Powered by{' '}
-        {techStack.map((tech, index) => (
+        {techStacks.map((tech, index) => (
           <span key={tech.name}>
             <a
               href={tech.link}
@@ -35,7 +52,7 @@ export const TechStack = () => {
             >
               {tech.name}
             </a>
-            {index !== techStack.length - 1 && ' - '}
+            {index !== techStacks.length - 1 && ' - '}
           </span>
         ))}
       </PFTypography>
