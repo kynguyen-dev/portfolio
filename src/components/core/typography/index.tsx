@@ -4,7 +4,7 @@ import { TypewriterEffect } from '@components/core/typography/TypewriterEffect.t
 import { OutlineToSolidEffect } from '@components/core/typography/OutlineToSolidEffect.tsx';
 import { ReactNode } from 'react';
 
-interface PFTypographyProps extends TypographyProps {
+export interface PFTypographyProps extends TypographyProps {
   children: string;
   animations?: APP_TYPOGRAPHIES_ANIMATION[];
   speed?: number; // typewriter speed

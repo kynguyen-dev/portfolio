@@ -32,34 +32,34 @@ export const Variant = () => (
 export const Colors = () => (
   <Stack spacing={2} alignItems={'start'}>
     <Typography variant='h1'>h1 - 18px 400 Roboto</Typography>
-    <PFTypography variant='h2' colorVariant='primary.main'>
+    <PFTypography variant='h2' color='primary.main'>
       h2 - 16px 400 Roboto
     </PFTypography>
-    <PFTypography variant='h3' colorVariant='secondary.main'>
+    <PFTypography variant='h3' color='secondary.main'>
       h3 - 14px 400 Roboto
     </PFTypography>
-    <PFTypography variant='h4' colorVariant='error.main'>
+    <PFTypography variant='h4' color='error.main'>
       h4 - 12px 400 Roboto
     </PFTypography>
-    <PFTypography variant='h5' colorVariant='warning.main'>
+    <PFTypography variant='h5' color='warning.main'>
       h5 - 12px 400 Roboto
     </PFTypography>
-    <PFTypography variant='h6' colorVariant='info.main'>
+    <PFTypography variant='h6' color='info.main'>
       h6 - 12px 700 Roboto
     </PFTypography>
-    <PFTypography variant='subtitle1' colorVariant='success.main'>
+    <PFTypography variant='subtitle1' color='success.main'>
       subtitle1 - 14px 700 Roboto
     </PFTypography>
-    <PFTypography variant='subtitle2' colorVariant='grey.800'>
+    <PFTypography variant='subtitle2' color='grey.800'>
       subtitle2 - 12px 700 Roboto
     </PFTypography>
-    <PFTypography variant='body1' colorVariant='grey.700'>
+    <PFTypography variant='body1' color='grey.700'>
       body1 - 14px 400 Roboto
     </PFTypography>
-    <PFTypography variant='body2' colorVariant='grey.600'>
+    <PFTypography variant='body2' color='grey.600'>
       body2 - 12px 400 Roboto
     </PFTypography>
-    <PFTypography variant='caption' colorVariant='grey.500'>
+    <PFTypography variant='caption' color='grey.500'>
       caption - 10px 400 Roboto
     </PFTypography>
   </Stack>
