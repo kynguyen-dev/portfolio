@@ -1,10 +1,8 @@
-import { motion } from 'framer-motion';
-import { Stack, useTheme } from '@mui/material';
-import { PFGradientTypography } from '@components/core';
-import {
-  HorizontalSkillList,
-  HorizontalSkillListProps,
-} from '@components/customs/lists/HorizontalSkills';
+import {motion} from 'framer-motion';
+import {Stack, useTheme} from '@mui/material';
+import {PFGradientTypography} from '@components/core';
+import {HorizontalSkillList, HorizontalSkillListProps,} from '@components/customs/lists/HorizontalSkills';
+import {APP_THEMES} from "@constants";
 
 const skills: HorizontalSkillListProps[] = [
   {
@@ -92,7 +90,7 @@ export const Skills = () => {
         <PFGradientTypography
           variant='h2'
           color={palette.primary.contrastText}
-          theme={'dark'}
+          theme={APP_THEMES.DARK}
         >
           My Skills
         </PFGradientTypography>

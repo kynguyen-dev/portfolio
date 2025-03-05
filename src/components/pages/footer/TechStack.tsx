@@ -1,5 +1,4 @@
-import { Stack, useTheme } from '@mui/material';
-import { PFTypography } from '@components/core';
+import { Stack, Box, useTheme } from '@mui/material';
 import { APP_MESSAGES } from '@utils/core/messages';
 import {
   ESLINT_URLS,
@@ -14,6 +13,7 @@ import {
   VITE_URLS,
   YARN_URLS,
 } from '@constants';
+import { PFTypography } from "@components/core";
 
 interface TechStackProps {
   name: string;
@@ -38,27 +38,24 @@ export const TechStack = () => {
   const { palette } = useTheme();
 
   return (
-    <Stack width='100%' textAlign='center' mt='auto' pb={2}>
-      <PFTypography
-        variant='body2'
-        color={palette.text?.primary}
-        textAlign={'center'}
-      >
-        Powered by{' '}
+    <Stack width="100%" textAlign="center" mt="auto" pb={2}>
+      <Stack direction="row" justifyContent="center" alignItems="center" flexWrap="wrap" gap={1}>
+        <PFTypography>{`Powered by `}</PFTypography>
         {techStacks.map((tech, index) => (
-          <span key={tech.name}>
+          <Box key={tech.name} display="inline">
             <a
               href={tech.link}
-              target='_blank'
-              rel='noopener noreferrer'
+              target="_blank"
+              rel="noopener noreferrer"
               style={{ textDecoration: 'none', color: palette.common.white }}
+              aria-label={`Learn more about ${tech.name}`}
             >
               {tech.name}
             </a>
-            {index !== techStacks.length - 1 && ' - '}
-          </span>
+            {index !== techStacks.length - 1 && <span> - </span>}
+          </Box>
         ))}
-      </PFTypography>
+      </Stack>
     </Stack>
   );
 };
