@@ -5,7 +5,10 @@ interface TypewriterEffectProps {
   speed?: number; // Typing speed in ms
 }
 
-export const TypewriterEffect = ({ text, speed = 100 }: TypewriterEffectProps) => {
+export const TypewriterEffect = ({
+  text,
+  speed = 100,
+}: TypewriterEffectProps) => {
   const [visibleText, setVisibleText] = useState('');
 
   useEffect(() => {

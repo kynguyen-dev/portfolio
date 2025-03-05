@@ -1,6 +1,6 @@
 import { Stack } from '@mui/material';
 import { MyProject } from '../project/MyProject';
-import { APP_PAGES } from "@constants";
+import { APP_PAGES } from '@constants';
 
 export const WorkExperience = () => {
   return (

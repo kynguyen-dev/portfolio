@@ -1,8 +1,13 @@
-import {motion} from 'framer-motion';
-import {Avatar, Box, Stack, useTheme} from '@mui/material';
-import {PFGradientTypography, PFTypography} from '@components/core';
-import {APP_MESSAGES} from "@utils/core/messages";
-import {APP_PAGES, APP_THEMES, APP_TYPOGRAPHIES, APP_TYPOGRAPHIES_ANIMATION} from "@constants";
+import { motion } from 'framer-motion';
+import { Avatar, Box, Stack, useTheme } from '@mui/material';
+import { PFGradientTypography, PFTypography } from '@components/core';
+import { APP_MESSAGES } from '@utils/core/messages';
+import {
+  APP_PAGES,
+  APP_THEMES,
+  APP_TYPOGRAPHIES,
+  APP_TYPOGRAPHIES_ANIMATION,
+} from '@constants';
 
 export const Intro = () => {
   const { palette } = useTheme();
@@ -31,11 +36,21 @@ export const Intro = () => {
         gap={4}
         textAlign={{ xs: 'center', md: 'left' }}
       >
-        <PFGradientTypography variant={APP_TYPOGRAPHIES.HEADER_PRIMARY} theme={APP_THEMES.DARK} fontWeight='bold'
-                              animations={[APP_TYPOGRAPHIES_ANIMATION.TYPEWRITER, APP_TYPOGRAPHIES_ANIMATION.OUTlINE_TO_SOLID]}>
+        <PFGradientTypography
+          variant={APP_TYPOGRAPHIES.HEADER_PRIMARY}
+          theme={APP_THEMES.DARK}
+          fontWeight='bold'
+          animations={[
+            APP_TYPOGRAPHIES_ANIMATION.TYPEWRITER,
+            APP_TYPOGRAPHIES_ANIMATION.OUTlINE_TO_SOLID,
+          ]}
+        >
           {APP_MESSAGES.intro.title}
         </PFGradientTypography>
-        <PFTypography variant={APP_TYPOGRAPHIES.SUBTITLE_PRIMARY} color={palette.text.disabled}>
+        <PFTypography
+          variant={APP_TYPOGRAPHIES.SUBTITLE_PRIMARY}
+          color={palette.text.disabled}
+        >
           {APP_MESSAGES.intro.description}
         </PFTypography>
         <motion.div animate={floatAnimation} whileHover={hoverEffect}>

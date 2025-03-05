@@ -1,16 +1,19 @@
 import { Stack, useTheme } from '@mui/material';
 import { PFTypography } from '@components/core';
-import {APP_MESSAGES} from "@utils/core/messages";
+import { APP_MESSAGES } from '@utils/core/messages';
 import {
   ESLINT_URLS,
-  HUSKY_URLS, MOTION_URLS, MUI_URLS,
-  PRETTIER_URLS, REACTJS_URLS,
+  HUSKY_URLS,
+  MOTION_URLS,
+  MUI_URLS,
+  PRETTIER_URLS,
+  REACTJS_URLS,
   STORYBOOK_URLS,
   VANTA_URLS,
   VERCEL_URLS,
   VITE_URLS,
-  YARN_URLS
-} from "@constants";
+  YARN_URLS,
+} from '@constants';
 
 interface TechStackProps {
   name: string;

@@ -1,12 +1,17 @@
-import {Box, Grid, Stack} from '@mui/material';
-import {motion} from 'framer-motion';
-import {Code, Terminal} from '@mui/icons-material';
+import { Box, Grid, Stack } from '@mui/material';
+import { motion } from 'framer-motion';
+import { Code, Terminal } from '@mui/icons-material';
 import ConstructionIcon from '@mui/icons-material/Construction';
-import {GradientPaper} from '@components/customs/paper/GradientPaper.tsx';
-import {PFGradientTypography, PFTypography} from '@components/core';
-import {APP_MESSAGES} from "@utils/core/messages";
-import {APP_PAGES, APP_SIZES, APP_TYPOGRAPHIES, APP_TYPOGRAPHIES_ANIMATION} from "@constants";
-import {ReactNode} from "react";
+import { GradientPaper } from '@components/customs/paper/GradientPaper.tsx';
+import { PFGradientTypography, PFTypography } from '@components/core';
+import { APP_MESSAGES } from '@utils/core/messages';
+import {
+  APP_PAGES,
+  APP_SIZES,
+  APP_TYPOGRAPHIES,
+  APP_TYPOGRAPHIES_ANIMATION,
+} from '@constants';
+import { ReactNode } from 'react';
 
 interface HighlightSkill {
   label: string;
@@ -31,7 +36,13 @@ const SKILLS: Skills[] = [
     ),
     quote: APP_MESSAGES.profile.skills.backEndQuote,
     highlights: [
-      { label: APP_MESSAGES.profile.skills.enjoyCoding, items: [APP_MESSAGES.profile.skills.java, APP_MESSAGES.profile.skills.typeScript] },
+      {
+        label: APP_MESSAGES.profile.skills.enjoyCoding,
+        items: [
+          APP_MESSAGES.profile.skills.java,
+          APP_MESSAGES.profile.skills.typeScript,
+        ],
+      },
       {
         label: APP_MESSAGES.profile.skills.devTech,
         items: [
@@ -62,7 +73,11 @@ const SKILLS: Skills[] = [
     highlights: [
       {
         label: APP_MESSAGES.profile.skills.languages,
-        items: [APP_MESSAGES.profile.skills.html, APP_MESSAGES.profile.skills.css, APP_MESSAGES.profile.skills.typeScript]
+        items: [
+          APP_MESSAGES.profile.skills.html,
+          APP_MESSAGES.profile.skills.css,
+          APP_MESSAGES.profile.skills.typeScript,
+        ],
       },
       {
         label: APP_MESSAGES.profile.skills.devTech,
@@ -130,10 +145,17 @@ export const Profile = () => {
       }}
     >
       <Box>
-        <PFTypography variant={APP_TYPOGRAPHIES.HEADER_PRIMARY} animations={[APP_TYPOGRAPHIES_ANIMATION.TYPEWRITER]} fontWeight='bold'>
+        <PFTypography
+          variant={APP_TYPOGRAPHIES.HEADER_PRIMARY}
+          animations={[APP_TYPOGRAPHIES_ANIMATION.TYPEWRITER]}
+          fontWeight='bold'
+        >
           {APP_MESSAGES.profile.opening}
         </PFTypography>
-        <PFTypography variant={APP_TYPOGRAPHIES.BODY_SECONDARY} sx={{ mt: 2, mx: 'auto' }}>
+        <PFTypography
+          variant={APP_TYPOGRAPHIES.BODY_SECONDARY}
+          sx={{ mt: 2, mx: 'auto' }}
+        >
           {APP_MESSAGES.profile.content}
         </PFTypography>
       </Box>
@@ -156,7 +178,10 @@ export const Profile = () => {
               >
                 <Stack direction='column' gap={1} alignItems='center'>
                   {role.icon}
-                  <PFGradientTypography variant={APP_TYPOGRAPHIES.HEADER_SECONDARY} fontWeight='bold'>
+                  <PFGradientTypography
+                    variant={APP_TYPOGRAPHIES.HEADER_SECONDARY}
+                    fontWeight='bold'
+                  >
                     {role.title}
                   </PFGradientTypography>
                   <PFTypography
@@ -178,7 +203,11 @@ export const Profile = () => {
                         {highlight.label}
                       </PFGradientTypography>
                       {highlight.items.map(item => (
-                        <PFTypography key={item} variant={APP_TYPOGRAPHIES.BODY_SECONDARY} sx={{ mt: 1 }}>
+                        <PFTypography
+                          key={item}
+                          variant={APP_TYPOGRAPHIES.BODY_SECONDARY}
+                          sx={{ mt: 1 }}
+                        >
                           {item}
                         </PFTypography>
                       ))}

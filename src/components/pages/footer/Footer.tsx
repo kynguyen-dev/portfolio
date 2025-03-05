@@ -2,7 +2,7 @@ import { Stack } from '@mui/material';
 import { PFGradientTypography } from '@components/core';
 import { Contact } from '@components/pages/contacts/Contact.tsx';
 import { TechStack } from '@components/pages/footer/TechStack.tsx';
-import { APP_TYPOGRAPHIES } from "@constants";
+import { APP_TYPOGRAPHIES } from '@constants';
 
 export const Footer = () => {
   return (
@@ -19,7 +19,10 @@ export const Footer = () => {
     >
       {/* Centered Content */}
       <Stack display='flex' alignItems='center' mt={10}>
-        <PFGradientTypography variant={APP_TYPOGRAPHIES.HEADER_SECONDARY} textAlign={'center'}>
+        <PFGradientTypography
+          variant={APP_TYPOGRAPHIES.HEADER_SECONDARY}
+          textAlign={'center'}
+        >
           Living, learning, & improve one day at a time.
         </PFGradientTypography>
       </Stack>
