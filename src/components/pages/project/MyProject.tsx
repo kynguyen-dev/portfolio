@@ -1,8 +1,16 @@
 import { motion } from 'framer-motion';
-import { Grid, Stack, Typography, useTheme } from '@mui/material';
+import { Grid, Stack, Typography, Box, useTheme } from '@mui/material';
 import { PFGradientTypography, PFTypography } from '@components/core';
-import Box from '@mui/material/Box';
 import { Overlay, OverlayContent } from '@components/core/overlay';
+import {
+  APP_THEMES,
+  APP_TYPOGRAPHIES,
+  EDUCATION_PROJECT_IMAGE_URLS,
+  HIRE_SERVICE_PROJECT_IMAGE_URLS,
+  LOGISTIC_PROJECT_IMAGE_URLS,
+  MEDICAL_PROJECT_IMAGE_URLS,
+} from '@constants';
+import { APP_MESSAGES } from '@utils/core/messages';
 
 interface ProjectCardProps {
   title: string;
@@ -12,28 +20,24 @@ interface ProjectCardProps {
 
 const projects: ProjectCardProps[] = [
   {
-    title: 'Logistics',
-    description:
-      'Developed a Comprehensive Driver and Truck Tracking System Collaborated on designing and building a multi-platform application ecosystem to enhance logistics efficiency. Achieved safety accreditation and compliance certification from NHVR.\n',
-    imageUrl: '/images/projects/drivalink.jpg',
+    title: APP_MESSAGES.projects.logistic.title,
+    description: APP_MESSAGES.projects.logistic.description,
+    imageUrl: LOGISTIC_PROJECT_IMAGE_URLS,
   },
   {
-    title: 'Medical',
-    description:
-      'Developing a web application for an epilepsy research center, focused on managing health reports, tracking health conditions, and collecting information from clinics and epilepsy patients.\n',
-    imageUrl: '/images/projects/EPI.jpg',
+    title: APP_MESSAGES.projects.medical.title,
+    description: APP_MESSAGES.projects.medical.description,
+    imageUrl: MEDICAL_PROJECT_IMAGE_URLS,
   },
   {
-    title: 'Education',
-    description:
-      'Developing a web application for managing student Credentialate, focusing on skill recognition, badge management, and student progress tracking.\n',
-    imageUrl: '/images/projects/learner-dashboard.webp',
+    title: APP_MESSAGES.projects.education.title,
+    description: APP_MESSAGES.projects.education.description,
+    imageUrl: EDUCATION_PROJECT_IMAGE_URLS,
   },
   {
-    title: 'Hire Service',
-    description:
-      'Developed a full-stack web application for an air conditioner subscription service using ReactJS and Next.js.\n',
-    imageUrl: '/images/projects/airconsub.jpg',
+    title: APP_MESSAGES.projects.hireService.title,
+    description: APP_MESSAGES.projects.hireService.description,
+    imageUrl: HIRE_SERVICE_PROJECT_IMAGE_URLS,
   },
 ];
 
@@ -48,16 +52,18 @@ export const MyProject = () => {
       alignItems={'center'}
       gap={{ md: 8, xs: 3 }}
     >
-      <PFGradientTypography variant='h5' theme={'dark'}>
-        My Recent Work
+      <PFGradientTypography
+        variant={APP_TYPOGRAPHIES.HEADER_PRIMARY}
+        theme={APP_THEMES.DARK}
+      >
+        {APP_MESSAGES.projects.recentWork}
       </PFGradientTypography>
       <PFTypography
-        variant='subtitle1'
-        colorVariant={'common.black'}
+        variant={APP_TYPOGRAPHIES.SUBTITLE_PRIMARY}
+        color={theme.palette.common.black}
         textAlign={'center'}
       >
-        Here are a few past design projects I've worked on. Want to see more?
-        Email me.
+        {APP_MESSAGES.projects.recentWorkDescriptions}
       </PFTypography>
       <Grid container spacing={4}>
         {projects.map((project, index) => (
@@ -85,11 +91,22 @@ export const MyProject = () => {
               />
               <Overlay className={'overlay'}>
                 <OverlayContent className='overlay-content'>
-                  <Stack direction={'column'} gap={2} justifyItems={'center'}>
-                    <PFGradientTypography variant='h5' theme={'light'}>
+                  <Stack
+                    direction={'column'}
+                    gap={2}
+                    justifyItems={'center'}
+                    px={2}
+                  >
+                    <PFGradientTypography
+                      variant={APP_TYPOGRAPHIES.HEADER_SECONDARY}
+                      theme={APP_THEMES.LIGHT}
+                    >
                       {project.title}
                     </PFGradientTypography>
-                    <Typography variant='caption' color={'white'}>
+                    <Typography
+                      variant={APP_TYPOGRAPHIES.CAPTION}
+                      color={'white'}
+                    >
                       {project.description}
                     </Typography>
                   </Stack>
