@@ -1,5 +1,5 @@
 import { PFSolidButton, PFTypography } from '@components/core';
-import { Stack } from '@mui/material';
+import {Stack, useTheme} from '@mui/material';
 
 export interface FullScreenErrorProps {
   title?: string;
@@ -13,6 +13,8 @@ export const FullScreenError = ({
   buttonText = 'Retry',
   onClick,
 }: FullScreenErrorProps) => {
+  const { palette } = useTheme();
+
   return (
     <Stack
       flex={1}
@@ -27,7 +29,7 @@ export const FullScreenError = ({
           variant='h1'
           fontWeight={600}
           fontSize={'24px'}
-          colorVariant='error.main'
+          color={palette.error.main}
           textAlign={'center'}
         >
           {title}
