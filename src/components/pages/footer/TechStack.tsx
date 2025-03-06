@@ -38,7 +38,7 @@ export const TechStack = () => {
   const { palette } = useTheme();
 
   return (
-    <Stack width="100%" textAlign="center" mt="auto" pb={2}>
+    <Stack width="100%" textAlign="center">
       <Stack direction="row" justifyContent="center" alignItems="center" flexWrap="wrap" gap={1}>
         <PFTypography>{`Powered by `}</PFTypography>
         {techStacks.map((tech, index) => (

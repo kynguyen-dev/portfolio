@@ -30,14 +30,15 @@ export const PFStrokeButton = ({ ...buttonProps }: PFButtonProps) => {
 export const StyledButton = styled(PFWhiteButton)`
   ${({ theme }) => `
   cursor: pointer;
-  background-color: ${theme.palette.primary.main};
+  background-color: ${theme.palette.primary.dark};
   transition: ${theme.transitions.create(['background-color', 'transform'], {
     duration: theme.transitions.duration.standard,
   })};
   &:hover {
-    background-color: ${theme.palette.primary.light};
+    background-color: ${theme.palette.primary.main};
     transform: scale(1.1);
   }
   color: ${theme.palette.text.primary};
+  border: 2px solid ${theme.palette.primary.main};
   `}
 `;

@@ -77,7 +77,8 @@ export const APP_MESSAGES = {
     logistic: {
       title: 'Logistic',
       description:
-        'Developed a Comprehensive Driver and Truck Tracking System Collaborated on designing and building a multi-platform application ecosystem to enhance logistics efficiency. Achieved safety accreditation and compliance certification from NHVR.',
+        'DrivaLink has built an innovative system that brings together all elements of Driver Safety, Truck Safety and Maintenance.' +
+        ' This innovation has been achieved by combining driver experience and logistics management into a user-friendly set of solutions.',
     },
     medical: {
       title: 'Medical',
@@ -87,7 +88,9 @@ export const APP_MESSAGES = {
     education: {
       title: 'Education',
       description:
-        'Developing a web application for managing student Credentialate, focusing on skill recognition, badge management, and student progress tracking.',
+        'Developing web application Learner Dashboard provides a dynamic portrait of a learner that is accessible 24/7 by all stakeholders in the learning community,' +
+        ' including learners, parents, teachers and administrators.Typically displayed in the dashboard (with links to in-depth data) are the learners provisional and earned badges,' +
+        ' cohort comparison and a digital backpack and attendance tracking is available as a custom module.',
     },
     hireService: {
       title: 'Hire Service',
@@ -97,5 +100,9 @@ export const APP_MESSAGES = {
     recentWork: 'My Recent Work',
     recentWorkDescriptions:
       "Here are a few past design projects I've worked on. Want to know more? Email me.",
+    fontEndDeveloper: 'Font-End Developer',
+    backEndDeveloper: 'Back-End Developer',
+    fullStackDeveloper: 'Full-Stack Developer',
+    visitWebSite: 'Visit Website >',
   },
 };

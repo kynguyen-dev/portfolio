@@ -7,7 +7,7 @@ export const Overlay = styled(motion.div)(({ theme }) => ({
   left: 0,
   width: '100%',
   height: '100%',
-  backgroundColor: 'rgba(10, 20, 50, 0.6)', // Default overlay color
+  backgroundColor: 'rgba(30, 58, 138, 0.6)', // Default overlay color
   color: theme.palette.common.white,
   display: 'flex',
   flexDirection: 'column',
@@ -15,11 +15,7 @@ export const Overlay = styled(motion.div)(({ theme }) => ({
   alignItems: 'center',
   textAlign: 'center',
   transition: 'background-color 0.3s ease-in-out',
-  opacity: 1, // Overlay is always visible
-
-  '&:hover': {
-    backgroundColor: 'rgba(5, 10, 30, 0.8)', // Darker overlay on hover
-  },
+  opacity: 1,
 }));
 
 export const OverlayContent = styled(motion.div)({

@@ -50,3 +50,7 @@ export const HUSKY_URLS = 'https://typicode.github.io/husky/';
 export const YARN_URLS = 'https://yarnpkg.com/';
 export const VITE_URLS = 'https://vitejs.dev/';
 export const VERCEL_URLS = 'https://vercel.com/';
+
+export const LEARNER_DASHBOARD_URL = 'https://www.edalex.com/credentialate/learner-dashboard-features/';
+export const EPILEPSY_PROJECT_URL = 'https://www.epilepsyproject.org.au/';
+export const DRIVALINK_URL = 'https://www.drivalink.com.au/';

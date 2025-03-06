@@ -78,11 +78,11 @@ export const Contact = () => {
             <Icon
               fontSize={APP_SIZES.LARGE}
               sx={{
-                color: palette.primary.light,
+                color: palette.text.primary,
                 transition:
                   'color 0.3s ease-in-out, transform 0.3s ease-in-out',
                 '&:hover': {
-                  color: palette.text.primary,
+                  color: palette.primary.dark,
                 },
               }}
             />
