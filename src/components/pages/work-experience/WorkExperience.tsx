@@ -5,15 +5,15 @@ import { APP_PAGES } from '@constants';
 export const WorkExperience = () => {
   return (
     <Stack
+      id={APP_PAGES.PROJECTS.toLowerCase()}
       direction={'column'}
-      gap={{ md: 8, xs: 2 }}
+      gap={{ md: 6, xs: 2 }}
       sx={{ px: { md: '20%', xs: 3 } }}
     >
       <Stack
         display='flex'
         justifyContent='center'
         alignItems='center'
-        id={APP_PAGES.PROJECTS}
       >
         <MyProject />
       </Stack>

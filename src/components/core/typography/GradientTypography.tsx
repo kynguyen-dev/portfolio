@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Typography, TypographyProps } from '@mui/material';
+import {Typography, TypographyProps, useTheme} from '@mui/material';
 import { motion } from 'framer-motion';
 import { makeStyles } from '@mui/styles';
 import {
@@ -35,10 +35,11 @@ export const PFGradientTypography = ({
   speed = TYPEWRITER_SPEED,
   ...props
 }: GradientTypographyProps) => {
+  const { palette } = useTheme();
   const defaultColors =
     theme === APP_THEMES.LIGHT
-      ? ['#ffffff', '#B0E0E6', '#87CEFA']
-      : ['#1E3A8A', '#3B82F6', '#00D8FF'];
+      ? [palette.primary.contrastText, '#B0E0E6', '#87CEFA']
+      : [palette.primary.dark, '#3B82F6', '#00D8FF'];
 
   const gradientColors = colors || defaultColors;
   const classes = useStyles();

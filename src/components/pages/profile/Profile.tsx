@@ -135,7 +135,7 @@ const SKILLS: Skills[] = [
 export const Profile = () => {
   return (
     <Box
-      id={APP_PAGES.PROFILE}
+      id={APP_PAGES.PROFILE.toLowerCase()}
       sx={{
         textAlign: 'center',
         pt: 12,
