@@ -54,3 +54,13 @@ export const VERCEL_URLS = 'https://vercel.com/';
 export const LEARNER_DASHBOARD_URL = 'https://www.edalex.com/credentialate/learner-dashboard-features/';
 export const EPILEPSY_PROJECT_URL = 'https://www.epilepsyproject.org.au/';
 export const DRIVALINK_URL = 'https://www.drivalink.com.au/';
+
+export enum APP_INFORMATION {
+  EMAIL_TO = "mailto:kynt101099@gmail.com",
+  PHONE_NUMBER_TO = "tel:+84868772887",
+  GITHUB_URL =  "https://github.com/kynguyen-dev"
+}
+
+export const GITHUB = "github"
+export const EMAIL = "mail"
+export const PHONE = "phone"
