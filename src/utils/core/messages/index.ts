@@ -99,10 +99,17 @@ export const APP_MESSAGES = {
     },
     recentWork: 'My Recent Work',
     recentWorkDescriptions:
-      "Here are a few past design projects I've worked on. Want to know more? Email me.",
+      "Here are a few past design projects I've worked on. Want to know more?",
+    emailMe: "Email me.",
     fontEndDeveloper: 'Font-End Developer',
     backEndDeveloper: 'Back-End Developer',
     fullStackDeveloper: 'Full-Stack Developer',
     visitWebSite: 'Visit Website >',
   },
+  contacts: {
+    visitMyGithub: 'Visit My Github',
+    sendMeEmail: "Send me an email",
+    callMe: "Call me",
+    phoneAlert: "Phone calls can only be made from a mobile device."
+  }
 };

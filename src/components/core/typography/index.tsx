@@ -5,7 +5,7 @@ import { OutlineToSolidEffect } from '@components/core/typography/OutlineToSolid
 import { ReactNode } from 'react';
 
 export interface PFTypographyProps extends TypographyProps {
-  children: string;
+  children: ReactNode;
   animations?: APP_TYPOGRAPHIES_ANIMATION[];
   speed?: number; // typewriter speed
 }
@@ -21,7 +21,7 @@ export const PFTypography = ({
 
   /** ⌨️ Typewriter Effect */
   if (animations.includes(APP_TYPOGRAPHIES_ANIMATION.TYPEWRITER)) {
-    animatedText = <TypewriterEffect text={children} speed={speed} />;
+    animatedText = <TypewriterEffect text={children?.toString() ?? ''} speed={speed} />;
   }
 
   /** ✨ Outline to Solid Effect */
