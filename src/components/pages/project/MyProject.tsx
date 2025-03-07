@@ -3,6 +3,7 @@ import { Grid, Stack, Box, useTheme } from '@mui/material';
 import { PFGradientTypography, PFTypography} from '@components/core';
 import { Overlay, OverlayContent } from '@components/core/overlay';
 import {
+  APP_INFORMATION,
   APP_THEMES,
   APP_TYPOGRAPHIES, DRIVALINK_URL,
   EDUCATION_PROJECT_IMAGE_URLS, EPILEPSY_PROJECT_URL,
@@ -69,13 +70,18 @@ export const MyProject = () => {
       >
         {APP_MESSAGES.projects.recentWork}
       </PFGradientTypography>
-      <PFTypography
-        variant={APP_TYPOGRAPHIES.SUBTITLE_PRIMARY}
-        color={theme.palette.common.black}
-        textAlign={'center'}
-      >
-        {APP_MESSAGES.projects.recentWorkDescriptions}
-      </PFTypography>
+      <Stack direction="row" justifyContent="center" alignItems="center" gap={1}>
+        <PFTypography
+          variant={APP_TYPOGRAPHIES.SUBTITLE_PRIMARY}
+          color={theme.palette.common.black}
+          textAlign={'center'}
+        >
+          {APP_MESSAGES.projects.recentWorkDescriptions}{' '}
+          <a href={APP_INFORMATION.EMAIL_TO} style={{ textDecoration: 'none', fontWeight: 'bold', color: theme.palette.primary.main }}>
+            {APP_MESSAGES.projects.emailMe}
+          </a>
+        </PFTypography>
+      </Stack>
       <Grid container spacing={4}>
         {projects.map((project, index) => (
           <Grid item xs={12} sm={6} key={index}>

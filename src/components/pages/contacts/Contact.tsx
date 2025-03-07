@@ -4,8 +4,9 @@ import { Stack, SvgIconTypeMap, Tooltip, useTheme } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import SmartphoneIcon from '@mui/icons-material/Smartphone';
-import { APP_SIZES } from '@constants';
+import { APP_INFORMATION, APP_SIZES, EMAIL, GITHUB, PHONE } from '@constants';
 import { PFTypography } from '@components/core';
+import { APP_MESSAGES } from "@utils/core/messages";
 
 interface ContactProps {
   icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & { muiName: string };
@@ -17,21 +18,21 @@ interface ContactProps {
 const contacts: ContactProps[] = [
   {
     icon: GitHubIcon,
-    key: 'github',
-    href: 'https://github.com/kynguyen-dev',
-    message: 'Visit my GitHub',
+    key: GITHUB,
+    href: APP_INFORMATION.GITHUB_URL,
+    message: APP_MESSAGES.contacts.visitMyGithub,
   },
   {
     icon: MailOutlineIcon,
-    key: 'mail',
-    href: 'mailto:kynt101099@gmail.com',
-    message: 'Send me an email',
+    key: EMAIL,
+    href: APP_INFORMATION.EMAIL_TO,
+    message: APP_MESSAGES.contacts.sendMeEmail,
   },
   {
     icon: SmartphoneIcon,
-    key: 'phone',
-    href: 'tel:+84868772887',
-    message: 'Call me',
+    key: PHONE,
+    href: APP_INFORMATION.PHONE_NUMBER_TO,
+    message: APP_MESSAGES.contacts.callMe,
   },
 ];
 
@@ -47,7 +48,7 @@ export const Contact = () => {
         window.location.href = href;
       } else {
         // Desktop: Show alert
-        alert('Phone calls can only be made from a mobile device.');
+        alert(APP_MESSAGES.contacts.phoneAlert);
       }
     } else {
       window.location.href = href;
