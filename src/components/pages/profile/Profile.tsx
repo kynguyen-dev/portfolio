@@ -1,131 +1,87 @@
-import { Box, Grid, Stack } from '@mui/material';
+import { Box, Grid, Stack, useTheme } from '@mui/material';
 import { motion } from 'framer-motion';
 import { Code, Terminal } from '@mui/icons-material';
 import ConstructionIcon from '@mui/icons-material/Construction';
 import { GradientPaper } from '@components/customs/paper/GradientPaper.tsx';
 import { PFGradientTypography, PFTypography } from '@components/core';
-import { APP_MESSAGES } from '@utils/core/messages';
+import { useTranslation } from 'react-i18next';
 import {
   APP_PAGES,
   APP_SIZES,
   APP_TYPOGRAPHIES,
   APP_TYPOGRAPHIES_ANIMATION,
+  CAREER_START_DATE,
 } from '@constants';
 import { ReactNode } from 'react';
+import { staggerContainer, staggerItem } from '@utils/animations/scrollVariants';
+
+const getYears = () =>
+  Math.floor((Date.now() - CAREER_START_DATE.getTime()) / (365.25 * 24 * 60 * 60 * 1000));
 
 interface HighlightSkill {
-  label: string;
+  labelKey: string;
   items: string[];
 }
 
-interface Skills {
-  title: string;
+interface SkillsDef {
+  titleKey: string;
   icon: ReactNode;
-  quote: string;
+  quoteKey: string;
   highlights: HighlightSkill[];
 }
 
-const SKILLS: Skills[] = [
+const skillDefs: SkillsDef[] = [
   {
-    title: APP_MESSAGES.profile.skills.backEndDeveloper,
-    icon: (
-      <Terminal
-        fontSize={APP_SIZES.LARGE}
-        sx={{ color: 'linear-gradient(to bottom, #68B8D7, #A0B3FF, #F0FFFF)' }}
-      />
-    ),
-    quote: APP_MESSAGES.profile.skills.backEndQuote,
+    titleKey: 'profile.backEndDeveloper',
+    icon: <Terminal fontSize={APP_SIZES.LARGE} sx={{ color: 'primary.light' }} />,
+    quoteKey: 'profile.backEndQuote',
     highlights: [
       {
-        label: APP_MESSAGES.profile.skills.enjoyCoding,
-        items: [
-          APP_MESSAGES.profile.skills.java,
-          APP_MESSAGES.profile.skills.typeScript,
-        ],
+        labelKey: 'profile.enjoyCoding',
+        items: ['Java', 'TypeScript'],
       },
       {
-        label: APP_MESSAGES.profile.skills.devTech,
+        labelKey: 'profile.devTech',
         items: [
-          APP_MESSAGES.profile.skills.javaVersion,
-          APP_MESSAGES.profile.skills.springBoot,
-          APP_MESSAGES.profile.skills.nextJS,
-          APP_MESSAGES.profile.skills.sqLite,
-          APP_MESSAGES.profile.skills.noSQL,
-          APP_MESSAGES.profile.skills.postgre,
-          APP_MESSAGES.profile.skills.orm,
-          APP_MESSAGES.profile.skills.restful,
-          APP_MESSAGES.profile.skills.junit,
-          APP_MESSAGES.profile.skills.groovy,
-          APP_MESSAGES.profile.skills.android,
+          'Java 8', 'Spring Boot', 'NextJS', 'SQLite', 'NoSQL MongoDB',
+          'PostgreSQL', 'Drizzle ORM', 'RESTful API', 'JUnit', 'Groovy', 'Java Android',
         ],
       },
     ],
   },
   {
-    title: APP_MESSAGES.profile.skills.fontEndDeveloper,
-    icon: (
-      <Code
-        fontSize={APP_SIZES.LARGE}
-        sx={{ color: 'linear-gradient(to bottom, #68B8D7, #A0B3FF, #F0FFFF)' }}
-      />
-    ),
-    quote: APP_MESSAGES.profile.skills.fontEndQuote,
+    titleKey: 'profile.frontEndDeveloper',
+    icon: <Code fontSize={APP_SIZES.LARGE} sx={{ color: 'primary.light' }} />,
+    quoteKey: 'profile.frontEndQuote',
     highlights: [
       {
-        label: APP_MESSAGES.profile.skills.languages,
-        items: [
-          APP_MESSAGES.profile.skills.html,
-          APP_MESSAGES.profile.skills.css,
-          APP_MESSAGES.profile.skills.typeScript,
-        ],
+        labelKey: 'profile.languages',
+        items: ['HTML', 'CSS', 'TypeScript'],
       },
       {
-        label: APP_MESSAGES.profile.skills.devTech,
+        labelKey: 'profile.devTech',
         items: [
-          APP_MESSAGES.profile.skills.react,
-          APP_MESSAGES.profile.skills.tailwind,
-          APP_MESSAGES.profile.skills.mui,
-          APP_MESSAGES.profile.skills.useQuery,
-          APP_MESSAGES.profile.skills.nextJS,
-          APP_MESSAGES.profile.skills.angular,
-          APP_MESSAGES.profile.skills.vite,
-          APP_MESSAGES.profile.skills.esLint,
-          APP_MESSAGES.profile.skills.prettier,
-          APP_MESSAGES.profile.skills.storybook,
-          APP_MESSAGES.profile.skills.jest,
-          APP_MESSAGES.profile.skills.testLibrary,
-          APP_MESSAGES.profile.skills.reactHookForm,
-          APP_MESSAGES.profile.skills.auth0,
+          'ReactJS', 'Tailwind CSS', 'Material UI', 'TanStack Query', 'NextJS',
+          'AngularJS', 'Vite', 'ESLint', 'Prettier', 'Storybook',
+          'Jest', 'React Testing Library', 'React Hook Form', 'Auth0',
         ],
       },
     ],
   },
   {
-    title: APP_MESSAGES.profile.skills.tools,
-    icon: (
-      <ConstructionIcon
-        fontSize={APP_SIZES.LARGE}
-        sx={{ color: 'linear-gradient(to bottom, #68B8D7, #A0B3FF, #F0FFFF)' }}
-      />
-    ),
-    quote: APP_MESSAGES.profile.skills.toolEndQuote,
+    titleKey: 'profile.tools',
+    icon: <ConstructionIcon fontSize={APP_SIZES.LARGE} sx={{ color: 'primary.light' }} />,
+    quoteKey: 'profile.toolEndQuote',
     highlights: [
       {
-        label: APP_MESSAGES.profile.skills.methods,
-        items: [APP_MESSAGES.profile.skills.agile],
+        labelKey: 'profile.methods',
+        items: ['Scrum/Agile'],
       },
       {
-        label: APP_MESSAGES.profile.skills.accompany,
+        labelKey: 'profile.toolsIUse',
         items: [
-          APP_MESSAGES.profile.skills.vsCode,
-          APP_MESSAGES.profile.skills.webStorm,
-          APP_MESSAGES.profile.skills.intelliJ,
-          APP_MESSAGES.profile.skills.postman,
-          APP_MESSAGES.profile.skills.docker,
-          APP_MESSAGES.profile.skills.git,
-          APP_MESSAGES.profile.skills.gitTools,
-          APP_MESSAGES.profile.skills.jira,
-          APP_MESSAGES.profile.skills.figma,
+          'Visual Studio Code', 'WebStorm', 'IntelliJ IDE', 'Postman',
+          'Docker Desktop', 'Git', 'GitHub/GitLab', 'Jira', 'Figma',
         ],
       },
     ],
@@ -133,14 +89,21 @@ const SKILLS: Skills[] = [
 ];
 
 export const Profile = () => {
+  const { palette } = useTheme();
+  const { t } = useTranslation();
+  const years = getYears();
+
   return (
     <Box
+      component="section"
       id={APP_PAGES.PROFILE.toLowerCase()}
+      aria-label={t('profile.heading')}
       sx={{
         textAlign: 'center',
-        pt: 12,
-        background: 'linear-gradient(to bottom, #68B8D7, #F0FFFF)',
-        color: 'white',
+        pt: 16,
+        pb: 16,
+        position: 'relative',
+        color: palette.text.primary,
         px: { xs: 3, md: '20%' },
       }}
     >
@@ -150,24 +113,32 @@ export const Profile = () => {
           animations={[APP_TYPOGRAPHIES_ANIMATION.TYPEWRITER]}
           fontWeight='bold'
         >
-          {APP_MESSAGES.profile.opening}
+          {t('profile.opening')}
         </PFTypography>
         <PFTypography
           variant={APP_TYPOGRAPHIES.BODY_SECONDARY}
           sx={{ mt: 2, mx: 'auto' }}
         >
-          {APP_MESSAGES.profile.content}
+          {t('profile.content', { years })}
         </PFTypography>
       </Box>
 
-      <Grid container spacing={4} sx={{ mt: 8, alignItems: 'stretch' }}>
-        {SKILLS.map((role, index) => (
-          <Grid item xs={12} md={4} key={role.title} sx={{ display: 'flex' }}>
+      <Grid
+        container
+        spacing={4}
+        sx={{ mt: 8, alignItems: 'stretch' }}
+        component={motion.div}
+        variants={staggerContainer(0.2, 0.15)}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        {skillDefs.map((role) => (
+          <Grid item xs={12} md={4} key={role.titleKey} sx={{ display: 'flex' }}>
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.2 }}
+              variants={staggerItem}
               style={{ flex: 1 }}
+              whileHover={{ y: -8, transition: { duration: 0.25 } }}
             >
               <GradientPaper
                 sx={{
@@ -182,31 +153,31 @@ export const Profile = () => {
                     variant={APP_TYPOGRAPHIES.HEADER_SECONDARY}
                     fontWeight='bold'
                   >
-                    {role.title}
+                    {t(role.titleKey)}
                   </PFGradientTypography>
                   <PFTypography
                     variant={APP_TYPOGRAPHIES.BODY_SECONDARY}
                     animations={[APP_TYPOGRAPHIES_ANIMATION.TYPEWRITER]}
                     speed={50}
-                    sx={{ mt: 1, color: 'text.secondary' }}
+                    sx={{ mt: 1, color: `${palette.text.secondary} !important` }}
                   >
-                    {role.quote}
+                    {t(role.quoteKey)}
                   </PFTypography>
                   <Box flexGrow={1} />
                   {role.highlights.map(highlight => (
-                    <Box key={highlight.label} sx={{ mt: 2 }}>
+                    <Box key={highlight.labelKey} sx={{ mt: 2 }}>
                       <PFGradientTypography
                         variant={APP_TYPOGRAPHIES.SUBTITLE_SECONDARY}
                         fontWeight='bold'
-                        color='#6C63FF'
+                        colors={[palette.primary.light, palette.primary.main, palette.secondary.main]}
                       >
-                        {highlight.label}
+                        {t(highlight.labelKey)}
                       </PFGradientTypography>
                       {highlight.items.map(item => (
                         <PFTypography
                           key={item}
                           variant={APP_TYPOGRAPHIES.BODY_SECONDARY}
-                          sx={{ mt: 1 }}
+                          sx={{ mt: 1, color: `${palette.text.primary} !important`, fontWeight: 700 }}
                         >
                           {item}
                         </PFTypography>

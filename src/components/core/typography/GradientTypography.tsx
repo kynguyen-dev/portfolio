@@ -1,7 +1,6 @@
 import { ReactNode } from 'react';
-import {Typography, TypographyProps, useTheme} from '@mui/material';
+import { Typography, TypographyProps, useTheme } from '@mui/material';
 import { motion } from 'framer-motion';
-import { makeStyles } from '@mui/styles';
 import {
   APP_THEMES,
   APP_TYPOGRAPHIES_ANIMATION,
@@ -10,7 +9,7 @@ import {
 import { TypewriterEffect } from '@components/core/typography/TypewriterEffect.tsx';
 import { OutlineToSolidEffect } from '@components/core/typography/OutlineToSolidEffect.tsx';
 
-interface GradientTypographyProps extends TypographyProps {
+interface GradientTypographyProps extends Omit<TypographyProps, 'theme'> {
   children: string;
   theme?: APP_THEMES;
   colors?: string[];
@@ -18,13 +17,11 @@ interface GradientTypographyProps extends TypographyProps {
   speed?: number; // typewriter speed
 }
 
-const useStyles = makeStyles(() => ({
-  gradientText: {
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-    backgroundSize: '200% 200%',
-  },
-}));
+const gradientTextSx = {
+  WebkitBackgroundClip: 'text',
+  WebkitTextFillColor: 'transparent',
+  backgroundSize: '200% 200%',
+} as const;
 
 export const PFGradientTypography = ({
   children,
@@ -38,11 +35,10 @@ export const PFGradientTypography = ({
   const { palette } = useTheme();
   const defaultColors =
     theme === APP_THEMES.LIGHT
-      ? [palette.primary.contrastText, '#B0E0E6', '#87CEFA']
-      : [palette.primary.dark, '#3B82F6', '#00D8FF'];
+      ? [palette.primary.contrastText, '#F0D080', '#E8C060']
+      : [palette.primary.dark, '#D4A843', '#C75B39'];
 
   const gradientColors = colors || defaultColors;
-  const classes = useStyles();
   let animatedText: ReactNode = children;
 
   /** ⌨️ Typewriter Effect */
@@ -51,7 +47,7 @@ export const PFGradientTypography = ({
   }
 
   /** ✨ Outline to Solid Effect */
-  if (animations.includes(APP_TYPOGRAPHIES_ANIMATION.OUTlINE_TO_SOLID)) {
+  if (animations.includes(APP_TYPOGRAPHIES_ANIMATION.OUTLINE_TO_SOLID)) {
     animatedText = (
       <OutlineToSolidEffect
         style={{
@@ -61,7 +57,7 @@ export const PFGradientTypography = ({
       >
         <Typography
           variant={variant}
-          className={classes.gradientText}
+          sx={gradientTextSx}
           {...props}
         >
           {animatedText}
@@ -88,7 +84,7 @@ export const PFGradientTypography = ({
         display: 'inline-block',
       }}
     >
-      <Typography variant={variant} className={classes.gradientText} {...props}>
+      <Typography variant={variant} sx={gradientTextSx} {...props}>
         {animatedText}
       </Typography>
     </motion.div>

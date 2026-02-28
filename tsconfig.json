@@ -33,14 +33,16 @@
       "@models": ["src/models"],
       "@utils/*": ["src/utils/*"],
       "@utils": ["src/utils"],
-      "@context/*": ["src/context/*"],
-      "@context": ["src/context"],
+      "@contexts/*": ["src/contexts/*"],
+      "@contexts": ["src/contexts"],
       "@constants/*": ["src/constants/*"],
       "@constants": ["src/constants"],
       "@pages/*": ["src/pages/*"],
       "@pages": ["src/pages"],
       "@routers/*": ["src/routers/*"],
-      "@routers": ["src/routers"]
+      "@routers": ["src/routers"],
+      "@i18n/*": ["src/i18n/*"],
+      "@i18n": ["src/i18n"]
     }
   },
 
