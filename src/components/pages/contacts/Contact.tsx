@@ -1,54 +1,66 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
-import { Stack, SvgIconTypeMap, Tooltip, useTheme } from '@mui/material';
+import { Snackbar, Stack, SvgIconTypeMap, Tooltip, useTheme } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import SmartphoneIcon from '@mui/icons-material/Smartphone';
-import { APP_INFORMATION, APP_SIZES, EMAIL, GITHUB, PHONE } from '@constants';
+import { useTranslation } from 'react-i18next';
+import { APP_INFORMATION, APP_SIZES, EMAIL, GITHUB, LINKEDIN, PHONE } from '@constants';
 import { PFTypography } from '@components/core';
-import { APP_MESSAGES } from "@utils/core/messages";
 
 interface ContactProps {
   icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & { muiName: string };
-  key: string;
+  id: string;
   href: string;
-  message: string;
+  messageKey: string;
 }
 
 const contacts: ContactProps[] = [
   {
     icon: GitHubIcon,
-    key: GITHUB,
+    id: GITHUB,
     href: APP_INFORMATION.GITHUB_URL,
-    message: APP_MESSAGES.contacts.visitMyGithub,
+    messageKey: 'contact.visitMyGithub',
+  },
+  {
+    icon: LinkedInIcon,
+    id: LINKEDIN,
+    href: APP_INFORMATION.LINKEDIN_URL,
+    messageKey: 'contact.visitMyLinkedIn',
   },
   {
     icon: MailOutlineIcon,
-    key: EMAIL,
+    id: EMAIL,
     href: APP_INFORMATION.EMAIL_TO,
-    message: APP_MESSAGES.contacts.sendMeEmail,
+    messageKey: 'contact.sendMeEmail',
   },
   {
     icon: SmartphoneIcon,
-    key: PHONE,
+    id: PHONE,
     href: APP_INFORMATION.PHONE_NUMBER_TO,
-    message: APP_MESSAGES.contacts.callMe,
+    messageKey: 'contact.callMe',
   },
 ];
 
 export const Contact = () => {
   const { palette } = useTheme();
+  const { t } = useTranslation();
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const handleClick = (href: string, key: string) => {
-    if (key === 'github') {
-      window.open(href, '_blank');
-    } else if (key === 'phone') {
+    if (key === GITHUB || key === LINKEDIN) {
+      window.open(href, '_blank', 'noopener,noreferrer');
+    } else if (key === PHONE) {
       if (/Mobi|Android/i.test(navigator.userAgent)) {
-        // Mobile: Open dialer
         window.location.href = href;
       } else {
-        // Desktop: Show alert
-        alert(APP_MESSAGES.contacts.phoneAlert);
+        // Desktop: copy number to clipboard instead of alert()
+        const phoneNumber = href.replace('tel:', '');
+        navigator.clipboard.writeText(phoneNumber).then(() => {
+          setSnackbarOpen(true);
+        });
       }
     } else {
       window.location.href = href;
@@ -56,40 +68,57 @@ export const Contact = () => {
   };
 
   return (
-    <Stack gap={10} direction='row'>
-      {contacts.map(({ icon: Icon, href, message, key }) => (
-        <Tooltip
-          key={key}
-          title={<PFTypography variant='body2'>{message}</PFTypography>}
-          arrow
-        >
-          <motion.div
-            key={key}
-            whileHover={{ scale: 1.2 }}
-            whileTap={{ scale: 0.9 }}
-            transition={{ type: 'spring', stiffness: 300 }}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-            }}
-            onClick={() => handleClick(href, key)}
+    <>
+      <Stack gap={{ xs: 4, sm: 6, md: 10 }} direction='row'>
+        {contacts.map(({ icon: Icon, href, messageKey, id }) => (
+          <Tooltip
+            key={id}
+            title={<PFTypography variant='body2'>{t(messageKey)}</PFTypography>}
+            arrow
           >
-            <Icon
-              fontSize={APP_SIZES.LARGE}
-              sx={{
-                color: palette.text.primary,
-                transition:
-                  'color 0.3s ease-in-out, transform 0.3s ease-in-out',
-                '&:hover': {
-                  color: palette.primary.dark,
-                },
+            <motion.div
+              whileHover={{ scale: 1.2 }}
+              whileTap={{ scale: 0.9 }}
+              transition={{ type: 'spring', stiffness: 300 }}
+              role="link"
+              aria-label={t(messageKey)}
+              tabIndex={0}
+              onKeyDown={(e: React.KeyboardEvent) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleClick(href, id);
+                }
               }}
-            />
-          </motion.div>
-        </Tooltip>
-      ))}
-    </Stack>
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+              }}
+              onClick={() => handleClick(href, id)}
+            >
+              <Icon
+                fontSize={APP_SIZES.LARGE}
+                sx={{
+                  color: palette.text.primary,
+                  transition:
+                    'color 0.3s ease-in-out, transform 0.3s ease-in-out',
+                  '&:hover': {
+                    color: palette.primary.dark,
+                  },
+                }}
+              />
+            </motion.div>
+          </Tooltip>
+        ))}
+      </Stack>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={() => setSnackbarOpen(false)}
+        message={t('contact.phoneCopied')}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      />
+    </>
   );
 };

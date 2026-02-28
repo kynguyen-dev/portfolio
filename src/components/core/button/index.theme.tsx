@@ -1,6 +1,6 @@
 import { Components, Theme } from '@mui/material';
 
-export const muiButtonTheme = ({}: Theme): Pick<
+export const muiButtonTheme = (_theme: Theme): Pick<
   Components<Omit<Theme, 'components'>>,
   'MuiButton'
 > => ({

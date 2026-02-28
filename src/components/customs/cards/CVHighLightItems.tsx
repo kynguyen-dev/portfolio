@@ -23,7 +23,9 @@ export const CVHighLightItems = ({
       className='flip-card'
       onClick={handleFlip}
       style={{
-        width: '272px',
+        width: '100%',
+        maxWidth: '272px',
+        minWidth: '200px',
         height: '80px',
         perspective: '1000px',
         cursor: 'pointer',
@@ -89,7 +91,6 @@ export const CVHighLightItems = ({
             color: palette.common.white,
           }}
         >
-          {/*<PFTypography variant="body2">{details}</PFTypography>*/}
           {details.split('-').map(tech => (
             <Chip
               key={tech}

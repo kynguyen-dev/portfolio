@@ -13,12 +13,12 @@ export const OutlineToSolidEffect = ({
   return (
     <motion.div
       initial={{
-        WebkitTextStroke: '1px rgba(255, 255, 255, 0.8)',
+        WebkitTextStroke: '1px rgba(255, 243, 224, 0.8)',
         opacity: 0.7,
       }}
       animate={{
-        WebkitTextStroke: ['1px rgba(255, 255, 255, 0.8)', '0px rgba(0,0,0,0)'],
-        WebkitTextFillColor: ['transparent', 'white'],
+        WebkitTextStroke: ['1px rgba(255, 243, 224, 0.8)', '0px rgba(0,0,0,0)'],
+        WebkitTextFillColor: ['transparent', '#FFF3E0'],
         opacity: [0.7, 1],
       }}
       transition={{

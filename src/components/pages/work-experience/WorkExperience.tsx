@@ -1,21 +1,29 @@
 import { Stack } from '@mui/material';
 import { MyProject } from '../project/MyProject';
+import { WorkTimeline } from './WorkTimeline';
 import { APP_PAGES } from '@constants';
 
 export const WorkExperience = () => {
   return (
     <Stack
+      component="section"
       id={APP_PAGES.PROJECTS.toLowerCase()}
+      aria-label="Work Experience & Projects"
       direction={'column'}
-      gap={{ md: 6, xs: 2 }}
-      sx={{ px: { md: '20%', xs: 3 } }}
     >
+      <WorkTimeline />
       <Stack
-        display='flex'
-        justifyContent='center'
-        alignItems='center'
+        direction="column"
+        gap={{ md: 6, xs: 2 }}
+        sx={{ px: { md: '20%', xs: 3 }, py: 10 }}
       >
-        <MyProject />
+        <Stack
+          display='flex'
+          justifyContent='center'
+          alignItems='center'
+        >
+          <MyProject />
+        </Stack>
       </Stack>
     </Stack>
   );

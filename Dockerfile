@@ -6,13 +6,16 @@ WORKDIR /portfolio
 
 # Copy project files
 COPY package*.json ./
-RUN yarn install --frozen-lockfile
+RUN yarn install --immutable
 
-# Copy remaining files (excluding node_modules)
-COPY . . .gitignore/
+# Copy remaining files (excluding node_modules via .dockerignore)
+COPY . .
 
-# Expose Vite development server port (default: 5173)
-EXPOSE 5173
+# Build for production
+RUN yarn build
 
-# Start the development server using yarn
-CMD [ "yarn", "start" ]
+# Expose Vite preview server port
+EXPOSE 4173
+
+# Serve the production build
+CMD [ "yarn", "preview", "--host" ]

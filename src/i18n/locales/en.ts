@@ -1,0 +1,175 @@
+export const en = {
+  splash: {
+    greeting: 'Welcome',
+    name: 'Ky Nguyen',
+    role: 'Full-Stack Developer',
+  },
+  nav: {
+    home: 'Home',
+    profile: 'Profile',
+    skills: 'Skills',
+    projects: 'Projects',
+    contact: 'Contact',
+  },
+  intro: {
+    title: 'Ky Nguyen — Full-Stack Developer',
+    description:
+      'I build production-ready web apps with React & TypeScript — from logistics platforms to healthcare systems. Turning complex problems into clean, scalable solutions.',
+    viewMyWork: 'View My Work',
+    downloadCV: 'Download CV',
+    yearsExperience: '{{years}}+ Years Experience',
+    productionApps: '4 Production Apps',
+    techStack: 'React · TypeScript · Next.js',
+  },
+  aboutMe: {
+    heading: 'About Me',
+    p1: "I'm a full-stack developer based in Vietnam with {{years}}+ years of hands-on experience building web applications for the Australian tech scene. My core stack is React and TypeScript, and I've delivered production systems across logistics, healthcare, education and services.",
+    p2: 'I graduated from FPT University with a degree in Information Technology, where I built a strong foundation in software engineering principles. Since then I\'ve worked in cross-functional Agile teams — architecting front-ends, integrating REST APIs, and shipping features end-to-end with Next.js, MongoDB, PostgreSQL and Auth0.',
+    p3: "I'm trilingual — fluent in Vietnamese, conversational in English and Japanese — which helps me collaborate across diverse teams. Outside of code, I enjoy photography and exploring new coffee spots.",
+    p4: 'Always open to interesting opportunities and conversations — feel free to reach out.',
+    github: 'GitHub →',
+    linkedin: 'LinkedIn →',
+  },
+  profile: {
+    opening: "Hi, I'm Ky Nguyen. Nice to meet you.",
+    content:
+      'With {{years}}+ years of experience as a Software Developer, I have built expertise in developing cross-browser, responsive web applications. I specialize in TypeScript and ReactJS within Agile environments, continuously improving codebase quality through optimization, documentation, mentoring, and code reviews. Passionate about learning and growth, I stay up to date with modern development technologies to enhance both my skills and team collaboration.',
+    backEndDeveloper: 'Backend Developer',
+    frontEndDeveloper: 'Frontend Developer',
+    tools: 'Tools',
+    backEndQuote: 'I turn business logic into robust backend solutions that power the digital world.',
+    frontEndQuote: 'I like to code things from scratch and enjoy bringing ideas to life in the browser.',
+    toolEndQuote: "I don't just use tools; I master them to build something great.",
+    languages: 'Languages I speak:',
+    methods: 'The method I work:',
+    toolsIUse: 'Tools I use:',
+    enjoyCoding: 'Things I enjoy coding:',
+    devTech: 'Dev Tech:',
+  },
+  education: {
+    heading: 'Education',
+    degree: 'Bachelor of Information Technology',
+    period: '2018 — 2022',
+    major: 'Major: Software Engineering',
+    coursework: 'Coursework: Mobile, Web & Database Development',
+    languages: 'Languages: Japanese & English',
+  },
+  skills: {
+    heading: 'Skills & Technologies',
+    core: 'Core Technologies',
+    additional: 'Additional Skills',
+    toolsAndMethods: 'Tools & Methodologies',
+  },
+  projects: {
+    recentWork: 'My Recent Work',
+    recentWorkDescriptions: "Here are a few past design projects I've worked on. Want to know more?",
+    emailMe: 'Email me.',
+    frontEndDeveloper: 'Front-End Developer',
+    backEndDeveloper: 'Back-End Developer',
+    fullStackDeveloper: 'Full-Stack Developer',
+    visitWebSite: 'Visit Website >',
+    logistic: {
+      title: 'DrivaLink — Logistics',
+      description:
+        'Built an innovative logistics platform unifying driver safety, truck maintenance, and fleet tracking. Streamlined compliance workflows, reducing driver onboarding time. Architected responsive dashboards serving fleet operators daily.',
+      contributions: [
+        'Architected frontend with React 18, TypeScript & TanStack Query',
+        'Built real-time fleet tracking dashboard with live GPS data',
+        'Implemented role-based access control with Auth0',
+        'Mentored 2 junior developers through code reviews & pair programming',
+      ],
+    },
+    medical: {
+      title: 'Epilepsy Research Platform',
+      description:
+        'Developed a clinical data management app for epilepsy researchers. Streamlined patient report workflows, cutting data-entry time for clinic staff. Built accessible, responsive interfaces meeting healthcare compliance standards.',
+      contributions: [
+        'Designed component library with Material UI for consistent UX',
+        'Integrated RESTful APIs with TanStack Query for efficient data fetching',
+        'Implemented form validation with React Hook Form + Yup schema',
+        'Achieved 90%+ test coverage with Jest & React Testing Library',
+      ],
+    },
+    education: {
+      title: 'Edalex — Learner Dashboard',
+      description:
+        'Built a dynamic learner dashboard providing 24/7 access to badges, cohort comparisons, and attendance tracking. Deployed at multiple educational institutions, serving learners, parents, teachers and administrators.',
+      contributions: [
+        'Developed full-stack features with Next.js, MongoDB & Auth0',
+        'Built interactive data visualizations for learner progress',
+        'Implemented SSR for improved SEO and initial load performance',
+        'Collaborated with designers to build a responsive, accessible UI',
+      ],
+    },
+    hireService: {
+      title: 'AirConSub — Hire Service',
+      description:
+        'Developed a full-stack subscription service handling booking, payments, and scheduling for air conditioner services. Implemented end-to-end booking flow with payment integration.',
+      contributions: [
+        'Built full-stack app with React, Next.js & Drizzle ORM',
+        'Implemented booking & payment flow with Stripe integration',
+        'Designed database schema with SQLite + Drizzle ORM migrations',
+        'Set up CI/CD pipeline for automated testing and deployment',
+      ],
+    },
+  },
+  workExperience: {
+    heading: 'Work Experience',
+  },
+  testimonials: {
+    heading: 'What People Say',
+    subtitle: "Feedback from colleagues and managers I've worked with",
+    items: [
+      {
+        quote: 'Ky consistently delivered production-ready code ahead of schedule. His deep knowledge of React and TypeScript made a real impact on our product quality, and he was always willing to help teammates grow.',
+        name: 'Team Lead',
+        title: 'DrivaLink',
+        relationship: 'Direct Manager',
+      },
+      {
+        quote: 'Working with Ky was a great experience — he turned complex requirements into clean, accessible UIs. His attention to detail and proactive communication made cross-team collaboration seamless.',
+        name: 'Senior Developer',
+        title: 'Edalex',
+        relationship: 'Colleague',
+      },
+      {
+        quote: 'Ky brought both technical skill and a genuine passion for user experience. He introduced modern best practices to our codebase and significantly improved our testing coverage.',
+        name: 'Project Manager',
+        title: 'Epilepsy Research Center',
+        relationship: 'Project Stakeholder',
+      },
+    ],
+  },
+  contact: {
+    heading: 'Get In Touch',
+    subtitle: "Have a project in mind or just want to chat? I'd love to hear from you.",
+    nameLabel: 'Your Name',
+    emailLabel: 'Your Email',
+    messageLabel: 'Your Message',
+    send: 'Send Message',
+    sending: 'Sending...',
+    successTitle: 'Message sent!',
+    successMessage: "Thanks for reaching out — I'll get back to you soon.",
+    errorTitle: 'Oops!',
+    errorMessage: 'Something went wrong. Please try again or email me directly.',
+    visitMyGithub: 'Visit My Github',
+    visitMyLinkedIn: 'Visit My LinkedIn',
+    sendMeEmail: 'Send me an email',
+    callMe: 'Call me',
+    phoneCopied: 'Phone number copied to clipboard!',
+  },
+  footer: {
+    quote: 'Living, learning, & improving one day at a time.',
+  },
+  blog: {
+    heading: 'Blog & Insights',
+    subtitle: 'Thoughts on web development, performance, and the tools I use daily.',
+    readMore: 'Read article →',
+    minRead: '{{min}} min read',
+  },
+  common: {
+    scrollToTop: 'Back to top',
+    lightMode: 'Switch to light mode',
+    darkMode: 'Switch to dark mode',
+  },
+};

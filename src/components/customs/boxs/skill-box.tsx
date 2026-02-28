@@ -19,12 +19,14 @@ export const SkillBox = (props: SkillBoxProps) => {
       gap={1}
     >
       <motion.div
-        initial={{ y: 0 }}
-        animate={{ y: [0, -5, 0] }} // Floating effect
-        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+        whileHover={{ y: -6 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 15 }}
       >
         <CardMedia
+          component="img"
           image={props.imageUrl}
+          alt={props.title}
+          loading="lazy"
           sx={{ width: '96px', height: '96px', objectFit: 'contain' }}
         />
       </motion.div>

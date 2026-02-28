@@ -28,7 +28,7 @@ export const Light = () => {
     'text',
     'grey',
     'background',
-    'branchBlue',
+    'earthAccent',
   ];
 
   const getArrayColors = useCallback(

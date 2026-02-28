@@ -1,0 +1,161 @@
+import { useState, FormEvent } from 'react';
+import {
+  Box,
+  TextField,
+  Alert,
+  CircularProgress,
+  Stack,
+  useTheme,
+} from '@mui/material';
+import { motion } from 'framer-motion';
+import SendIcon from '@mui/icons-material/Send';
+import emailjs from '@emailjs/browser';
+import { useTranslation } from 'react-i18next';
+import { PFTypography } from '@components/core/typography';
+import { StyledButton } from '@components/core/button';
+import { scaleUp } from '@utils/animations/scrollVariants';
+
+// ---- EmailJS config (public keys — safe to commit) ----
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID ?? 'YOUR_SERVICE_ID';
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID ?? 'YOUR_TEMPLATE_ID';
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY ?? 'YOUR_PUBLIC_KEY';
+
+const inputSx = {
+  '& .MuiOutlinedInput-root': {
+    color: 'text.primary',
+    '& fieldset': { borderColor: 'divider' },
+    '&:hover fieldset': { borderColor: 'primary.light' },
+    '&.Mui-focused fieldset': { borderColor: 'primary.light' },
+  },
+  '& .MuiInputLabel-root': { color: 'text.secondary' },
+  '& .MuiInputLabel-root.Mui-focused': { color: 'primary.light' },
+};
+
+export const ContactForm = () => {
+  const { t } = useTranslation();
+  const { palette } = useTheme();
+  const isLight = palette.mode === 'light';
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setStatus('sending');
+
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name: form.name,
+          from_email: form.email,
+          message: form.message,
+        },
+        EMAILJS_PUBLIC_KEY,
+      );
+      setStatus('success');
+      setForm({ name: '', email: '', message: '' });
+    } catch {
+      setStatus('error');
+    }
+  };
+
+  return (
+    <Box
+      component="section"
+      id="contact-form"
+      aria-label={t('contact.heading')}
+      sx={{ py: { xs: 8, md: 12 }, px: { xs: 2, md: 6 }, maxWidth: 700, mx: 'auto' }}
+    >
+      <PFTypography
+        variant="h4"
+        align="center"
+        sx={{
+          fontWeight: 800,
+          mb: 1,
+          background: 'linear-gradient(90deg, #F5D060 0%, #E8A838 50%, #D4652A 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+        }}
+      >
+        {t('contact.heading')}
+      </PFTypography>
+      <PFTypography variant="body1" align="center" sx={{ color: palette.text.secondary, opacity: 0.7, mb: 5 }}>
+        {t('contact.subtitle')}
+      </PFTypography>
+
+      <Box
+        component={motion.form}
+        variants={scaleUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        onSubmit={handleSubmit}
+        sx={{
+          background: isLight ? 'rgba(255,248,240,0.85)' : 'rgba(11, 13, 46, 0.55)',
+          backdropFilter: 'blur(12px)',
+          border: `1px solid ${isLight ? 'rgba(184,137,31,0.15)' : 'rgba(245, 208, 96, 0.15)'}`,
+          borderRadius: 3,
+          p: { xs: 3, md: 5 },
+        }}
+      >
+        <Stack spacing={3}>
+          <TextField
+            label={t('contact.nameLabel')}
+            required
+            fullWidth
+            value={form.name}
+            onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
+            sx={inputSx}
+          />
+          <TextField
+            label={t('contact.emailLabel')}
+            required
+            type="email"
+            fullWidth
+            value={form.email}
+            onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
+            sx={inputSx}
+          />
+          <TextField
+            label={t('contact.messageLabel')}
+            required
+            multiline
+            minRows={4}
+            fullWidth
+            value={form.message}
+            onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
+            sx={inputSx}
+          />
+
+          <StyledButton
+            type="submit"
+            variant="contained"
+            size="large"
+            disabled={status === 'sending'}
+            endIcon={
+              status === 'sending' ? (
+                <CircularProgress size={18} sx={{ color: 'inherit' }} />
+              ) : (
+                <SendIcon />
+              )
+            }
+          >
+            {status === 'sending' ? t('contact.sending') : t('contact.send')}
+          </StyledButton>
+
+          {status === 'success' && (
+            <Alert severity="success" sx={{ background: 'rgba(107,142,58,0.2)', color: '#8AAE55' }}>
+              <strong>{t('contact.successTitle')}</strong> {t('contact.successMessage')}
+            </Alert>
+          )}
+          {status === 'error' && (
+            <Alert severity="error" sx={{ background: 'rgba(212,64,64,0.15)', color: '#E06060' }}>
+              <strong>{t('contact.errorTitle')}</strong> {t('contact.errorMessage')}
+            </Alert>
+          )}
+        </Stack>
+      </Box>
+    </Box>
+  );
+};

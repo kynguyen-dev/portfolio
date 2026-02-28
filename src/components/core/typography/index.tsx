@@ -25,7 +25,7 @@ export const PFTypography = ({
   }
 
   /** ✨ Outline to Solid Effect */
-  if (animations.includes(APP_TYPOGRAPHIES_ANIMATION.OUTlINE_TO_SOLID)) {
+  if (animations.includes(APP_TYPOGRAPHIES_ANIMATION.OUTLINE_TO_SOLID)) {
     animatedText = <OutlineToSolidEffect>{animatedText}</OutlineToSolidEffect>;
   }
 

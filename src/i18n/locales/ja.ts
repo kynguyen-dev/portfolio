@@ -1,0 +1,175 @@
+export const ja = {
+  splash: {
+    greeting: 'ようこそ',
+    name: 'Ky Nguyen',
+    role: 'フルスタック開発者',
+  },
+  nav: {
+    home: 'ホーム',
+    profile: 'プロフィール',
+    skills: 'スキル',
+    projects: 'プロジェクト',
+    contact: 'お問い合わせ',
+  },
+  intro: {
+    title: 'Ky Nguyen — フルスタック開発者',
+    description:
+      'React & TypeScriptで本番レベルのWebアプリを構築 — 物流プラットフォームから医療システムまで。複雑な問題をクリーンでスケーラブルなソリューションに変換。',
+    viewMyWork: '作品を見る',
+    downloadCV: 'CV をダウンロード',
+    yearsExperience: '{{years}}+ 年の経験',
+    productionApps: '4つの本番アプリ',
+    techStack: 'React · TypeScript · Next.js',
+  },
+  aboutMe: {
+    heading: '自己紹介',
+    p1: 'ベトナム在住のフルスタック開発者で、オーストラリアのテック業界で{{years}}年以上のWebアプリ開発経験があります。React と TypeScript を主軸に、物流・医療・教育・サービス分野で本番システムを提供してきました。',
+    p2: 'FPT大学で情報技術の学位を取得し、ソフトウェアエンジニアリングの基礎を築きました。以来、アジャイルチームでフロントエンド設計、REST API統合、Next.js・MongoDB・PostgreSQL・Auth0を使ったエンドツーエンド開発に従事しています。',
+    p3: 'ベトナム語・英語・日本語の3言語を使い、多様なチームでのコラボレーションに活かしています。コード以外では、写真撮影や新しいカフェの開拓を楽しんでいます。',
+    p4: '新しい機会やお話に常にオープンです — お気軽にご連絡ください。',
+    github: 'GitHub →',
+    linkedin: 'LinkedIn →',
+  },
+  profile: {
+    opening: 'こんにちは、Ky Nguyenです。お会いできて嬉しいです。',
+    content:
+      'ソフトウェア開発者として{{years}}年以上の経験を持ち、クロスブラウザ対応のレスポンシブWebアプリ開発の専門知識を築いてきました。TypeScriptとReactJSを専門とし、アジャイル環境で最適化・ドキュメント・メンタリング・コードレビューを通じてコード品質を継続的に改善しています。',
+    backEndDeveloper: 'バックエンド開発者',
+    frontEndDeveloper: 'フロントエンド開発者',
+    tools: 'ツール',
+    backEndQuote: 'ビジネスロジックを堅牢なバックエンドソリューションに変えます。',
+    frontEndQuote: 'ゼロからコードを書き、アイデアをブラウザで実現するのが好きです。',
+    toolEndQuote: '道具をただ使うだけでなく、マスターして素晴らしいものを作ります。',
+    languages: '使用言語:',
+    methods: '作業手法:',
+    toolsIUse: '使用ツール:',
+    enjoyCoding: '楽しくコーディング:',
+    devTech: '開発技術:',
+  },
+  education: {
+    heading: '学歴',
+    degree: '情報技術学士',
+    period: '2018 — 2022',
+    major: '専攻: ソフトウェアエンジニアリング',
+    coursework: 'カリキュラム: モバイル・Web・データベース開発',
+    languages: '言語: 日本語・英語',
+  },
+  skills: {
+    heading: 'スキル＆技術',
+    core: 'コア技術',
+    additional: '追加スキル',
+    toolsAndMethods: 'ツール＆手法',
+  },
+  projects: {
+    recentWork: '最近の作品',
+    recentWorkDescriptions: 'これまでに手がけたデザインプロジェクトです。もっと知りたいですか？',
+    emailMe: 'メールしてください。',
+    frontEndDeveloper: 'フロントエンド開発者',
+    backEndDeveloper: 'バックエンド開発者',
+    fullStackDeveloper: 'フルスタック開発者',
+    visitWebSite: 'ウェブサイトへ >',
+    logistic: {
+      title: 'DrivaLink — 物流',
+      description:
+        'ドライバーの安全・トラック整備・フリート追跡を統合した革新的な物流プラットフォームを構築。コンプライアンスワークフローを合理化。',
+      contributions: [
+        'React 18、TypeScript & TanStack Queryでフロントエンド設計',
+        'リアルタイムGPSデータでフリート追跡ダッシュボードを構築',
+        'Auth0でロールベースアクセス制御を実装',
+        'コードレビュー＆ペアプログラミングでジュニア2名を指導',
+      ],
+    },
+    medical: {
+      title: 'てんかん研究プラットフォーム',
+      description:
+        'てんかん研究者のための臨床データ管理アプリを開発。患者レポートのワークフローを合理化し、データ入力時間を短縮。',
+      contributions: [
+        'Material UIで一貫したUXのコンポーネントライブラリを設計',
+        'TanStack QueryでRESTful APIを効率的に統合',
+        'React Hook Form + Yupでフォームバリデーションを実装',
+        'Jest & React Testing Libraryで90%+のテストカバレッジを達成',
+      ],
+    },
+    education: {
+      title: 'Edalex — 学習者ダッシュボード',
+      description:
+        'バッジ・コホート比較・出席追跡へ24/7アクセスできる動的学習者ダッシュボードを構築。',
+      contributions: [
+        'Next.js、MongoDB & Auth0でフルスタック機能を開発',
+        '学習進捗のインタラクティブデータ可視化を構築',
+        'SSRでSEOと初期読み込み性能を改善',
+        'デザイナーと協力してレスポンシブでアクセシブルなUIを構築',
+      ],
+    },
+    hireService: {
+      title: 'AirConSub — レンタルサービス',
+      description:
+        'エアコンサービスの予約・決済・スケジューリングを処理するフルスタックサブスクリプションサービスを開発。',
+      contributions: [
+        'React、Next.js & Drizzle ORMでフルスタックアプリを構築',
+        'Stripe統合で予約＆決済フローを実装',
+        'SQLite + Drizzle ORMマイグレーションでDBスキーマを設計',
+        'CI/CDパイプラインでテスト＆デプロイを自動化',
+      ],
+    },
+  },
+  workExperience: {
+    heading: '職務経歴',
+  },
+  testimonials: {
+    heading: '推薦の声',
+    subtitle: '一緒に働いた同僚やマネージャーからのフィードバック',
+    items: [
+      {
+        quote: 'Kyは常にproduction-readyなコードを予定より早く納品しました。ReactとTypeScriptの深い知識が製品品質に大きな影響を与え、チームメイトの成長も常にサポートしていました。',
+        name: 'チームリーダー',
+        title: 'DrivaLink',
+        relationship: '直属マネージャー',
+      },
+      {
+        quote: 'Kyとの仕事は素晴らしい経験でした — 複雑な要件をクリーンでアクセシブルなUIに変換。細部への注意と積極的なコミュニケーションでチーム間協力がスムーズでした。',
+        name: 'シニア開発者',
+        title: 'Edalex',
+        relationship: '同僚',
+      },
+      {
+        quote: 'Kyは技術力とUXへの情熱の両方を持ち合わせていました。モダンなベストプラクティスを導入し、テストカバレッジを大幅に改善しました。',
+        name: 'プロジェクトマネージャー',
+        title: 'Epilepsy Research Center',
+        relationship: 'プロジェクトステークホルダー',
+      },
+    ],
+  },
+  contact: {
+    heading: 'お問い合わせ',
+    subtitle: 'プロジェクトやお話がありましたら、お気軽にどうぞ。',
+    nameLabel: 'お名前',
+    emailLabel: 'メール',
+    messageLabel: 'メッセージ',
+    send: 'メッセージを送信',
+    sending: '送信中...',
+    successTitle: '送信完了！',
+    successMessage: 'お問い合わせありがとうございます — 近日中にご返信します。',
+    errorTitle: 'エラー！',
+    errorMessage: 'エラーが発生しました。もう一度お試しいただくか、直接メールでお問い合わせください。',
+    visitMyGithub: 'Githubを見る',
+    visitMyLinkedIn: 'LinkedInを見る',
+    sendMeEmail: 'メールを送る',
+    callMe: '電話する',
+    phoneCopied: '電話番号をコピーしました！',
+  },
+  footer: {
+    quote: '日々、生き、学び、改善し続ける。',
+  },
+  blog: {
+    heading: 'ブログ＆インサイト',
+    subtitle: 'Web開発、パフォーマンス、日々使うツールについての考察。',
+    readMore: '記事を読む →',
+    minRead: '{{min}}分で読めます',
+  },
+  common: {
+    scrollToTop: 'トップへ戻る',
+    lightMode: 'ライトモードに切替',
+    darkMode: 'ダークモードに切替',
+  },
+};
