@@ -32,7 +32,7 @@ export const HorizontalSkillList = ({
           visible: { opacity: 1, y: 0, transition: { staggerChildren: 0.2 } },
         }}
       >
-        <Stack gap={10} direction={'row'}>
+        <Stack gap={{ xs: 3, sm: 5, md: 8 }} direction={'row'} flexWrap='wrap' justifyContent='center'>
           {skillBoxes.map((skillBox, index) => (
             <motion.div
               key={index}

@@ -1,30 +1,39 @@
+import { CAREER_START_DATE } from '@constants';
+
+const getYearsOfExperience = (): string => {
+  const years = Math.floor(
+    (Date.now() - CAREER_START_DATE.getTime()) / (365.25 * 24 * 60 * 60 * 1000)
+  );
+  return `${years}+`;
+};
+
 export const APP_MESSAGES = {
   intro: {
-    title: 'Software Developer',
+    title: 'Ky Nguyen — Full-Stack Developer',
     description:
-      'I craft clean, efficient, and scalable code to bring ideas to life.' +
-      ' Building seamless digital experiences is what I love to do.',
+      'I build production-ready web apps with React & TypeScript — from logistics platforms to healthcare systems.' +
+      ' Turning complex problems into clean, scalable solutions.',
   },
   profile: {
     opening: "Hi, I'm Ky Nguyen. Nice to meet you.",
     content:
-      'Since beginning my journey as a Font-End Developer three years ago, I have built expertise in developing ' +
+      `With ${getYearsOfExperience()} years of experience as a Software Developer, I have built expertise in developing ` +
       'cross-browser, responsive web applications. I specialize in TypeScript and ReactJS within Agile environments, ' +
       'continuously improving codebase quality through optimization, documentation, mentoring, and code reviews. Passionate' +
       ' about learning and growth, I stay up to date with modern development technologies to enhance both my skills and team collaboration.',
     skills: {
       backEndDeveloper: 'Backend Developer',
-      fontEndDeveloper: 'Frontend Developer',
+      frontEndDeveloper: 'Frontend Developer',
       tools: 'Tools',
       backEndQuote:
         'I turn business logic into robust backend solutions that power the digital world.',
-      fontEndQuote:
+      frontEndQuote:
         'I like to code things from scratch and enjoy bringing ideas to life in the browser.',
       toolEndQuote:
         'I don’t just use tools; I master them to build something great.',
       languages: 'Languages I speak:',
       methods: 'The method I work:',
-      accompany: 'Accompany I work:',
+      toolsIUse: 'Tools I use:',
       enjoyCoding: 'Things I enjoy coding:',
       devTech: 'Dev Tech:',
       javaVersion: 'Java 8',
@@ -75,41 +84,69 @@ export const APP_MESSAGES = {
   },
   projects: {
     logistic: {
-      title: 'Logistic',
+      title: 'DrivaLink — Logistics',
       description:
-        'DrivaLink has built an innovative system that brings together all elements of Driver Safety, Truck Safety and Maintenance.' +
-        ' This innovation has been achieved by combining driver experience and logistics management into a user-friendly set of solutions.',
+        'Built an innovative logistics platform unifying driver safety, truck maintenance, and fleet tracking. ' +
+        'Streamlined compliance workflows, reducing driver onboarding time. ' +
+        'Architected responsive dashboards serving fleet operators daily.',
+      contributions: [
+        'Architected frontend with React 18, TypeScript & TanStack Query',
+        'Built real-time fleet tracking dashboard with live GPS data',
+        'Implemented role-based access control with Auth0',
+        'Mentored 2 junior developers through code reviews & pair programming',
+      ],
     },
     medical: {
-      title: 'Medical',
+      title: 'Epilepsy Research Platform',
       description:
-        'Developing a web application for an epilepsy research center, focused on managing health reports, tracking health conditions, and collecting information from clinics and epilepsy patients.',
+        'Developed a clinical data management app for epilepsy researchers. ' +
+        'Streamlined patient report workflows, cutting data-entry time for clinic staff. ' +
+        'Built accessible, responsive interfaces meeting healthcare compliance standards.',
+      contributions: [
+        'Designed component library with Material UI for consistent UX',
+        'Integrated RESTful APIs with TanStack Query for efficient data fetching',
+        'Implemented form validation with React Hook Form + Yup schema',
+        'Achieved 90%+ test coverage with Jest & React Testing Library',
+      ],
     },
     education: {
-      title: 'Education',
+      title: 'Edalex — Learner Dashboard',
       description:
-        'Developing web application Learner Dashboard provides a dynamic portrait of a learner that is accessible 24/7 by all stakeholders in the learning community,' +
-        ' including learners, parents, teachers and administrators.Typically displayed in the dashboard (with links to in-depth data) are the learners provisional and earned badges,' +
-        ' cohort comparison and a digital backpack and attendance tracking is available as a custom module.',
+        'Built a dynamic learner dashboard providing 24/7 access to badges, cohort comparisons, and attendance tracking. ' +
+        'Deployed at multiple educational institutions, serving learners, parents, teachers and administrators.',
+      contributions: [
+        'Developed full-stack features with Next.js, MongoDB & Auth0',
+        'Built interactive data visualizations for learner progress',
+        'Implemented SSR for improved SEO and initial load performance',
+        'Collaborated with designers to build a responsive, accessible UI',
+      ],
     },
     hireService: {
-      title: 'Hire Service',
+      title: 'AirConSub — Hire Service',
       description:
-        'Developed a full-stack web application for an air conditioner subscription service using ReactJS and Next.js.',
+        'Developed a full-stack subscription service handling booking, payments, and scheduling for air conditioner services. ' +
+        'Implemented end-to-end booking flow with payment integration.',
+      contributions: [
+        'Built full-stack app with React, Next.js & Drizzle ORM',
+        'Implemented booking & payment flow with Stripe integration',
+        'Designed database schema with SQLite + Drizzle ORM migrations',
+        'Set up CI/CD pipeline for automated testing and deployment',
+      ],
     },
     recentWork: 'My Recent Work',
     recentWorkDescriptions:
       "Here are a few past design projects I've worked on. Want to know more?",
     emailMe: "Email me.",
-    fontEndDeveloper: 'Font-End Developer',
+    frontEndDeveloper: 'Front-End Developer',
     backEndDeveloper: 'Back-End Developer',
     fullStackDeveloper: 'Full-Stack Developer',
     visitWebSite: 'Visit Website >',
   },
   contacts: {
     visitMyGithub: 'Visit My Github',
-    sendMeEmail: "Send me an email",
-    callMe: "Call me",
-    phoneAlert: "Phone calls can only be made from a mobile device."
+    visitMyLinkedIn: 'Visit My LinkedIn',
+    sendMeEmail: 'Send me an email',
+    callMe: 'Call me',
+    phoneCopied: 'Phone number copied to clipboard!',
   }
 };

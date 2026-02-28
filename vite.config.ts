@@ -12,15 +12,13 @@ export default defineConfig(_configEnv => {
                 '@components': resolve(__dirname, 'src/components'),
                 '@constants': resolve(__dirname, 'src/constants'),
                 '@contexts': resolve(__dirname, 'src/contexts'),
-                '@hooks': resolve(__dirname, 'src/hooks'),
                 '@models': resolve(__dirname, 'src/models'),
                 '@pages': resolve(__dirname, 'src/pages'),
                 '@routers': resolve(__dirname, 'src/routers'),
-                '@services': resolve(__dirname, 'src/services'),
-                '@tests': resolve(__dirname, 'src/tests'),
                 '@utils': resolve(__dirname, 'src/utils'),
+                '@i18n': resolve(__dirname, 'src/i18n'),
             },
         },
-        optimizeDeps: {include: ['node_modules/@mui/material']},
+        optimizeDeps: {include: ['@mui/material']},
     };
 });

@@ -22,5 +22,9 @@ export const TypewriterEffect = ({
     return () => clearInterval(interval);
   }, [text, speed]);
 
-  return <>{visibleText}</>;
+  return (
+    <span aria-label={text} role="text">
+      <span aria-hidden="true">{visibleText}</span>
+    </span>
+  );
 };

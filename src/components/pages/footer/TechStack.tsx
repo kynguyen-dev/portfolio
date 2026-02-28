@@ -1,5 +1,4 @@
 import { Stack, Box, useTheme } from '@mui/material';
-import { APP_MESSAGES } from '@utils/core/messages';
 import {
   ESLINT_URLS,
   HUSKY_URLS,
@@ -21,17 +20,17 @@ interface TechStackProps {
 }
 
 const techStacks: TechStackProps[] = [
-  { name: APP_MESSAGES.profile.skills.react, link: REACTJS_URLS },
-  { name: APP_MESSAGES.profile.skills.mui, link: MUI_URLS },
-  { name: APP_MESSAGES.profile.skills.motion, link: MOTION_URLS },
-  { name: APP_MESSAGES.profile.skills.vanta, link: VANTA_URLS },
-  { name: APP_MESSAGES.profile.skills.storybook, link: STORYBOOK_URLS },
-  { name: APP_MESSAGES.profile.skills.esLint, link: ESLINT_URLS },
-  { name: APP_MESSAGES.profile.skills.prettier, link: PRETTIER_URLS },
-  { name: APP_MESSAGES.profile.skills.husky, link: HUSKY_URLS },
-  { name: APP_MESSAGES.profile.skills.yarn, link: YARN_URLS },
-  { name: APP_MESSAGES.profile.skills.vite, link: VITE_URLS },
-  { name: APP_MESSAGES.profile.skills.vercel, link: VERCEL_URLS },
+  { name: 'ReactJS', link: REACTJS_URLS },
+  { name: 'Material UI', link: MUI_URLS },
+  { name: 'Motion', link: MOTION_URLS },
+  { name: 'VantaJS', link: VANTA_URLS },
+  { name: 'Storybook', link: STORYBOOK_URLS },
+  { name: 'ESLint', link: ESLINT_URLS },
+  { name: 'Prettier', link: PRETTIER_URLS },
+  { name: 'Husky', link: HUSKY_URLS },
+  { name: 'Yarn', link: YARN_URLS },
+  { name: 'Vite', link: VITE_URLS },
+  { name: 'Vercel', link: VERCEL_URLS },
 ];
 
 export const TechStack = () => {
@@ -47,7 +46,9 @@ export const TechStack = () => {
               href={tech.link}
               target="_blank"
               rel="noopener noreferrer"
-              style={{ textDecoration: 'none', color: palette.common.white }}
+              style={{ textDecoration: 'none', color: palette.text.primary, transition: 'color 0.2s ease' }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = palette.primary.light)}
+              onMouseLeave={(e) => (e.currentTarget.style.color = palette.text.primary)}
               aria-label={`Learn more about ${tech.name}`}
             >
               {tech.name}

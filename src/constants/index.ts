@@ -28,7 +28,7 @@ export enum APP_PAGES {
 }
 
 export enum APP_TYPOGRAPHIES_ANIMATION {
-  OUTlINE_TO_SOLID = 'Outline to solid',
+  OUTLINE_TO_SOLID = 'Outline to solid',
   TYPEWRITER = 'Typewriter',
 }
 
@@ -58,9 +58,14 @@ export const DRIVALINK_URL = 'https://www.drivalink.com.au/';
 export enum APP_INFORMATION {
   EMAIL_TO = "mailto:kynt101099@gmail.com",
   PHONE_NUMBER_TO = "tel:+84868772887",
-  GITHUB_URL =  "https://github.com/kynguyen-dev"
+  GITHUB_URL = "https://github.com/kynguyen-dev",
+  LINKEDIN_URL = "https://www.linkedin.com/in/kynguyen-dev"
 }
 
 export const GITHUB = "github"
 export const EMAIL = "mail"
 export const PHONE = "phone"
+export const LINKEDIN = "linkedin"
+
+/** Career start date used to calculate years of experience dynamically */
+export const CAREER_START_DATE = new Date('2022-08-01');

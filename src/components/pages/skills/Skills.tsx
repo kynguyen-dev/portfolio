@@ -2,23 +2,24 @@ import {motion} from 'framer-motion';
 import {Stack, useTheme} from '@mui/material';
 import {PFGradientTypography} from '@components/core';
 import {HorizontalSkillList, HorizontalSkillListProps,} from '@components/customs/lists/HorizontalSkills';
-import {APP_THEMES} from "@constants";
+import { useTranslation } from 'react-i18next';
+import {APP_THEMES, APP_TYPOGRAPHIES} from "@constants";
+import { staggerContainer, staggerScaleUp } from '@utils/animations/scrollVariants';
 
-const skills: HorizontalSkillListProps[] = [
+const skillGroups: { titleKey: string; skillBoxes: HorizontalSkillListProps['skillBoxes'] }[] = [
   {
-    title: 'Target on',
+    titleKey: 'skills.core',
     skillBoxes: [
       {
-        imageUrl: 'https://cdn-icons-png.flaticon.com/512/5968/5968381.png',
+        imageUrl: '/icons/skills/typescript.png',
         title: 'Typescript',
       },
       {
-        imageUrl:
-          'https://cdn4.iconfinder.com/data/icons/logos-3/600/React.js_logo-512.png',
+        imageUrl: '/icons/skills/react.png',
         title: 'React',
       },
       {
-        imageUrl: 'https://v4.mui.com/static/logo.png',
+        imageUrl: '/icons/skills/mui.png',
         title: 'MUI',
       },
       {
@@ -28,30 +29,26 @@ const skills: HorizontalSkillListProps[] = [
     ],
   },
   {
-    title: 'Capable of adapting',
+    titleKey: 'skills.additional',
     skillBoxes: [
       {
-        imageUrl:
-          'https://www.opencodez.com/wp-content/uploads/2018/02/Java-8-using-Examples.png',
+        imageUrl: '/icons/skills/java.png',
         title: 'Java',
       },
       {
-        imageUrl:
-          'https://cdn2.phunware.com/wp-content/uploads/2014/10/SDK-Logo-Android.png',
+        imageUrl: '/icons/skills/android.png',
         title: 'Java Android',
       },
       {
-        imageUrl:
-          'https://www.drupal.org/files/project-images/nextjs-drupal.jpg',
+        imageUrl: '/icons/skills/nextjs.jpg',
         title: 'NextJS',
       },
       {
-        imageUrl:
-          'https://th.bing.com/th/id/R.09af26effa4f2999663f96e00bb51f0a?rik=rlTKWrK8D1DPpg&pid=ImgRaw&r=0',
+        imageUrl: '/icons/skills/angular.png',
         title: 'Angular',
       },
       {
-        imageUrl: 'https://www.svgrepo.com/show/331488/mongodb.svg',
+        imageUrl: '/icons/skills/mongodb.svg',
         title: 'MongoDB',
       },
       {
@@ -61,21 +58,18 @@ const skills: HorizontalSkillListProps[] = [
     ],
   },
   {
-    title: 'Another',
+    titleKey: 'skills.toolsAndMethods',
     skillBoxes: [
       {
-        imageUrl:
-          'https://logos-world.net/wp-content/uploads/2021/02/Jira-Emblem.png',
+        imageUrl: '/icons/skills/jira.png',
         title: 'Jira',
       },
       {
-        imageUrl:
-          'https://brandlogos.net/wp-content/uploads/2022/05/figma-logo_brandlogos.net_6n1pb.png',
+        imageUrl: '/icons/skills/figma.png',
         title: 'Figma',
       },
       {
-        imageUrl:
-          'https://cdn2.iconfinder.com/data/icons/business-methodologies-soft-fill/60/Sprint-Management-corporate-scrum-agile-1024.png',
+        imageUrl: '/icons/skills/agile.png',
         title: 'Agile & Scrum',
       },
     ],
@@ -83,28 +77,49 @@ const skills: HorizontalSkillListProps[] = [
 ];
 
 export const Skills = () => {
+  const { t } = useTranslation();
   const { palette } = useTheme();
   return (
-    <Stack justifyContent='center' alignItems='center' gap={8}>
+    <Stack
+      component='section'
+      id='skills'
+      aria-label={t('skills.heading')}
+      justifyContent='center'
+      alignItems='center'
+      gap={8}
+      sx={{
+        px: { xs: 3, md: '20%' },
+        pt: 12,
+        pb: 12,
+        position: 'relative',
+      }}
+    >
       <Stack display={'flex'} direction={'column'}>
         <PFGradientTypography
-          variant='h2'
-          color={palette.primary.contrastText}
+          variant={APP_TYPOGRAPHIES.HEADER_PRIMARY}
+          color={palette.text.primary}
           theme={APP_THEMES.DARK}
         >
-          My Skills
+          {t('skills.heading')}
         </PFGradientTypography>
       </Stack>
-      <Stack display={'flex'} alignItems={'center'} gap={6}>
-        {skills.map((skill, index) => (
+      <Stack
+        component={motion.div}
+        variants={staggerContainer(0.18, 0.1)}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        display={'flex'}
+        alignItems={'center'}
+        gap={6}
+      >
+        {skillGroups.map((skill, index) => (
           <motion.div
             key={index}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+            variants={staggerScaleUp}
           >
             <HorizontalSkillList
-              title={skill.title}
+              title={t(skill.titleKey)}
               skillBoxes={skill.skillBoxes}
             />
           </motion.div>
