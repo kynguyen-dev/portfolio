@@ -4,6 +4,7 @@ import {resolve} from 'path';
 
 export default defineConfig(_configEnv => {
     return {
+        base: process.env.BASE_PATH || '/',
         plugins: [react()],
         resolve: {
             alias: {
