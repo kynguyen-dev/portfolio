@@ -1,21 +1,35 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Box, useTheme } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 
+const SPLASH_STORAGE_KEY = 'portfolio_splash_seen';
+const SPLASH_DURATION = 1800;
+
 /**
  * Full-screen animated splash screen displayed on initial page load.
  * Shows a greeting, the developer's name and role, then fades away.
+ * - Skipped entirely on repeat visits within the same session.
+ * - Click / tap / keyboard anywhere to dismiss early.
  */
 export const SplashScreen = () => {
   const { palette } = useTheme();
   const { t } = useTranslation();
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(() => {
+    try { return !sessionStorage.getItem(SPLASH_STORAGE_KEY); }
+    catch { return true; }
+  });
+
+  const dismiss = useCallback(() => {
+    setVisible(false);
+    try { sessionStorage.setItem(SPLASH_STORAGE_KEY, '1'); } catch { /* noop */ }
+  }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => setVisible(false), 2800);
+    if (!visible) return;
+    const timer = setTimeout(dismiss, SPLASH_DURATION);
     return () => clearTimeout(timer);
-  }, []);
+  }, [visible, dismiss]);
 
   return (
     <AnimatePresence>
@@ -25,6 +39,11 @@ export const SplashScreen = () => {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, scale: 1.05 }}
           transition={{ duration: 0.6, ease: 'easeInOut' }}
+          onClick={dismiss}
+          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') dismiss(); }}
+          role="button"
+          tabIndex={0}
+          aria-label={t('common.skipSplash')}
           style={{
             position: 'fixed',
             inset: 0,
@@ -33,6 +52,7 @@ export const SplashScreen = () => {
             alignItems: 'center',
             justifyContent: 'center',
             flexDirection: 'column',
+            cursor: 'pointer',
             background:
               palette.mode === 'dark'
                 ? 'linear-gradient(135deg, #1A1410 0%, #2D1F10 50%, #1A1410 100%)'

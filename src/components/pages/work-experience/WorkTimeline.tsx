@@ -3,6 +3,7 @@ import { motion, type Variants } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { PFGradientTypography, PFTypography } from '@components/core';
 import { APP_THEMES, APP_TYPOGRAPHIES } from '@constants';
+import { glassCardSx } from '@utils/styles/glassCard';
 
 interface TimelineEntry {
   company: string;
@@ -80,7 +81,7 @@ export const WorkTimeline = () => {
     <Box
       component="section"
       id="experience"
-      sx={{ px: { xs: 3, md: '20%' }, py: 10 }}
+      sx={{ px: { xs: 2, md: 6 }, py: { xs: 8, md: 12 }, maxWidth: 1100, mx: 'auto' }}
     >
       <Stack alignItems="center" gap={6}>
         <PFGradientTypography
@@ -157,16 +158,9 @@ export const WorkTimeline = () => {
                 {/* Card */}
                 <Box
                   sx={{
-                    background: isLight ? 'rgba(251,246,238,0.85)' : 'rgba(11, 13, 46, 0.6)',
-                    backdropFilter: 'blur(10px)',
-                    border: `1px solid ${isLight ? 'rgba(184,137,31,0.2)' : 'rgba(245, 208, 96, 0.2)'}`,
-                    borderRadius: 2,
+                    ...glassCardSx(isLight, { blur: 10, borderRadius: 2, hoverLift: false }),
                     p: 3,
                     width: '100%',
-                    transition: 'border-color 0.3s',
-                    '&:hover': {
-                      borderColor: isLight ? 'rgba(184,137,31,0.5)' : 'rgba(245, 208, 96, 0.5)',
-                    },
                   }}
                 >
                   <PFTypography

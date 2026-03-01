@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import { Box, useMediaQuery, useTheme } from '@mui/material';
 
 /**
@@ -15,7 +15,7 @@ export const CustomCursor = () => {
   const mouse = useRef({ x: -100, y: -100 });
   const ring = useRef({ x: -100, y: -100 });
   const raf = useRef(0);
-  const [hovering, setHovering] = useState(false);
+  const hoveringRef = useRef(false);
 
   const onMove = useCallback((e: MouseEvent) => {
     mouse.current = { x: e.clientX, y: e.clientY };
@@ -32,7 +32,7 @@ export const CustomCursor = () => {
         dotRef.current.style.transform = `translate(${mouse.current.x - 4}px, ${mouse.current.y - 4}px)`;
       }
       if (ringRef.current) {
-        ringRef.current.style.transform = `translate(${ring.current.x - 18}px, ${ring.current.y - 18}px) scale(${hovering ? 1.6 : 1})`;
+        ringRef.current.style.transform = `translate(${ring.current.x - 18}px, ${ring.current.y - 18}px) scale(${hoveringRef.current ? 1.6 : 1})`;
       }
       raf.current = requestAnimationFrame(animate);
     };
@@ -46,10 +46,10 @@ export const CustomCursor = () => {
       if (
         target.closest('a, button, [role="button"], input, textarea, [tabindex]')
       ) {
-        setHovering(true);
+        hoveringRef.current = true;
       }
     };
-    const onOut = () => setHovering(false);
+    const onOut = () => { hoveringRef.current = false; };
 
     document.addEventListener('mouseover', onOver, { passive: true });
     document.addEventListener('mouseout', onOut, { passive: true });
@@ -60,7 +60,7 @@ export const CustomCursor = () => {
       document.removeEventListener('mouseover', onOver);
       document.removeEventListener('mouseout', onOut);
     };
-  }, [prefersReduced, isTouch, hovering, onMove]);
+  }, [prefersReduced, isTouch, onMove]);
 
   if (prefersReduced || isTouch) return null;
 

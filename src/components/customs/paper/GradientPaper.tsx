@@ -19,7 +19,7 @@ export const GradientPaper = ({
       component={motion.div}
       whileHover={{ scale: 1.03, rotateX: 5, rotateY: 5 }}
       transition={{ duration: 0.3, ease: 'easeInOut' }}
-      elevation={6}
+      elevation={0}
       sx={{
         background: isLight
           ? 'linear-gradient(160deg, rgba(255,248,240,0.95) 0%, rgba(250,232,176,0.85) 50%, rgba(255,248,240,0.95) 100%)'

@@ -88,9 +88,10 @@ export const Skills = () => {
       alignItems='center'
       gap={8}
       sx={{
-        px: { xs: 3, md: '20%' },
-        pt: 12,
-        pb: 12,
+        px: { xs: 2, md: 6 },
+        py: { xs: 8, md: 12 },
+        maxWidth: 1100,
+        mx: 'auto',
         position: 'relative',
       }}
     >

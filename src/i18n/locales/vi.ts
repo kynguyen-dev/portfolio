@@ -68,6 +68,8 @@ export const vi = {
     backEndDeveloper: 'Back-End Developer',
     fullStackDeveloper: 'Full-Stack Developer',
     visitWebSite: 'Xem website >',
+    viewDetails: 'Xem chi tiết {{title}}',
+    privateProject: 'Dự án nội bộ / Riêng tư',
     logistic: {
       title: 'DrivaLink — Logistics',
       description:
@@ -171,5 +173,15 @@ export const vi = {
     scrollToTop: 'Lên đầu trang',
     lightMode: 'Chuyển sang chế độ sáng',
     darkMode: 'Chuyển sang chế độ tối',
+    skipSplash: 'Nhấn để bỏ qua',
+    closeMenu: 'Đóng menu',
+    quickActions: 'Thao tác nhanh',
+    scrollDown: 'Cuộn xuống',
+    downloadCV: 'Tải CV',
+  },
+  notFound: {
+    title: '404',
+    message: 'Không tìm thấy trang',
+    goHome: 'Về trang chủ',
   },
 };

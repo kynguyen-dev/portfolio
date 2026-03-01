@@ -1,4 +1,4 @@
-import {Stack} from '@mui/material';
+import {Stack, useTheme} from '@mui/material';
 import {motion} from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { PFGradientTypography } from '@components/core';
@@ -9,24 +9,33 @@ import { fadeUp, blurIn } from '@utils/animations/scrollVariants';
 
 export const Footer = () => {
   const { t } = useTranslation();
+  const { palette } = useTheme();
+  const isLight = palette.mode === 'light';
   return (
     <Stack
       component="footer"
-      id='contact'
+      id='footer'
       display='flex'
       justifyContent='space-between'
       alignItems='center'
       gap={7}
       sx={{
         position: 'relative',
-        /* Smooth gradient overlay that blends with the sunrise bottom (peach/gold) */
-        background: `linear-gradient(
-          180deg,
-          transparent 0%,
-          rgba(0,0,0,0.06) 15%,
-          rgba(0,0,0,0.15) 40%,
-          rgba(11,13,46,0.35) 100%
-        )`,
+        background: isLight
+          ? `linear-gradient(
+              180deg,
+              transparent 0%,
+              rgba(184,137,31,0.04) 15%,
+              rgba(184,137,31,0.08) 40%,
+              rgba(184,137,31,0.14) 100%
+            )`
+          : `linear-gradient(
+              180deg,
+              transparent 0%,
+              rgba(0,0,0,0.06) 15%,
+              rgba(0,0,0,0.15) 40%,
+              rgba(11,13,46,0.35) 100%
+            )`,
         backdropFilter: 'blur(2px)',
       }}
       px={3}

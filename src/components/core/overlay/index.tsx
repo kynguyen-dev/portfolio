@@ -7,15 +7,15 @@ export const Overlay = styled(motion.div)(({ theme }) => ({
   left: 0,
   width: '100%',
   height: '100%',
-  backgroundColor: 'rgba(30, 58, 138, 0.6)', // Default overlay color
+  backgroundColor: 'rgba(30, 58, 138, 0.6)',
   color: theme.palette.common.white,
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
   textAlign: 'center',
-  transition: 'background-color 0.3s ease-in-out',
-  opacity: 1,
+  transition: 'opacity 0.3s ease-in-out, background-color 0.3s ease-in-out',
+  opacity: 0,
 }));
 
 export const OverlayContent = styled(motion.div)({

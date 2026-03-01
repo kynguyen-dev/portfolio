@@ -1,16 +1,8 @@
-import { Stack } from "@mui/material";
+import { Stack, Box, useTheme } from "@mui/material";
+import { lazy, Suspense } from "react";
 import { motion, type Variants } from "framer-motion";
-import { Profile } from "@components/pages/profile/Profile.tsx";
-import { Footer } from "@components/pages/footer/Footer.tsx";
-import { WorkExperience } from "@components/pages/work-experience/WorkExperience.tsx";
 import { Intro } from "@components/pages/Intro/Intro.tsx";
-import { Skills } from "@components/pages/skills/Skills.tsx";
 import { AboutMe } from "@components/pages/about-me/AboutMe";
-import { Education } from "@components/pages/education/Education";
-import { Testimonials } from "@components/pages/testimonials/Testimonials";
-import { ContactForm } from "@components/pages/contacts/ContactForm";
-import { Blog } from "@components/pages/blog/Blog";
-import { SpeedDialCustom } from "@components/customs/speed-dial";
 import { SunriseBackground } from "@components/customs/backgrounds/SunriseBackground";
 import { PFAppBar } from "@components/core/header";
 import { ScrollProgressBar } from "@components/core/scroll-progress/ScrollProgressBar";
@@ -24,6 +16,17 @@ import {
   blurIn,
   rotateIn,
 } from "@utils/animations/scrollVariants";
+
+/* Below-the-fold sections — lazy loaded for faster initial paint */
+const Profile = lazy(() => import("@components/pages/profile/Profile.tsx").then(m => ({ default: m.Profile })));
+const Footer = lazy(() => import("@components/pages/footer/Footer.tsx").then(m => ({ default: m.Footer })));
+const WorkExperience = lazy(() => import("@components/pages/work-experience/WorkExperience.tsx").then(m => ({ default: m.WorkExperience })));
+const Skills = lazy(() => import("@components/pages/skills/Skills.tsx").then(m => ({ default: m.Skills })));
+const Education = lazy(() => import("@components/pages/education/Education.tsx").then(m => ({ default: m.Education })));
+const Testimonials = lazy(() => import("@components/pages/testimonials/Testimonials.tsx").then(m => ({ default: m.Testimonials })));
+const ContactForm = lazy(() => import("@components/pages/contacts/ContactForm.tsx").then(m => ({ default: m.ContactForm })));
+const Blog = lazy(() => import("@components/pages/blog/Blog.tsx").then(m => ({ default: m.Blog })));
+const SpeedDialCustom = lazy(() => import("@components/customs/speed-dial").then(m => ({ default: m.SpeedDialCustom })));
 
 /** Animated scroll-reveal wrapper — accepts a framer-motion variant */
 const Section = ({
@@ -42,6 +45,36 @@ const Section = ({
     {children}
   </motion.div>
 );
+
+/** Lightweight placeholder shown while lazy sections load */
+const SectionSkeleton = () => {
+  const { palette } = useTheme();
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        py: { xs: 8, md: 12 },
+        minHeight: 200,
+      }}
+    >
+      <Box
+        sx={{
+          width: 40,
+          height: 40,
+          borderRadius: '50%',
+          border: `3px solid ${palette.primary.light}30`,
+          borderTopColor: palette.primary.light,
+          animation: 'spin 0.8s linear infinite',
+          '@keyframes spin': {
+            to: { transform: 'rotate(360deg)' },
+          },
+        }}
+      />
+    </Box>
+  );
+};
 
 const HomePage = () => {
   return (
@@ -88,22 +121,26 @@ const HomePage = () => {
           <ParallaxSection offset={40}>
             <Section variants={blurIn}><AboutMe /></Section>
           </ParallaxSection>
-          <Section variants={scaleUp}><Profile /></Section>
-          <ParallaxSection offset={30}>
-            <Section variants={slideInLeft}><Education /></Section>
-          </ParallaxSection>
-          <Section variants={fadeUp}><Skills /></Section>
-          <ParallaxSection offset={50}>
-            <Section variants={slideInRight}><WorkExperience /></Section>
-          </ParallaxSection>
-          <Section variants={rotateIn}><Blog /></Section>
-          <ParallaxSection offset={30}>
-            <Section variants={blurIn}><Testimonials /></Section>
-          </ParallaxSection>
-          <Section variants={scaleUp}><ContactForm /></Section>
-          <Footer />
+          <Suspense fallback={<SectionSkeleton />}>
+            <Section variants={scaleUp}><Profile /></Section>
+            <ParallaxSection offset={30}>
+              <Section variants={slideInLeft}><Education /></Section>
+            </ParallaxSection>
+            <Section variants={fadeUp}><Skills /></Section>
+            <ParallaxSection offset={50}>
+              <Section variants={slideInRight}><WorkExperience /></Section>
+            </ParallaxSection>
+            <Section variants={rotateIn}><Blog /></Section>
+            <ParallaxSection offset={30}>
+              <Section variants={blurIn}><Testimonials /></Section>
+            </ParallaxSection>
+            <Section variants={scaleUp}><ContactForm /></Section>
+            <Footer />
+          </Suspense>
         </Stack>
-        <SpeedDialCustom />
+        <Suspense fallback={<SectionSkeleton />}>
+          <SpeedDialCustom />
+        </Suspense>
         <BackToTop />
       </main>
     </SunriseBackground>
