@@ -9,22 +9,27 @@ import { RootRouterElement } from '@routers/element';
 const Home = loadable(() => import('@pages/Home')) as ComponentType;
 const NotFound = loadable(() => import('@pages/NotFound')) as ComponentType;
 
-export const appRoute = createBrowserRouter([
+export const appRoute = createBrowserRouter(
+  [
+    {
+      errorElement: <RootRouterError />,
+      element: <RootRouterElement />,
+      children: [
+        {
+          path: ROUTES.HOME,
+          element: <Home />,
+        },
+        {
+          path: ROUTES.NOT_FOUND,
+          element: <NotFound />,
+        },
+      ],
+    },
+  ],
   {
-    errorElement: <RootRouterError />,
-    element: <RootRouterElement />,
-    children: [
-      {
-        path: ROUTES.HOME,
-        element: <Home />,
-      },
-      {
-        path: ROUTES.NOT_FOUND,
-        element: <NotFound />,
-      },
-    ],
-  },
-]);
+    basename: import.meta.env.BASE_URL.replace(/\/+$/, ''),
+  }
+);
 
 export const AppRouter = () => (
   <RouterProvider router={appRoute} fallbackElement={<FullScreenLoading />} />
