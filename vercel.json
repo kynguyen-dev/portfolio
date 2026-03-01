@@ -1,4 +1,8 @@
 {
+  "framework": "vite",
+  "installCommand": "corepack enable && yarn install",
+  "buildCommand": "yarn build",
+  "outputDirectory": "dist",
   "rewrites": [
     {
       "source": "/(.*)",
