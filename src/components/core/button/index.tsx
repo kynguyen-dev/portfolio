@@ -36,7 +36,7 @@ export const StyledButton = styled(PFWhiteButton)`
   })};
   &:hover {
     background-color: ${theme.palette.primary.main};
-    transform: scale(1.1);
+    transform: scale(1.04);
   }
   color: ${theme.palette.text.primary};
   border: 2px solid ${theme.palette.primary.main};

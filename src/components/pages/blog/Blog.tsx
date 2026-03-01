@@ -2,7 +2,9 @@ import { Box, Chip, Stack, useTheme } from '@mui/material';
 import { motion } from 'framer-motion';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { useTranslation } from 'react-i18next';
-import { PFTypography } from '@components/core/typography';
+import { PFGradientTypography, PFTypography } from '@components/core/typography';
+import { APP_THEMES, APP_TYPOGRAPHIES } from '@constants';
+import { glassCardSx } from '@utils/styles/glassCard';
 
 interface BlogPost {
   titleKey: string;
@@ -68,19 +70,15 @@ export const Blog = () => {
       aria-label={t('blog.heading')}
       sx={{ py: { xs: 8, md: 12 }, px: { xs: 2, md: 6 }, maxWidth: 1100, mx: 'auto' }}
     >
-      <PFTypography
-        variant="h4"
+      <PFGradientTypography
+        variant={APP_TYPOGRAPHIES.HEADER_PRIMARY}
+        theme={APP_THEMES.DARK}
+        fontWeight="bold"
         align="center"
-        sx={{
-          fontWeight: 800,
-          mb: 1,
-          background: 'linear-gradient(90deg, #F5D060 0%, #E8A838 50%, #D4652A 100%)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-        }}
+        sx={{ mb: 1 }}
       >
         {t('blog.heading')}
-      </PFTypography>
+      </PFGradientTypography>
       <PFTypography variant="body1" align="center" sx={{ color: palette.text.secondary, opacity: 0.7, mb: 6 }}>
         {t('blog.subtitle')}
       </PFTypography>
@@ -101,17 +99,13 @@ export const Blog = () => {
             sx={{
               display: 'block',
               textDecoration: 'none',
-              background: isLight ? 'rgba(255,248,240,0.85)' : 'rgba(11, 13, 46, 0.55)',
-              backdropFilter: 'blur(12px)',
-              border: `1px solid ${isLight ? 'rgba(184,137,31,0.15)' : 'rgba(245, 208, 96, 0.15)'}`,
-              borderRadius: 3,
+              ...glassCardSx(isLight),
               p: { xs: 3, md: 4 },
               cursor: 'pointer',
-              transition: 'border-color 0.3s, box-shadow 0.3s, transform 0.2s',
-              '&:hover': {
-                borderColor: isLight ? 'rgba(184,137,31,0.45)' : 'rgba(245, 208, 96, 0.45)',
-                boxShadow: `0 0 24px ${isLight ? 'rgba(184,137,31,0.08)' : 'rgba(245, 208, 96, 0.08)'}`,
-                transform: 'translateY(-2px)',
+              borderLeft: `3px solid ${palette.primary.light}`,
+              '&:focus-visible': {
+                outline: `2px solid ${palette.primary.light}`,
+                outlineOffset: 2,
               },
             }}
           >

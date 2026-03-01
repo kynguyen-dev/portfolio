@@ -21,6 +21,10 @@ function getInitialMode(): ThemeMode {
   } catch {
     // SSR / privacy mode
   }
+  // Detect OS preference
+  if (typeof window !== 'undefined' && window.matchMedia?.('(prefers-color-scheme: light)').matches) {
+    return 'light';
+  }
   return 'dark';
 }
 

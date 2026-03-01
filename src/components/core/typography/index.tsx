@@ -4,6 +4,8 @@ import { TypewriterEffect } from '@components/core/typography/TypewriterEffect.t
 import { OutlineToSolidEffect } from '@components/core/typography/OutlineToSolidEffect.tsx';
 import { ReactNode } from 'react';
 
+export { PFGradientTypography } from './GradientTypography';
+
 export interface PFTypographyProps extends TypographyProps {
   children: ReactNode;
   animations?: APP_TYPOGRAPHIES_ANIMATION[];

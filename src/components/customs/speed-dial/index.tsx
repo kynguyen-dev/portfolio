@@ -1,75 +1,85 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
 import Backdrop from "@mui/material/Backdrop";
 import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
-import HomeIcon from '@mui/icons-material/Home';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
-import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
-import PsychologyIcon from '@mui/icons-material/Psychology';
+import DescriptionIcon from '@mui/icons-material/Description';
+import EmailIcon from '@mui/icons-material/Email';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { motion } from "framer-motion";
-import { APP_PAGES } from "@constants";
+import { APP_INFORMATION } from "@constants";
 import { useMediaQuery } from "@mui/material";
-
-const pageItems = [
-  { icon: <HomeIcon />, name: APP_PAGES.HOME },
-  { icon: <AccountBoxIcon />, name: APP_PAGES.PROFILE },
-  { icon: <PsychologyIcon />, name: APP_PAGES.SKILLS },
-  { icon: <WorkHistoryIcon />, name: APP_PAGES.PROJECTS },
-  { icon: <ConnectWithoutContactIcon />, name: APP_PAGES.CONTACT },
-];
+import { useTranslation } from "react-i18next";
 
 export const SpeedDialCustom = () => {
+  const { t } = useTranslation();
   const isMobile = useMediaQuery("(max-width: 600px)");
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const handleScrollTo = (id: string) => {
-    const elementId = id.toLowerCase();
-    const element = document.getElementById(elementId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    } else {
-      console.warn(`Element with ID '${elementId}' not found`);
-    }
-    handleClose();
-  };
+  const actions = [
+    {
+      icon: <DescriptionIcon />,
+      name: t('intro.downloadCV'),
+      onClick: () => window.open('/resume/Ky_Nguyen_CV.pdf', '_blank', 'noopener,noreferrer'),
+    },
+    {
+      icon: <EmailIcon />,
+      name: t('contact.sendMeEmail'),
+      onClick: () => { window.location.href = APP_INFORMATION.EMAIL_TO; },
+    },
+    {
+      icon: <LinkedInIcon />,
+      name: 'LinkedIn',
+      onClick: () => window.open(APP_INFORMATION.LINKEDIN_URL, '_blank', 'noopener,noreferrer'),
+    },
+    {
+      icon: <GitHubIcon />,
+      name: 'GitHub',
+      onClick: () => window.open(APP_INFORMATION.GITHUB_URL, '_blank', 'noopener,noreferrer'),
+    },
+  ];
 
   /** Hide on mobile screens — navbar drawer handles mobile navigation */
   if (isMobile) return null;
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }}
-      style={{ position: 'fixed', bottom: 16, right: 16, zIndex: 1000 }}
-    >
-      <Box sx={{ height: 330, transform: "translateZ(0px)", flexGrow: 1 }}>
-        <Backdrop open={open} />
+    <>
+      <Backdrop open={open} sx={{ zIndex: 999 }} onClick={handleClose} />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+        style={{ position: 'fixed', bottom: 32, right: 32, zIndex: 1000, pointerEvents: 'none' }}
+      >
         <SpeedDial
-          ariaLabel="Navigate to page sections"
-          sx={{ position: "absolute", bottom: 16, right: 16 }}
+          ariaLabel={t('common.quickActions')}
           icon={<SpeedDialIcon />}
           onClose={handleClose}
           onOpen={handleOpen}
           open={open}
+          sx={{ pointerEvents: 'auto' }}
         >
-          {pageItems.map((action) => (
+          {actions.map((action) => (
             <SpeedDialAction
               key={action.name}
               icon={action.icon}
               tooltipTitle={action.name}
-              tooltipOpen
-              onClick={() => handleScrollTo(action.name)}
+              FabProps={{ sx: { width: 48, height: 48 } }}
+              sx={{
+                '& .MuiSpeedDialAction-staticTooltipLabel': {
+                  whiteSpace: 'nowrap',
+                  maxWidth: 'none',
+                },
+              }}
+              onClick={() => { action.onClick(); handleClose(); }}
             />
           ))}
         </SpeedDial>
-      </Box>
-    </motion.div>
+      </motion.div>
+    </>
   );
 };

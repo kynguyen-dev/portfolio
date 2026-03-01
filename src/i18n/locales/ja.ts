@@ -68,6 +68,8 @@ export const ja = {
     backEndDeveloper: 'バックエンド開発者',
     fullStackDeveloper: 'フルスタック開発者',
     visitWebSite: 'ウェブサイトへ >',
+    viewDetails: '{{title}}の詳細を見る',
+    privateProject: '非公開 / 社内プロジェクト',
     logistic: {
       title: 'DrivaLink — 物流',
       description:
@@ -171,5 +173,15 @@ export const ja = {
     scrollToTop: 'トップへ戻る',
     lightMode: 'ライトモードに切替',
     darkMode: 'ダークモードに切替',
+    skipSplash: 'クリックしてスキップ',
+    closeMenu: 'メニューを閉じる',
+    quickActions: 'クイックアクション',
+    scrollDown: '下にスクロール',
+    downloadCV: '履歴書をダウンロード',
+  },
+  notFound: {
+    title: '404',
+    message: 'ページが見つかりません',
+    goHome: 'ホームへ戻る',
   },
 };

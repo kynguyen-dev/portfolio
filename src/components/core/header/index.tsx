@@ -9,6 +9,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -43,26 +44,30 @@ export const PFAppBar = () => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [activeSection, setActiveSection] = React.useState<string>(APP_PAGES.HOME.toLowerCase());
 
-  // Track active section using IntersectionObserver
+  // Track active section on scroll
   React.useEffect(() => {
     const sectionIds = navItems.map(item => item.toLowerCase());
-    const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
+
+    const handleScroll = () => {
+      let currentSection = sectionIds[0];
+      const threshold = window.innerHeight * 0.35;
+
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          // Section top is above the threshold line → it's the current section
+          if (rect.top <= threshold) {
+            currentSection = id;
           }
-        });
-      },
-      { rootMargin: '-20% 0px -60% 0px', threshold: 0 }
-    );
+        }
+      }
+      setActiveSection(currentSection);
+    };
 
-    sectionIds.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const handleDrawerToggle = () => {
@@ -70,18 +75,29 @@ export const PFAppBar = () => {
   };
 
   const handleScrollTo = (id: string) => {
-    const element = document.getElementById(id.toLowerCase());
+    const lowerId = id.toLowerCase();
+    const element = document.getElementById(lowerId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setActiveSection(lowerId);
     }
     setMobileOpen(false);
   };
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography variant='h6' sx={{ my: 2, fontWeight: 'bold', color: isLight ? '#5C4A32' : '#FFE4B5' }}>
-        Ky Nguyen
-      </Typography>
+    <Box sx={{ textAlign: 'center' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', px: 2, my: 1 }}>
+        <Typography variant='h6' sx={{ fontWeight: 'bold', color: isLight ? '#5C4A32' : '#FFE4B5' }}>
+          Ky Nguyen
+        </Typography>
+        <IconButton
+          onClick={handleDrawerToggle}
+          aria-label={t('common.closeMenu')}
+          sx={{ color: isLight ? '#5C4A32' : '#FFE4B5' }}
+        >
+          <CloseIcon />
+        </IconButton>
+      </Box>
       <Divider sx={{ borderColor: isLight ? 'rgba(184,137,31,0.3)' : 'rgba(245, 208, 96, 0.3)' }} />
       <List>
         {navItems.map(item => (
@@ -130,7 +146,7 @@ export const PFAppBar = () => {
             <img
               src='/icons/dashboard-icon.png'
               alt='Ky Nguyen Logo'
-              loading='lazy'
+              loading='eager'
               style={{ height: 40, cursor: 'pointer' }}
               onClick={() => handleScrollTo(APP_PAGES.HOME)}
             />

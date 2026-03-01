@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Avatar, Box, Chip, Stack, useTheme } from "@mui/material";
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { PFGradientTypography, PFTypography } from "@components/core";
 import { StyledButton } from "@components/core/button";
 import { useTranslation } from "react-i18next";
@@ -8,17 +9,14 @@ import {
   APP_THEMES,
   APP_TYPOGRAPHIES,
   APP_TYPOGRAPHIES_ANIMATION,
-  CAREER_START_DATE,
 } from "@constants";
-import { staggerContainer, staggerItem, pop } from "@utils/animations/scrollVariants";
-
-const getYears = () =>
-  Math.floor((Date.now() - CAREER_START_DATE.getTime()) / (365.25 * 24 * 60 * 60 * 1000));
+import { staggerContainer, staggerItem, pop } from '@utils/animations/scrollVariants';
+import { getYearsOfExperience } from '@utils/core/career';
 
 export const Intro = () => {
   const { palette } = useTheme();
   const { t } = useTranslation();
-  const years = getYears();
+  const years = getYearsOfExperience();
 
   const statBadges = [
     { label: t('intro.yearsExperience', { years }) },
@@ -33,8 +31,8 @@ export const Intro = () => {
       justifyContent="center"
       alignItems="center"
       id={APP_PAGES.HOME.toLowerCase()}
-      aria-label={t('intro.heading')}
-      sx={{ px: { xs: 3, md: 0 }, pt: 20 }}
+      aria-label={t('intro.title')}
+      sx={{ px: { xs: 3, md: 0 }, minHeight: '100vh', pt: { xs: 10, md: 12 }, pb: { xs: 4, md: 6 } }}
     >
       <Stack
         alignItems="center"
@@ -84,7 +82,7 @@ export const Intro = () => {
                 variant="outlined"
                 size="large"
                 onClick={() => {
-                  window.open('/resume/Ky_Nguyen_CV.pdf', '_blank');
+                  window.open('/resume/Ky_Nguyen_CV.pdf', '_blank', 'noopener,noreferrer');
                 }}
               >
                 {t('intro.downloadCV')}
@@ -124,11 +122,84 @@ export const Intro = () => {
 
         <Box
           component={motion.div}
-          initial={{ opacity: 0, x: '100%', rotate: 180 }}
-          animate={{ opacity: 1, x: 0, rotate: 0 }}
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ type: 'spring', stiffness: 80, damping: 15, delay: 0.3 }}
-          whileHover={{ scale: 1.1, y: -10, transition: { duration: 0.3 } }}
+          whileHover={{ scale: 1.08, transition: { duration: 0.3 } }}
+          sx={{ position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
         >
+          {/* Outer rotating dashed ring */}
+          <Box
+            component={motion.div}
+            animate={{ rotate: 360 }}
+            transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+            sx={{
+              position: 'absolute',
+              width: { md: 220, xs: 155 },
+              height: { md: 220, xs: 155 },
+              borderRadius: '50%',
+              border: `2px dashed ${palette.primary.light}40`,
+            }}
+          />
+          {/* Middle pulsing glow ring */}
+          <Box
+            component={motion.div}
+            animate={{
+              boxShadow: [
+                `0 0 20px ${palette.primary.main}30, 0 0 40px ${palette.primary.main}10`,
+                `0 0 30px ${palette.primary.main}60, 0 0 60px ${palette.primary.main}30`,
+                `0 0 20px ${palette.primary.main}30, 0 0 40px ${palette.primary.main}10`,
+              ],
+            }}
+            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+            sx={{
+              position: 'absolute',
+              width: { md: 200, xs: 140 },
+              height: { md: 200, xs: 140 },
+              borderRadius: '50%',
+              border: `2px solid ${palette.primary.light}50`,
+            }}
+          />
+          {/* Floating orbital dots */}
+          {[0, 1, 2, 3].map(i => (
+            <Box
+              key={i}
+              component={motion.div}
+              animate={{ rotate: 360 }}
+              transition={{
+                duration: 8 + i * 2,
+                repeat: Infinity,
+                ease: 'linear',
+                delay: i * 0.5,
+              }}
+              sx={{
+                position: 'absolute',
+                width: { md: 210 + i * 8, xs: 148 + i * 6 },
+                height: { md: 210 + i * 8, xs: 148 + i * 6 },
+              }}
+            >
+              <Box
+                component={motion.div}
+                animate={{
+                  scale: [1, 1.5, 1],
+                  opacity: [0.6, 1, 0.6],
+                }}
+                transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
+                sx={{
+                  position: 'absolute',
+                  top: 0,
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  width: { md: 8, xs: 6 },
+                  height: { md: 8, xs: 6 },
+                  borderRadius: '50%',
+                  background: i % 2 === 0 ? palette.primary.light : palette.secondary.light,
+                  boxShadow: `0 0 8px ${i % 2 === 0 ? palette.primary.light : palette.secondary.light}`,
+                }}
+              />
+            </Box>
+          ))}
+          {/* Avatar image */}
           <Avatar
             src="/images/avatar.png"
             alt="Ky Nguyen's avatar"
@@ -138,6 +209,7 @@ export const Intro = () => {
               boxShadow: `0 0 30px ${palette.primary.main}60, 0 0 60px ${palette.secondary.main}30`,
               background: palette.primary.main,
               border: `3px solid ${palette.primary.light}`,
+              zIndex: 1,
             }}
           />
         </Box>
@@ -150,11 +222,24 @@ export const Intro = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          whileHover={{ scale: 1.05, opacity: 0.85, y: -10 }}
           height='auto'
           width={{ xs: '100%', md: '800px' }}
           pt={6}
         />
+
+        {/* Scroll-down indicator */}
+        <Box
+          component={motion.div}
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+          sx={{ mt: 2, cursor: 'pointer', opacity: 0.6 }}
+          onClick={() => {
+            const el = document.getElementById('about');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }}
+        >
+          <KeyboardArrowDownIcon sx={{ fontSize: 36, color: palette.primary.light }} />
+        </Box>
       </Stack>
     </Box>
   );

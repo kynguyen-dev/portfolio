@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { PFGradientTypography, PFTypography } from '@components/core';
 import { APP_THEMES, APP_TYPOGRAPHIES } from '@constants';
 import { slideInLeft } from '@utils/animations/scrollVariants';
+import { glassCardSx } from '@utils/styles/glassCard';
 
 export const Education = () => {
   const { t } = useTranslation();
@@ -28,7 +29,7 @@ export const Education = () => {
       component="section"
       id="education"
       aria-label={t('education.heading')}
-      sx={{ px: { xs: 3, md: '20%' }, py: 10 }}
+      sx={{ px: { xs: 2, md: 6 }, py: { xs: 8, md: 12 }, maxWidth: 1100, mx: 'auto' }}
     >
       <Stack alignItems="center" gap={5}>
         <PFGradientTypography
@@ -51,16 +52,8 @@ export const Education = () => {
             sx={{
               width: '100%',
               maxWidth: 700,
-              background: isLight ? 'rgba(255,248,240,0.85)' : 'rgba(11, 13, 46, 0.55)',
-              backdropFilter: 'blur(10px)',
-              border: `1px solid ${isLight ? 'rgba(184,137,31,0.2)' : 'rgba(245, 208, 96, 0.2)'}`,
-              borderRadius: 3,
+              ...glassCardSx(isLight, { blur: 10 }),
               p: 4,
-              transition: 'border-color 0.3s, box-shadow 0.3s',
-              '&:hover': {
-                borderColor: isLight ? 'rgba(184,137,31,0.5)' : 'rgba(245, 208, 96, 0.5)',
-                boxShadow: `0 4px 30px ${isLight ? 'rgba(184,137,31,0.1)' : 'rgba(245, 208, 96, 0.1)'}`,
-              },
             }}
           >
             <Stack direction={{ xs: 'column', sm: 'row' }} alignItems={{ xs: 'flex-start', sm: 'center' }} gap={2} mb={2} flexWrap='wrap'>

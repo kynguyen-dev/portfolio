@@ -68,6 +68,8 @@ export const en = {
     backEndDeveloper: 'Back-End Developer',
     fullStackDeveloper: 'Full-Stack Developer',
     visitWebSite: 'Visit Website >',
+    viewDetails: 'View details for {{title}}',
+    privateProject: 'Private / Internal Project',
     logistic: {
       title: 'DrivaLink — Logistics',
       description:
@@ -171,5 +173,15 @@ export const en = {
     scrollToTop: 'Back to top',
     lightMode: 'Switch to light mode',
     darkMode: 'Switch to dark mode',
+    skipSplash: 'Click to skip',
+    closeMenu: 'Close menu',
+    quickActions: 'Quick actions',
+    scrollDown: 'Scroll down',
+    downloadCV: 'Download CV',
+  },
+  notFound: {
+    title: '404',
+    message: 'Page Not Found',
+    goHome: 'Go Home',
   },
 };
