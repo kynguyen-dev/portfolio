@@ -2,23 +2,21 @@ import { PFGradientTypography, PFTypography } from '@components/core';
 import { Box, Stack, useTheme } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { APP_THEMES, APP_TYPOGRAPHIES, APP_INFORMATION, CAREER_START_DATE } from '@constants';
+import { APP_THEMES, APP_TYPOGRAPHIES, APP_INFORMATION } from '@constants';
 import { staggerContainer, staggerItem, blurIn } from '@utils/animations/scrollVariants';
-
-const getYears = () =>
-  Math.floor((Date.now() - CAREER_START_DATE.getTime()) / (365.25 * 24 * 60 * 60 * 1000));
+import { getYearsOfExperience } from '@utils/core/career';
 
 export const AboutMe = () => {
   const { t } = useTranslation();
   const { palette } = useTheme();
-  const years = getYears();
+  const years = getYearsOfExperience();
 
   return (
     <Box
       component="section"
       id="about"
-      aria-label={t('about.heading')}
-      sx={{ px: { xs: 3, md: '20%' }, py: 10 }}
+      aria-label={t('aboutMe.heading')}
+      sx={{ px: { xs: 2, md: 6 }, py: { xs: 8, md: 12 }, maxWidth: 1100, mx: 'auto' }}
     >
       <Stack
         direction="column"

@@ -121,7 +121,7 @@ export const MyProject = () => {
                 tabIndex={0}
                 role="button"
                 aria-expanded={activeCard === title}
-                aria-label={`View details for ${title}`}
+                aria-label={t('projects.viewDetails', { title })}
                 onClick={() => isTouchDevice && toggleCard(title)}
                 onFocus={() => !isTouchDevice && setActiveCard(title)}
                 onBlur={() => !isTouchDevice && setActiveCard(null)}
@@ -144,10 +144,12 @@ export const MyProject = () => {
                   ...(!isTouchDevice && {
                     '&:hover, &:focus-visible': {
                       backgroundColor: theme.palette.primary.dark,
-                      opacity: 0.8,
                     },
                     '&:hover .project-image, &:focus-visible .project-image': {
                       opacity: 0,
+                    },
+                    '&:hover .overlay, &:focus-visible .overlay': {
+                      opacity: 1,
                     },
                     '&:hover .overlay-content, &:focus-visible .overlay-content': {
                       opacity: 1,
@@ -159,8 +161,8 @@ export const MyProject = () => {
                   }),
                   ...(isTouchDevice && activeCard === title && {
                     backgroundColor: theme.palette.primary.dark,
-                    opacity: 0.8,
                     '& .project-image': { opacity: 0 },
+                    '& .overlay': { opacity: 1 },
                     '& .overlay-content': { opacity: 1, transform: 'translateY(0)' },
                     '& .default-text': { opacity: 0 },
                   }),
@@ -190,15 +192,12 @@ export const MyProject = () => {
                   className="default-text"
                   sx={{
                     position: 'absolute',
-                    top: '90%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
                     textAlign: 'center',
-                    backgroundColor: 'rgba(0, 0, 0, 0.6)',
-                    backdropFilter: 'blur(5px)',
-                    padding: '12px 20px',
-                    borderRadius: '12px',
-                    opacity: 1,
+                    background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.35) 60%, transparent 100%)',
+                    padding: '32px 20px 16px',
                     transition: 'opacity 0.3s ease-in-out',
                   }}
                 >
@@ -210,6 +209,12 @@ export const MyProject = () => {
                     sx={{ textShadow: '2px 2px 6px rgba(0, 0, 0, 0.7)' }}
                   >
                     {title}
+                  </PFTypography>
+                  <PFTypography
+                    variant="caption"
+                    sx={{ color: 'rgba(255,255,255,0.7)', letterSpacing: 1, fontWeight: 500 }}
+                  >
+                    {role}
                   </PFTypography>
                 </Box>
 
@@ -238,12 +243,12 @@ export const MyProject = () => {
 
                       <Stack direction="row" gap={2} alignItems="center">
                         {project.url ? (
-                          <StyledButton variant="outlined" size="large" onClick={() => window.open(project.url, '_blank')}>
+                          <StyledButton variant="outlined" size="large" onClick={() => window.open(project.url, '_blank', 'noopener,noreferrer')}>
                             {t('projects.visitWebSite')}
                           </StyledButton>
                         ) : (
                           <PFTypography variant="body2" color={theme.palette.text.secondary} fontStyle="italic">
-                            Private / Internal Project
+                            {t('projects.privateProject')}
                           </PFTypography>
                         )}
                         {project.githubUrl && (

@@ -11,7 +11,9 @@ import { motion } from 'framer-motion';
 import SendIcon from '@mui/icons-material/Send';
 import emailjs from '@emailjs/browser';
 import { useTranslation } from 'react-i18next';
-import { PFTypography } from '@components/core/typography';
+import { PFGradientTypography, PFTypography } from '@components/core/typography';
+import { APP_THEMES, APP_TYPOGRAPHIES } from '@constants';
+import { glassCardSx } from '@utils/styles/glassCard';
 import { StyledButton } from '@components/core/button';
 import { scaleUp } from '@utils/animations/scrollVariants';
 
@@ -63,23 +65,19 @@ export const ContactForm = () => {
   return (
     <Box
       component="section"
-      id="contact-form"
+      id="contact"
       aria-label={t('contact.heading')}
       sx={{ py: { xs: 8, md: 12 }, px: { xs: 2, md: 6 }, maxWidth: 700, mx: 'auto' }}
     >
-      <PFTypography
-        variant="h4"
+      <PFGradientTypography
+        variant={APP_TYPOGRAPHIES.HEADER_PRIMARY}
+        theme={APP_THEMES.DARK}
+        fontWeight="bold"
         align="center"
-        sx={{
-          fontWeight: 800,
-          mb: 1,
-          background: 'linear-gradient(90deg, #F5D060 0%, #E8A838 50%, #D4652A 100%)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-        }}
+        sx={{ mb: 1 }}
       >
         {t('contact.heading')}
-      </PFTypography>
+      </PFGradientTypography>
       <PFTypography variant="body1" align="center" sx={{ color: palette.text.secondary, opacity: 0.7, mb: 5 }}>
         {t('contact.subtitle')}
       </PFTypography>
@@ -92,10 +90,7 @@ export const ContactForm = () => {
         viewport={{ once: true, amount: 0.2 }}
         onSubmit={handleSubmit}
         sx={{
-          background: isLight ? 'rgba(255,248,240,0.85)' : 'rgba(11, 13, 46, 0.55)',
-          backdropFilter: 'blur(12px)',
-          border: `1px solid ${isLight ? 'rgba(184,137,31,0.15)' : 'rgba(245, 208, 96, 0.15)'}`,
-          borderRadius: 3,
+          ...glassCardSx(isLight, { hoverLift: false }),
           p: { xs: 3, md: 5 },
         }}
       >
@@ -145,12 +140,26 @@ export const ContactForm = () => {
           </StyledButton>
 
           {status === 'success' && (
-            <Alert severity="success" sx={{ background: 'rgba(107,142,58,0.2)', color: '#8AAE55' }}>
+            <Alert
+              severity="success"
+              sx={{
+                background: isLight ? 'rgba(107,142,58,0.12)' : 'rgba(107,142,58,0.2)',
+                color: isLight ? 'success.dark' : '#8AAE55',
+                '& .MuiAlert-icon': { color: isLight ? 'success.main' : '#8AAE55' },
+              }}
+            >
               <strong>{t('contact.successTitle')}</strong> {t('contact.successMessage')}
             </Alert>
           )}
           {status === 'error' && (
-            <Alert severity="error" sx={{ background: 'rgba(212,64,64,0.15)', color: '#E06060' }}>
+            <Alert
+              severity="error"
+              sx={{
+                background: isLight ? 'rgba(212,64,64,0.08)' : 'rgba(212,64,64,0.15)',
+                color: isLight ? 'error.dark' : '#E06060',
+                '& .MuiAlert-icon': { color: isLight ? 'error.main' : '#E06060' },
+              }}
+            >
               <strong>{t('contact.errorTitle')}</strong> {t('contact.errorMessage')}
             </Alert>
           )}

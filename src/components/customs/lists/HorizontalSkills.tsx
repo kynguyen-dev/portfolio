@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { PFTypography } from '@components/core';
-import { Stack } from '@mui/material';
-import { common } from '@mui/material/colors';
+import { Stack, useTheme } from '@mui/material';
 import { SkillBox, SkillBoxProps } from '../boxs/skill-box';
 
 export interface HorizontalSkillListProps {
@@ -13,6 +12,8 @@ export const HorizontalSkillList = ({
   title,
   skillBoxes,
 }: HorizontalSkillListProps) => {
+  const { palette } = useTheme();
+
   return (
     <Stack
       direction={'column'}
@@ -20,7 +21,7 @@ export const HorizontalSkillList = ({
       alignItems={'center'}
       gap={2}
     >
-      <PFTypography variant='h6' color={common.white}>
+      <PFTypography variant='h6' color={palette.text.primary}>
         {title}
       </PFTypography>
       <motion.div

@@ -10,13 +10,10 @@ import {
   APP_SIZES,
   APP_TYPOGRAPHIES,
   APP_TYPOGRAPHIES_ANIMATION,
-  CAREER_START_DATE,
 } from '@constants';
 import { ReactNode } from 'react';
 import { staggerContainer, staggerItem } from '@utils/animations/scrollVariants';
-
-const getYears = () =>
-  Math.floor((Date.now() - CAREER_START_DATE.getTime()) / (365.25 * 24 * 60 * 60 * 1000));
+import { getYearsOfExperience } from '@utils/core/career';
 
 interface HighlightSkill {
   labelKey: string;
@@ -91,20 +88,21 @@ const skillDefs: SkillsDef[] = [
 export const Profile = () => {
   const { palette } = useTheme();
   const { t } = useTranslation();
-  const years = getYears();
+  const years = getYearsOfExperience();
 
   return (
     <Box
       component="section"
       id={APP_PAGES.PROFILE.toLowerCase()}
-      aria-label={t('profile.heading')}
+      aria-label={t('profile.opening')}
       sx={{
         textAlign: 'center',
-        pt: 16,
-        pb: 16,
+        py: { xs: 8, md: 12 },
         position: 'relative',
         color: palette.text.primary,
-        px: { xs: 3, md: '20%' },
+        px: { xs: 2, md: 6 },
+        maxWidth: 1100,
+        mx: 'auto',
       }}
     >
       <Box>

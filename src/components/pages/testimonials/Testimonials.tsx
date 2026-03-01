@@ -2,7 +2,9 @@ import { Box, Stack, useTheme } from '@mui/material';
 import { motion } from 'framer-motion';
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
 import { useTranslation } from 'react-i18next';
-import { PFTypography } from '@components/core/typography';
+import { PFGradientTypography, PFTypography } from '@components/core/typography';
+import { APP_THEMES, APP_TYPOGRAPHIES } from '@constants';
+import { glassCardSx } from '@utils/styles/glassCard';
 
 const cardVariants = {
   hidden: { opacity: 0, y: 50, scale: 0.9 },
@@ -36,19 +38,15 @@ export const Testimonials = () => {
         mx: 'auto',
       }}
     >
-      <PFTypography
-        variant="h4"
+      <PFGradientTypography
+        variant={APP_TYPOGRAPHIES.HEADER_PRIMARY}
+        theme={APP_THEMES.DARK}
+        fontWeight="bold"
         align="center"
-        sx={{
-          fontWeight: 800,
-          mb: 1,
-          background: 'linear-gradient(90deg, #F5D060 0%, #E8A838 50%, #D4652A 100%)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-        }}
+        sx={{ mb: 1 }}
       >
         {t('testimonials.heading')}
-      </PFTypography>
+      </PFGradientTypography>
       <PFTypography
         variant="body1"
         align="center"
@@ -78,25 +76,20 @@ export const Testimonials = () => {
                 flex: 1,
                 display: 'flex',
                 flexDirection: 'column',
-                background: isLight ? 'rgba(255,248,240,0.85)' : 'rgba(11, 13, 46, 0.55)',
-                backdropFilter: 'blur(12px)',
-                border: `1px solid ${isLight ? 'rgba(184,137,31,0.15)' : 'rgba(245, 208, 96, 0.15)'}`,
-                borderRadius: 3,
+                ...glassCardSx(isLight, { hoverLift: false }),
                 p: 4,
                 position: 'relative',
-                transition: 'border-color 0.3s, box-shadow 0.3s',
-                '&:hover': {
-                  borderColor: isLight ? 'rgba(184,137,31,0.45)' : 'rgba(245, 208, 96, 0.45)',
-                  boxShadow: `0 0 24px ${isLight ? 'rgba(184,137,31,0.08)' : 'rgba(245, 208, 96, 0.08)'}`,
-                },
               }}
             >
               <FormatQuoteIcon
                 sx={{
-                  color: `${palette.primary.light}40`,
-                  fontSize: 40,
-                  mb: 1,
+                  position: 'absolute',
+                  top: 12,
+                  right: 16,
+                  color: `${palette.primary.light}12`,
+                  fontSize: 80,
                   transform: 'scaleX(-1)',
+                  pointerEvents: 'none',
                 }}
               />
               <PFTypography
