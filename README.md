@@ -78,12 +78,28 @@ The project is automatically deployed to GitHub Pages on every push to `master`.
 
 You can also manually trigger a deployment from the [Actions tab](https://github.com/kynguyen-dev/portfolio/actions/workflows/jekyll-gh-pages.yml).
 
-### Vercel (requires setup)
+### Vercel
 
-To deploy via Vercel, configure the following repository secrets in **Settings → Secrets and variables → Actions**:
+#### Quick Deploy (Vercel Dashboard)
 
-- `VERCEL_TOKEN` – Generate at https://vercel.com/account/tokens
-- `VERCEL_ORG_ID` – Found in your Vercel project settings
-- `VERCEL_PROJECT_ID` – Found in your Vercel project settings
+1. Go to [vercel.com](https://vercel.com) and sign in with your GitHub account
+2. Click **"Add New… → Project"**
+3. Import the `kynguyen-dev/portfolio` repository
+4. Vercel auto-detects the Vite framework — no extra configuration needed
+5. Click **Deploy**
 
-Once configured, deployments trigger automatically on push to `master` or via the [Actions tab](https://github.com/kynguyen-dev/portfolio/actions/workflows/vercel-deploy.yml).
+Your site will be live at: `https://portfolio-<unique-id>.vercel.app`
+You can add a custom domain (e.g. `kynguyen.dev`) in **Project Settings → Domains**.
+
+#### CI/CD via GitHub Actions (optional)
+
+To enable automated deployments on every push to `master` via the included workflow:
+
+1. **Generate a Vercel Token** — Go to https://vercel.com/account/tokens and create a new token
+2. **Find your Org & Project IDs** — In your Vercel project, go to **Settings → General** and copy the *Project ID* and *Org ID*
+3. **Add GitHub Secrets** — In your repo, go to **Settings → Secrets and variables → Actions** and add:
+   - `VERCEL_TOKEN`
+   - `VERCEL_ORG_ID`
+   - `VERCEL_PROJECT_ID`
+
+Once configured, deployments trigger automatically on push to `master` or via the [Actions tab](https://github.com/kynguyen-dev/portfolio/actions/workflows/vercel-deploy.yml). Pull requests to `master` will receive preview deployments.
