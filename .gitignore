@@ -15,6 +15,7 @@ dist-ssr
 
 # build
 dist
+.vite
 
 # Editor directories and files
 .vscode/*
