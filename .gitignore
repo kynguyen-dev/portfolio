@@ -15,6 +15,7 @@ dist-ssr
 
 # build
 dist
+.vite
 
 # Editor directories and files
 .vscode/*
@@ -30,6 +31,5 @@ dist
 package-lock.json
 .eslintcache
 yarn-error.lock
-yarn.lock
 
 *storybook.log

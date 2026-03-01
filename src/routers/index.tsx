@@ -1,12 +1,13 @@
 import { FullScreenLoading } from '@components/pages/loadings';
 import { ROUTES } from '@constants/router';
 import loadable from '@loadable/component';
+import { ComponentType } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { RootRouterError } from '@routers/error';
 import { RootRouterElement } from '@routers/element';
 
-const Home = loadable(() => import('@pages/Home'));
-const NotFound = loadable(() => import('@pages/NotFound'));
+const Home = loadable(() => import('@pages/Home')) as ComponentType;
+const NotFound = loadable(() => import('@pages/NotFound')) as ComponentType;
 
 export const appRoute = createBrowserRouter([
   {
