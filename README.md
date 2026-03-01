@@ -67,3 +67,23 @@ Storybook
     yarn storybook
     yarn build-storybook
     yarn chromatic
+
+## Deployment
+
+### GitHub Pages (automatic)
+
+The project is automatically deployed to GitHub Pages on every push to `master`.
+
+**URL:** https://kynguyen-dev.github.io/portfolio/
+
+You can also manually trigger a deployment from the [Actions tab](https://github.com/kynguyen-dev/portfolio/actions/workflows/jekyll-gh-pages.yml).
+
+### Vercel (requires setup)
+
+To deploy via Vercel, configure the following repository secrets in **Settings → Secrets and variables → Actions**:
+
+- `VERCEL_TOKEN` – Generate at https://vercel.com/account/tokens
+- `VERCEL_ORG_ID` – Found in your Vercel project settings
+- `VERCEL_PROJECT_ID` – Found in your Vercel project settings
+
+Once configured, deployments trigger automatically on push to `master` or via the [Actions tab](https://github.com/kynguyen-dev/portfolio/actions/workflows/vercel-deploy.yml).
