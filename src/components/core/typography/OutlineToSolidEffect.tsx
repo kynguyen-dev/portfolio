@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, type TargetAndTransition } from 'framer-motion';
 import { CSSProperties, ReactNode } from 'react';
 
 interface OutlineToSolidEffectProps {
@@ -12,15 +12,19 @@ export const OutlineToSolidEffect = ({
 }: OutlineToSolidEffectProps) => {
   return (
     <motion.div
-      initial={{
-        WebkitTextStroke: '1px rgba(255, 243, 224, 0.8)',
-        opacity: 0.7,
-      }}
-      animate={{
-        WebkitTextStroke: ['1px rgba(255, 243, 224, 0.8)', '0px rgba(0,0,0,0)'],
-        WebkitTextFillColor: ['transparent', '#FFF3E0'],
-        opacity: [0.7, 1],
-      }}
+      initial={
+        {
+          WebkitTextStroke: '1px rgba(255, 243, 224, 0.8)',
+          opacity: 0.7,
+        } as TargetAndTransition
+      }
+      animate={
+        {
+          WebkitTextStroke: ['1px rgba(255, 243, 224, 0.8)', '0px rgba(0,0,0,0)'],
+          WebkitTextFillColor: ['transparent', '#FFF3E0'],
+          opacity: [0.7, 1],
+        } as TargetAndTransition
+      }
       transition={{
         duration: 1.5,
         ease: 'easeInOut',
