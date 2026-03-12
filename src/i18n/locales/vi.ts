@@ -9,6 +9,7 @@ export const vi = {
     profile: 'Hồ sơ',
     skills: 'Kỹ năng',
     projects: 'Dự án',
+    tools: 'Công cụ',
     contact: 'Liên hệ',
   },
   intro: {
@@ -183,5 +184,28 @@ export const vi = {
     title: '404',
     message: 'Không tìm thấy trang',
     goHome: 'Về trang chủ',
+  },
+  tools: {
+    heading: 'Công cụ & Thí nghiệm',
+    subtitle: 'Những mini app tôi xây dựng để khám phá ý tưởng, trau dồi kỹ năng và vui với công nghệ.',
+    explore: 'Khám phá',
+    items: {
+      weather: {
+        title: 'AI Weather Advisor',
+        description: 'Nhận gợi ý trang phục & hoạt động cá nhân hóa dựa trên dữ liệu thời tiết thực và AI.',
+      },
+      dbExplorer: {
+        title: 'Smart Database Explorer',
+        description: 'Đặt câu hỏi bằng tiếng Việt — AI chuyển đổi thành câu lệnh SQL tức thì.',
+      },
+      gallery: {
+        title: 'Infinite Photo Gallery',
+        description: 'Gallery ảo hóa hiển thị hàng nghìn ảnh ở 60 FPS với cuộn vô tận.',
+      },
+      threeKingdoms: {
+        title: 'Tam Quốc Finder',
+        description: 'Khám phá các tướng huyền thoại, so sánh chỉ số, và AI dự đoán kết quả trận đấu.',
+      },
+    },
   },
 };

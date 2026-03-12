@@ -1,31 +1,102 @@
+import { lazy } from 'react';
+import {
+  createRouter,
+  createRoute,
+  createRootRoute,
+  Outlet,
+  useRouterState,
+} from '@tanstack/react-router';
+import { AnimatePresence, motion } from 'framer-motion';
 import { FullScreenLoading } from '@components/pages/loadings';
-import { ROUTES } from '@constants/router';
-import loadable from '@loadable/component';
-import { ComponentType } from 'react';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { RootRouterError } from '@routers/error';
-import { RootRouterElement } from '@routers/element';
 
-const Home = loadable(() => import('@pages/Home')) as ComponentType;
-const NotFound = loadable(() => import('@pages/NotFound')) as ComponentType;
+/* ─── Root layout with animated page transitions ─── */
+const RootLayout = () => {
+  const { location } = useRouterState();
 
-export const appRoute = createBrowserRouter([
-  {
-    errorElement: <RootRouterError />,
-    element: <RootRouterElement />,
-    children: [
-      {
-        path: ROUTES.HOME,
-        element: <Home />,
-      },
-      {
-        path: ROUTES.NOT_FOUND,
-        element: <NotFound />,
-      },
-    ],
-  },
+  return (
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={location.pathname}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.3, ease: 'easeInOut' }}
+      >
+        <Outlet />
+      </motion.div>
+    </AnimatePresence>
+  );
+};
+
+/* ─── Root route ─── */
+const rootRoute = createRootRoute({
+  component: RootLayout,
+  pendingComponent: FullScreenLoading,
+});
+
+/* ─── Lazy page imports ─── */
+const HomePage = lazy(() => import('@pages/Home'));
+const NotFoundPage = lazy(() => import('@pages/NotFound'));
+const WeatherAdvisorPage = lazy(() => import('@pages/tools/WeatherAdvisor'));
+const DbExplorerPage = lazy(() => import('@pages/tools/DbExplorer'));
+const GalleryPage = lazy(() => import('@pages/tools/Gallery'));
+const ThreeKingdomsPage = lazy(() => import('@pages/tools/ThreeKingdoms'));
+
+/* ─── Route definitions ─── */
+const homeRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/',
+  component: HomePage,
+});
+
+const weatherRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/tools/weather-advisor',
+  component: WeatherAdvisorPage,
+});
+
+const dbExplorerRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/tools/db-explorer',
+  component: DbExplorerPage,
+});
+
+const galleryRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/tools/gallery',
+  component: GalleryPage,
+});
+
+const threeKingdomsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/tools/three-kingdoms',
+  component: ThreeKingdomsPage,
+});
+
+const notFoundRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '*',
+  component: NotFoundPage,
+});
+
+/* ─── Route tree & router ─── */
+const routeTree = rootRoute.addChildren([
+  homeRoute,
+  weatherRoute,
+  dbExplorerRoute,
+  galleryRoute,
+  threeKingdomsRoute,
+  notFoundRoute,
 ]);
 
-export const AppRouter = () => (
-  <RouterProvider router={appRoute} fallbackElement={<FullScreenLoading />} />
-);
+export const router = createRouter({
+  routeTree,
+  defaultPendingComponent: FullScreenLoading,
+});
+
+/* ─── Type safety ─── */
+declare module '@tanstack/react-router' {
+  interface Register {
+    router: typeof router;
+  }
+}

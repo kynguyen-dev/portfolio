@@ -25,6 +25,7 @@ const navItems = [
   APP_PAGES.PROFILE,
   APP_PAGES.SKILLS,
   APP_PAGES.PROJECTS,
+  APP_PAGES.TOOLS,
   APP_PAGES.CONTACT,
 ];
 
@@ -34,6 +35,7 @@ const navI18nMap: Record<string, string> = {
   [APP_PAGES.PROFILE]: 'nav.profile',
   [APP_PAGES.SKILLS]: 'nav.skills',
   [APP_PAGES.PROJECTS]: 'nav.projects',
+  [APP_PAGES.TOOLS]: 'nav.tools',
   [APP_PAGES.CONTACT]: 'nav.contact',
 };
 
