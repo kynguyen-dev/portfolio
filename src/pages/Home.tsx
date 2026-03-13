@@ -26,6 +26,7 @@ const Education = lazy(() => import("@components/pages/education/Education.tsx")
 const Testimonials = lazy(() => import("@components/pages/testimonials/Testimonials.tsx").then(m => ({ default: m.Testimonials })));
 const ContactForm = lazy(() => import("@components/pages/contacts/ContactForm.tsx").then(m => ({ default: m.ContactForm })));
 const Blog = lazy(() => import("@components/pages/blog/Blog.tsx").then(m => ({ default: m.Blog })));
+const Tools = lazy(() => import("@components/pages/tools/Tools.tsx").then(m => ({ default: m.Tools })));
 const SpeedDialCustom = lazy(() => import("@components/customs/speed-dial").then(m => ({ default: m.SpeedDialCustom })));
 
 /** Animated scroll-reveal wrapper — accepts a framer-motion variant */
@@ -131,6 +132,9 @@ const HomePage = () => {
               <Section variants={slideInRight}><WorkExperience /></Section>
             </ParallaxSection>
             <Section variants={rotateIn}><Blog /></Section>
+            <ParallaxSection offset={35}>
+              <Section variants={scaleUp}><Tools /></Section>
+            </ParallaxSection>
             <ParallaxSection offset={30}>
               <Section variants={blurIn}><Testimonials /></Section>
             </ParallaxSection>

@@ -24,6 +24,7 @@ export enum APP_PAGES {
   PROFILE = 'Profile',
   PROJECTS = 'Projects',
   SKILLS = 'Skills',
+  TOOLS = 'Tools',
   CONTACT = 'Contact',
 }
 

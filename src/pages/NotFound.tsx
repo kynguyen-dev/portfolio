@@ -1,5 +1,5 @@
 import { Stack, Button, useTheme } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { PFTypography } from '@components/core';
 import { useEffect } from 'react';
@@ -42,7 +42,7 @@ const NotFound = () => {
           backgroundColor: isLight ? '#B8891F' : '#D4A843',
           '&:hover': { backgroundColor: isLight ? '#D4A843' : '#E8C96A' },
         }}
-        onClick={() => navigate('/')}
+        onClick={() => navigate({ to: '/' })}
       >
         {t('notFound.goHome')}
       </Button>

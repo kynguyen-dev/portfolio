@@ -9,6 +9,7 @@ export const ja = {
     profile: 'プロフィール',
     skills: 'スキル',
     projects: 'プロジェクト',
+    tools: 'ツール',
     contact: 'お問い合わせ',
   },
   intro: {
@@ -183,5 +184,28 @@ export const ja = {
     title: '404',
     message: 'ページが見つかりません',
     goHome: 'ホームへ戻る',
+  },
+  tools: {
+    heading: 'ツール＆実験',
+    subtitle: 'アイデアを探求し、スキルを磨き、テクノロジーを楽しむために作ったミニアプリ。',
+    explore: '探索する',
+    items: {
+      weather: {
+        title: 'AI天気アドバイザー',
+        description: 'リアルタイム天気データとAIによるパーソナライズされた服装＆活動の提案。',
+      },
+      dbExplorer: {
+        title: 'スマートDBエクスプローラー',
+        description: '自然言語で質問するだけ — AIがテキストをSQLクエリに即座に変換。',
+      },
+      gallery: {
+        title: '無限フォトギャラリー',
+        description: '仮想化ギャラリーが何千枚もの写真を60FPSで無限スクロール表示。',
+      },
+      threeKingdoms: {
+        title: '三国志ファインダー',
+        description: '伝説の武将を探索、ステータス比較、AIによる対戦結果予測。',
+      },
+    },
   },
 };

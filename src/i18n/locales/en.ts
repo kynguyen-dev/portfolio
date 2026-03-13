@@ -9,6 +9,7 @@ export const en = {
     profile: 'Profile',
     skills: 'Skills',
     projects: 'Projects',
+    tools: 'Tools',
     contact: 'Contact',
   },
   intro: {
@@ -183,5 +184,28 @@ export const en = {
     title: '404',
     message: 'Page Not Found',
     goHome: 'Go Home',
+  },
+  tools: {
+    heading: 'Tools & Experiments',
+    subtitle: 'Mini apps I built to explore ideas, sharpen skills, and have fun with technology.',
+    explore: 'Explore',
+    items: {
+      weather: {
+        title: 'AI Weather Advisor',
+        description: 'Get personalized outfit & activity recommendations powered by real-time weather data and AI.',
+      },
+      dbExplorer: {
+        title: 'Smart Database Explorer',
+        description: 'Ask questions in plain language — AI converts your text into SQL queries instantly.',
+      },
+      gallery: {
+        title: 'Infinite Photo Gallery',
+        description: 'Virtualized gallery rendering thousands of photos at 60 FPS with infinite scroll.',
+      },
+      threeKingdoms: {
+        title: 'Three Kingdoms Finder',
+        description: 'Explore legendary warriors, compare stats, and let AI predict battle outcomes.',
+      },
+    },
   },
 };

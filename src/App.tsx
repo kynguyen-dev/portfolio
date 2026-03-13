@@ -1,6 +1,6 @@
 import { PFThemeProvider } from './contexts/theme-provider';
 import { ThemeModeProvider } from './contexts/theme-mode';
-import { AppRouter } from './routers';
+import { router } from './routers';
 import { SplashScreen } from '@components/customs/effects/SplashScreen';
 import { CustomCursor } from '@components/customs/effects/CustomCursor';
 import { MouseSpotlight } from '@components/customs/effects/MouseSpotlight';
@@ -9,6 +9,7 @@ import { ErrorBoundary } from '@components/core/error-boundary/ErrorBoundary';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MotionConfig } from 'framer-motion';
+import { RouterProvider } from '@tanstack/react-router';
 
 const HtmlLangSync = () => {
   const { i18n } = useTranslation();
@@ -29,7 +30,7 @@ export const App = () => {
             <CustomCursor />
             <MouseSpotlight />
             <KonamiEasterEgg />
-            <AppRouter />
+            <RouterProvider router={router} />
           </PFThemeProvider>
         </ThemeModeProvider>
       </MotionConfig>
