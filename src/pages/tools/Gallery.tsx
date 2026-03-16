@@ -1,11 +1,5 @@
-import ToolPageLayout from './ToolPageLayout';
+import { GalleryContainer } from '@components/pages/gallery';
 
-const Gallery = () => (
-  <ToolPageLayout
-    title="Infinite Photo Gallery"
-    emoji="🖼️"
-    description="Virtualized gallery rendering thousands of photos at 60 FPS — showcasing performance optimization with TanStack Virtual and infinite scroll."
-  />
-);
+const Gallery = () => <GalleryContainer />;
 
 export default Gallery;
