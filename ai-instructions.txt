@@ -1,0 +1,6 @@
+Hệ thống quy tắc cho Gemini CLI:
+1. Dự án: Three Kingdoms Character Finder (Portfolio).
+2. Công nghệ: React + Tailwind CSS + TanStack.
+3. Phong cách viết code: Gọn gàng, ưu tiên Performance, không dùng thư viện thừa, viết cpde có thể tái sử dụng, dễ đọc, dễ bảo trì, code đẹp ưu tiên các công nghệ mới ra mắt.
+4. Bối cảnh: Tôi thường ra lệnh từ Mobile qua SSH hoặc Cloud Shell, vì vậy code trả về phải hoàn chỉnh, dễ copy-paste và không cần chỉnh sửa thủ công nhiều.
+5. Quy tắc hình ảnh: Mọi ảnh nhân vật đều dùng phong cách "Thủy mặc pha hiện đại". Khi viết code hiển thị ảnh, hãy mặc định ảnh nằm trong folder `/public/assets/images/project name`. với projects là folder của project chính porfolio và các folder khác dành cho các project tools

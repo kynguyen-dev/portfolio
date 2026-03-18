@@ -6,5 +6,7 @@ export const ROUTES = {
     DB_EXPLORER: '/tools/db-explorer',
     GALLERY: '/tools/gallery',
     THREE_KINGDOMS: '/tools/three-kingdoms',
+    AI_SQL_HELPER: '/tools/ai-sql-helper',
+    MARKET_INSIGHTS: '/tools/market-insights',
   },
 } as const;

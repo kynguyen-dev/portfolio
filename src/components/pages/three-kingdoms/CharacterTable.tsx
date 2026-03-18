@@ -13,6 +13,45 @@ import { useVirtualizer } from '@tanstack/react-virtual';
 import { Box, useTheme, useMediaQuery } from '@mui/material';
 import type { ThreeKingdomsCharacter } from '@constants/three-kingdoms';
 import { getKingdomMeta } from '@constants/three-kingdoms';
+import { MultiFormatImage } from './MultiFormatImage';
+
+/* Small component so we can use MultiFormatImage (which uses hooks) inside a table cell */
+const AvatarCell = ({ character }: { character: ThreeKingdomsCharacter }) => {
+  const km = getKingdomMeta(character.kingdom);
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+      <Box
+        sx={{
+          width: 36,
+          height: 36,
+          borderRadius: '50%',
+          border: `2px solid ${km.color}`,
+          flexShrink: 0,
+          overflow: 'hidden',
+          backgroundColor: `${km.color}20`,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <MultiFormatImage
+          basePath={`/images/three-kingdoms/avatar/${character.id}`}
+          alt={character.name.en}
+          sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          fallback={
+            <Box component="span" sx={{ fontWeight: 700, fontSize: '0.85rem', color: km.color }}>
+              {character.name.cn.charAt(0)}
+            </Box>
+          }
+        />
+      </Box>
+      <Box>
+        <Box sx={{ fontWeight: 700, lineHeight: 1.2 }}>{character.name.cn}</Box>
+        <Box sx={{ fontSize: '0.75rem', opacity: 0.7 }}>{character.name.vi} · {character.name.en}</Box>
+      </Box>
+    </Box>
+  );
+};
 
 const columnHelper = createColumnHelper<ThreeKingdomsCharacter>();
 
@@ -42,27 +81,7 @@ export const CharacterTable = ({
       columnHelper.accessor(row => row.name.en, {
         id: 'name',
         header: '⚔ Name',
-        cell: info => {
-          const row = info.row.original;
-          const km = getKingdomMeta(row.kingdom);
-          return (
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <Box
-                sx={{
-                  width: 10,
-                  height: 10,
-                  borderRadius: '50%',
-                  backgroundColor: km.color,
-                  flexShrink: 0,
-                }}
-              />
-              <Box>
-                <Box sx={{ fontWeight: 700, lineHeight: 1.2 }}>{row.name.cn}</Box>
-                <Box sx={{ fontSize: '0.75rem', opacity: 0.7 }}>{row.name.vi} · {row.name.en}</Box>
-              </Box>
-            </Box>
-          );
-        },
+        cell: info => <AvatarCell character={info.row.original} />,
         enableSorting: true,
         size: 200,
         minSize: 140,
@@ -161,7 +180,7 @@ export const CharacterTable = ({
   const virtualizer = useVirtualizer({
     count: rows.length,
     getScrollElement: () => parentRef.current,
-    estimateSize: () => 56,
+    estimateSize: () => 60,
     overscan: 10,
   });
 

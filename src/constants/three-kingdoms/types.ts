@@ -43,3 +43,6 @@ export const STAT_LABELS: Record<StatKey, { cn: string; en: string; vi: string }
   charisma:     { cn: '魅力', en: 'Charisma',      vi: 'Mị lực' },
   leadership:   { cn: '統率', en: 'Leadership',    vi: 'Thống soái' },
 };
+
+export const STAT_KEYS: StatKey[] = ['might', 'intelligence', 'politics', 'charisma', 'leadership'];
+
