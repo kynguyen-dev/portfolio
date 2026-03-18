@@ -10,7 +10,7 @@ import { CharacterTable } from '@components/pages/three-kingdoms/CharacterTable'
 import { CharacterDetail } from '@components/pages/three-kingdoms/CharacterDetail';
 import { BattleCompare } from '@components/pages/three-kingdoms/BattleCompare';
 import { KingdomFilter } from '@components/pages/three-kingdoms/KingdomFilter';
-import { CHARACTERS, QUOTES } from '@constants/three-kingdoms';
+import { CHARACTERS, QUOTES, getKingdomMeta } from '@constants/three-kingdoms';
 import type { ThreeKingdomsCharacter, Kingdom } from '@constants/three-kingdoms';
 import type { SortingState } from '@tanstack/react-table';
 
@@ -71,23 +71,58 @@ const ThreeKingdoms = () => {
     setView('browse');
   }, []);
 
+  const handleCancelCompare = useCallback(() => {
+    setComparePick(null);
+  }, []);
+
+  const handleBackToDetail = useCallback((char: ThreeKingdomsCharacter) => {
+    setSelected(char);
+    setFighter1(null);
+    setFighter2(null);
+    setComparePick(null);
+    setView('detail');
+  }, []);
+
+  const handleBackToBrowse = useCallback(() => {
+    setView('browse');
+    setSelected(null);
+    setFighter1(null);
+    setFighter2(null);
+    setComparePick(null);
+  }, []);
+
   const handleBack = useCallback(() => {
-    if (view === 'detail' || view === 'compare') {
-      setView('browse');
-      setSelected(null);
-      setFighter1(null);
-      setFighter2(null);
-      setComparePick(null);
+    if (comparePick) {
+      handleCancelCompare();
+      return;
+    }
+    if (view === 'compare') {
+      if (fighter1) {
+        handleBackToDetail(fighter1);
+      } else {
+        handleBackToBrowse();
+      }
+    } else if (view === 'detail') {
+      handleBackToBrowse();
     } else {
       navigate({ to: '/' });
     }
-  }, [view, navigate]);
+  }, [view, navigate, fighter1, comparePick, handleBackToDetail, handleBackToBrowse, handleCancelCompare]);
+
+  /* ─── Keyboard shortcut: Escape to go back ─── */
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') handleBack();
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [handleBack]);
 
   return (
     <SunriseBackground>
       <Stack
         component="main"
-        sx={{ height: '100vh', overflow: 'hidden', px: { xs: 2, md: 6, lg: 8 }, py: { xs: 8, md: 10 } }}
+        sx={{ height: 'calc(100vh - 80px)', overflow: 'hidden', px: { xs: 2, md: 6, lg: 8 }, py: { xs: 8, md: 10 } }}
       >
         {/* Back button */}
         <Box sx={{ position: 'fixed', top: 20, left: 20, zIndex: 50 }}>
@@ -108,58 +143,71 @@ const ThreeKingdoms = () => {
           </IconButton>
         </Box>
 
-        {/* Header */}
-        <Stack alignItems="center" spacing={1} sx={{ mb: 4 }}>
+        {/* Header — collapses when not browsing */}
+        <AnimatePresence mode="wait">
           <motion.div
-            animate={{ scale: [1, 1.05, 1] }}
-            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+            key={view === 'browse' ? 'full' : 'compact'}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
           >
-            <Box
-              component="img"
-              src="/images/three-kingdoms/logo.jpg"
-              alt="Three Kingdoms"
-              sx={{
-                width: { xs: 80, md: 100 },
-                height: { xs: 80, md: 100 },
-                borderRadius: '50%',
-                objectFit: 'cover',
-                border: `2px solid ${isLight ? 'rgba(184,137,31,0.3)' : 'rgba(245,208,96,0.3)'}`,
-                boxShadow: isLight
-                  ? '0 4px 20px rgba(184,137,31,0.15)'
-                  : '0 4px 20px rgba(245,208,96,0.15)',
-              }}
-            />
-          </motion.div>
-          <PFGradientTypography variant="h3" fontWeight={800}>
-            Three Kingdoms Finder
-          </PFGradientTypography>
-
-          {/* Rotating quote */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={quoteIdx}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.5 }}
-            >
-              <PFTypography
-                variant="body2"
-                sx={{
-                  textAlign: 'center',
-                  fontStyle: 'italic',
-                  color: isLight ? '#8B7355' : '#C9A96E',
-                  maxWidth: 500,
-                }}
+            <Stack alignItems="center" spacing={1} sx={{ mb: view === 'browse' ? 4 : 2 }}>
+              <motion.div
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
               >
-                "{quote.vi}"
-                <Box component="span" sx={{ display: 'block', fontSize: '0.7rem', mt: 0.5, opacity: 0.7 }}>
-                  — {quote.author}
-                </Box>
-              </PFTypography>
-            </motion.div>
-          </AnimatePresence>
-        </Stack>
+                <Box
+                  component="img"
+                  src="/images/three-kingdoms/logo.jpg"
+                  alt="Three Kingdoms"
+                  sx={{
+                    width: view === 'browse' ? { xs: 80, md: 100 } : { xs: 48, md: 56 },
+                    height: view === 'browse' ? { xs: 80, md: 100 } : { xs: 48, md: 56 },
+                    borderRadius: '50%',
+                    objectFit: 'cover',
+                    transition: 'all 0.3s ease',
+                    border: `2px solid ${isLight ? 'rgba(184,137,31,0.3)' : 'rgba(245,208,96,0.3)'}`,
+                    boxShadow: isLight
+                      ? '0 4px 20px rgba(184,137,31,0.15)'
+                      : '0 4px 20px rgba(245,208,96,0.15)',
+                  }}
+                />
+              </motion.div>
+              <PFGradientTypography variant={view === 'browse' ? 'h3' : 'h5'} fontWeight={800}>
+                Three Kingdoms Finder
+              </PFGradientTypography>
+
+              {/* Rotating quote — only on browse */}
+              {view === 'browse' && (
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={quoteIdx}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <PFTypography
+                      variant="body2"
+                      sx={{
+                        textAlign: 'center',
+                        fontStyle: 'italic',
+                        color: isLight ? '#8B7355' : '#C9A96E',
+                        maxWidth: 500,
+                      }}
+                    >
+                      "{quote.vi}"
+                      <Box component="span" sx={{ display: 'block', fontSize: '0.7rem', mt: 0.5, opacity: 0.7 }}>
+                        — {quote.author}
+                      </Box>
+                    </PFTypography>
+                  </motion.div>
+                </AnimatePresence>
+              )}
+            </Stack>
+          </motion.div>
+        </AnimatePresence>
 
         {/* Content area */}
         <AnimatePresence mode="wait">
@@ -178,7 +226,10 @@ const ThreeKingdoms = () => {
                     mb: 2,
                     p: 1.5,
                     borderRadius: 2,
-                    textAlign: 'center',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 2,
                     background: `linear-gradient(90deg, ${getKingdomColor(comparePick)}18, transparent)`,
                     border: `1px solid ${getKingdomColor(comparePick)}40`,
                   }}
@@ -189,6 +240,28 @@ const ThreeKingdoms = () => {
                       {comparePick.name.cn} ({comparePick.name.en})
                     </Box>
                   </PFTypography>
+                  <Box
+                    onClick={handleCancelCompare}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={e => { if (e.key === 'Enter') handleCancelCompare(); }}
+                    sx={{
+                      px: 1.5,
+                      py: 0.5,
+                      borderRadius: 1.5,
+                      cursor: 'pointer',
+                      fontSize: '0.75rem',
+                      fontWeight: 600,
+                      color: palette.text.secondary,
+                      border: `1px solid ${isLight ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.15)'}`,
+                      transition: 'all 0.2s',
+                      '&:hover': {
+                        background: isLight ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.08)',
+                      },
+                    }}
+                  >
+                    ✕ Cancel
+                  </Box>
                 </Box>
               )}
 
@@ -256,7 +329,13 @@ const ThreeKingdoms = () => {
           )}
 
           {view === 'compare' && fighter1 && fighter2 && (
-            <BattleCompare key="compare" fighter1={fighter1} fighter2={fighter2} />
+            <BattleCompare
+              key="compare"
+              fighter1={fighter1}
+              fighter2={fighter2}
+              onBackToDetail={handleBackToDetail}
+              onBackToBrowse={handleBackToBrowse}
+            />
           )}
         </AnimatePresence>
       </Stack>
@@ -265,7 +344,6 @@ const ThreeKingdoms = () => {
 };
 
 /* Helper to get kingdom color from a character */
-import { getKingdomMeta } from '@constants/three-kingdoms';
 const getKingdomColor = (char: ThreeKingdomsCharacter) => getKingdomMeta(char.kingdom).color;
 
 export default ThreeKingdoms;

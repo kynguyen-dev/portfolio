@@ -43,6 +43,18 @@ const TOOLS: ToolItem[] = [
     descriptionKey: 'tools.items.threeKingdoms.description',
     route: ROUTES.TOOLS.THREE_KINGDOMS,
   },
+  {
+    emoji: '🤖',
+    titleKey: 'tools.items.aiSqlHelper.title',
+    descriptionKey: 'tools.items.aiSqlHelper.description',
+    route: ROUTES.TOOLS.AI_SQL_HELPER,
+  },
+  {
+    emoji: '📊',
+    titleKey: 'tools.items.marketInsights.title',
+    descriptionKey: 'tools.items.marketInsights.description',
+    route: ROUTES.TOOLS.MARKET_INSIGHTS,
+  },
 ];
 
 export const Tools = () => {

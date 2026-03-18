@@ -8,4 +8,4 @@ export type {
   KingdomMeta,
   StatKey,
 } from './types';
-export { STAT_LABELS } from './types';
+export { STAT_LABELS, STAT_KEYS } from './types';
