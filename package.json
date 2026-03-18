@@ -23,6 +23,7 @@
     "@emotion/styled": "^11.14.0",
     "@fontsource/roboto": "^5.0.12",
     "@google/generative-ai": "^0.24.1",
+    "@icons-pack/react-simple-icons": "^13.13.0",
     "@mui/icons-material": "^5.15.14",
     "@mui/material": "^5.15.14",
     "@tanstack/react-router": "^1.166.7",

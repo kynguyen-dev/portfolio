@@ -856,6 +856,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@icons-pack/react-simple-icons@npm:^13.13.0":
+  version: 13.13.0
+  resolution: "@icons-pack/react-simple-icons@npm:13.13.0"
+  peerDependencies:
+    react: ^16.13 || ^17 || ^18 || ^19
+  checksum: 10c0/2c49846554d855347f0ebbcd39accdd754854670db214d218df7b8d4927d3f8b3f3b5c8ac25280006467e8c94d585105a3e3f7de17e61bf3f63538aad3728309
+  languageName: node
+  linkType: hard
+
 "@isaacs/cliui@npm:^8.0.2":
   version: 8.0.2
   resolution: "@isaacs/cliui@npm:8.0.2"
@@ -6196,6 +6205,7 @@ __metadata:
     "@emotion/styled": "npm:^11.14.0"
     "@fontsource/roboto": "npm:^5.0.12"
     "@google/generative-ai": "npm:^0.24.1"
+    "@icons-pack/react-simple-icons": "npm:^13.13.0"
     "@mui/icons-material": "npm:^5.15.14"
     "@mui/material": "npm:^5.15.14"
     "@storybook/addon-essentials": "npm:^8.0.4"

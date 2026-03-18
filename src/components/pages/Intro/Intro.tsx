@@ -201,7 +201,7 @@ export const Intro = () => {
           ))}
           {/* Avatar image */}
           <Avatar
-            src="/images/avatar.png"
+            src="/images/avatar.jpg"
             alt="Ky Nguyen's avatar"
             sx={{
               width: { md: 180, xs: 120 },

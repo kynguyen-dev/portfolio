@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, memo } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   Grid,
   Paper,
@@ -17,11 +17,10 @@ import {
   Tooltip,
 } from '@mui/material';
 import ToolPageLayout from './ToolPageLayout';
-import { PFTypography, PFGradientTypography } from '@components/core';
+import { PFTypography } from '@components/core';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import PublicIcon from '@mui/icons-material/Public';
@@ -51,10 +50,10 @@ const LocalClock = ({ utcOffset }: { utcOffset: number }) => {
       const now = new Date();
       const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
       const local = new Date(utc + (utcOffset * 1000));
-      setTime(local.toLocaleTimeString('vi-VN', { 
-        hour: '2-digit', 
-        minute: '2-digit', 
-        second: '2-digit' 
+      setTime(local.toLocaleTimeString('vi-VN', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
       }));
     };
 
@@ -167,7 +166,7 @@ const MarketInsights = () => {
       const url = `https://api.open-meteo.com/v1/forecast?latitude=${selectedCity.lat}&longitude=${selectedCity.lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code,wind_speed_10m,wind_direction_10m,surface_pressure,visibility,cloud_cover,precipitation&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max,precipitation_sum,precipitation_probability_max,wind_speed_10m_max,shortwave_radiation_sum&timezone=auto`;
       const res = await fetch(url);
       const data = await res.json();
-      
+
       setWeatherData({ ...data.current, timezone: data.timezone, utc_offset: data.utc_offset_seconds });
       setWeatherForecast(data.daily.time.map((time: string, i: number) => ({
         date: new Date(time).toLocaleDateString('vi-VN', { weekday: 'short', day: '2-digit', month: '2-digit' }),
@@ -196,7 +195,7 @@ const MarketInsights = () => {
     try {
       setLoading(prev => ({ ...prev, petrol: true }));
       const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=vnd');
-      const rateData = await res.json();
+      await res.json();
       const basePrices = [{ type: 'RON 95-V', base: 23.500 }, { type: 'E5 RON 92', base: 22.450 }, { type: 'Diesel 0.05S', base: 20.120 }];
       const jitter = (Math.random() * 200 - 100);
       setPetrolData(basePrices.map(p => ({ ...p, price: (p.base + (jitter / 1000)).toFixed(3), unit: 'VND/L' })));
@@ -232,11 +231,11 @@ const MarketInsights = () => {
   };
 
   const CardWrapper = ({ children, title, icon: Icon, loading: sectionLoading, onRefresh, type, customBg, iconAnimate, sx = {} }: any) => (
-    <Paper elevation={0} sx={{ 
-      p: 3, height: '100%', 
-      background: customBg || (isLight ? 'rgba(255, 255, 255, 0.4)' : 'rgba(11, 13, 46, 0.4)'), 
-      backdropFilter: 'blur(20px)', borderRadius: 4, 
-      border: `1px solid ${isLight ? 'rgba(184,137,31,0.2)' : 'rgba(245,208,96,0.2)'}`, 
+    <Paper elevation={0} sx={{
+      p: 3, height: '100%',
+      background: customBg || (isLight ? 'rgba(255, 255, 255, 0.4)' : 'rgba(11, 13, 46, 0.4)'),
+      backdropFilter: 'blur(20px)', borderRadius: 4,
+      border: `1px solid ${isLight ? 'rgba(184,137,31,0.2)' : 'rgba(245,208,96,0.2)'}`,
       transition: 'all 0.5s ease', color: customBg ? 'white' : 'inherit',
       display: 'flex', flexDirection: 'column',
       '&:hover': { transform: 'translateY(-5px)', borderColor: isLight ? 'rgba(184,137,31,0.5)' : 'rgba(245,208,96,0.5)' },
@@ -277,7 +276,7 @@ const MarketInsights = () => {
                   getOptionLabel={(option) => option.label || ''}
                   isOptionEqualToValue={(o, v) => v && o.lat === v.lat && o.lon === v.lon}
                   renderInput={(params) => (
-                    <TextField {...params} size="small" placeholder="Tìm thành phố..." sx={{ '& .MuiOutlinedInput-root': { borderRadius: 3, background: isLight ? 'rgba(255,255,255,0.6)' : 'rgba(255,255,255,0.08)', backdropFilter: 'blur(10px)' } }} 
+                    <TextField {...params} size="small" placeholder="Tìm thành phố..." sx={{ '& .MuiOutlinedInput-root': { borderRadius: 3, background: isLight ? 'rgba(255,255,255,0.6)' : 'rgba(255,255,255,0.08)', backdropFilter: 'blur(10px)' } }}
                       InputProps={{ ...params.InputProps, endAdornment: (<>{isSearching ? <CircularProgress color="inherit" size={20} /> : null}{params.InputProps.endAdornment}</>) }}
                     />
                   )}
@@ -291,12 +290,12 @@ const MarketInsights = () => {
                 )}
               </Stack>
 
-              <CardWrapper 
-                title={t('tools.items.marketInsights.weather')} 
-                icon={weatherVisual?.icon || WbSunnyIcon} 
-                loading={loading.weather} 
-                onRefresh={fetchWeather} 
-                type="weather" 
+              <CardWrapper
+                title={t('tools.items.marketInsights.weather')}
+                icon={weatherVisual?.icon || WbSunnyIcon}
+                loading={loading.weather}
+                onRefresh={fetchWeather}
+                type="weather"
                 customBg={weatherVisual?.bg}
                 iconAnimate={weatherVisual?.animate}
                 sx={{ flexGrow: 1 }}
@@ -433,11 +432,11 @@ const MarketInsights = () => {
                 </CardWrapper>
               </Grid>
               <Grid item xs={12}>
-                <CardWrapper 
-                  title={t('tools.items.marketInsights.news')} 
-                  icon={PublicIcon} 
-                  loading={loading.news} 
-                  onRefresh={fetchNews} 
+                <CardWrapper
+                  title={t('tools.items.marketInsights.news')}
+                  icon={PublicIcon}
+                  loading={loading.news}
+                  onRefresh={fetchNews}
                   type="news"
                   iconAnimate={{ rotateY: 360 }}
                 >
@@ -452,7 +451,7 @@ const MarketInsights = () => {
                           </Stack>
                         </Box>
                       ))}
-                      <Box sx={{ textAlign: 'center', pt: 1 }}><PFTypography variant="button" component="a" href="/tools/market-insights/news" sx={{ textDecoration: 'none', color: isLight ? '#B8891F' : '#F5D060', fontWeight: 700, fontSize: '0.75rem' }}>{t('tools.items.marketInsights.viewAll')} →</PFTypography></Box></>
+                        <Box sx={{ textAlign: 'center', pt: 1 }}><PFTypography variant="button" component="a" href="/tools/market-insights/news" sx={{ textDecoration: 'none', color: isLight ? '#B8891F' : '#F5D060', fontWeight: 700, fontSize: '0.75rem' }}>{t('tools.items.marketInsights.viewAll')} →</PFTypography></Box></>
                     ) : (
                       <Typography variant="caption" sx={{ opacity: 0.5 }}>{t('tools.items.marketInsights.noNews')}</Typography>
                     )}

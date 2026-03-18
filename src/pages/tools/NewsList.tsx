@@ -56,10 +56,10 @@ const NewsList = () => {
   const isLight = palette.mode === 'light';
   
   const [news, setNews] = useState<any[]>([]);
-  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const observer = useRef<IntersectionObserver | null>(null);
+  const pageRef = useRef(1);
 
   const fetchNews = useCallback(async (pageNum: number) => {
     if (loading && pageNum !== 1) return;
@@ -123,11 +123,8 @@ const NewsList = () => {
     if (observer.current) observer.current.disconnect();
     observer.current = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting && hasMore) {
-        setPage(prevPage => {
-          const nextPage = prevPage + 1;
-          fetchNews(nextPage);
-          return nextPage;
-        });
+        pageRef.current += 1;
+        fetchNews(pageRef.current);
       }
     });
     if (node) observer.current.observe(node);
