@@ -6,6 +6,9 @@ export default defineConfig(_configEnv => {
     return {
         base: process.env.BASE_PATH || '/',
         plugins: [react()],
+        server: {
+            port: 3000,
+        },
         resolve: {
             alias: {
                 '@public': resolve(__dirname, 'public'),

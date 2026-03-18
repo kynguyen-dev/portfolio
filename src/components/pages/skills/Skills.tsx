@@ -5,73 +5,50 @@ import {HorizontalSkillList, HorizontalSkillListProps,} from '@components/custom
 import { useTranslation } from 'react-i18next';
 import {APP_THEMES, APP_TYPOGRAPHIES} from "@constants";
 import { staggerContainer, staggerScaleUp } from '@utils/animations/scrollVariants';
+import {
+  SiTypescript,
+  SiReact,
+  SiMui,
+  SiTailwindcss,
+  SiNextdotjs,
+  SiMongodb,
+  SiPostgresql,
+  SiAndroid,
+  SiAngular,
+  SiJira,
+  SiFigma,
+  SiSpringboot,
+} from '@icons-pack/react-simple-icons';
+
+const ICON_SIZE = 72;
 
 const skillGroups: { titleKey: string; skillBoxes: HorizontalSkillListProps['skillBoxes'] }[] = [
   {
     titleKey: 'skills.core',
     skillBoxes: [
-      {
-        imageUrl: '/icons/skills/typescript.png',
-        title: 'Typescript',
-      },
-      {
-        imageUrl: '/icons/skills/react.png',
-        title: 'React',
-      },
-      {
-        imageUrl: '/icons/skills/mui.png',
-        title: 'MUI',
-      },
-      {
-        imageUrl: '/icons/skills/tailwindcss.png',
-        title: 'TailwindCSS',
-      },
+      { icon: <SiTypescript size={ICON_SIZE} color="#3178C6" />, title: 'TypeScript' },
+      { icon: <SiReact size={ICON_SIZE} color="#61DAFB" />, title: 'React' },
+      { icon: <SiMui size={ICON_SIZE} color="#007FFF" />, title: 'MUI' },
+      { icon: <SiTailwindcss size={ICON_SIZE} color="#06B6D4" />, title: 'TailwindCSS' },
     ],
   },
   {
     titleKey: 'skills.additional',
     skillBoxes: [
-      {
-        imageUrl: '/icons/skills/java.png',
-        title: 'Java',
-      },
-      {
-        imageUrl: '/icons/skills/android.png',
-        title: 'Java Android',
-      },
-      {
-        imageUrl: '/icons/skills/nextjs.jpg',
-        title: 'NextJS',
-      },
-      {
-        imageUrl: '/icons/skills/angular.png',
-        title: 'Angular',
-      },
-      {
-        imageUrl: '/icons/skills/mongodb.svg',
-        title: 'MongoDB',
-      },
-      {
-        imageUrl: '/icons/skills/postgresql.png',
-        title: 'PostgreSQL',
-      },
+      { icon: <SiSpringboot size={ICON_SIZE} color="#6DB33F" />, title: 'Spring Boot' },
+      { icon: <SiAndroid size={ICON_SIZE} color="#34A853" />, title: 'Java Android' },
+      { icon: <SiNextdotjs size={ICON_SIZE} />, title: 'NextJS' },
+      { icon: <SiAngular size={ICON_SIZE} color="#DD0031" />, title: 'Angular' },
+      { icon: <SiMongodb size={ICON_SIZE} color="#47A248" />, title: 'MongoDB' },
+      { icon: <SiPostgresql size={ICON_SIZE} color="#4169E1" />, title: 'PostgreSQL' },
     ],
   },
   {
     titleKey: 'skills.toolsAndMethods',
     skillBoxes: [
-      {
-        imageUrl: '/icons/skills/jira.png',
-        title: 'Jira',
-      },
-      {
-        imageUrl: '/icons/skills/figma.png',
-        title: 'Figma',
-      },
-      {
-        imageUrl: '/icons/skills/agile.png',
-        title: 'Agile & Scrum',
-      },
+      { icon: <SiJira size={ICON_SIZE} color="#0052CC" />, title: 'Jira' },
+      { icon: <SiFigma size={ICON_SIZE} color="#F24E1E" />, title: 'Figma' },
+      { imageUrl: '/icons/skills/agile.png', title: 'Agile & Scrum' },
     ],
   },
 ];

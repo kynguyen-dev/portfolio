@@ -13,6 +13,11 @@ node_modules
 dist-ssr
 *.local
 
+# environment
+.env
+.env.local
+.env.*.local
+
 # build
 dist
 .vite
@@ -33,3 +38,4 @@ package-lock.json
 yarn-error.lock
 
 *storybook.log
+storybook-static

@@ -44,6 +44,7 @@ export const HorizontalSkillList = ({
             >
               <SkillBox
                 imageUrl={skillBox.imageUrl}
+                icon={skillBox.icon}
                 title={skillBox.title}
                 titleColor={skillBox.titleColor}
               />
