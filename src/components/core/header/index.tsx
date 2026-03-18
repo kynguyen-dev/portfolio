@@ -16,6 +16,7 @@ import Button from '@mui/material/Button';
 import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from '@components/core/language-switcher/LanguageSwitcher';
 import { ThemeModeToggle } from '@components/core/theme-toggle/ThemeModeToggle';
+import { AuthButton } from '@components/core/auth';
 import { APP_PAGES } from '@constants';
 import { useTheme } from '@mui/material/styles';
 
@@ -44,7 +45,9 @@ export const PFAppBar = () => {
   const theme = useTheme();
   const isLight = theme.palette.mode === 'light';
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [activeSection, setActiveSection] = React.useState<string>(APP_PAGES.HOME.toLowerCase());
+  const [activeSection, setActiveSection] = React.useState<string>(
+    APP_PAGES.HOME.toLowerCase()
+  );
 
   // Track active section on scroll
   React.useEffect(() => {
@@ -88,8 +91,19 @@ export const PFAppBar = () => {
 
   const drawer = (
     <Box sx={{ textAlign: 'center' }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', px: 2, my: 1 }}>
-        <Typography variant='h6' sx={{ fontWeight: 'bold', color: isLight ? '#5C4A32' : '#FFE4B5' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          px: 2,
+          my: 1,
+        }}
+      >
+        <Typography
+          variant='h6'
+          sx={{ fontWeight: 'bold', color: isLight ? '#5C4A32' : '#FFE4B5' }}
+        >
           Ky Nguyen
         </Typography>
         <IconButton
@@ -100,7 +114,13 @@ export const PFAppBar = () => {
           <CloseIcon />
         </IconButton>
       </Box>
-      <Divider sx={{ borderColor: isLight ? 'rgba(184,137,31,0.3)' : 'rgba(245, 208, 96, 0.3)' }} />
+      <Divider
+        sx={{
+          borderColor: isLight
+            ? 'rgba(184,137,31,0.3)'
+            : 'rgba(245, 208, 96, 0.3)',
+        }}
+      />
       <List>
         {navItems.map(item => (
           <ListItem key={item} disablePadding>
@@ -113,9 +133,10 @@ export const PFAppBar = () => {
             </ListItemButton>
           </ListItem>
         ))}
-        <ListItem sx={{ justifyContent: 'center', mt: 1 }}>
+        <ListItem sx={{ justifyContent: 'center', mt: 1, gap: 0.5 }}>
           <ThemeModeToggle />
           <LanguageSwitcher />
+          <AuthButton />
         </ListItem>
       </List>
     </Box>
@@ -130,8 +151,12 @@ export const PFAppBar = () => {
         sx={{
           px: { md: '20%' },
           backdropFilter: 'blur(12px)',
-          backgroundColor: isLight ? 'rgba(251,246,238,0.85)' : 'rgba(11, 13, 46, 0.7)',
-          boxShadow: isLight ? '0 1px 20px rgba(0,0,0,0.08)' : '0 1px 20px rgba(0,0,0,0.3)',
+          backgroundColor: isLight
+            ? 'rgba(251,246,238,0.85)'
+            : 'rgba(11, 13, 46, 0.7)',
+          boxShadow: isLight
+            ? '0 1px 20px rgba(0,0,0,0.08)'
+            : '0 1px 20px rgba(0,0,0,0.3)',
         }}
       >
         <Toolbar>
@@ -140,7 +165,11 @@ export const PFAppBar = () => {
             aria-label='open drawer'
             edge='start'
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' }, color: isLight ? '#5C4A32' : '#FFE4B5' }}
+            sx={{
+              mr: 2,
+              display: { sm: 'none' },
+              color: isLight ? '#5C4A32' : '#FFE4B5',
+            }}
           >
             <MenuIcon />
           </IconButton>
@@ -158,19 +187,27 @@ export const PFAppBar = () => {
               <Button
                 key={item}
                 sx={{
-                  color: activeSection === item.toLowerCase()
-                    ? (isLight ? '#B8891F' : '#F5D060')
-                    : (isLight ? '#5C4A32' : '#FFE4B5'),
+                  color:
+                    activeSection === item.toLowerCase()
+                      ? isLight
+                        ? '#B8891F'
+                        : '#F5D060'
+                      : isLight
+                        ? '#5C4A32'
+                        : '#FFE4B5',
                   fontWeight: activeSection === item.toLowerCase() ? 700 : 500,
-                  borderBottom: activeSection === item.toLowerCase()
-                    ? `2px solid ${isLight ? '#B8891F' : '#F5D060'}`
-                    : '2px solid transparent',
+                  borderBottom:
+                    activeSection === item.toLowerCase()
+                      ? `2px solid ${isLight ? '#B8891F' : '#F5D060'}`
+                      : '2px solid transparent',
                   borderRadius: 0,
                   transition: 'all 0.3s ease',
                   mx: 0.5,
                   '&:hover': {
                     color: isLight ? '#B8891F' : '#F5D060',
-                    backgroundColor: isLight ? 'rgba(184,137,31,0.1)' : 'rgba(245, 208, 96, 0.1)',
+                    backgroundColor: isLight
+                      ? 'rgba(184,137,31,0.1)'
+                      : 'rgba(245, 208, 96, 0.1)',
                   },
                 }}
                 onClick={() => handleScrollTo(item)}
@@ -179,9 +216,17 @@ export const PFAppBar = () => {
               </Button>
             ))}
           </Box>
-          <Box sx={{ display: { xs: 'none', sm: 'flex' }, ml: 1, alignItems: 'center', gap: 0.5 }}>
+          <Box
+            sx={{
+              display: { xs: 'none', sm: 'flex' },
+              ml: 1,
+              alignItems: 'center',
+              gap: 0.5,
+            }}
+          >
             <ThemeModeToggle />
             <LanguageSwitcher />
+            <AuthButton />
           </Box>
         </Toolbar>
       </AppBar>
@@ -199,7 +244,9 @@ export const PFAppBar = () => {
             '& .MuiDrawer-paper': {
               boxSizing: 'border-box',
               width: drawerWidth,
-              backgroundColor: isLight ? 'rgba(251,246,238,0.98)' : 'rgba(11, 13, 46, 0.95)',
+              backgroundColor: isLight
+                ? 'rgba(251,246,238,0.98)'
+                : 'rgba(11, 13, 46, 0.95)',
               backdropFilter: 'blur(12px)',
               color: isLight ? '#5C4A32' : '#FFE4B5',
             },

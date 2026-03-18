@@ -5,6 +5,9 @@ import {resolve} from 'path';
 export default defineConfig(_configEnv => {
     return {
         plugins: [react()],
+        server: {
+            port: 3000,
+        },
         resolve: {
             alias: {
                 '@public': resolve(__dirname, 'public'),
