@@ -72,47 +72,47 @@ export const vi = {
     viewDetails: 'Xem chi tiết {{title}}',
     privateProject: 'Dự án nội bộ / Riêng tư',
     logistic: {
-      title: 'DrivaLink — Logistics',
+      title: 'DrivaLink — Logistics & An toàn Tài xế',
       description:
-        'Xây dựng nền tảng logistics hợp nhất an toàn tài xế, bảo trì xe tải và theo dõi đội xe. Tối ưu quy trình tuân thủ, giảm thời gian đào tạo tài xế mới.',
+        'Xây dựng hệ thống quản lý logistics và an toàn tài xế, kết hợp theo dõi đội xe, quy trình tuân thủ và ứng dụng di động hỗ trợ tài xế.',
       contributions: [
-        'Thiết kế frontend với React 18, TypeScript & TanStack Query',
-        'Xây dựng dashboard theo dõi đội xe real-time với GPS',
-        'Triển khai phân quyền truy cập với Auth0',
+        'Phát triển backend với Java 8 & Spring Boot cho API quản lý đội xe',
+        'Xây dựng dashboard admin responsive với Angular cho quản lý đội xe',
+        'Phát triển ứng dụng Android để giám sát an toàn tài xế real-time',
         'Hướng dẫn 2 junior developer qua code review & pair programming',
       ],
     },
     medical: {
-      title: 'Nền tảng Nghiên cứu Động kinh',
+      title: 'Nền tảng Y tế — Nghiên cứu Động kinh',
       description:
-        'Phát triển ứng dụng quản lý dữ liệu lâm sàng cho nhà nghiên cứu. Tối ưu quy trình báo cáo bệnh nhân, giảm thời gian nhập liệu.',
+        'Phát triển nền tảng y tế cho trung tâm nghiên cứu động kinh, quản lý dữ liệu lâm sàng, theo dõi tình trạng bệnh nhân và tối ưu quy trình báo cáo sức khỏe.',
       contributions: [
-        'Thiết kế thư viện component với Material UI',
-        'Tích hợp RESTful API với TanStack Query',
-        'Triển khai validation form với React Hook Form + Yup',
+        'Thiết kế thư viện component tái sử dụng với Material UI',
+        'Tích hợp xác thực và phân quyền bảo mật với Auth0',
+        'Triển khai validation form phức tạp với React Hook Form + Yup',
         'Đạt 90%+ test coverage với Jest & React Testing Library',
       ],
     },
     education: {
-      title: 'Edalex — Dashboard Học viên',
+      title: 'Learner Dashboard — Nền tảng Giáo dục',
       description:
-        'Xây dựng dashboard học viên cung cấp truy cập 24/7 vào huy hiệu, so sánh nhóm và theo dõi điểm danh.',
+        'Xây dựng dashboard học viên cho các tổ chức giáo dục Úc, cung cấp truy cập 24/7 vào huy hiệu, so sánh nhóm và theo dõi điểm danh.',
       contributions: [
-        'Phát triển tính năng full-stack với Next.js, MongoDB & Auth0',
-        'Xây dựng trực quan hóa dữ liệu tiến độ học tập',
-        'Triển khai SSR cải thiện SEO và hiệu suất tải trang',
+        'Phát triển UI component tương tác với ReactJS và tài liệu hóa bằng Storybook',
+        'Triển khai quản lý server-state hiệu quả với TanStack Query',
+        'Xây dựng microservices backend với Java & Micronaut',
         'Phối hợp với designer để xây dựng UI responsive, accessible',
       ],
     },
     hireService: {
-      title: 'AirConSub — Dịch vụ thuê',
+      title: 'AirConSub — Dịch vụ Thuê Điều hòa',
       description:
-        'Phát triển dịch vụ đăng ký full-stack xử lý đặt lịch, thanh toán và lịch trình cho dịch vụ máy lạnh.',
+        'Phát triển nền tảng dịch vụ thuê điều hòa full-stack cho thị trường Nhật Bản, xử lý quản lý đăng ký, đặt lịch và lịch trình dịch vụ.',
       contributions: [
-        'Xây dựng ứng dụng full-stack với React, Next.js & Drizzle ORM',
-        'Triển khai luồng đặt hàng & thanh toán với Stripe',
-        'Thiết kế schema database với SQLite + Drizzle ORM',
-        'Thiết lập CI/CD pipeline cho testing và deployment tự động',
+        'Xây dựng trang server-rendered và API routes với Next.js App Router & TypeScript',
+        'Thiết kế schema database quan hệ và quản lý migration với Drizzle ORM',
+        'Triển khai UI responsive, mobile-first với Tailwind CSS',
+        'Hoàn thành tính năng end-to-end theo sprint Agile trong team đa văn hóa',
       ],
     },
   },
@@ -126,19 +126,19 @@ export const vi = {
       {
         quote: 'Ky luôn hoàn thành code production-ready trước deadline. Kiến thức sâu về React và TypeScript tạo tác động thực sự lên chất lượng sản phẩm, và anh ấy luôn sẵn sàng giúp đồng nghiệp phát triển.',
         name: 'Team Lead',
-        title: 'DrivaLink',
+        title: 'PTN Global — DrivaLink',
         relationship: 'Quản lý trực tiếp',
       },
       {
         quote: 'Làm việc với Ky là trải nghiệm tuyệt vời — anh ấy biến yêu cầu phức tạp thành UI sạch, accessible. Sự tỉ mỉ và giao tiếp chủ động giúp hợp tác xuyên team rất mượt mà.',
         name: 'Senior Developer',
-        title: 'Edalex',
+        title: 'PTN Global — Learner Dashboard',
         relationship: 'Đồng nghiệp',
       },
       {
         quote: 'Ky mang đến cả kỹ năng kỹ thuật và đam mê thực sự về trải nghiệm người dùng. Anh ấy giới thiệu best practices hiện đại và cải thiện đáng kể test coverage.',
         name: 'Project Manager',
-        title: 'Epilepsy Research Center',
+        title: 'PTN Global — Epilepsy Research',
         relationship: 'Stakeholder dự án',
       },
     ],
@@ -190,14 +190,6 @@ export const vi = {
     subtitle: 'Những mini app tôi xây dựng để khám phá ý tưởng, trau dồi kỹ năng và vui với công nghệ.',
     explore: 'Khám phá',
     items: {
-      weather: {
-        title: 'AI Weather Advisor',
-        description: 'Nhận gợi ý trang phục & hoạt động cá nhân hóa dựa trên dữ liệu thời tiết thực và AI.',
-      },
-      dbExplorer: {
-        title: 'Smart Database Explorer',
-        description: 'Đặt câu hỏi bằng tiếng Việt — AI chuyển đổi thành câu lệnh SQL tức thì.',
-      },
       gallery: {
         title: 'Infinite Photo Gallery',
         description: 'Gallery ảo hóa hiển thị hàng nghìn ảnh ở 60 FPS với cuộn vô tận.',

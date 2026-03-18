@@ -20,18 +20,6 @@ interface ToolItem {
 
 const TOOLS: ToolItem[] = [
   {
-    emoji: '🌤️',
-    titleKey: 'tools.items.weather.title',
-    descriptionKey: 'tools.items.weather.description',
-    route: ROUTES.TOOLS.WEATHER_ADVISOR,
-  },
-  {
-    emoji: '🗄️',
-    titleKey: 'tools.items.dbExplorer.title',
-    descriptionKey: 'tools.items.dbExplorer.description',
-    route: ROUTES.TOOLS.DB_EXPLORER,
-  },
-  {
     emoji: '🖼️',
     titleKey: 'tools.items.gallery.title',
     descriptionKey: 'tools.items.gallery.description',

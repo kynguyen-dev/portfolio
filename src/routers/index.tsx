@@ -37,8 +37,7 @@ const rootRoute = createRootRoute({
 /* ─── Lazy page imports ─── */
 const HomePage = lazy(() => import('@pages/Home'));
 const NotFoundPage = lazy(() => import('@pages/NotFound'));
-const WeatherAdvisorPage = lazy(() => import('@pages/tools/WeatherAdvisor'));
-const DbExplorerPage = lazy(() => import('@pages/tools/DbExplorer'));
+
 const GalleryPage = lazy(() => import('@pages/tools/Gallery'));
 const ThreeKingdomsPage = lazy(() => import('@pages/tools/ThreeKingdoms'));
 const AiSqlHelperPage = lazy(() => import('@pages/tools/AiSqlHelper'));
@@ -52,17 +51,7 @@ const homeRoute = createRoute({
   component: HomePage,
 });
 
-const weatherRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: '/tools/weather-advisor',
-  component: WeatherAdvisorPage,
-});
 
-const dbExplorerRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: '/tools/db-explorer',
-  component: DbExplorerPage,
-});
 
 const galleryRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -103,8 +92,7 @@ const notFoundRoute = createRoute({
 /* ─── Route tree & router ─── */
 const routeTree = rootRoute.addChildren([
   homeRoute,
-  weatherRoute,
-  dbExplorerRoute,
+
   galleryRoute,
   threeKingdomsRoute,
   aiSqlHelperRoute,
