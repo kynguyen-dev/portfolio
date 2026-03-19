@@ -39,7 +39,10 @@ const AvatarCell = ({ character }: { character: ThreeKingdomsCharacter }) => {
           alt={character.name.en}
           sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
           fallback={
-            <Box component="span" sx={{ fontWeight: 700, fontSize: '0.85rem', color: km.color }}>
+            <Box
+              component='span'
+              sx={{ fontWeight: 700, fontSize: '0.85rem', color: km.color }}
+            >
               {character.name.cn.charAt(0)}
             </Box>
           }
@@ -47,7 +50,9 @@ const AvatarCell = ({ character }: { character: ThreeKingdomsCharacter }) => {
       </Box>
       <Box>
         <Box sx={{ fontWeight: 700, lineHeight: 1.2 }}>{character.name.cn}</Box>
-        <Box sx={{ fontSize: '0.75rem', opacity: 0.7 }}>{character.name.vi} · {character.name.en}</Box>
+        <Box sx={{ fontSize: '0.75rem', opacity: 0.7 }}>
+          {character.name.vi} · {character.name.en}
+        </Box>
       </Box>
     </Box>
   );
@@ -77,6 +82,7 @@ export const CharacterTable = ({
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const columns: ColumnDef<ThreeKingdomsCharacter, any>[] = useMemo(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const base: ColumnDef<ThreeKingdomsCharacter, any>[] = [
       columnHelper.accessor(row => row.name.en, {
         id: 'name',
@@ -110,17 +116,21 @@ export const CharacterTable = ({
     ];
 
     if (!isMobile) {
-      base.splice(2, 0, columnHelper.accessor(row => row.hometown, {
-        id: 'hometown',
-        header: '📍 Hometown',
-        cell: info => (
-          <Box sx={{ fontSize: '0.82rem', opacity: 0.85 }}>
-            {info.getValue()}
-          </Box>
-        ),
-        size: 160,
-        minSize: 120,
-      }));
+      base.splice(
+        2,
+        0,
+        columnHelper.accessor(row => row.hometown, {
+          id: 'hometown',
+          header: '📍 Hometown',
+          cell: info => (
+            <Box sx={{ fontSize: '0.82rem', opacity: 0.85 }}>
+              {info.getValue()}
+            </Box>
+          ),
+          size: 160,
+          minSize: 120,
+        })
+      );
 
       base.push(
         columnHelper.accessor(row => row.stats.intelligence, {
@@ -128,29 +138,29 @@ export const CharacterTable = ({
           header: '🧠 Intel',
           cell: info => <StatCell value={info.getValue()} />,
           size: 100,
-        minSize: 70,
+          minSize: 70,
         }),
         columnHelper.accessor(row => row.stats.politics, {
           id: 'politics',
           header: '📜 Polit',
           cell: info => <StatCell value={info.getValue()} />,
           size: 100,
-        minSize: 70,
+          minSize: 70,
         }),
         columnHelper.accessor(row => row.stats.charisma, {
           id: 'charisma',
           header: '✨ Charm',
           cell: info => <StatCell value={info.getValue()} />,
           size: 100,
-        minSize: 70,
+          minSize: 70,
         }),
         columnHelper.accessor(row => row.stats.leadership, {
           id: 'leadership',
           header: '👑 Lead',
           cell: info => <StatCell value={info.getValue()} />,
           size: 100,
-        minSize: 70,
-        }),
+          minSize: 70,
+        })
       );
     }
 
@@ -171,7 +181,11 @@ export const CharacterTable = ({
     globalFilterFn: (row, _columnId, filterValue: string) => {
       const s = filterValue.toLowerCase();
       const { cn, en, vi } = row.original.name;
-      return cn.toLowerCase().includes(s) || en.toLowerCase().includes(s) || vi.toLowerCase().includes(s);
+      return (
+        cn.toLowerCase().includes(s) ||
+        en.toLowerCase().includes(s) ||
+        vi.toLowerCase().includes(s)
+      );
     },
   });
 
@@ -186,12 +200,18 @@ export const CharacterTable = ({
 
   const headerColor = isLight ? '#5C4A32' : '#FFE4B5';
   const rowHover = isLight ? 'rgba(184,137,31,0.06)' : 'rgba(245,208,96,0.06)';
-  const borderColor = isLight ? 'rgba(184,137,31,0.15)' : 'rgba(245,208,96,0.15)';
+  const borderColor = isLight
+    ? 'rgba(184,137,31,0.15)'
+    : 'rgba(245,208,96,0.15)';
 
   const headerColumns = table.getHeaderGroups()[0]?.headers ?? [];
-  const gridCols = headerColumns.length > 0
-    ? `${headerColumns[0].getSize()}px ${headerColumns.slice(1).map(() => '1fr').join(' ')}`
-    : '1fr';
+  const gridCols =
+    headerColumns.length > 0
+      ? `${headerColumns[0].getSize()}px ${headerColumns
+          .slice(1)
+          .map(() => '1fr')
+          .join(' ')}`
+      : '1fr';
 
   return (
     <Box
@@ -204,7 +224,9 @@ export const CharacterTable = ({
         borderRadius: 2,
         border: `1px solid ${borderColor}`,
         width: '100%',
-        backgroundColor: isLight ? 'rgba(255,248,240,0.5)' : 'rgba(11,13,46,0.35)',
+        backgroundColor: isLight
+          ? 'rgba(255,248,240,0.5)'
+          : 'rgba(11,13,46,0.35)',
         backdropFilter: 'blur(8px)',
       }}
     >
@@ -216,7 +238,9 @@ export const CharacterTable = ({
           position: 'sticky',
           top: 0,
           zIndex: 2,
-          backgroundColor: isLight ? 'rgba(251,246,238,0.95)' : 'rgba(11,13,46,0.9)',
+          backgroundColor: isLight
+            ? 'rgba(251,246,238,0.95)'
+            : 'rgba(11,13,46,0.9)',
           backdropFilter: 'blur(12px)',
           borderBottom: `1px solid ${borderColor}`,
         }}
@@ -244,12 +268,14 @@ export const CharacterTable = ({
               {header.column.getIsSorted() === 'asc' && ' ▲'}
               {header.column.getIsSorted() === 'desc' && ' ▼'}
             </Box>
-          )),
+          ))
         )}
       </Box>
 
       {/* Virtualized rows */}
-      <Box sx={{ height: `${virtualizer.getTotalSize()}px`, position: 'relative' }}>
+      <Box
+        sx={{ height: `${virtualizer.getTotalSize()}px`, position: 'relative' }}
+      >
         {virtualizer.getVirtualItems().map(vRow => {
           const row = rows[vRow.index];
           const km = getKingdomMeta(row.original.kingdom);
@@ -258,7 +284,7 @@ export const CharacterTable = ({
             <Box
               key={row.id}
               onClick={() => onRowClick(row.original)}
-              role="button"
+              role='button'
               tabIndex={0}
               onKeyDown={e => {
                 if (e.key === 'Enter') onRowClick(row.original);
@@ -323,9 +349,21 @@ export const CharacterTable = ({
 /* ─── Small stat cell with color scale ─── */
 const StatCell = ({ value }: { value: number }) => {
   const color =
-    value >= 90 ? '#C41E3A' : value >= 70 ? '#D4A843' : value >= 50 ? '#2E5090' : '#6B7280';
+    value >= 90
+      ? '#C41E3A'
+      : value >= 70
+        ? '#D4A843'
+        : value >= 50
+          ? '#2E5090'
+          : '#6B7280';
   return (
-    <Box sx={{ fontWeight: value >= 90 ? 700 : 500, color, fontVariantNumeric: 'tabular-nums' }}>
+    <Box
+      sx={{
+        fontWeight: value >= 90 ? 700 : 500,
+        color,
+        fontVariantNumeric: 'tabular-nums',
+      }}
+    >
       {value}
     </Box>
   );

@@ -24,13 +24,13 @@ export const Default: Story = {
   args: {
     threshold: 200,
   },
-  render: (args) => (
+  render: args => (
     <Box>
       <Stack spacing={3} sx={{ p: 4 }}>
-        <Typography variant="h4" fontWeight={700}>
+        <Typography variant='h4' fontWeight={700}>
           Back to Top Button
         </Typography>
-        <Typography variant="body1" color="text.secondary">
+        <Typography variant='body1' color='text.secondary'>
           Scroll down past {args.threshold}px to reveal the floating button in
           the bottom-left corner.
         </Typography>
@@ -43,8 +43,8 @@ export const Default: Story = {
               background: `rgba(128, 128, 128, ${0.05 + (i % 3) * 0.03})`,
             }}
           >
-            <Typography variant="h6">Section {i + 1}</Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant='h6'>Section {i + 1}</Typography>
+            <Typography variant='body2' color='text.secondary'>
               Keep scrolling to see the back-to-top button appear.
             </Typography>
           </Box>

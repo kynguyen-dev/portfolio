@@ -3,11 +3,16 @@ import { Box, useTheme } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
 
 const KONAMI = [
-  'ArrowUp', 'ArrowUp',
-  'ArrowDown', 'ArrowDown',
-  'ArrowLeft', 'ArrowRight',
-  'ArrowLeft', 'ArrowRight',
-  'b', 'a',
+  'ArrowUp',
+  'ArrowUp',
+  'ArrowDown',
+  'ArrowDown',
+  'ArrowLeft',
+  'ArrowRight',
+  'ArrowLeft',
+  'ArrowRight',
+  'b',
+  'a',
 ];
 
 /**
@@ -19,18 +24,15 @@ export const KonamiEasterEgg = () => {
   const [triggered, setTriggered] = useState(false);
   const bufferRef = useRef<string[]>([]);
 
-  const check = useCallback(
-    (buf: string[]) => {
-      if (buf.length < KONAMI.length) return;
-      const tail = buf.slice(-KONAMI.length);
-      if (tail.every((k, i) => k.toLowerCase() === KONAMI[i].toLowerCase())) {
-        setTriggered(true);
-        bufferRef.current = [];
-        setTimeout(() => setTriggered(false), 4000);
-      }
-    },
-    [],
-  );
+  const check = useCallback((buf: string[]) => {
+    if (buf.length < KONAMI.length) return;
+    const tail = buf.slice(-KONAMI.length);
+    if (tail.every((k, i) => k.toLowerCase() === KONAMI[i].toLowerCase())) {
+      setTriggered(true);
+      bufferRef.current = [];
+      setTimeout(() => setTriggered(false), 4000);
+    }
+  }, []);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -54,7 +56,7 @@ export const KonamiEasterEgg = () => {
     ];
     return {
       id: i,
-      x: Math.random() * 100,          // vw
+      x: Math.random() * 100, // vw
       delay: Math.random() * 0.5,
       size: 6 + Math.random() * 10,
       color: colors[i % colors.length],
@@ -66,7 +68,7 @@ export const KonamiEasterEgg = () => {
     <AnimatePresence>
       {triggered && (
         <motion.div
-          key="konami-overlay"
+          key='konami-overlay'
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.6 }}
@@ -112,7 +114,7 @@ export const KonamiEasterEgg = () => {
           </motion.div>
 
           {/* Confetti particles */}
-          {particles.map((p) => (
+          {particles.map(p => (
             <motion.div
               key={p.id}
               initial={{ y: '-10vh', x: `${p.x}vw`, opacity: 1, rotate: 0 }}
@@ -130,7 +132,8 @@ export const KonamiEasterEgg = () => {
                 position: 'absolute',
                 width: p.size,
                 height: p.size,
-                borderRadius: p.id % 3 === 0 ? '50%' : p.id % 3 === 1 ? '2px' : '0%',
+                borderRadius:
+                  p.id % 3 === 0 ? '50%' : p.id % 3 === 1 ? '2px' : '0%',
                 background: p.color,
               }}
             />

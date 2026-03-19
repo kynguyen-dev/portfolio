@@ -1,5 +1,12 @@
 import { useState, useMemo, useEffect, useCallback } from 'react';
-import { Stack, Box, IconButton, TextField, useTheme, InputAdornment } from '@mui/material';
+import {
+  Stack,
+  Box,
+  IconButton,
+  TextField,
+  useTheme,
+  InputAdornment,
+} from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from '@tanstack/react-router';
@@ -11,7 +18,10 @@ import { CharacterDetail } from '@components/pages/three-kingdoms/CharacterDetai
 import { BattleCompare } from '@components/pages/three-kingdoms/BattleCompare';
 import { KingdomFilter } from '@components/pages/three-kingdoms/KingdomFilter';
 import { CHARACTERS, QUOTES, getKingdomMeta } from '@constants/three-kingdoms';
-import type { ThreeKingdomsCharacter, Kingdom } from '@constants/three-kingdoms';
+import type {
+  ThreeKingdomsCharacter,
+  Kingdom,
+} from '@constants/three-kingdoms';
 import type { SortingState } from '@tanstack/react-table';
 
 type View = 'browse' | 'detail' | 'compare';
@@ -27,7 +37,9 @@ const ThreeKingdoms = () => {
   const [kingdomFilter, setKingdomFilter] = useState<Kingdom | 'all'>('all');
   const [sorting, setSorting] = useState<SortingState>([]);
   const [selected, setSelected] = useState<ThreeKingdomsCharacter | null>(null);
-  const [comparePick, setComparePick] = useState<ThreeKingdomsCharacter | null>(null);
+  const [comparePick, setComparePick] = useState<ThreeKingdomsCharacter | null>(
+    null
+  );
   const [fighter1, setFighter1] = useState<ThreeKingdomsCharacter | null>(null);
   const [fighter2, setFighter2] = useState<ThreeKingdomsCharacter | null>(null);
   const [quoteIdx, setQuoteIdx] = useState(0);
@@ -48,22 +60,25 @@ const ThreeKingdoms = () => {
       kingdomFilter === 'all'
         ? CHARACTERS
         : CHARACTERS.filter(c => c.kingdom === kingdomFilter),
-    [kingdomFilter],
+    [kingdomFilter]
   );
 
   /* ─── Handlers ─── */
-  const handleRowClick = useCallback((char: ThreeKingdomsCharacter) => {
-    if (comparePick) {
-      // We're in compare-pick mode — use this as fighter2
-      setFighter1(comparePick);
-      setFighter2(char);
-      setComparePick(null);
-      setView('compare');
-    } else {
-      setSelected(char);
-      setView('detail');
-    }
-  }, [comparePick]);
+  const handleRowClick = useCallback(
+    (char: ThreeKingdomsCharacter) => {
+      if (comparePick) {
+        // We're in compare-pick mode — use this as fighter2
+        setFighter1(comparePick);
+        setFighter2(char);
+        setComparePick(null);
+        setView('compare');
+      } else {
+        setSelected(char);
+        setView('detail');
+      }
+    },
+    [comparePick]
+  );
 
   const handleCompare = useCallback((char: ThreeKingdomsCharacter) => {
     setComparePick(char);
@@ -107,7 +122,15 @@ const ThreeKingdoms = () => {
     } else {
       navigate({ to: '/' });
     }
-  }, [view, navigate, fighter1, comparePick, handleBackToDetail, handleBackToBrowse, handleCancelCompare]);
+  }, [
+    view,
+    navigate,
+    fighter1,
+    comparePick,
+    handleBackToDetail,
+    handleBackToBrowse,
+    handleCancelCompare,
+  ]);
 
   /* ─── Keyboard shortcut: Escape to go back ─── */
   useEffect(() => {
@@ -121,21 +144,30 @@ const ThreeKingdoms = () => {
   return (
     <SunriseBackground>
       <Stack
-        component="main"
-        sx={{ height: 'calc(100vh - 80px)', overflow: 'hidden', px: { xs: 2, md: 6, lg: 8 }, py: { xs: 8, md: 10 } }}
+        component='main'
+        sx={{
+          height: 'calc(100vh - 80px)',
+          overflow: 'hidden',
+          px: { xs: 2, md: 6, lg: 8 },
+          py: { xs: 8, md: 10 },
+        }}
       >
         {/* Back button */}
         <Box sx={{ position: 'fixed', top: 20, left: 20, zIndex: 50 }}>
           <IconButton
             onClick={handleBack}
-            aria-label="Back"
+            aria-label='Back'
             sx={{
               color: isLight ? '#5C4A32' : '#FFE4B5',
-              background: isLight ? 'rgba(255,248,240,0.8)' : 'rgba(11,13,46,0.6)',
+              background: isLight
+                ? 'rgba(255,248,240,0.8)'
+                : 'rgba(11,13,46,0.6)',
               backdropFilter: 'blur(12px)',
               border: `1px solid ${isLight ? 'rgba(184,137,31,0.2)' : 'rgba(245,208,96,0.2)'}`,
               '&:hover': {
-                background: isLight ? 'rgba(255,248,240,0.95)' : 'rgba(11,13,46,0.85)',
+                background: isLight
+                  ? 'rgba(255,248,240,0.95)'
+                  : 'rgba(11,13,46,0.85)',
               },
             }}
           >
@@ -144,7 +176,7 @@ const ThreeKingdoms = () => {
         </Box>
 
         {/* Header — collapses when not browsing */}
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode='wait'>
           <motion.div
             key={view === 'browse' ? 'full' : 'compact'}
             initial={{ opacity: 0, height: 0 }}
@@ -152,18 +184,32 @@ const ThreeKingdoms = () => {
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <Stack alignItems="center" spacing={1} sx={{ mb: view === 'browse' ? 4 : 2 }}>
+            <Stack
+              alignItems='center'
+              spacing={1}
+              sx={{ mb: view === 'browse' ? 4 : 2 }}
+            >
               <motion.div
                 animate={{ scale: [1, 1.05, 1] }}
-                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
               >
                 <Box
-                  component="img"
-                  src="/images/three-kingdoms/logo.jpg"
-                  alt="Three Kingdoms"
+                  component='img'
+                  src='/images/three-kingdoms/logo.jpg'
+                  alt='Three Kingdoms'
                   sx={{
-                    width: view === 'browse' ? { xs: 80, md: 100 } : { xs: 48, md: 56 },
-                    height: view === 'browse' ? { xs: 80, md: 100 } : { xs: 48, md: 56 },
+                    width:
+                      view === 'browse'
+                        ? { xs: 80, md: 100 }
+                        : { xs: 48, md: 56 },
+                    height:
+                      view === 'browse'
+                        ? { xs: 80, md: 100 }
+                        : { xs: 48, md: 56 },
                     borderRadius: '50%',
                     objectFit: 'cover',
                     transition: 'all 0.3s ease',
@@ -174,13 +220,16 @@ const ThreeKingdoms = () => {
                   }}
                 />
               </motion.div>
-              <PFGradientTypography variant={view === 'browse' ? 'h3' : 'h5'} fontWeight={800}>
+              <PFGradientTypography
+                variant={view === 'browse' ? 'h3' : 'h5'}
+                fontWeight={800}
+              >
                 Three Kingdoms Finder
               </PFGradientTypography>
 
               {/* Rotating quote — only on browse */}
               {view === 'browse' && (
-                <AnimatePresence mode="wait">
+                <AnimatePresence mode='wait'>
                   <motion.div
                     key={quoteIdx}
                     initial={{ opacity: 0, y: 8 }}
@@ -189,7 +238,7 @@ const ThreeKingdoms = () => {
                     transition={{ duration: 0.5 }}
                   >
                     <PFTypography
-                      variant="body2"
+                      variant='body2'
                       sx={{
                         textAlign: 'center',
                         fontStyle: 'italic',
@@ -198,7 +247,15 @@ const ThreeKingdoms = () => {
                       }}
                     >
                       "{quote.vi}"
-                      <Box component="span" sx={{ display: 'block', fontSize: '0.7rem', mt: 0.5, opacity: 0.7 }}>
+                      <Box
+                        component='span'
+                        sx={{
+                          display: 'block',
+                          fontSize: '0.7rem',
+                          mt: 0.5,
+                          opacity: 0.7,
+                        }}
+                      >
                         — {quote.author}
                       </Box>
                     </PFTypography>
@@ -210,10 +267,10 @@ const ThreeKingdoms = () => {
         </AnimatePresence>
 
         {/* Content area */}
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode='wait'>
           {view === 'browse' && (
             <motion.div
-              key="browse"
+              key='browse'
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -234,17 +291,25 @@ const ThreeKingdoms = () => {
                     border: `1px solid ${getKingdomColor(comparePick)}40`,
                   }}
                 >
-                  <PFTypography variant="body2" sx={{ fontWeight: 600 }}>
+                  <PFTypography variant='body2' sx={{ fontWeight: 600 }}>
                     ⚔️ Select an opponent for{' '}
-                    <Box component="span" sx={{ color: getKingdomColor(comparePick), fontWeight: 800 }}>
+                    <Box
+                      component='span'
+                      sx={{
+                        color: getKingdomColor(comparePick),
+                        fontWeight: 800,
+                      }}
+                    >
                       {comparePick.name.cn} ({comparePick.name.en})
                     </Box>
                   </PFTypography>
                   <Box
                     onClick={handleCancelCompare}
-                    role="button"
+                    role='button'
                     tabIndex={0}
-                    onKeyDown={e => { if (e.key === 'Enter') handleCancelCompare(); }}
+                    onKeyDown={e => {
+                      if (e.key === 'Enter') handleCancelCompare();
+                    }}
                     sx={{
                       px: 1.5,
                       py: 0.5,
@@ -256,7 +321,9 @@ const ThreeKingdoms = () => {
                       border: `1px solid ${isLight ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.15)'}`,
                       transition: 'all 0.2s',
                       '&:hover': {
-                        background: isLight ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.08)',
+                        background: isLight
+                          ? 'rgba(0,0,0,0.05)'
+                          : 'rgba(255,255,255,0.08)',
                       },
                     }}
                   >
@@ -273,14 +340,16 @@ const ThreeKingdoms = () => {
                 sx={{ mb: 3 }}
               >
                 <TextField
-                  placeholder="Search by name..."
-                  size="small"
+                  placeholder='Search by name...'
+                  size='small'
                   value={search}
                   onChange={e => setSearch(e.target.value)}
                   InputProps={{
                     startAdornment: (
-                      <InputAdornment position="start">
-                        <SearchIcon sx={{ color: palette.text.secondary, fontSize: 20 }} />
+                      <InputAdornment position='start'>
+                        <SearchIcon
+                          sx={{ color: palette.text.secondary, fontSize: 20 }}
+                        />
                       </InputAdornment>
                     ),
                   }}
@@ -288,16 +357,23 @@ const ThreeKingdoms = () => {
                     flex: 1,
                     maxWidth: 320,
                     '& .MuiOutlinedInput-root': {
-                      backgroundColor: isLight ? 'rgba(255,248,240,0.7)' : 'rgba(11,13,46,0.4)',
+                      backgroundColor: isLight
+                        ? 'rgba(255,248,240,0.7)'
+                        : 'rgba(11,13,46,0.4)',
                       backdropFilter: 'blur(8px)',
                       borderRadius: 2,
                       '& fieldset': {
-                        borderColor: isLight ? 'rgba(184,137,31,0.2)' : 'rgba(245,208,96,0.2)',
+                        borderColor: isLight
+                          ? 'rgba(184,137,31,0.2)'
+                          : 'rgba(245,208,96,0.2)',
                       },
                     },
                   }}
                 />
-                <KingdomFilter selected={kingdomFilter} onChange={setKingdomFilter} />
+                <KingdomFilter
+                  selected={kingdomFilter}
+                  onChange={setKingdomFilter}
+                />
               </Stack>
 
               {/* Table */}
@@ -311,8 +387,13 @@ const ThreeKingdoms = () => {
 
               {/* Character count */}
               <PFTypography
-                variant="caption"
-                sx={{ display: 'block', textAlign: 'center', mt: 1.5, color: palette.text.secondary }}
+                variant='caption'
+                sx={{
+                  display: 'block',
+                  textAlign: 'center',
+                  mt: 1.5,
+                  color: palette.text.secondary,
+                }}
               >
                 {filteredData.length} warriors
               </PFTypography>
@@ -321,16 +402,19 @@ const ThreeKingdoms = () => {
 
           {view === 'detail' && selected && (
             <CharacterDetail
-              key="detail"
+              key='detail'
               character={selected}
-              onClose={() => { setView('browse'); setSelected(null); }}
+              onClose={() => {
+                setView('browse');
+                setSelected(null);
+              }}
               onCompare={handleCompare}
             />
           )}
 
           {view === 'compare' && fighter1 && fighter2 && (
             <BattleCompare
-              key="compare"
+              key='compare'
               fighter1={fighter1}
               fighter2={fighter2}
               onBackToDetail={handleBackToDetail}
@@ -344,6 +428,7 @@ const ThreeKingdoms = () => {
 };
 
 /* Helper to get kingdom color from a character */
-const getKingdomColor = (char: ThreeKingdomsCharacter) => getKingdomMeta(char.kingdom).color;
+const getKingdomColor = (char: ThreeKingdomsCharacter) =>
+  getKingdomMeta(char.kingdom).color;
 
 export default ThreeKingdoms;

@@ -23,16 +23,20 @@ export const SkillBox = (props: SkillBoxProps) => {
       <motion.div
         whileHover={{ y: -6 }}
         transition={{ type: 'spring', stiffness: 300, damping: 15 }}
-        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
       >
         {props.icon ? (
           props.icon
         ) : (
           <CardMedia
-            component="img"
+            component='img'
             image={props.imageUrl}
             alt={props.title}
-            loading="lazy"
+            loading='lazy'
             sx={{ width: '96px', height: '96px', objectFit: 'contain' }}
           />
         )}

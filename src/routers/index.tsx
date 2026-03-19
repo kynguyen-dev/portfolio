@@ -14,7 +14,7 @@ const RootLayout = () => {
   const { location } = useRouterState();
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode='wait'>
       <motion.div
         key={location.pathname}
         initial={{ opacity: 0 }}
@@ -50,8 +50,6 @@ const homeRoute = createRoute({
   path: '/',
   component: HomePage,
 });
-
-
 
 const galleryRoute = createRoute({
   getParentRoute: () => rootRoute,

@@ -44,12 +44,16 @@ export const CustomCursor = () => {
     const onOver = (e: Event) => {
       const target = e.target as HTMLElement;
       if (
-        target.closest('a, button, [role="button"], input, textarea, [tabindex]')
+        target.closest(
+          'a, button, [role="button"], input, textarea, [tabindex]'
+        )
       ) {
         hoveringRef.current = true;
       }
     };
-    const onOut = () => { hoveringRef.current = false; };
+    const onOut = () => {
+      hoveringRef.current = false;
+    };
 
     document.addEventListener('mouseover', onOver, { passive: true });
     document.addEventListener('mouseout', onOut, { passive: true });
@@ -64,7 +68,8 @@ export const CustomCursor = () => {
 
   if (prefersReduced || isTouch) return null;
 
-  const color = palette.mode === 'light' ? palette.primary.dark : palette.primary.light;
+  const color =
+    palette.mode === 'light' ? palette.primary.dark : palette.primary.light;
 
   return (
     <>

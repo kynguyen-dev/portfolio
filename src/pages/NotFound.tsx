@@ -12,12 +12,14 @@ const NotFound = () => {
 
   useEffect(() => {
     document.title = `${t('notFound.title')} | Ky Nguyen`;
-    return () => { document.title = 'Ky Nguyen | Software Developer Portfolio'; };
+    return () => {
+      document.title = 'Ky Nguyen | Software Developer Portfolio';
+    };
   }, [t]);
 
   return (
     <Stack
-      component="main"
+      component='main'
       flex={1}
       alignItems='center'
       justifyContent='center'
@@ -30,10 +32,17 @@ const NotFound = () => {
           : 'linear-gradient(180deg, #0B0D2E 0%, #1B1145 40%, #4A1942 100%)',
       }}
     >
-      <PFTypography variant='h1' fontWeight={600} sx={{ color: isLight ? '#B8891F' : '#F5D060' }}>
+      <PFTypography
+        variant='h1'
+        fontWeight={600}
+        sx={{ color: isLight ? '#B8891F' : '#F5D060' }}
+      >
         {t('notFound.title')}
       </PFTypography>
-      <PFTypography variant='h5' sx={{ color: isLight ? '#5C4A32' : '#FFE4B5' }}>
+      <PFTypography
+        variant='h5'
+        sx={{ color: isLight ? '#5C4A32' : '#FFE4B5' }}
+      >
         {t('notFound.message')}
       </PFTypography>
       <Button

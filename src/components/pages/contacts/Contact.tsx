@@ -1,17 +1,32 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
-import { Snackbar, Stack, SvgIconTypeMap, Tooltip, useTheme } from '@mui/material';
+import {
+  Snackbar,
+  Stack,
+  SvgIconTypeMap,
+  Tooltip,
+  useTheme,
+} from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import SmartphoneIcon from '@mui/icons-material/Smartphone';
 import { useTranslation } from 'react-i18next';
-import { APP_INFORMATION, APP_SIZES, EMAIL, GITHUB, LINKEDIN, PHONE } from '@constants';
+import {
+  APP_INFORMATION,
+  APP_SIZES,
+  EMAIL,
+  GITHUB,
+  LINKEDIN,
+  PHONE,
+} from '@constants';
 import { PFTypography } from '@components/core';
 
 interface ContactProps {
-  icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & { muiName: string };
+  icon: OverridableComponent<SvgIconTypeMap<object, 'svg'>> & {
+    muiName: string;
+  };
   id: string;
   href: string;
   messageKey: string;
@@ -80,7 +95,7 @@ export const Contact = () => {
               whileHover={{ scale: 1.2 }}
               whileTap={{ scale: 0.9 }}
               transition={{ type: 'spring', stiffness: 300 }}
-              role="link"
+              role='link'
               aria-label={t(messageKey)}
               tabIndex={0}
               onKeyDown={(e: React.KeyboardEvent) => {

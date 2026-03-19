@@ -14,8 +14,8 @@ const meta = {
 export default meta;
 
 export const Default = () => (
-  <Stack alignItems="center" spacing={2}>
-    <Typography variant="body2" color="text.secondary">
+  <Stack alignItems='center' spacing={2}>
+    <Typography variant='body2' color='text.secondary'>
       Click the icon to toggle between dark and light mode
     </Typography>
     <ThemeModeToggle />

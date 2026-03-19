@@ -20,7 +20,12 @@ interface MultiFormatImageProps {
  * Uses a JavaScript `Image()` object to probe for the correct extension without
  * rendering anything to the DOM (avoids layout/overflow clipping issues).
  */
-export const MultiFormatImage = ({ basePath, alt = '', sx, fallback }: MultiFormatImageProps) => {
+export const MultiFormatImage = ({
+  basePath,
+  alt = '',
+  sx,
+  fallback,
+}: MultiFormatImageProps) => {
   const [resolvedSrc, setResolvedSrc] = useState<string | null>(null);
   const [failed, setFailed] = useState(false);
   const probeRef = useRef<HTMLImageElement | null>(null);
@@ -79,7 +84,8 @@ export const MultiFormatImage = ({ basePath, alt = '', sx, fallback }: MultiForm
       <Box
         sx={{
           ...((sx ?? {}) as Record<string, unknown>),
-          background: 'linear-gradient(90deg, rgba(128,128,128,0.08) 25%, rgba(128,128,128,0.18) 50%, rgba(128,128,128,0.08) 75%)',
+          background:
+            'linear-gradient(90deg, rgba(128,128,128,0.08) 25%, rgba(128,128,128,0.18) 50%, rgba(128,128,128,0.08) 75%)',
           backgroundSize: '200% 100%',
           animation: 'shimmer 1.5s ease-in-out infinite',
           '@keyframes shimmer': {
@@ -91,13 +97,5 @@ export const MultiFormatImage = ({ basePath, alt = '', sx, fallback }: MultiForm
     );
   }
 
-  return (
-    <Box
-      component="img"
-      src={resolvedSrc}
-      alt={alt}
-      sx={sx}
-    />
-  );
+  return <Box component='img' src={resolvedSrc} alt={alt} sx={sx} />;
 };
-

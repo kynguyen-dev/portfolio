@@ -4,25 +4,25 @@ import { useMemo, ReactNode } from 'react';
 
 /* ───────── Sunrise color tokens ───────── */
 const DARK_SKY = {
-  top: '#0B0D2E',       // deep night sky
-  mid: '#1B1145',       // dark indigo
-  purple: '#4A1942',    // twilight purple
-  rose: '#8B2252',      // dawn rose
-  orange: '#D4652A',    // sunrise orange
-  gold: '#E8A838',      // golden horizon
-  yellow: '#F5D060',    // bright sunlight
-  peach: '#FFE4B5',     // warm peach glow
+  top: '#0B0D2E', // deep night sky
+  mid: '#1B1145', // dark indigo
+  purple: '#4A1942', // twilight purple
+  rose: '#8B2252', // dawn rose
+  orange: '#D4652A', // sunrise orange
+  gold: '#E8A838', // golden horizon
+  yellow: '#F5D060', // bright sunlight
+  peach: '#FFE4B5', // warm peach glow
 };
 
 const LIGHT_SKY = {
-  top: '#E8F0F8',       // pale blue sky
-  mid: '#D6E8F4',       // soft sky
-  purple: '#C8D8E8',    // lavender haze
-  rose: '#F0D8C8',      // blush
-  orange: '#F5D8A8',    // warm peach
-  gold: '#FAE8B0',      // soft gold
-  yellow: '#FFF2CC',    // cream sunshine
-  peach: '#FFF8F0',     // near-white cream
+  top: '#E8F0F8', // pale blue sky
+  mid: '#D6E8F4', // soft sky
+  purple: '#C8D8E8', // lavender haze
+  rose: '#F0D8C8', // blush
+  orange: '#F5D8A8', // warm peach
+  gold: '#FAE8B0', // soft gold
+  yellow: '#FFF2CC', // cream sunshine
+  peach: '#FFF8F0', // near-white cream
 };
 
 /* ───────── Floating light mote ───────── */
@@ -182,7 +182,9 @@ export const SunriseBackground = ({
   const isLight = theme.palette.mode === 'light';
   const SKY = isLight ? LIGHT_SKY : DARK_SKY;
 
-  const prefersReducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
+  const prefersReducedMotion = useMediaQuery(
+    '(prefers-reduced-motion: reduce)'
+  );
   const isMobile = useMediaQuery('(max-width:600px)');
 
   const moteCount = prefersReducedMotion ? 0 : isMobile ? 10 : 25;
@@ -191,7 +193,8 @@ export const SunriseBackground = ({
   const motes = useMemo(
     () =>
       Array.from({ length: moteCount }, (_, i) => {
-        const warm = i % 3 === 0 ? SKY.gold : i % 3 === 1 ? SKY.orange : SKY.peach;
+        const warm =
+          i % 3 === 0 ? SKY.gold : i % 3 === 1 ? SKY.orange : SKY.peach;
         return {
           id: i,
           size: 2 + Math.random() * 5,
@@ -201,7 +204,7 @@ export const SunriseBackground = ({
           color: warm,
         };
       }),
-    [moteCount, SKY],
+    [moteCount, SKY]
   );
 
   return (
@@ -268,8 +271,9 @@ export const SunriseBackground = ({
       {sun && <Sun sky={SKY} />}
 
       {/* Floating warm particles */}
-      {particles && showAnimations &&
-        motes.map((m) => (
+      {particles &&
+        showAnimations &&
+        motes.map(m => (
           <LightMote
             key={m.id}
             size={m.size}

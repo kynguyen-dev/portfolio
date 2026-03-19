@@ -5,7 +5,11 @@ import { motion } from 'framer-motion';
 import { PFTypography } from '@components/core';
 import { StatsRadarChart } from './StatsRadarChart';
 import { MultiFormatImage } from './MultiFormatImage';
-import { getKingdomMeta, STAT_LABELS, STAT_KEYS } from '@constants/three-kingdoms';
+import {
+  getKingdomMeta,
+  STAT_LABELS,
+  STAT_KEYS,
+} from '@constants/three-kingdoms';
 import type { ThreeKingdomsCharacter } from '@constants/three-kingdoms';
 
 interface CharacterDetailProps {
@@ -14,7 +18,11 @@ interface CharacterDetailProps {
   onCompare: (character: ThreeKingdomsCharacter) => void;
 }
 
-export const CharacterDetail = ({ character, onClose, onCompare }: CharacterDetailProps) => {
+export const CharacterDetail = ({
+  character,
+  onClose,
+  onCompare,
+}: CharacterDetailProps) => {
   const { palette } = useTheme();
   const isLight = palette.mode === 'light';
   const km = getKingdomMeta(character.kingdom);
@@ -79,17 +87,21 @@ export const CharacterDetail = ({ character, onClose, onCompare }: CharacterDeta
 
           <IconButton
             onClick={onClose}
-            aria-label="Close detail"
+            aria-label='Close detail'
             sx={{
               position: 'absolute',
               top: 12,
               right: 12,
               zIndex: 5,
               color: isLight ? '#5C4A32' : '#FFE4B5',
-              background: isLight ? 'rgba(255,248,240,0.7)' : 'rgba(11,13,46,0.5)',
+              background: isLight
+                ? 'rgba(255,248,240,0.7)'
+                : 'rgba(11,13,46,0.5)',
               backdropFilter: 'blur(8px)',
               '&:hover': {
-                background: isLight ? 'rgba(255,248,240,0.95)' : 'rgba(11,13,46,0.8)',
+                background: isLight
+                  ? 'rgba(255,248,240,0.95)'
+                  : 'rgba(11,13,46,0.8)',
               },
             }}
           >
@@ -97,8 +109,8 @@ export const CharacterDetail = ({ character, onClose, onCompare }: CharacterDeta
           </IconButton>
 
           <Stack
-            direction="row"
-            alignItems="flex-end"
+            direction='row'
+            alignItems='flex-end'
             spacing={2}
             sx={{
               position: 'absolute',
@@ -134,7 +146,7 @@ export const CharacterDetail = ({ character, onClose, onCompare }: CharacterDeta
                   sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   fallback={
                     <PFTypography
-                      variant="h3"
+                      variant='h3'
                       sx={{ fontWeight: 800, color: km.color, lineHeight: 1 }}
                     >
                       {character.name.cn.charAt(0)}
@@ -146,7 +158,7 @@ export const CharacterDetail = ({ character, onClose, onCompare }: CharacterDeta
 
             <Box sx={{ pb: 0.5 }}>
               <PFTypography
-                variant="h4"
+                variant='h4'
                 sx={{
                   fontWeight: 800,
                   color: km.color,
@@ -158,7 +170,7 @@ export const CharacterDetail = ({ character, onClose, onCompare }: CharacterDeta
                 {character.name.cn}
               </PFTypography>
               <PFTypography
-                variant="subtitle1"
+                variant='subtitle1'
                 sx={{
                   color: isLight ? palette.text.primary : '#e0d5c5',
                   textShadow: isLight
@@ -175,16 +187,24 @@ export const CharacterDetail = ({ character, onClose, onCompare }: CharacterDeta
         {/* ── Body content ── */}
         <Box
           sx={{
-            background: isLight ? 'rgba(255,248,240,0.92)' : 'rgba(11,13,46,0.8)',
+            background: isLight
+              ? 'rgba(255,248,240,0.92)'
+              : 'rgba(11,13,46,0.8)',
             backdropFilter: 'blur(16px)',
             p: { xs: 2.5, md: 4 },
             pt: { xs: 2, md: 3 },
           }}
         >
-          <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mb: 3 }}>
+          <Stack
+            direction='row'
+            spacing={1}
+            flexWrap='wrap'
+            useFlexGap
+            sx={{ mb: 3 }}
+          >
             <Chip
               label={`${km.name.en} (${km.name.cn})`}
-              size="small"
+              size='small'
               sx={{
                 backgroundColor: `${km.color}18`,
                 color: km.color,
@@ -194,32 +214,63 @@ export const CharacterDetail = ({ character, onClose, onCompare }: CharacterDeta
             />
             <Chip
               label={`📍 ${character.hometown}`}
-              size="small"
-              variant="outlined"
-              sx={{ borderColor: isLight ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.15)' }}
+              size='small'
+              variant='outlined'
+              sx={{
+                borderColor: isLight
+                  ? 'rgba(0,0,0,0.15)'
+                  : 'rgba(255,255,255,0.15)',
+              }}
             />
             <Chip
               label={character.weapon}
-              size="small"
-              variant="outlined"
-              sx={{ borderColor: isLight ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.15)' }}
+              size='small'
+              variant='outlined'
+              sx={{
+                borderColor: isLight
+                  ? 'rgba(0,0,0,0.15)'
+                  : 'rgba(255,255,255,0.15)',
+              }}
             />
           </Stack>
 
           <Box sx={{ maxWidth: 320, mx: 'auto', mb: 3 }}>
-            <StatsRadarChart stats={character.stats} color={km.color} label={character.name.en} />
+            <StatsRadarChart
+              stats={character.stats}
+              color={km.color}
+              label={character.name.en}
+            />
           </Box>
 
           <Stack spacing={1} sx={{ mb: 3 }}>
             {STAT_KEYS.map(key => (
-              <Stack key={key} direction="row" alignItems="center" spacing={1.5}>
+              <Stack
+                key={key}
+                direction='row'
+                alignItems='center'
+                spacing={1.5}
+              >
                 <PFTypography
-                  variant="caption"
-                  sx={{ width: 80, fontWeight: 600, color: palette.text.secondary, textAlign: 'right' }}
+                  variant='caption'
+                  sx={{
+                    width: 80,
+                    fontWeight: 600,
+                    color: palette.text.secondary,
+                    textAlign: 'right',
+                  }}
                 >
                   {STAT_LABELS[key].en}
                 </PFTypography>
-                <Box sx={{ flex: 1, height: 8, borderRadius: 1, backgroundColor: isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.08)' }}>
+                <Box
+                  sx={{
+                    flex: 1,
+                    height: 8,
+                    borderRadius: 1,
+                    backgroundColor: isLight
+                      ? 'rgba(0,0,0,0.06)'
+                      : 'rgba(255,255,255,0.08)',
+                  }}
+                >
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${character.stats[key]}%` }}
@@ -232,8 +283,12 @@ export const CharacterDetail = ({ character, onClose, onCompare }: CharacterDeta
                   />
                 </Box>
                 <PFTypography
-                  variant="caption"
-                  sx={{ width: 28, fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}
+                  variant='caption'
+                  sx={{
+                    width: 28,
+                    fontWeight: 700,
+                    fontVariantNumeric: 'tabular-nums',
+                  }}
                 >
                   {character.stats[key]}
                 </PFTypography>
@@ -241,10 +296,17 @@ export const CharacterDetail = ({ character, onClose, onCompare }: CharacterDeta
             ))}
           </Stack>
 
-          <Divider sx={{ mb: 2, borderColor: isLight ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.08)' }} />
+          <Divider
+            sx={{
+              mb: 2,
+              borderColor: isLight
+                ? 'rgba(0,0,0,0.08)'
+                : 'rgba(255,255,255,0.08)',
+            }}
+          />
 
           <PFTypography
-            variant="body2"
+            variant='body2'
             sx={{ color: palette.text.secondary, lineHeight: 1.7, mb: 3 }}
           >
             {character.bio}
@@ -252,9 +314,11 @@ export const CharacterDetail = ({ character, onClose, onCompare }: CharacterDeta
 
           <Box
             onClick={() => onCompare(character)}
-            role="button"
+            role='button'
             tabIndex={0}
-            onKeyDown={e => { if (e.key === 'Enter') onCompare(character); }}
+            onKeyDown={e => {
+              if (e.key === 'Enter') onCompare(character);
+            }}
             sx={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -274,7 +338,7 @@ export const CharacterDetail = ({ character, onClose, onCompare }: CharacterDeta
               },
             }}
           >
-            <CompareArrowsIcon fontSize="small" />
+            <CompareArrowsIcon fontSize='small' />
             Compare with another warrior…
           </Box>
         </Box>

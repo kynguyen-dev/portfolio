@@ -22,8 +22,8 @@ export const BackToTop = ({ threshold = 400 }: { threshold?: number }) => {
     <Zoom in={visible}>
       <Fab
         onClick={scrollToTop}
-        aria-label="Back to top"
-        size="small"
+        aria-label='Back to top'
+        size='small'
         sx={{
           position: 'fixed',
           bottom: 24,

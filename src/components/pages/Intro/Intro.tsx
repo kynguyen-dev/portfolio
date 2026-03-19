@@ -1,16 +1,20 @@
-import { motion } from "framer-motion";
-import { Avatar, Box, Chip, Stack, useTheme } from "@mui/material";
+import { motion } from 'framer-motion';
+import { Avatar, Box, Chip, Stack, useTheme } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { PFGradientTypography, PFTypography } from "@components/core";
-import { StyledButton } from "@components/core/button";
-import { useTranslation } from "react-i18next";
+import { PFGradientTypography, PFTypography } from '@components/core';
+import { StyledButton } from '@components/core/button';
+import { useTranslation } from 'react-i18next';
 import {
   APP_PAGES,
   APP_THEMES,
   APP_TYPOGRAPHIES,
   APP_TYPOGRAPHIES_ANIMATION,
-} from "@constants";
-import { staggerContainer, staggerItem, pop } from '@utils/animations/scrollVariants';
+} from '@constants';
+import {
+  staggerContainer,
+  staggerItem,
+  pop,
+} from '@utils/animations/scrollVariants';
 import { getYearsOfExperience } from '@utils/core/career';
 
 export const Intro = () => {
@@ -26,24 +30,29 @@ export const Intro = () => {
 
   return (
     <Box
-      component="section"
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
+      component='section'
+      display='flex'
+      justifyContent='center'
+      alignItems='center'
       id={APP_PAGES.HOME.toLowerCase()}
       aria-label={t('intro.title')}
-      sx={{ px: { xs: 3, md: 0 }, minHeight: '100vh', pt: { xs: 10, md: 12 }, pb: { xs: 4, md: 6 } }}
+      sx={{
+        px: { xs: 3, md: 0 },
+        minHeight: '100vh',
+        pt: { xs: 10, md: 12 },
+        pb: { xs: 4, md: 6 },
+      }}
     >
       <Stack
-        alignItems="center"
-        justifyContent="center"
+        alignItems='center'
+        justifyContent='center'
         gap={4}
-        textAlign={{ xs: "center", md: "left" }}
+        textAlign={{ xs: 'center', md: 'left' }}
       >
         <PFGradientTypography
           variant={APP_TYPOGRAPHIES.HEADER_PRIMARY}
           theme={APP_THEMES.DARK}
-          fontWeight="bold"
+          fontWeight='bold'
           animations={[
             APP_TYPOGRAPHIES_ANIMATION.TYPEWRITER,
             APP_TYPOGRAPHIES_ANIMATION.OUTLINE_TO_SOLID,
@@ -61,17 +70,24 @@ export const Intro = () => {
         {/* CTA Buttons */}
         <motion.div
           variants={staggerContainer(0.15, 0.3)}
-          initial="hidden"
-          animate="visible"
+          initial='hidden'
+          animate='visible'
         >
-          <Stack direction={{ xs: 'column', sm: 'row' }} gap={2} alignItems="center">
+          <Stack
+            direction={{ xs: 'column', sm: 'row' }}
+            gap={2}
+            alignItems='center'
+          >
             <motion.div variants={staggerItem}>
               <StyledButton
-                variant="contained"
-                size="large"
+                variant='contained'
+                size='large'
                 onClick={() => {
-                  const el = document.getElementById(APP_PAGES.PROJECTS.toLowerCase());
-                  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  const el = document.getElementById(
+                    APP_PAGES.PROJECTS.toLowerCase()
+                  );
+                  if (el)
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }}
               >
                 {t('intro.viewMyWork')}
@@ -79,10 +95,14 @@ export const Intro = () => {
             </motion.div>
             <motion.div variants={staggerItem}>
               <StyledButton
-                variant="outlined"
-                size="large"
+                variant='outlined'
+                size='large'
                 onClick={() => {
-                  window.open('/resume/Ky_Nguyen_CV.pdf', '_blank', 'noopener,noreferrer');
+                  window.open(
+                    '/resume/NGUYEN_TRUONG_KY_FULL_STACK_DEVELOPER_CV.pdf',
+                    '_blank',
+                    'noopener,noreferrer'
+                  );
                 }}
               >
                 {t('intro.downloadCV')}
@@ -95,11 +115,11 @@ export const Intro = () => {
         <Stack
           component={motion.div}
           variants={staggerContainer(0.1, 0.6)}
-          initial="hidden"
-          animate="visible"
-          direction="row"
-          flexWrap="wrap"
-          justifyContent="center"
+          initial='hidden'
+          animate='visible'
+          direction='row'
+          flexWrap='wrap'
+          justifyContent='center'
           gap={1.5}
         >
           {statBadges.map(badge => (
@@ -124,9 +144,19 @@ export const Intro = () => {
           component={motion.div}
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ type: 'spring', stiffness: 80, damping: 15, delay: 0.3 }}
+          transition={{
+            type: 'spring',
+            stiffness: 80,
+            damping: 15,
+            delay: 0.3,
+          }}
           whileHover={{ scale: 1.08, transition: { duration: 0.3 } }}
-          sx={{ position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
+          sx={{
+            position: 'relative',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
         >
           {/* Outer rotating dashed ring */}
           <Box
@@ -193,7 +223,10 @@ export const Intro = () => {
                   width: { md: 8, xs: 6 },
                   height: { md: 8, xs: 6 },
                   borderRadius: '50%',
-                  background: i % 2 === 0 ? palette.primary.light : palette.secondary.light,
+                  background:
+                    i % 2 === 0
+                      ? palette.primary.light
+                      : palette.secondary.light,
                   boxShadow: `0 0 8px ${i % 2 === 0 ? palette.primary.light : palette.secondary.light}`,
                 }}
               />
@@ -201,7 +234,7 @@ export const Intro = () => {
           ))}
           {/* Avatar image */}
           <Avatar
-            src="/images/avatar.jpg"
+            src='/images/avatar.jpg'
             alt="Ky Nguyen's avatar"
             sx={{
               width: { md: 180, xs: 120 },
@@ -238,7 +271,9 @@ export const Intro = () => {
             if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }}
         >
-          <KeyboardArrowDownIcon sx={{ fontSize: 36, color: palette.primary.light }} />
+          <KeyboardArrowDownIcon
+            sx={{ fontSize: 36, color: palette.primary.light }}
+          />
         </Box>
       </Stack>
     </Box>

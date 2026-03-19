@@ -27,7 +27,8 @@ export const MouseSpotlight = () => {
 
   if (prefersReduced || isMobile) return null;
 
-  const color = palette.mode === 'light' ? palette.primary.main : palette.primary.light;
+  const color =
+    palette.mode === 'light' ? palette.primary.main : palette.primary.light;
 
   return (
     <Box

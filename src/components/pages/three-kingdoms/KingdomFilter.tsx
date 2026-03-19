@@ -12,14 +12,16 @@ export const KingdomFilter = ({ selected, onChange }: KingdomFilterProps) => {
   const isLight = palette.mode === 'light';
 
   return (
-    <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+    <Stack direction='row' spacing={1} flexWrap='wrap' useFlexGap>
       <Chip
-        label="🏯 All"
+        label='🏯 All'
         variant={selected === 'all' ? 'filled' : 'outlined'}
         onClick={() => onChange('all')}
         sx={{
           fontWeight: selected === 'all' ? 700 : 500,
-          borderColor: isLight ? 'rgba(184,137,31,0.3)' : 'rgba(245,208,96,0.3)',
+          borderColor: isLight
+            ? 'rgba(184,137,31,0.3)'
+            : 'rgba(245,208,96,0.3)',
           ...(selected === 'all' && {
             background: isLight
               ? 'linear-gradient(135deg, rgba(184,137,31,0.15), rgba(196,30,58,0.08))'
@@ -49,4 +51,3 @@ export const KingdomFilter = ({ selected, onChange }: KingdomFilterProps) => {
     </Stack>
   );
 };
-

@@ -93,7 +93,7 @@ export const pop: Variants = {
  */
 export const staggerContainer = (
   staggerDelay = 0.12,
-  delayChildren = 0.1,
+  delayChildren = 0.1
 ): Variants => ({
   hidden: {},
   visible: {

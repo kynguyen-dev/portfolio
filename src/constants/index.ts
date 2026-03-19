@@ -52,21 +52,22 @@ export const YARN_URLS = 'https://yarnpkg.com/';
 export const VITE_URLS = 'https://vitejs.dev/';
 export const VERCEL_URLS = 'https://vercel.com/';
 
-export const LEARNER_DASHBOARD_URL = 'https://www.edalex.com/credentialate/learner-dashboard-features/';
+export const LEARNER_DASHBOARD_URL =
+  'https://www.edalex.com/credentialate/learner-dashboard-features/';
 export const EPILEPSY_PROJECT_URL = 'https://www.epilepsyproject.org.au/';
 export const DRIVALINK_URL = 'https://www.drivalink.com.au/';
 
 export enum APP_INFORMATION {
-  EMAIL_TO = "mailto:kynt101099@gmail.com",
-  PHONE_NUMBER_TO = "tel:+84868772887",
-  GITHUB_URL = "https://github.com/kynguyen-dev",
-  LINKEDIN_URL = "https://www.linkedin.com/in/kynguyen-dev"
+  EMAIL_TO = 'mailto:kynt101099@gmail.com',
+  PHONE_NUMBER_TO = 'tel:+84868772887',
+  GITHUB_URL = 'https://github.com/kynguyen-dev',
+  LINKEDIN_URL = 'https://www.linkedin.com/in/kynguyen-dev',
 }
 
-export const GITHUB = "github"
-export const EMAIL = "mail"
-export const PHONE = "phone"
-export const LINKEDIN = "linkedin"
+export const GITHUB = 'github';
+export const EMAIL = 'mail';
+export const PHONE = 'phone';
+export const LINKEDIN = 'linkedin';
 
 /** Career start date used to calculate years of experience dynamically */
 export const CAREER_START_DATE = new Date('2021-12-01');

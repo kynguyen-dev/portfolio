@@ -38,9 +38,12 @@ export const ja = {
     backEndDeveloper: 'バックエンド開発者',
     frontEndDeveloper: 'フロントエンド開発者',
     tools: 'ツール',
-    backEndQuote: 'ビジネスロジックを堅牢なバックエンドソリューションに変えます。',
-    frontEndQuote: 'ゼロからコードを書き、アイデアをブラウザで実現するのが好きです。',
-    toolEndQuote: '道具をただ使うだけでなく、マスターして素晴らしいものを作ります。',
+    backEndQuote:
+      'ビジネスロジックを堅牢なバックエンドソリューションに変えます。',
+    frontEndQuote:
+      'ゼロからコードを書き、アイデアをブラウザで実現するのが好きです。',
+    toolEndQuote:
+      '道具をただ使うだけでなく、マスターして素晴らしいものを作ります。',
     languages: '使用言語:',
     methods: '作業手法:',
     toolsIUse: '使用ツール:',
@@ -63,7 +66,8 @@ export const ja = {
   },
   projects: {
     recentWork: '最近の作品',
-    recentWorkDescriptions: 'これまでに手がけたデザインプロジェクトです。もっと知りたいですか？',
+    recentWorkDescriptions:
+      'これまでに手がけたデザインプロジェクトです。もっと知りたいですか？',
     emailMe: 'メールしてください。',
     frontEndDeveloper: 'フロントエンド開発者',
     backEndDeveloper: 'バックエンド開発者',
@@ -107,12 +111,12 @@ export const ja = {
     hireService: {
       title: 'AirConSub — エアコンレンタルサービス',
       description:
-        '日本市場向けのフルスタックエアコンレンタルサービスプラットフォームを開発。サブスクリプション管理、予約フロー、サービススケジューリングを処理。',
+        '日本市場向けのフルスタックエアコンレンタルサービスプラットフォームを開発。サブスクリプション management、予約フロー、サービススケジューリングを処理。',
       contributions: [
-        'Next.js App Router & TypeScriptでサーバーレンダリングページとAPIルートを構築',
-        'Drizzle ORMでリレーショナルDBスキーマ設計＆マイグレーション管理',
-        'Tailwind CSSでレスポンシブ・モバイルファーストUIを実装',
-        '異文化チームでアジャイルスプリントに従いエンドツーエンド機能を納品',
+        'Next.js App Router & TypeScript for server-rendered pages & API routes',
+        'Drizzle ORM for relational DB schema & migration management',
+        'Tailwind CSS for responsive mobile-first UI',
+        'Delivered features following Agile sprints in cross-cultural teams',
       ],
     },
   },
@@ -124,19 +128,22 @@ export const ja = {
     subtitle: '一緒に働いた同僚やマネージャーからのフィードバック',
     items: [
       {
-        quote: 'Kyは常にproduction-readyなコードを予定より早く納品しました。ReactとTypeScriptの深い知識が製品品質に大きな影響を与え、チームメイトの成長も常にサポートしていました。',
+        quote:
+          'Kyは常にproduction-readyなコードを予定より早く納品しました。ReactとTypeScriptの深い知識が製品品質に大きな影響を与え、チームメイトの成長も常にサポートしていました。',
         name: 'チームリーダー',
         title: 'PTN Global — DrivaLink',
         relationship: '直属マネージャー',
       },
       {
-        quote: 'Kyとの仕事は素晴らしい経験でした — 複雑な要件をクリーンでアクセシブルなUIに変換。細部への注意と積極的なコミュニケーションでチーム間協力がスムーズでした。',
+        quote:
+          'Kyとの仕事は素晴らしい経験でした — 複雑な要件をクリーンでアクセシブルなUIに変換。細部への注意と積極的なコミュニケーションでチーム間協力がスムーズでした。',
         name: 'シニア開発者',
         title: 'PTN Global — Learner Dashboard',
         relationship: '同僚',
       },
       {
-        quote: 'Kyは技術力とUXへの情熱の両方を持ち合わせていました。モダンなベストプラクティスを導入し、テストカバレッジを大幅に改善しました。',
+        quote:
+          'Kyは技術力とUXへの情熱の両方を持ち合わせていました。モダンなベストプラクティスを導入し、テストカバレッジを大幅に改善しました。',
         name: 'プロジェクトマネージャー',
         title: 'PTN Global — Epilepsy Research',
         relationship: 'プロジェクトステークホルダー',
@@ -154,7 +161,8 @@ export const ja = {
     successTitle: '送信完了！',
     successMessage: 'お問い合わせありがとうございます — 近日中にご返信します。',
     errorTitle: 'エラー！',
-    errorMessage: 'エラーが発生しました。もう一度お試しいただくか、直接メールでお問い合わせください。',
+    errorMessage:
+      'エラーが発生しました。もう一度お試しいただくか、直接メールでお問い合わせください。',
     visitMyGithub: 'Githubを見る',
     visitMyLinkedIn: 'LinkedInを見る',
     sendMeEmail: 'メールを送る',
@@ -187,12 +195,14 @@ export const ja = {
   },
   tools: {
     heading: 'ツール＆実験',
-    subtitle: 'アイデアを探求し、スキルを磨き、テクノロジーを楽しむために作ったミニアプリ。',
+    subtitle:
+      'アイデアを探求し、スキルを磨き、テクノロジーを楽しむために作ったミニアプリ。',
     explore: '探索する',
     items: {
       gallery: {
         title: '無限フォトギャラリー',
-        description: '仮想化ギャラリーが何千枚もの写真を60FPSで無限スクロール表示。',
+        description:
+          '仮想化ギャラリーが何千枚もの写真を60FPSで無限スクロール表示。',
       },
       threeKingdoms: {
         title: '三国志ファインダー',
@@ -200,11 +210,13 @@ export const ja = {
       },
       aiSqlHelper: {
         title: 'AI SQL & 計画アシスタント',
-        description: '自然言語をSQLクエリに変換したり、AIでアプリの構成案を作成したりします。',
+        description:
+          '自然言語をSQLクエリに変換したり、AIでアプリの構成案を作成したりします。',
       },
       marketInsights: {
         title: 'マーケット＆グローバルインサイト',
-        description: '金、ガソリン価格、天気、国際ニュースを1つのダッシュボードで追跡。',
+        description:
+          '金、ガソリン価格、天気、国際ニュースを1つのダッシュボードで追跡。',
       },
     },
   },

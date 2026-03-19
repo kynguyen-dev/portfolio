@@ -22,7 +22,7 @@ const HtmlLangSync = () => {
 export const App = () => {
   return (
     <ErrorBoundary>
-      <MotionConfig reducedMotion="user">
+      <MotionConfig reducedMotion='user'>
         <ThemeModeProvider>
           <PFThemeProvider>
             <HtmlLangSync />

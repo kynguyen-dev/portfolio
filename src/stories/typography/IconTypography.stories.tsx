@@ -26,7 +26,7 @@ type Story = StoryObj<typeof meta>;
 
 export const WithEmail: Story = {
   args: {
-    icon: <EmailIcon color="primary" />,
+    icon: <EmailIcon color='primary' />,
     text: 'kynt101099@gmail.com',
     variant: 'body1',
   },
@@ -34,7 +34,7 @@ export const WithEmail: Story = {
 
 export const WithPhone: Story = {
   args: {
-    icon: <PhoneIcon color="primary" />,
+    icon: <PhoneIcon color='primary' />,
     text: '+84 868 772 887',
     variant: 'body1',
   },
@@ -42,9 +42,18 @@ export const WithPhone: Story = {
 
 export const AllContactTypes = () => (
   <Stack spacing={2}>
-    <IconTypography icon={<EmailIcon color="primary" />} text="kynt101099@gmail.com" />
-    <IconTypography icon={<PhoneIcon color="primary" />} text="+84 868 772 887" />
-    <IconTypography icon={<GitHubIcon color="primary" />} text="kynguyen-dev" />
-    <IconTypography icon={<LinkedInIcon color="primary" />} text="kynguyen-dev" />
+    <IconTypography
+      icon={<EmailIcon color='primary' />}
+      text='kynt101099@gmail.com'
+    />
+    <IconTypography
+      icon={<PhoneIcon color='primary' />}
+      text='+84 868 772 887'
+    />
+    <IconTypography icon={<GitHubIcon color='primary' />} text='kynguyen-dev' />
+    <IconTypography
+      icon={<LinkedInIcon color='primary' />}
+      text='kynguyen-dev'
+    />
   </Stack>
 );

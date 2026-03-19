@@ -1,5 +1,5 @@
 import { PFSolidButton, PFTypography } from '@components/core';
-import {Stack, useTheme} from '@mui/material';
+import { Stack, useTheme } from '@mui/material';
 
 export interface FullScreenErrorProps {
   title?: string;

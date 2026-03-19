@@ -55,11 +55,7 @@ export const PFGradientTypography = ({
           WebkitBackgroundClip: 'text',
         }}
       >
-        <Typography
-          variant={variant}
-          sx={gradientTextSx}
-          {...props}
-        >
+        <Typography variant={variant} sx={gradientTextSx} {...props}>
           {animatedText}
         </Typography>
       </OutlineToSolidEffect>
