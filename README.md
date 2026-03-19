@@ -96,7 +96,7 @@ You can add a custom domain (e.g. `kynguyen.dev`) in **Project Settings → Doma
 To enable automated deployments on every push to `master` via the included workflow:
 
 1. **Generate a Vercel Token** — Go to https://vercel.com/account/tokens and create a new token
-2. **Find your Org & Project IDs** — In your Vercel project, go to **Settings → General** and copy the *Project ID* and *Org ID*
+2. **Find your Org & Project IDs** — In your Vercel project, go to **Settings → General** and copy the _Project ID_ and _Org ID_
 3. **Add GitHub Secrets** — In your repo, go to **Settings → Secrets and variables → Actions** and add:
    - `VERCEL_TOKEN`
    - `VERCEL_ORG_ID`

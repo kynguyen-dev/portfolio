@@ -8,13 +8,13 @@ import { PaletteOptions } from '@mui/material';
 export const lightPalette: PaletteOptions = {
   mode: 'light',
   primary: {
-    main: '#B8891F',     // Deeper gold for contrast on light bg
-    light: '#D4A843',    // Warm gold
-    dark: '#8B6914',     // Deep bronze
+    main: '#B8891F', // Deeper gold for contrast on light bg
+    light: '#D4A843', // Warm gold
+    dark: '#8B6914', // Deep bronze
     contrastText: '#FFFFFF',
   },
   secondary: {
-    main: '#C75B39',     // Terracotta stays vibrant
+    main: '#C75B39', // Terracotta stays vibrant
     light: '#E07850',
     dark: '#8B3A22',
   },
@@ -39,9 +39,9 @@ export const lightPalette: PaletteOptions = {
     dark: '#3E5A18',
   },
   text: {
-    primary: '#2A1E10',     // Dark warm brown
-    secondary: '#5C4A32',   // Medium brown
-    disabled: '#9E8A72',    // Muted warm grey
+    primary: '#2A1E10', // Dark warm brown
+    secondary: '#5C4A32', // Medium brown
+    disabled: '#9E8A72', // Muted warm grey
   },
   grey: {
     '50': '#FAF6F0',
@@ -56,11 +56,11 @@ export const lightPalette: PaletteOptions = {
     '900': '#2A201A',
   },
   background: {
-    default: '#FBF6EE',     // Warm ivory
-    paper: '#FFF8F0',       // Light cream
+    default: '#FBF6EE', // Warm ivory
+    paper: '#FFF8F0', // Light cream
   },
   earthAccent: {
-    light: '#F0D080',       // Light sand (same)
-    main: '#C8962A',        // Rich amber (same)
+    light: '#F0D080', // Light sand (same)
+    main: '#C8962A', // Rich amber (same)
   },
 };

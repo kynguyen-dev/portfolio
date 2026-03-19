@@ -9,15 +9,15 @@ import { PaletteOptions } from '@mui/material';
 export const palette: PaletteOptions = {
   mode: 'dark',
   primary: {
-    main: '#D4A843',     // Warm gold — core earth tone
-    light: '#E8C96A',    // Light gold
-    dark: '#8B6914',     // Deep bronze
+    main: '#D4A843', // Warm gold — core earth tone
+    light: '#E8C96A', // Light gold
+    dark: '#8B6914', // Deep bronze
     contrastText: '#FFF8F0',
   },
   secondary: {
-    main: '#C75B39',     // Terracotta — Hỏa sinh Thổ
-    light: '#E07850',    // Light terracotta
-    dark: '#8B3A22',     // Deep burnt sienna
+    main: '#C75B39', // Terracotta — Hỏa sinh Thổ
+    light: '#E07850', // Light terracotta
+    dark: '#8B3A22', // Deep burnt sienna
   },
   error: {
     main: '#D44040',
@@ -40,9 +40,9 @@ export const palette: PaletteOptions = {
     dark: '#4A6A20',
   },
   text: {
-    primary: '#FFF3E0',     // Warm cream
-    secondary: '#FFCC80',   // Soft amber
-    disabled: '#C4AA96',    // Lighter warm grey (WCAG AA contrast on dark bg)
+    primary: '#FFF3E0', // Warm cream
+    secondary: '#FFCC80', // Soft amber
+    disabled: '#C4AA96', // Lighter warm grey (WCAG AA contrast on dark bg)
   },
   grey: {
     '50': '#FAF6F0',
@@ -57,11 +57,11 @@ export const palette: PaletteOptions = {
     '900': '#2A201A',
   },
   background: {
-    default: '#1A1410',     // Deep warm black-brown
-    paper: '#241E18',       // Dark mahogany
+    default: '#1A1410', // Deep warm black-brown
+    paper: '#241E18', // Dark mahogany
   },
   earthAccent: {
-    light: '#F0D080',       // Light sand
-    main: '#C8962A',        // Rich amber
+    light: '#F0D080', // Light sand
+    main: '#C8962A', // Rich amber
   },
 };

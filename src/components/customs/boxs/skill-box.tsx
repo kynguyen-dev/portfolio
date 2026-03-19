@@ -8,10 +8,11 @@ export interface SkillBoxProps {
   icon?: ReactNode;
   title: string;
   titleColor?: string;
+  link?: string;
 }
 export const SkillBox = (props: SkillBoxProps) => {
   const { palette } = useTheme();
-  return (
+  const content = (
     <Box
       display='flex'
       flexDirection='column'
@@ -19,6 +20,7 @@ export const SkillBox = (props: SkillBoxProps) => {
       justifyContent={'center'}
       width={'96px'}
       gap={1}
+      sx={{ cursor: props.link ? 'pointer' : 'default' }}
     >
       <motion.div
         whileHover={{ y: -6 }}
@@ -50,4 +52,20 @@ export const SkillBox = (props: SkillBoxProps) => {
       </PFTypography>
     </Box>
   );
+
+  if (props.link) {
+    return (
+      <Box
+        component='a'
+        href={props.link}
+        target='_blank'
+        rel='noopener noreferrer'
+        sx={{ textDecoration: 'none', color: 'inherit' }}
+      >
+        {content}
+      </Box>
+    );
+  }
+
+  return content;
 };
