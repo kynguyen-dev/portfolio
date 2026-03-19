@@ -16,80 +16,66 @@ interface TimelineEntry {
 
 const workHistory: TimelineEntry[] = [
   {
-    company: 'DrivaLink',
+    company: 'Cymosoft',
     role: 'Full-Stack Developer',
-    period: 'Jan 2024 — Present',
+    period: 'Sep 2024 — Jan 2025',
     description:
-      'Built and maintained an innovative logistics management system combining driver safety, truck maintenance, and fleet tracking into a unified platform.',
+      'Developed a full-stack air conditioner rental service platform for the Japanese market, handling subscription management, booking flows, and service scheduling.',
     highlights: [
-      'Architected the frontend with React 18, TypeScript & TanStack Query, reducing API call overhead through intelligent caching',
-      'Built real-time fleet tracking dashboard with live GPS data integration',
-      'Implemented role-based access control and authentication with Auth0',
-      'Mentored 2 junior developers through code reviews & pair programming sessions',
+      'Built server-rendered pages and API routes with Next.js App Router & TypeScript',
+      'Designed relational database schema and managed migrations with Drizzle ORM',
+      'Implemented responsive, mobile-first UI with Tailwind CSS',
+      'Delivered end-to-end features following Agile sprints in a cross-cultural team',
+    ],
+    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Drizzle ORM'],
+  },
+  {
+    company: 'PTN Global',
+    role: 'Full-Stack Developer',
+    period: 'Mar 2024 — Dec 2024',
+    description:
+      'Built a dynamic learner dashboard for Australian educational institutions, providing 24/7 access to badges, cohort comparisons, and attendance tracking for learners, parents, teachers and administrators.',
+    highlights: [
+      'Developed interactive UI components with ReactJS and documented them in Storybook',
+      'Implemented efficient server-state management with TanStack Query',
+      'Built backend microservices with Java & Micronaut framework',
+      'Collaborated closely with UX designers to deliver a responsive, accessible interface',
     ],
     technologies: [
-      'React',
-      'TypeScript',
-      'Next.js',
-      'PostgreSQL',
-      'REST API',
-      'Auth0',
+      'ReactJS',
+      'Java',
+      'Micronaut',
+      'TanStack Query',
+      'Storybook',
     ],
   },
   {
-    company: 'Epilepsy Research Center',
+    company: 'PTN Global',
     role: 'Front-End Developer',
-    period: 'Jun 2023 — Dec 2023',
+    period: 'Feb 2023 — Mar 2024',
     description:
-      'Developed a web application for an epilepsy research center, focused on managing health reports, tracking patient conditions, and collecting clinical data.',
+      'Developed a healthcare platform for an epilepsy research center, focused on managing clinical data, tracking patient conditions, and streamlining health report workflows.',
     highlights: [
-      'Designed and built a reusable component library with Material UI for consistent UX across the platform',
-      'Integrated RESTful APIs with TanStack Query for efficient data fetching and caching',
+      'Designed and built a reusable component library with Material UI for consistent UX',
+      'Integrated secure authentication and authorization with Auth0',
       'Implemented complex form validation with React Hook Form + Yup schema',
       'Achieved 90%+ test coverage with Jest & React Testing Library',
     ],
-    technologies: [
-      'React',
-      'TypeScript',
-      'Material UI',
-      'TanStack Query',
-      'Jest',
-    ],
+    technologies: ['React', 'TypeScript', 'Auth0', 'Jest', 'Material UI'],
   },
   {
-    company: 'Edalex — Learner Dashboard',
+    company: 'PTN Global',
     role: 'Full-Stack Developer',
-    period: 'Jan 2023 — May 2023',
+    period: 'Dec 2021 — Feb 2023',
     description:
-      'Built a dynamic learner dashboard providing 24/7 access to learning progress, badges, cohort comparisons, and attendance tracking for all stakeholders.',
+      'Built and maintained a logistics and driver safety management system, combining fleet tracking, compliance workflows, and a mobile companion app for drivers.',
     highlights: [
-      'Developed full-stack features with Next.js, MongoDB & Auth0 integration',
-      'Built interactive data visualizations for learner progress tracking',
-      'Implemented SSR for improved SEO and 40% faster initial page load',
-      'Collaborated closely with UX designers to create a responsive, accessible interface',
+      'Developed backend services with Java 8 & Spring Boot for fleet management APIs',
+      'Built responsive admin dashboard with Angular for fleet operators',
+      'Developed Android companion app for real-time driver safety monitoring',
+      'Mentored 2 junior developers through code reviews & pair programming sessions',
     ],
-    technologies: ['React', 'Next.js', 'TypeScript', 'MongoDB', 'Auth0'],
-  },
-  {
-    company: 'AirConSub — Hire Service',
-    role: 'Full-Stack Developer',
-    period: 'Aug 2022 — Dec 2022',
-    description:
-      'Developed a full-stack web application for an air conditioner subscription service, handling booking flows, payments, and service scheduling.',
-    highlights: [
-      'Built end-to-end booking & payment flow with Stripe integration',
-      'Designed relational database schema with SQLite + Drizzle ORM migrations',
-      'Developed responsive UI with React and Next.js App Router',
-      'Set up CI/CD pipeline for automated testing and deployment',
-    ],
-    technologies: [
-      'React',
-      'Next.js',
-      'TypeScript',
-      'Drizzle ORM',
-      'SQLite',
-      'Stripe',
-    ],
+    technologies: ['Java 8', 'Spring Boot', 'Angular', 'Android'],
   },
 ];
 
@@ -131,7 +117,7 @@ export const WorkTimeline = () => {
               top: 0,
               bottom: 0,
               width: 2,
-              background: `linear-gradient(to bottom, ${palette.primary.light}00, ${palette.primary.light}, ${palette.primary.main}, ${palette.secondary.main}, ${palette.secondary.main}00)`,
+              background: `linear-gradient(to bottom, ${palette.primary.light}00, ${palette.primary.light}, ${palette.primary.main}, ${palette.primary.main}, ${palette.secondary.main}, ${palette.secondary.main}00)`,
             }}
           />
 

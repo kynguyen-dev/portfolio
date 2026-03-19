@@ -24,7 +24,7 @@ export const ja = {
   },
   aboutMe: {
     heading: '自己紹介',
-    p1: 'ベトナム在住のフルスタック開発者で、オーストラリアのテック業界で{{years}}年以上のWebアプリ開発経験があります。React と TypeScript を主軸に、物流・医療・教育・サービス分野で本番システムを提供してきました。',
+    p1: 'ベトナム ở のフルスタック開発者で、オーストラリアのテック業界で{{years}}年以上のWebアプリ開発経験があります。React と TypeScript を主軸に、物流・医療・教育・サービス分野で本番システムを提供してきました。',
     p2: 'FPT大学で情報技術の学位を取得し、ソフトウェアエンジニアリングの基礎を築きました。以来、アジャイルチームでフロントエンド設計、REST API統合、Next.js・MongoDB・PostgreSQL・Auth0を使ったエンドツーエンド開発に従事しています。',
     p3: 'ベトナム語・英語・日本語の3言語を使い、多様なチームでのコラボレーションに活かしています。コード以外では、写真撮影や新しいカフェの開拓を楽しんでいます。',
     p4: '新しい機会やお話に常にオープンです — お気軽にご連絡ください。',
@@ -76,47 +76,47 @@ export const ja = {
     viewDetails: '{{title}}の詳細を見る',
     privateProject: '非公開 / 社内プロジェクト',
     logistic: {
-      title: 'DrivaLink — 物流',
+      title: 'DrivaLink — 物流＆ドライバー安全',
       description:
-        'ドライバーの安全・トラック整備・フリート追跡を統合した革新的な物流プラットフォームを構築。コンプライアンスワークフローを合理化。',
+        'フリート追跡、コンプライアンスワークフロー、ドライバー向けモバイルアプリを統合した物流・ドライバー安全管理システムを構築。',
       contributions: [
-        'React 18、TypeScript & TanStack Queryでフロントエンド設計',
-        'リアルタイムGPSデータでフリート追跡ダッシュボードを構築',
-        'Auth0でロールベースアクセス制御を実装',
+        'Java 8 & Spring Bootでフリート管理APIのバックエンドを開発',
+        'Angularでフリートオペレーター向けレスポンシブ管理ダッシュボードを構築',
+        'リアルタイムドライバー安全監視用Androidアプリを開発',
         'コードレビュー＆ペアプログラミングでジュニア2名を指導',
       ],
     },
     medical: {
-      title: 'てんかん研究プラットフォーム',
+      title: '医療プラットフォーム — てんかん研究',
       description:
-        'てんかん研究者のための臨床データ管理アプリを開発。患者レポートのワークフローを合理化し、データ入力時間を短縮。',
+        'てんかん研究センターの医療プラットフォームを開発。臨床データ管理、患者状態追跡、健康レポートワークフローの効率化を実現。',
       contributions: [
-        'Material UIで一貫したUXのコンポーネントライブラリを設計',
-        'TanStack QueryでRESTful APIを効率的に統合',
-        'React Hook Form + Yupでフォームバリデーションを実装',
+        'Material UIで再利用可能なコンポーネントライブラリを設計',
+        'Auth0でセキュアな認証・認可を統合',
+        'React Hook Form + Yupで複雑なフォームバリデーションを実装',
         'Jest & React Testing Libraryで90%+のテストカバレッジを達成',
       ],
     },
     education: {
-      title: 'Edalex — 学習者ダッシュボード',
+      title: '学習者ダッシュボード — 教育プラットフォーム',
       description:
-        'バッジ・コホート比較・出席追跡へ24/7アクセスできる動的学習者ダッシュボードを構築。',
+        'オーストラリアの教育機関向け動的学習者ダッシュボードを構築。バッジ・コホート比較・出席追跡へ24/7アクセスを提供。',
       contributions: [
-        'Next.js、MongoDB & Auth0でフルスタック機能を開発',
-        '学習進捗のインタラクティブデータ可視化を構築',
-        'SSRでSEOと初期読み込み性能を改善',
+        'ReactJSでインタラクティブUIコンポーネントを開発しStorybookで文書化',
+        'TanStack Queryで効率的なサーバーステート管理を実装',
+        'Java & Micronautでバックエンドマイクロサービスを構築',
         'デザイナーと協力してレスポンシブでアクセシブルなUIを構築',
       ],
     },
     hireService: {
-      title: 'AirConSub — レンタルサービス',
+      title: 'AirConSub — エアコンレンタルサービス',
       description:
-        'エアコンサービスの予約・決済・スケジューリングを処理するフルスタックサブスクリプションサービスを開発。',
+        '日本市場向けのフルスタックエアコンレンタルサービスプラットフォームを開発。サブスクリプション management、予約フロー、サービススケジューリングを処理。',
       contributions: [
-        'React、Next.js & Drizzle ORMでフルスタックアプリを構築',
-        'Stripe統合で予約＆決済フローを実装',
-        'SQLite + Drizzle ORMマイグレーションでDBスキーマを設計',
-        'CI/CDパイプラインでテスト＆デプロイを自動化',
+        'Next.js App Router & TypeScript for server-rendered pages & API routes',
+        'Drizzle ORM for relational DB schema & migration management',
+        'Tailwind CSS for responsive mobile-first UI',
+        'Delivered features following Agile sprints in cross-cultural teams',
       ],
     },
   },
@@ -131,21 +131,21 @@ export const ja = {
         quote:
           'Kyは常にproduction-readyなコードを予定より早く納品しました。ReactとTypeScriptの深い知識が製品品質に大きな影響を与え、チームメイトの成長も常にサポートしていました。',
         name: 'チームリーダー',
-        title: 'DrivaLink',
+        title: 'PTN Global — DrivaLink',
         relationship: '直属マネージャー',
       },
       {
         quote:
           'Kyとの仕事は素晴らしい経験でした — 複雑な要件をクリーンでアクセシブルなUIに変換。細部への注意と積極的なコミュニケーションでチーム間協力がスムーズでした。',
         name: 'シニア開発者',
-        title: 'Edalex',
+        title: 'PTN Global — Learner Dashboard',
         relationship: '同僚',
       },
       {
         quote:
           'Kyは技術力とUXへの情熱の両方を持ち合わせていました。モダンなベストプラクティスを導入し、テストカバレッジを大幅に改善しました。',
         name: 'プロジェクトマネージャー',
-        title: 'Epilepsy Research Center',
+        title: 'PTN Global — Epilepsy Research',
         relationship: 'プロジェクトステークホルダー',
       },
     ],
@@ -199,16 +199,6 @@ export const ja = {
       'アイデアを探求し、スキルを磨き、テクノロジーを楽しむために作ったミニアプリ。',
     explore: '探索する',
     items: {
-      weather: {
-        title: 'AI天気アドバイザー',
-        description:
-          'リアルタイム天気データとAIによるパーソナライズされた服装＆活動の提案。',
-      },
-      dbExplorer: {
-        title: 'スマートDBエクスプローラー',
-        description:
-          '自然言語で質問するだけ — AIがテキストをSQLクエリに即座に変換。',
-      },
       gallery: {
         title: '無限フォトギャラリー',
         description:
@@ -216,7 +206,17 @@ export const ja = {
       },
       threeKingdoms: {
         title: '三国志ファインダー',
-        description: '伝説の武将を探索、ステータス比較、AIによる対戦結果予測。',
+        description: '伝説の武將を探索、ステータス比較、AIによる対戦結果予測。',
+      },
+      aiSqlHelper: {
+        title: 'AI SQL & 計画アシスタント',
+        description:
+          '自然言語をSQLクエリに変換したり、AIでアプリの構成案を作成したりします。',
+      },
+      marketInsights: {
+        title: 'マーケット＆グローバルインサイト',
+        description:
+          '金、ガソリン価格、天気、国際ニュースを1つのダッシュボードで追跡。',
       },
     },
   },

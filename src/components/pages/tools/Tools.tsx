@@ -20,18 +20,6 @@ interface ToolItem {
 
 const TOOLS: ToolItem[] = [
   {
-    emoji: '🌤️',
-    titleKey: 'tools.items.weather.title',
-    descriptionKey: 'tools.items.weather.description',
-    route: ROUTES.TOOLS.WEATHER_ADVISOR,
-  },
-  {
-    emoji: '🗄️',
-    titleKey: 'tools.items.dbExplorer.title',
-    descriptionKey: 'tools.items.dbExplorer.description',
-    route: ROUTES.TOOLS.DB_EXPLORER,
-  },
-  {
     emoji: '🖼️',
     titleKey: 'tools.items.gallery.title',
     descriptionKey: 'tools.items.gallery.description',
@@ -42,6 +30,18 @@ const TOOLS: ToolItem[] = [
     titleKey: 'tools.items.threeKingdoms.title',
     descriptionKey: 'tools.items.threeKingdoms.description',
     route: ROUTES.TOOLS.THREE_KINGDOMS,
+  },
+  {
+    emoji: '🤖',
+    titleKey: 'tools.items.aiSqlHelper.title',
+    descriptionKey: 'tools.items.aiSqlHelper.description',
+    route: ROUTES.TOOLS.AI_SQL_HELPER,
+  },
+  {
+    emoji: '📊',
+    titleKey: 'tools.items.marketInsights.title',
+    descriptionKey: 'tools.items.marketInsights.description',
+    route: ROUTES.TOOLS.MARKET_INSIGHTS,
   },
 ];
 

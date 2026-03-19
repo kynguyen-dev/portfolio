@@ -8,18 +8,10 @@ import {
 } from 'chart.js';
 import { Radar } from 'react-chartjs-2';
 import { useTheme } from '@mui/material';
-import type { CharacterStats, StatKey } from '@constants/three-kingdoms';
-import { STAT_LABELS } from '@constants/three-kingdoms';
+import type { CharacterStats } from '@constants/three-kingdoms';
+import { STAT_LABELS, STAT_KEYS } from '@constants/three-kingdoms';
 
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip);
-
-const STAT_KEYS: StatKey[] = [
-  'might',
-  'intelligence',
-  'politics',
-  'charisma',
-  'leadership',
-];
 
 interface StatsRadarChartProps {
   stats: CharacterStats;

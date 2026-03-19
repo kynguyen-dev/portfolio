@@ -99,7 +99,7 @@ export const Intro = () => {
                 size='large'
                 onClick={() => {
                   window.open(
-                    '/resume/Ky_Nguyen_CV.pdf',
+                    '/resume/NGUYEN_TRUONG_KY_FULL_STACK_DEVELOPER_CV.pdf',
                     '_blank',
                     'noopener,noreferrer'
                   );
@@ -234,7 +234,7 @@ export const Intro = () => {
           ))}
           {/* Avatar image */}
           <Avatar
-            src='/images/avatar.png'
+            src='/images/avatar.jpg'
             alt="Ky Nguyen's avatar"
             sx={{
               width: { md: 180, xs: 120 },

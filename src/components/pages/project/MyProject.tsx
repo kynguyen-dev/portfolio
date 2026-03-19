@@ -10,21 +10,31 @@ import {
   APP_THEMES,
   APP_TYPOGRAPHIES,
   DRIVALINK_URL,
-  EDUCATION_PROJECT_IMAGE_URLS,
   EPILEPSY_PROJECT_URL,
-  HIRE_SERVICE_PROJECT_IMAGE_URLS,
   LEARNER_DASHBOARD_URL,
-  LOGISTIC_PROJECT_IMAGE_URLS,
-  MEDICAL_PROJECT_IMAGE_URLS,
 } from '@constants';
 import { StyledButton } from '@components/core/button';
+
+/** Path to the 2×2 sprite sheet containing all project images */
+const SPRITE_URL = '/images/projects-sprite.jpg';
+
+/**
+ * CSS background-position values for each quadrant of a 2×2 sprite sheet.
+ * With `background-size: 200% 200%`, each position maps to one quarter.
+ */
+const SPRITE_POSITIONS = [
+  '0% 0%', // top-left     → DrivaLink
+  '100% 0%', // top-right    → Healthcare
+  '0% 100%', // bottom-left  → Learner Dashboard
+  '100% 100%', // bottom-right → AirConSub
+] as const;
 
 interface ProjectCardProps {
   titleKey: string;
   descriptionKey: string;
   roleKey: string;
   contributionsKey: string;
-  imageUrl: string;
+  spritePosition: string;
   url: string;
   githubUrl?: string;
   isPrivate?: boolean;
@@ -36,7 +46,7 @@ const projectDefs: ProjectCardProps[] = [
     descriptionKey: 'projects.logistic.description',
     roleKey: 'projects.fullStackDeveloper',
     contributionsKey: 'projects.logistic.contributions',
-    imageUrl: LOGISTIC_PROJECT_IMAGE_URLS,
+    spritePosition: SPRITE_POSITIONS[0],
     url: DRIVALINK_URL,
   },
   {
@@ -44,7 +54,7 @@ const projectDefs: ProjectCardProps[] = [
     descriptionKey: 'projects.medical.description',
     roleKey: 'projects.frontEndDeveloper',
     contributionsKey: 'projects.medical.contributions',
-    imageUrl: MEDICAL_PROJECT_IMAGE_URLS,
+    spritePosition: SPRITE_POSITIONS[1],
     url: EPILEPSY_PROJECT_URL,
   },
   {
@@ -52,7 +62,7 @@ const projectDefs: ProjectCardProps[] = [
     descriptionKey: 'projects.education.description',
     roleKey: 'projects.fullStackDeveloper',
     contributionsKey: 'projects.education.contributions',
-    imageUrl: EDUCATION_PROJECT_IMAGE_URLS,
+    spritePosition: SPRITE_POSITIONS[2],
     url: LEARNER_DASHBOARD_URL,
   },
   {
@@ -60,7 +70,7 @@ const projectDefs: ProjectCardProps[] = [
     descriptionKey: 'projects.hireService.description',
     roleKey: 'projects.fullStackDeveloper',
     contributionsKey: 'projects.hireService.contributions',
-    imageUrl: HIRE_SERVICE_PROJECT_IMAGE_URLS,
+    spritePosition: SPRITE_POSITIONS[3],
     url: '',
     isPrivate: true,
   },
@@ -194,21 +204,23 @@ export const MyProject = () => {
                     },
                   }}
                 >
-                  <img
+                  {/* CSS Sprite image using background-image + background-position */}
+                  <Box
                     className='project-image'
-                    src={project.imageUrl}
-                    alt={title}
-                    loading='lazy'
-                    style={{
+                    role='img'
+                    aria-label={title}
+                    sx={{
                       width: '100%',
                       height: '100%',
-                      objectFit: 'cover',
-                      objectPosition: 'center',
-                      display: 'block',
-                      transition: 'opacity 0.3s ease-in-out',
                       position: 'absolute',
                       top: 0,
                       left: 0,
+                      backgroundImage: `url('${SPRITE_URL}')`,
+                      backgroundRepeat: 'no-repeat',
+                      backgroundSize: '200% 200%',
+                      backgroundPosition: project.spritePosition,
+                      backgroundColor: 'transparent',
+                      transition: 'opacity 0.3s ease-in-out',
                     }}
                   />
                   <Box

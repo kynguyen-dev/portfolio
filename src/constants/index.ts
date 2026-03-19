@@ -70,4 +70,4 @@ export const PHONE = 'phone';
 export const LINKEDIN = 'linkedin';
 
 /** Career start date used to calculate years of experience dynamically */
-export const CAREER_START_DATE = new Date('2022-08-01');
+export const CAREER_START_DATE = new Date('2021-12-01');

@@ -100,47 +100,6 @@ const ToolPageLayout = ({
               {description}
             </PFTypography>
 
-            {/* Status badge */}
-            <Box
-              sx={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 1,
-                px: 3,
-                py: 1,
-                borderRadius: 2,
-                background: isLight
-                  ? 'rgba(184,137,31,0.08)'
-                  : 'rgba(245,208,96,0.08)',
-                border: `1px solid ${isLight ? 'rgba(184,137,31,0.2)' : 'rgba(245,208,96,0.2)'}`,
-              }}
-            >
-              <Box
-                sx={{
-                  width: 8,
-                  height: 8,
-                  borderRadius: '50%',
-                  background: isLight ? '#B8891F' : '#F5D060',
-                  animation: 'pulse 2s infinite',
-                  '@keyframes pulse': {
-                    '0%, 100%': { opacity: 1 },
-                    '50%': { opacity: 0.4 },
-                  },
-                }}
-              />
-              <PFTypography
-                variant='caption'
-                sx={{
-                  color: isLight ? '#B8891F' : '#F5D060',
-                  fontWeight: 600,
-                  letterSpacing: 1,
-                  textTransform: 'uppercase',
-                }}
-              >
-                Coming Soon
-              </PFTypography>
-            </Box>
-
             {/* Optional children for future tool content */}
             {children}
           </Stack>
