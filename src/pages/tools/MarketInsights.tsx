@@ -1501,7 +1501,7 @@ const MarketInsights = () => {
                           </Box>
                         ))}
                         <Box sx={{ textAlign: 'center', pt: 1 }}>
-                          <PFTypography
+                          <Typography
                             variant='button'
                             component='a'
                             href='/tools/market-insights/news'
@@ -1513,8 +1513,8 @@ const MarketInsights = () => {
                             }}
                           >
                             {t('tools.items.marketInsights.viewAll')} →
-                          </PFTypography>
-                        </Box>
+                          </Typography>
+                        </Box>{' '}
                       </>
                     ) : (
                       <Typography variant='caption' sx={{ opacity: 0.5 }}>
