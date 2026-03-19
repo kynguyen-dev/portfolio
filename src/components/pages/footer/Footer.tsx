@@ -1,5 +1,5 @@
-import {Stack, useTheme} from '@mui/material';
-import {motion} from 'framer-motion';
+import { Stack, useTheme } from '@mui/material';
+import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { PFGradientTypography } from '@components/core';
 import { Contact } from '@components/pages/contacts/Contact.tsx';
@@ -13,7 +13,7 @@ export const Footer = () => {
   const isLight = palette.mode === 'light';
   return (
     <Stack
-      component="footer"
+      component='footer'
       id='footer'
       display='flex'
       justifyContent='space-between'
@@ -45,8 +45,8 @@ export const Footer = () => {
       <Stack
         component={motion.div}
         variants={fadeUp}
-        initial="hidden"
-        whileInView="visible"
+        initial='hidden'
+        whileInView='visible'
         viewport={{ once: true }}
         display='flex'
         alignItems='center'
@@ -63,8 +63,8 @@ export const Footer = () => {
       {/* Social Icons */}
       <motion.div
         variants={blurIn}
-        initial="hidden"
-        whileInView="visible"
+        initial='hidden'
+        whileInView='visible'
         viewport={{ once: true }}
       >
         <Contact />

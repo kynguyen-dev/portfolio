@@ -13,7 +13,13 @@ import { STAT_LABELS } from '@constants/three-kingdoms';
 
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip);
 
-const STAT_KEYS: StatKey[] = ['might', 'intelligence', 'politics', 'charisma', 'leadership'];
+const STAT_KEYS: StatKey[] = [
+  'might',
+  'intelligence',
+  'politics',
+  'charisma',
+  'leadership',
+];
 
 interface StatsRadarChartProps {
   stats: CharacterStats;

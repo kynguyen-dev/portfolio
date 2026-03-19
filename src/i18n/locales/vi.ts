@@ -63,7 +63,8 @@ export const vi = {
   },
   projects: {
     recentWork: 'Dự án gần đây',
-    recentWorkDescriptions: 'Một vài dự án thiết kế tôi đã thực hiện. Muốn biết thêm?',
+    recentWorkDescriptions:
+      'Một vài dự án thiết kế tôi đã thực hiện. Muốn biết thêm?',
     emailMe: 'Gửi email cho tôi.',
     frontEndDeveloper: 'Front-End Developer',
     backEndDeveloper: 'Back-End Developer',
@@ -124,19 +125,22 @@ export const vi = {
     subtitle: 'Phản hồi từ đồng nghiệp và quản lý tôi đã làm việc cùng',
     items: [
       {
-        quote: 'Ky luôn hoàn thành code production-ready trước deadline. Kiến thức sâu về React và TypeScript tạo tác động thực sự lên chất lượng sản phẩm, và anh ấy luôn sẵn sàng giúp đồng nghiệp phát triển.',
+        quote:
+          'Ky luôn hoàn thành code production-ready trước deadline. Kiến thức sâu về React và TypeScript tạo tác động thực sự lên chất lượng sản phẩm, và anh ấy luôn sẵn sàng giúp đồng nghiệp phát triển.',
         name: 'Team Lead',
         title: 'DrivaLink',
         relationship: 'Quản lý trực tiếp',
       },
       {
-        quote: 'Làm việc với Ky là trải nghiệm tuyệt vời — anh ấy biến yêu cầu phức tạp thành UI sạch, accessible. Sự tỉ mỉ và giao tiếp chủ động giúp hợp tác xuyên team rất mượt mà.',
+        quote:
+          'Làm việc với Ky là trải nghiệm tuyệt vời — anh ấy biến yêu cầu phức tạp thành UI sạch, accessible. Sự tỉ mỉ và giao tiếp chủ động giúp hợp tác xuyên team rất mượt mà.',
         name: 'Senior Developer',
         title: 'Edalex',
         relationship: 'Đồng nghiệp',
       },
       {
-        quote: 'Ky mang đến cả kỹ năng kỹ thuật và đam mê thực sự về trải nghiệm người dùng. Anh ấy giới thiệu best practices hiện đại và cải thiện đáng kể test coverage.',
+        quote:
+          'Ky mang đến cả kỹ năng kỹ thuật và đam mê thực sự về trải nghiệm người dùng. Anh ấy giới thiệu best practices hiện đại và cải thiện đáng kể test coverage.',
         name: 'Project Manager',
         title: 'Epilepsy Research Center',
         relationship: 'Stakeholder dự án',
@@ -154,7 +158,8 @@ export const vi = {
     successTitle: 'Đã gửi!',
     successMessage: 'Cảm ơn bạn đã liên hệ — tôi sẽ phản hồi sớm.',
     errorTitle: 'Lỗi!',
-    errorMessage: 'Đã có lỗi xảy ra. Vui lòng thử lại hoặc gửi email trực tiếp.',
+    errorMessage:
+      'Đã có lỗi xảy ra. Vui lòng thử lại hoặc gửi email trực tiếp.',
     visitMyGithub: 'Xem Github của tôi',
     visitMyLinkedIn: 'Xem LinkedIn của tôi',
     sendMeEmail: 'Gửi email cho tôi',
@@ -166,7 +171,8 @@ export const vi = {
   },
   blog: {
     heading: 'Blog & Chia sẻ',
-    subtitle: 'Suy nghĩ về phát triển web, hiệu suất, và công cụ tôi dùng hàng ngày.',
+    subtitle:
+      'Suy nghĩ về phát triển web, hiệu suất, và công cụ tôi dùng hàng ngày.',
     readMore: 'Đọc bài viết →',
     minRead: '{{min}} phút đọc',
   },
@@ -187,24 +193,29 @@ export const vi = {
   },
   tools: {
     heading: 'Công cụ & Thí nghiệm',
-    subtitle: 'Những mini app tôi xây dựng để khám phá ý tưởng, trau dồi kỹ năng và vui với công nghệ.',
+    subtitle:
+      'Những mini app tôi xây dựng để khám phá ý tưởng, trau dồi kỹ năng và vui với công nghệ.',
     explore: 'Khám phá',
     items: {
       weather: {
         title: 'AI Weather Advisor',
-        description: 'Nhận gợi ý trang phục & hoạt động cá nhân hóa dựa trên dữ liệu thời tiết thực và AI.',
+        description:
+          'Nhận gợi ý trang phục & hoạt động cá nhân hóa dựa trên dữ liệu thời tiết thực và AI.',
       },
       dbExplorer: {
         title: 'Smart Database Explorer',
-        description: 'Đặt câu hỏi bằng tiếng Việt — AI chuyển đổi thành câu lệnh SQL tức thì.',
+        description:
+          'Đặt câu hỏi bằng tiếng Việt — AI chuyển đổi thành câu lệnh SQL tức thì.',
       },
       gallery: {
         title: 'Infinite Photo Gallery',
-        description: 'Gallery ảo hóa hiển thị hàng nghìn ảnh ở 60 FPS với cuộn vô tận.',
+        description:
+          'Gallery ảo hóa hiển thị hàng nghìn ảnh ở 60 FPS với cuộn vô tận.',
       },
       threeKingdoms: {
         title: 'Tam Quốc Finder',
-        description: 'Khám phá các tướng huyền thoại, so sánh chỉ số, và AI dự đoán kết quả trận đấu.',
+        description:
+          'Khám phá các tướng huyền thoại, so sánh chỉ số, và AI dự đoán kết quả trận đấu.',
       },
     },
   },

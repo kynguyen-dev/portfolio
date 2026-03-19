@@ -3,9 +3,18 @@ import { motion } from 'framer-motion';
 import { PFTypography } from '@components/core';
 import { StatsRadarChart } from './StatsRadarChart';
 import { getKingdomMeta, STAT_LABELS } from '@constants/three-kingdoms';
-import type { ThreeKingdomsCharacter, StatKey } from '@constants/three-kingdoms';
+import type {
+  ThreeKingdomsCharacter,
+  StatKey,
+} from '@constants/three-kingdoms';
 
-const STAT_KEYS: StatKey[] = ['might', 'intelligence', 'politics', 'charisma', 'leadership'];
+const STAT_KEYS: StatKey[] = [
+  'might',
+  'intelligence',
+  'politics',
+  'charisma',
+  'leadership',
+];
 
 interface BattleCompareProps {
   fighter1: ThreeKingdomsCharacter;
@@ -21,8 +30,12 @@ export const BattleCompare = ({ fighter1, fighter2 }: BattleCompareProps) => {
   /* Simple stat comparison "verdict" */
   const total1 = STAT_KEYS.reduce((s, k) => s + fighter1.stats[k], 0);
   const total2 = STAT_KEYS.reduce((s, k) => s + fighter2.stats[k], 0);
-  const wins1 = STAT_KEYS.filter(k => fighter1.stats[k] > fighter2.stats[k]).length;
-  const wins2 = STAT_KEYS.filter(k => fighter2.stats[k] > fighter1.stats[k]).length;
+  const wins1 = STAT_KEYS.filter(
+    k => fighter1.stats[k] > fighter2.stats[k]
+  ).length;
+  const wins2 = STAT_KEYS.filter(
+    k => fighter2.stats[k] > fighter1.stats[k]
+  ).length;
 
   return (
     <motion.div
@@ -40,19 +53,31 @@ export const BattleCompare = ({ fighter1, fighter2 }: BattleCompareProps) => {
         }}
       >
         {/* VS Header */}
-        <Stack direction="row" alignItems="center" justifyContent="center" spacing={3} sx={{ mb: 3 }}>
-          <Stack alignItems="center" spacing={0.5}>
+        <Stack
+          direction='row'
+          alignItems='center'
+          justifyContent='center'
+          spacing={3}
+          sx={{ mb: 3 }}
+        >
+          <Stack alignItems='center' spacing={0.5}>
             <Box sx={{ fontSize: '2rem' }}>{km1.emoji}</Box>
-            <PFTypography variant="h5" sx={{ fontWeight: 800, color: km1.color }}>
+            <PFTypography
+              variant='h5'
+              sx={{ fontWeight: 800, color: km1.color }}
+            >
               {fighter1.name.cn}
             </PFTypography>
-            <PFTypography variant="caption" sx={{ color: palette.text.secondary }}>
+            <PFTypography
+              variant='caption'
+              sx={{ color: palette.text.secondary }}
+            >
               {fighter1.name.en}
             </PFTypography>
           </Stack>
 
           <PFTypography
-            variant="h4"
+            variant='h4'
             sx={{
               fontWeight: 900,
               background: `linear-gradient(135deg, ${km1.color}, ${km2.color})`,
@@ -63,12 +88,18 @@ export const BattleCompare = ({ fighter1, fighter2 }: BattleCompareProps) => {
             VS
           </PFTypography>
 
-          <Stack alignItems="center" spacing={0.5}>
+          <Stack alignItems='center' spacing={0.5}>
             <Box sx={{ fontSize: '2rem' }}>{km2.emoji}</Box>
-            <PFTypography variant="h5" sx={{ fontWeight: 800, color: km2.color }}>
+            <PFTypography
+              variant='h5'
+              sx={{ fontWeight: 800, color: km2.color }}
+            >
               {fighter2.name.cn}
             </PFTypography>
-            <PFTypography variant="caption" sx={{ color: palette.text.secondary }}>
+            <PFTypography
+              variant='caption'
+              sx={{ color: palette.text.secondary }}
+            >
               {fighter2.name.en}
             </PFTypography>
           </Stack>
@@ -94,26 +125,41 @@ export const BattleCompare = ({ fighter1, fighter2 }: BattleCompareProps) => {
             const max = Math.max(v1, v2);
             return (
               <Stack key={key} spacing={0.5}>
-                <Stack direction="row" justifyContent="space-between">
+                <Stack direction='row' justifyContent='space-between'>
                   <PFTypography
-                    variant="caption"
-                    sx={{ fontWeight: 700, color: v1 > v2 ? km1.color : palette.text.secondary }}
+                    variant='caption'
+                    sx={{
+                      fontWeight: 700,
+                      color: v1 > v2 ? km1.color : palette.text.secondary,
+                    }}
                   >
                     {v1}
                   </PFTypography>
-                  <PFTypography variant="caption" sx={{ fontWeight: 600, color: palette.text.secondary }}>
+                  <PFTypography
+                    variant='caption'
+                    sx={{ fontWeight: 600, color: palette.text.secondary }}
+                  >
                     {STAT_LABELS[key].en}
                   </PFTypography>
                   <PFTypography
-                    variant="caption"
-                    sx={{ fontWeight: 700, color: v2 > v1 ? km2.color : palette.text.secondary }}
+                    variant='caption'
+                    sx={{
+                      fontWeight: 700,
+                      color: v2 > v1 ? km2.color : palette.text.secondary,
+                    }}
                   >
                     {v2}
                   </PFTypography>
                 </Stack>
-                <Stack direction="row" spacing={0.5}>
+                <Stack direction='row' spacing={0.5}>
                   {/* Left bar (fighter 1) — grows right-to-left */}
-                  <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+                  <Box
+                    sx={{
+                      flex: 1,
+                      display: 'flex',
+                      justifyContent: 'flex-end',
+                    }}
+                  >
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: `${(v1 / max) * 100}%` }}
@@ -121,9 +167,10 @@ export const BattleCompare = ({ fighter1, fighter2 }: BattleCompareProps) => {
                       style={{
                         height: 8,
                         borderRadius: 4,
-                        background: v1 >= v2
-                          ? `linear-gradient(90deg, ${km1.color}60, ${km1.color})`
-                          : `${km1.color}40`,
+                        background:
+                          v1 >= v2
+                            ? `linear-gradient(90deg, ${km1.color}60, ${km1.color})`
+                            : `${km1.color}40`,
                       }}
                     />
                   </Box>
@@ -136,9 +183,10 @@ export const BattleCompare = ({ fighter1, fighter2 }: BattleCompareProps) => {
                       style={{
                         height: 8,
                         borderRadius: 4,
-                        background: v2 >= v1
-                          ? `linear-gradient(90deg, ${km2.color}, ${km2.color}60)`
-                          : `${km2.color}40`,
+                        background:
+                          v2 >= v1
+                            ? `linear-gradient(90deg, ${km2.color}, ${km2.color}60)`
+                            : `${km2.color}40`,
                       }}
                     />
                   </Box>
@@ -148,7 +196,14 @@ export const BattleCompare = ({ fighter1, fighter2 }: BattleCompareProps) => {
           })}
         </Stack>
 
-        <Divider sx={{ mb: 2, borderColor: isLight ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.08)' }} />
+        <Divider
+          sx={{
+            mb: 2,
+            borderColor: isLight
+              ? 'rgba(0,0,0,0.08)'
+              : 'rgba(255,255,255,0.08)',
+          }}
+        />
 
         {/* Verdict */}
         <Box
@@ -156,28 +211,48 @@ export const BattleCompare = ({ fighter1, fighter2 }: BattleCompareProps) => {
             textAlign: 'center',
             p: 2,
             borderRadius: 2,
-            background: isLight ? 'rgba(184,137,31,0.06)' : 'rgba(245,208,96,0.06)',
+            background: isLight
+              ? 'rgba(184,137,31,0.06)'
+              : 'rgba(245,208,96,0.06)',
             border: `1px solid ${isLight ? 'rgba(184,137,31,0.15)' : 'rgba(245,208,96,0.15)'}`,
           }}
         >
-          <PFTypography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5, color: isLight ? '#B8891F' : '#F5D060' }}>
+          <PFTypography
+            variant='subtitle2'
+            sx={{
+              fontWeight: 700,
+              mb: 0.5,
+              color: isLight ? '#B8891F' : '#F5D060',
+            }}
+          >
             ⚖️ Battle Verdict
           </PFTypography>
-          <PFTypography variant="body2" sx={{ color: palette.text.secondary, lineHeight: 1.6 }}>
-            <Box component="span" sx={{ fontWeight: 700, color: km1.color }}>{fighter1.name.en}</Box>
+          <PFTypography
+            variant='body2'
+            sx={{ color: palette.text.secondary, lineHeight: 1.6 }}
+          >
+            <Box component='span' sx={{ fontWeight: 700, color: km1.color }}>
+              {fighter1.name.en}
+            </Box>
             {' wins '}
-            <Box component="span" sx={{ fontWeight: 700 }}>{wins1}</Box>
+            <Box component='span' sx={{ fontWeight: 700 }}>
+              {wins1}
+            </Box>
             {' / 5 stats, '}
-            <Box component="span" sx={{ fontWeight: 700, color: km2.color }}>{fighter2.name.en}</Box>
+            <Box component='span' sx={{ fontWeight: 700, color: km2.color }}>
+              {fighter2.name.en}
+            </Box>
             {' wins '}
-            <Box component="span" sx={{ fontWeight: 700 }}>{wins2}</Box>
+            <Box component='span' sx={{ fontWeight: 700 }}>
+              {wins2}
+            </Box>
             {' / 5 stats. '}
             Total: {total1} vs {total2}.
             {total1 > total2
               ? ` ${fighter1.name.cn} has the overall edge! 🏆`
               : total2 > total1
                 ? ` ${fighter2.name.cn} has the overall edge! 🏆`
-                : ' It\'s a dead even match! ⚔️'}
+                : " It's a dead even match! ⚔️"}
           </PFTypography>
         </Box>
       </Box>

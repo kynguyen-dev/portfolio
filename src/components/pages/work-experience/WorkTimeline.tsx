@@ -27,7 +27,14 @@ const workHistory: TimelineEntry[] = [
       'Implemented role-based access control and authentication with Auth0',
       'Mentored 2 junior developers through code reviews & pair programming sessions',
     ],
-    technologies: ['React', 'TypeScript', 'Next.js', 'PostgreSQL', 'REST API', 'Auth0'],
+    technologies: [
+      'React',
+      'TypeScript',
+      'Next.js',
+      'PostgreSQL',
+      'REST API',
+      'Auth0',
+    ],
   },
   {
     company: 'Epilepsy Research Center',
@@ -41,7 +48,13 @@ const workHistory: TimelineEntry[] = [
       'Implemented complex form validation with React Hook Form + Yup schema',
       'Achieved 90%+ test coverage with Jest & React Testing Library',
     ],
-    technologies: ['React', 'TypeScript', 'Material UI', 'TanStack Query', 'Jest'],
+    technologies: [
+      'React',
+      'TypeScript',
+      'Material UI',
+      'TanStack Query',
+      'Jest',
+    ],
   },
   {
     company: 'Edalex — Learner Dashboard',
@@ -69,7 +82,14 @@ const workHistory: TimelineEntry[] = [
       'Developed responsive UI with React and Next.js App Router',
       'Set up CI/CD pipeline for automated testing and deployment',
     ],
-    technologies: ['React', 'Next.js', 'TypeScript', 'Drizzle ORM', 'SQLite', 'Stripe'],
+    technologies: [
+      'React',
+      'Next.js',
+      'TypeScript',
+      'Drizzle ORM',
+      'SQLite',
+      'Stripe',
+    ],
   },
 ];
 
@@ -79,22 +99,27 @@ export const WorkTimeline = () => {
   const isLight = palette.mode === 'light';
   return (
     <Box
-      component="section"
-      id="experience"
-      sx={{ px: { xs: 2, md: 6 }, py: { xs: 8, md: 12 }, maxWidth: 1100, mx: 'auto' }}
+      component='section'
+      id='experience'
+      sx={{
+        px: { xs: 2, md: 6 },
+        py: { xs: 8, md: 12 },
+        maxWidth: 1100,
+        mx: 'auto',
+      }}
     >
-      <Stack alignItems="center" gap={6}>
+      <Stack alignItems='center' gap={6}>
         <PFGradientTypography
           variant={APP_TYPOGRAPHIES.HEADER_PRIMARY}
           theme={APP_THEMES.DARK}
-          fontWeight="bold"
+          fontWeight='bold'
         >
           {t('workExperience.heading')}
         </PFGradientTypography>
 
         {/* Timeline */}
         <Stack
-          direction="column"
+          direction='column'
           sx={{ position: 'relative', width: '100%', maxWidth: 800 }}
         >
           {/* Vertical line */}
@@ -118,7 +143,11 @@ export const WorkTimeline = () => {
                 opacity: 1,
                 x: 0,
                 scale: 1,
-                transition: { duration: 0.6, delay: index * 0.15, ease: [0.25, 0.46, 0.45, 0.94] },
+                transition: {
+                  duration: 0.6,
+                  delay: index * 0.15,
+                  ease: [0.25, 0.46, 0.45, 0.94],
+                },
               },
             };
             return (
@@ -126,13 +155,16 @@ export const WorkTimeline = () => {
                 key={entry.company}
                 component={motion.div}
                 variants={cardVariant}
-                initial="hidden"
-                whileInView="visible"
+                initial='hidden'
+                whileInView='visible'
                 viewport={{ once: true, amount: 0.3 }}
                 whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
                 sx={{
                   display: 'flex',
-                  justifyContent: { xs: 'flex-start', md: isLeft ? 'flex-end' : 'flex-start' },
+                  justifyContent: {
+                    xs: 'flex-start',
+                    md: isLeft ? 'flex-end' : 'flex-start',
+                  },
                   pl: { xs: 5, md: isLeft ? 0 : '52%' },
                   pr: { xs: 0, md: isLeft ? '52%' : 0 },
                   mb: 5,
@@ -158,38 +190,55 @@ export const WorkTimeline = () => {
                 {/* Card */}
                 <Box
                   sx={{
-                    ...glassCardSx(isLight, { blur: 10, borderRadius: 2, hoverLift: false }),
+                    ...glassCardSx(isLight, {
+                      blur: 10,
+                      borderRadius: 2,
+                      hoverLift: false,
+                    }),
                     p: 3,
                     width: '100%',
                   }}
                 >
                   <PFTypography
-                    variant="caption"
-                    sx={{ color: palette.primary.light, fontWeight: 600, letterSpacing: 1 }}
+                    variant='caption'
+                    sx={{
+                      color: palette.primary.light,
+                      fontWeight: 600,
+                      letterSpacing: 1,
+                    }}
                   >
                     {entry.period}
                   </PFTypography>
                   <PFTypography
-                    variant="h6"
-                    sx={{ color: palette.text.primary, fontWeight: 700, mt: 0.5 }}
+                    variant='h6'
+                    sx={{
+                      color: palette.text.primary,
+                      fontWeight: 700,
+                      mt: 0.5,
+                    }}
                   >
                     {entry.role}
                   </PFTypography>
                   <PFTypography
-                    variant="subtitle2"
+                    variant='subtitle2'
                     sx={{ color: palette.primary.main, fontWeight: 600 }}
                   >
                     {entry.company}
                   </PFTypography>
                   <PFTypography
-                    variant="body2"
-                    sx={{ color: palette.text.secondary, mt: 1.5, lineHeight: 1.7, opacity: 0.85 }}
+                    variant='body2'
+                    sx={{
+                      color: palette.text.secondary,
+                      mt: 1.5,
+                      lineHeight: 1.7,
+                      opacity: 0.85,
+                    }}
                   >
                     {entry.description}
                   </PFTypography>
                   {entry.highlights.length > 0 && (
                     <Box
-                      component="ul"
+                      component='ul'
                       sx={{
                         mt: 1.5,
                         pl: 2,
@@ -211,16 +260,20 @@ export const WorkTimeline = () => {
                       {entry.highlights.map((h, i) => (
                         <PFTypography
                           key={i}
-                          component="li"
-                          variant="body2"
-                          sx={{ color: palette.text.secondary, lineHeight: 1.6, opacity: 0.85 }}
+                          component='li'
+                          variant='body2'
+                          sx={{
+                            color: palette.text.secondary,
+                            lineHeight: 1.6,
+                            opacity: 0.85,
+                          }}
                         >
                           {h}
                         </PFTypography>
                       ))}
                     </Box>
                   )}
-                  <Stack direction="row" flexWrap="wrap" gap={1} mt={2}>
+                  <Stack direction='row' flexWrap='wrap' gap={1} mt={2}>
                     {entry.technologies.map(tech => (
                       <Box
                         key={tech}

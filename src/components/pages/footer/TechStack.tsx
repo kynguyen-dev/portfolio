@@ -12,7 +12,7 @@ import {
   VITE_URLS,
   YARN_URLS,
 } from '@constants';
-import { PFTypography } from "@components/core";
+import { PFTypography } from '@components/core';
 
 interface TechStackProps {
   name: string;
@@ -37,18 +37,32 @@ export const TechStack = () => {
   const { palette } = useTheme();
 
   return (
-    <Stack width="100%" textAlign="center">
-      <Stack direction="row" justifyContent="center" alignItems="center" flexWrap="wrap" gap={1}>
+    <Stack width='100%' textAlign='center'>
+      <Stack
+        direction='row'
+        justifyContent='center'
+        alignItems='center'
+        flexWrap='wrap'
+        gap={1}
+      >
         <PFTypography>{`Powered by `}</PFTypography>
         {techStacks.map((tech, index) => (
-          <Box key={tech.name} display="inline">
+          <Box key={tech.name} display='inline'>
             <a
               href={tech.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ textDecoration: 'none', color: palette.text.primary, transition: 'color 0.2s ease' }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = palette.primary.light)}
-              onMouseLeave={(e) => (e.currentTarget.style.color = palette.text.primary)}
+              target='_blank'
+              rel='noopener noreferrer'
+              style={{
+                textDecoration: 'none',
+                color: palette.text.primary,
+                transition: 'color 0.2s ease',
+              }}
+              onMouseEnter={e =>
+                (e.currentTarget.style.color = palette.primary.light)
+              }
+              onMouseLeave={e =>
+                (e.currentTarget.style.color = palette.text.primary)
+              }
               aria-label={`Learn more about ${tech.name}`}
             >
               {tech.name}

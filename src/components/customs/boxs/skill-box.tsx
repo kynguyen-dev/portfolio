@@ -23,10 +23,10 @@ export const SkillBox = (props: SkillBoxProps) => {
         transition={{ type: 'spring', stiffness: 300, damping: 15 }}
       >
         <CardMedia
-          component="img"
+          component='img'
           image={props.imageUrl}
           alt={props.title}
-          loading="lazy"
+          loading='lazy'
           sx={{ width: '96px', height: '96px', objectFit: 'contain' }}
         />
       </motion.div>

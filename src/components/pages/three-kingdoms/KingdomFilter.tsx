@@ -8,9 +8,9 @@ interface KingdomFilterProps {
 }
 
 export const KingdomFilter = ({ selected, onChange }: KingdomFilterProps) => (
-  <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+  <Stack direction='row' spacing={1} flexWrap='wrap' useFlexGap>
     <Chip
-      label="All"
+      label='All'
       variant={selected === 'all' ? 'filled' : 'outlined'}
       onClick={() => onChange('all')}
       sx={{

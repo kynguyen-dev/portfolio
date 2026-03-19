@@ -25,7 +25,7 @@ export const en = {
   aboutMe: {
     heading: 'About Me',
     p1: "I'm a full-stack developer based in Vietnam with {{years}}+ years of hands-on experience building web applications for the Australian tech scene. My core stack is React and TypeScript, and I've delivered production systems across logistics, healthcare, education and services.",
-    p2: 'I graduated from FPT University with a degree in Information Technology, where I built a strong foundation in software engineering principles. Since then I\'ve worked in cross-functional Agile teams — architecting front-ends, integrating REST APIs, and shipping features end-to-end with Next.js, MongoDB, PostgreSQL and Auth0.',
+    p2: "I graduated from FPT University with a degree in Information Technology, where I built a strong foundation in software engineering principles. Since then I've worked in cross-functional Agile teams — architecting front-ends, integrating REST APIs, and shipping features end-to-end with Next.js, MongoDB, PostgreSQL and Auth0.",
     p3: "I'm trilingual — fluent in Vietnamese, conversational in English and Japanese — which helps me collaborate across diverse teams. Outside of code, I enjoy photography and exploring new coffee spots.",
     p4: 'Always open to interesting opportunities and conversations — feel free to reach out.',
     github: 'GitHub →',
@@ -38,9 +38,12 @@ export const en = {
     backEndDeveloper: 'Backend Developer',
     frontEndDeveloper: 'Frontend Developer',
     tools: 'Tools',
-    backEndQuote: 'I turn business logic into robust backend solutions that power the digital world.',
-    frontEndQuote: 'I like to code things from scratch and enjoy bringing ideas to life in the browser.',
-    toolEndQuote: "I don't just use tools; I master them to build something great.",
+    backEndQuote:
+      'I turn business logic into robust backend solutions that power the digital world.',
+    frontEndQuote:
+      'I like to code things from scratch and enjoy bringing ideas to life in the browser.',
+    toolEndQuote:
+      "I don't just use tools; I master them to build something great.",
     languages: 'Languages I speak:',
     methods: 'The method I work:',
     toolsIUse: 'Tools I use:',
@@ -63,7 +66,8 @@ export const en = {
   },
   projects: {
     recentWork: 'My Recent Work',
-    recentWorkDescriptions: "Here are a few past design projects I've worked on. Want to know more?",
+    recentWorkDescriptions:
+      "Here are a few past design projects I've worked on. Want to know more?",
     emailMe: 'Email me.',
     frontEndDeveloper: 'Front-End Developer',
     backEndDeveloper: 'Back-End Developer',
@@ -124,19 +128,22 @@ export const en = {
     subtitle: "Feedback from colleagues and managers I've worked with",
     items: [
       {
-        quote: 'Ky consistently delivered production-ready code ahead of schedule. His deep knowledge of React and TypeScript made a real impact on our product quality, and he was always willing to help teammates grow.',
+        quote:
+          'Ky consistently delivered production-ready code ahead of schedule. His deep knowledge of React and TypeScript made a real impact on our product quality, and he was always willing to help teammates grow.',
         name: 'Team Lead',
         title: 'DrivaLink',
         relationship: 'Direct Manager',
       },
       {
-        quote: 'Working with Ky was a great experience — he turned complex requirements into clean, accessible UIs. His attention to detail and proactive communication made cross-team collaboration seamless.',
+        quote:
+          'Working with Ky was a great experience — he turned complex requirements into clean, accessible UIs. His attention to detail and proactive communication made cross-team collaboration seamless.',
         name: 'Senior Developer',
         title: 'Edalex',
         relationship: 'Colleague',
       },
       {
-        quote: 'Ky brought both technical skill and a genuine passion for user experience. He introduced modern best practices to our codebase and significantly improved our testing coverage.',
+        quote:
+          'Ky brought both technical skill and a genuine passion for user experience. He introduced modern best practices to our codebase and significantly improved our testing coverage.',
         name: 'Project Manager',
         title: 'Epilepsy Research Center',
         relationship: 'Project Stakeholder',
@@ -145,7 +152,8 @@ export const en = {
   },
   contact: {
     heading: 'Get In Touch',
-    subtitle: "Have a project in mind or just want to chat? I'd love to hear from you.",
+    subtitle:
+      "Have a project in mind or just want to chat? I'd love to hear from you.",
     nameLabel: 'Your Name',
     emailLabel: 'Your Email',
     messageLabel: 'Your Message',
@@ -154,7 +162,8 @@ export const en = {
     successTitle: 'Message sent!',
     successMessage: "Thanks for reaching out — I'll get back to you soon.",
     errorTitle: 'Oops!',
-    errorMessage: 'Something went wrong. Please try again or email me directly.',
+    errorMessage:
+      'Something went wrong. Please try again or email me directly.',
     visitMyGithub: 'Visit My Github',
     visitMyLinkedIn: 'Visit My LinkedIn',
     sendMeEmail: 'Send me an email',
@@ -166,7 +175,8 @@ export const en = {
   },
   blog: {
     heading: 'Blog & Insights',
-    subtitle: 'Thoughts on web development, performance, and the tools I use daily.',
+    subtitle:
+      'Thoughts on web development, performance, and the tools I use daily.',
     readMore: 'Read article →',
     minRead: '{{min}} min read',
   },
@@ -187,24 +197,29 @@ export const en = {
   },
   tools: {
     heading: 'Tools & Experiments',
-    subtitle: 'Mini apps I built to explore ideas, sharpen skills, and have fun with technology.',
+    subtitle:
+      'Mini apps I built to explore ideas, sharpen skills, and have fun with technology.',
     explore: 'Explore',
     items: {
       weather: {
         title: 'AI Weather Advisor',
-        description: 'Get personalized outfit & activity recommendations powered by real-time weather data and AI.',
+        description:
+          'Get personalized outfit & activity recommendations powered by real-time weather data and AI.',
       },
       dbExplorer: {
         title: 'Smart Database Explorer',
-        description: 'Ask questions in plain language — AI converts your text into SQL queries instantly.',
+        description:
+          'Ask questions in plain language — AI converts your text into SQL queries instantly.',
       },
       gallery: {
         title: 'Infinite Photo Gallery',
-        description: 'Virtualized gallery rendering thousands of photos at 60 FPS with infinite scroll.',
+        description:
+          'Virtualized gallery rendering thousands of photos at 60 FPS with infinite scroll.',
       },
       threeKingdoms: {
         title: 'Three Kingdoms Finder',
-        description: 'Explore legendary warriors, compare stats, and let AI predict battle outcomes.',
+        description:
+          'Explore legendary warriors, compare stats, and let AI predict battle outcomes.',
       },
     },
   },

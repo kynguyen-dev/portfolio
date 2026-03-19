@@ -20,8 +20,8 @@ export const Elevated: Story = {
     sx: { p: 3, minWidth: 280 },
     children: (
       <Stack spacing={1}>
-        <Typography variant="h6">Card Title</Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant='h6'>Card Title</Typography>
+        <Typography variant='body2' color='text.secondary'>
           This is a PFCard component with elevation.
         </Typography>
       </Stack>
@@ -35,8 +35,8 @@ export const Outlined: Story = {
     sx: { p: 3, minWidth: 280 },
     children: (
       <Stack spacing={1}>
-        <Typography variant="h6">Outlined Card</Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant='h6'>Outlined Card</Typography>
+        <Typography variant='body2' color='text.secondary'>
           This is a PFCard component with outlined variant.
         </Typography>
       </Stack>

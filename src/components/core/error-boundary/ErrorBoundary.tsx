@@ -44,19 +44,20 @@ export class ErrorBoundary extends Component<Props, State> {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            background: 'linear-gradient(180deg, #0B0D2E 0%, #1B1145 40%, #4A1942 100%)',
+            background:
+              'linear-gradient(180deg, #0B0D2E 0%, #1B1145 40%, #4A1942 100%)',
             p: 3,
           }}
         >
-          <Stack alignItems="center" spacing={3} sx={{ textAlign: 'center' }}>
-            <Typography variant="h3" sx={{ color: '#F5D060', fontWeight: 700 }}>
+          <Stack alignItems='center' spacing={3} sx={{ textAlign: 'center' }}>
+            <Typography variant='h3' sx={{ color: '#F5D060', fontWeight: 700 }}>
               Oops!
             </Typography>
-            <Typography variant="h6" sx={{ color: '#FFE4B5', maxWidth: 480 }}>
+            <Typography variant='h6' sx={{ color: '#FFE4B5', maxWidth: 480 }}>
               Something went wrong. Please try again.
             </Typography>
             <Button
-              variant="contained"
+              variant='contained'
               onClick={this.handleRetry}
               sx={{
                 backgroundColor: '#D4A843',

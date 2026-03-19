@@ -34,7 +34,7 @@ export const Default = () => (
     }}
   >
     <Typography
-      variant="h5"
+      variant='h5'
       sx={{
         position: 'absolute',
         top: '50%',
@@ -48,12 +48,12 @@ export const Default = () => (
     >
       Hover Me
     </Typography>
-    <Overlay className="overlay">
-      <OverlayContent className="overlay-content">
-        <Typography variant="h6" fontWeight={700}>
+    <Overlay className='overlay'>
+      <OverlayContent className='overlay-content'>
+        <Typography variant='h6' fontWeight={700}>
           Overlay Title
         </Typography>
-        <Typography variant="body2" sx={{ mt: 1 }}>
+        <Typography variant='body2' sx={{ mt: 1 }}>
           This overlay appears on hover with a smooth transition.
         </Typography>
       </OverlayContent>

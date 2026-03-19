@@ -1,4 +1,12 @@
-import { createContext, useContext, useState, useCallback, useMemo, ReactNode, useEffect } from 'react';
+import {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useMemo,
+  ReactNode,
+  useEffect,
+} from 'react';
 
 export type ThemeMode = 'dark' | 'light';
 
@@ -22,7 +30,10 @@ function getInitialMode(): ThemeMode {
     // SSR / privacy mode
   }
   // Detect OS preference
-  if (typeof window !== 'undefined' && window.matchMedia?.('(prefers-color-scheme: light)').matches) {
+  if (
+    typeof window !== 'undefined' &&
+    window.matchMedia?.('(prefers-color-scheme: light)').matches
+  ) {
     return 'light';
   }
   return 'dark';

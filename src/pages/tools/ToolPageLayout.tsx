@@ -17,7 +17,12 @@ interface ToolPageLayoutProps {
  * Shared layout for tool pages — gradient background, back button,
  * animated title section, and a content area for the actual tool.
  */
-const ToolPageLayout = ({ title, emoji, description, children }: ToolPageLayoutProps) => {
+const ToolPageLayout = ({
+  title,
+  emoji,
+  description,
+  children,
+}: ToolPageLayoutProps) => {
   const navigate = useNavigate();
   const { palette } = useTheme();
   const isLight = palette.mode === 'light';
@@ -25,17 +30,17 @@ const ToolPageLayout = ({ title, emoji, description, children }: ToolPageLayoutP
   return (
     <SunriseBackground>
       <Stack
-        component="main"
-        minHeight="100vh"
-        alignItems="center"
-        justifyContent="center"
+        component='main'
+        minHeight='100vh'
+        alignItems='center'
+        justifyContent='center'
         sx={{ px: { xs: 2, md: 4 }, py: { xs: 10, md: 12 } }}
       >
         {/* Back button */}
         <Box sx={{ position: 'fixed', top: 20, left: 20, zIndex: 50 }}>
           <IconButton
             onClick={() => navigate({ to: '/' })}
-            aria-label="Back to portfolio"
+            aria-label='Back to portfolio'
             sx={{
               color: isLight ? '#5C4A32' : '#FFE4B5',
               background: isLight
@@ -61,7 +66,7 @@ const ToolPageLayout = ({ title, emoji, description, children }: ToolPageLayoutP
           transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
           <Stack
-            alignItems="center"
+            alignItems='center'
             spacing={3}
             sx={{
               textAlign: 'center',
@@ -79,13 +84,13 @@ const ToolPageLayout = ({ title, emoji, description, children }: ToolPageLayoutP
             </motion.div>
 
             {/* Title */}
-            <PFGradientTypography variant="h3" fontWeight={800}>
+            <PFGradientTypography variant='h3' fontWeight={800}>
               {title}
             </PFGradientTypography>
 
             {/* Description */}
             <PFTypography
-              variant="h6"
+              variant='h6'
               sx={{
                 color: isLight ? '#5C4A32' : '#FFE4B5',
                 fontWeight: 400,
@@ -124,7 +129,7 @@ const ToolPageLayout = ({ title, emoji, description, children }: ToolPageLayoutP
                 }}
               />
               <PFTypography
-                variant="caption"
+                variant='caption'
                 sx={{
                   color: isLight ? '#B8891F' : '#F5D060',
                   fontWeight: 600,

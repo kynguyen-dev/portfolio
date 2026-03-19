@@ -16,13 +16,20 @@ export const SplashScreen = () => {
   const { palette } = useTheme();
   const { t } = useTranslation();
   const [visible, setVisible] = useState(() => {
-    try { return !sessionStorage.getItem(SPLASH_STORAGE_KEY); }
-    catch { return true; }
+    try {
+      return !sessionStorage.getItem(SPLASH_STORAGE_KEY);
+    } catch {
+      return true;
+    }
   });
 
   const dismiss = useCallback(() => {
     setVisible(false);
-    try { sessionStorage.setItem(SPLASH_STORAGE_KEY, '1'); } catch { /* noop */ }
+    try {
+      sessionStorage.setItem(SPLASH_STORAGE_KEY, '1');
+    } catch {
+      /* noop */
+    }
   }, []);
 
   useEffect(() => {
@@ -35,13 +42,16 @@ export const SplashScreen = () => {
     <AnimatePresence>
       {visible && (
         <motion.div
-          key="splash"
+          key='splash'
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, scale: 1.05 }}
           transition={{ duration: 0.6, ease: 'easeInOut' }}
           onClick={dismiss}
-          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') dismiss(); }}
-          role="button"
+          onKeyDown={e => {
+            if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape')
+              dismiss();
+          }}
+          role='button'
           tabIndex={0}
           aria-label={t('common.skipSplash')}
           style={{
@@ -139,7 +149,7 @@ export const SplashScreen = () => {
 
           {/* Pulsing dot loader */}
           <Box sx={{ display: 'flex', gap: 1, mt: 5 }}>
-            {[0, 1, 2].map((i) => (
+            {[0, 1, 2].map(i => (
               <motion.div
                 key={i}
                 animate={{ scale: [1, 1.4, 1], opacity: [0.4, 1, 0.4] }}

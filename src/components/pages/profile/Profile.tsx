@@ -12,7 +12,10 @@ import {
   APP_TYPOGRAPHIES_ANIMATION,
 } from '@constants';
 import { ReactNode } from 'react';
-import { staggerContainer, staggerItem } from '@utils/animations/scrollVariants';
+import {
+  staggerContainer,
+  staggerItem,
+} from '@utils/animations/scrollVariants';
 import { getYearsOfExperience } from '@utils/core/career';
 
 interface HighlightSkill {
@@ -30,7 +33,9 @@ interface SkillsDef {
 const skillDefs: SkillsDef[] = [
   {
     titleKey: 'profile.backEndDeveloper',
-    icon: <Terminal fontSize={APP_SIZES.LARGE} sx={{ color: 'primary.light' }} />,
+    icon: (
+      <Terminal fontSize={APP_SIZES.LARGE} sx={{ color: 'primary.light' }} />
+    ),
     quoteKey: 'profile.backEndQuote',
     highlights: [
       {
@@ -40,8 +45,17 @@ const skillDefs: SkillsDef[] = [
       {
         labelKey: 'profile.devTech',
         items: [
-          'Java 8', 'Spring Boot', 'NextJS', 'SQLite', 'NoSQL MongoDB',
-          'PostgreSQL', 'Drizzle ORM', 'RESTful API', 'JUnit', 'Groovy', 'Java Android',
+          'Java 8',
+          'Spring Boot',
+          'NextJS',
+          'SQLite',
+          'NoSQL MongoDB',
+          'PostgreSQL',
+          'Drizzle ORM',
+          'RESTful API',
+          'JUnit',
+          'Groovy',
+          'Java Android',
         ],
       },
     ],
@@ -58,16 +72,32 @@ const skillDefs: SkillsDef[] = [
       {
         labelKey: 'profile.devTech',
         items: [
-          'ReactJS', 'Tailwind CSS', 'Material UI', 'TanStack Query', 'NextJS',
-          'AngularJS', 'Vite', 'ESLint', 'Prettier', 'Storybook',
-          'Jest', 'React Testing Library', 'React Hook Form', 'Auth0',
+          'ReactJS',
+          'Tailwind CSS',
+          'Material UI',
+          'TanStack Query',
+          'NextJS',
+          'AngularJS',
+          'Vite',
+          'ESLint',
+          'Prettier',
+          'Storybook',
+          'Jest',
+          'React Testing Library',
+          'React Hook Form',
+          'Auth0',
         ],
       },
     ],
   },
   {
     titleKey: 'profile.tools',
-    icon: <ConstructionIcon fontSize={APP_SIZES.LARGE} sx={{ color: 'primary.light' }} />,
+    icon: (
+      <ConstructionIcon
+        fontSize={APP_SIZES.LARGE}
+        sx={{ color: 'primary.light' }}
+      />
+    ),
     quoteKey: 'profile.toolEndQuote',
     highlights: [
       {
@@ -77,8 +107,15 @@ const skillDefs: SkillsDef[] = [
       {
         labelKey: 'profile.toolsIUse',
         items: [
-          'Visual Studio Code', 'WebStorm', 'IntelliJ IDE', 'Postman',
-          'Docker Desktop', 'Git', 'GitHub/GitLab', 'Jira', 'Figma',
+          'Visual Studio Code',
+          'WebStorm',
+          'IntelliJ IDE',
+          'Postman',
+          'Docker Desktop',
+          'Git',
+          'GitHub/GitLab',
+          'Jira',
+          'Figma',
         ],
       },
     ],
@@ -92,7 +129,7 @@ export const Profile = () => {
 
   return (
     <Box
-      component="section"
+      component='section'
       id={APP_PAGES.PROFILE.toLowerCase()}
       aria-label={t('profile.opening')}
       sx={{
@@ -127,12 +164,18 @@ export const Profile = () => {
         sx={{ mt: 8, alignItems: 'stretch' }}
         component={motion.div}
         variants={staggerContainer(0.2, 0.15)}
-        initial="hidden"
-        whileInView="visible"
+        initial='hidden'
+        whileInView='visible'
         viewport={{ once: true, amount: 0.2 }}
       >
-        {skillDefs.map((role) => (
-          <Grid item xs={12} md={4} key={role.titleKey} sx={{ display: 'flex' }}>
+        {skillDefs.map(role => (
+          <Grid
+            item
+            xs={12}
+            md={4}
+            key={role.titleKey}
+            sx={{ display: 'flex' }}
+          >
             <motion.div
               variants={staggerItem}
               style={{ flex: 1 }}
@@ -157,7 +200,10 @@ export const Profile = () => {
                     variant={APP_TYPOGRAPHIES.BODY_SECONDARY}
                     animations={[APP_TYPOGRAPHIES_ANIMATION.TYPEWRITER]}
                     speed={50}
-                    sx={{ mt: 1, color: `${palette.text.secondary} !important` }}
+                    sx={{
+                      mt: 1,
+                      color: `${palette.text.secondary} !important`,
+                    }}
                   >
                     {t(role.quoteKey)}
                   </PFTypography>
@@ -167,7 +213,11 @@ export const Profile = () => {
                       <PFGradientTypography
                         variant={APP_TYPOGRAPHIES.SUBTITLE_SECONDARY}
                         fontWeight='bold'
-                        colors={[palette.primary.light, palette.primary.main, palette.secondary.main]}
+                        colors={[
+                          palette.primary.light,
+                          palette.primary.main,
+                          palette.secondary.main,
+                        ]}
                       >
                         {t(highlight.labelKey)}
                       </PFGradientTypography>
@@ -175,7 +225,11 @@ export const Profile = () => {
                         <PFTypography
                           key={item}
                           variant={APP_TYPOGRAPHIES.BODY_SECONDARY}
-                          sx={{ mt: 1, color: `${palette.text.primary} !important`, fontWeight: 700 }}
+                          sx={{
+                            mt: 1,
+                            color: `${palette.text.primary} !important`,
+                            fontWeight: 700,
+                          }}
                         >
                           {item}
                         </PFTypography>

@@ -60,12 +60,12 @@ export const WithTypewriter: Story = {
 };
 
 export const AllVariants = () => (
-  <Stack spacing={2} alignItems="start">
-    <PFGradientTypography variant="h1">Heading 1</PFGradientTypography>
-    <PFGradientTypography variant="h2">Heading 2</PFGradientTypography>
-    <PFGradientTypography variant="h3">Heading 3</PFGradientTypography>
-    <PFGradientTypography variant="h4">Heading 4</PFGradientTypography>
-    <PFGradientTypography variant="h5">Heading 5</PFGradientTypography>
-    <PFGradientTypography variant="h6">Heading 6</PFGradientTypography>
+  <Stack spacing={2} alignItems='start'>
+    <PFGradientTypography variant='h1'>Heading 1</PFGradientTypography>
+    <PFGradientTypography variant='h2'>Heading 2</PFGradientTypography>
+    <PFGradientTypography variant='h3'>Heading 3</PFGradientTypography>
+    <PFGradientTypography variant='h4'>Heading 4</PFGradientTypography>
+    <PFGradientTypography variant='h5'>Heading 5</PFGradientTypography>
+    <PFGradientTypography variant='h6'>Heading 6</PFGradientTypography>
   </Stack>
 );

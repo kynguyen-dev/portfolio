@@ -31,9 +31,7 @@ export const ParallaxSection = ({
 
   return (
     <Box ref={ref} id={id} sx={{ overflow: 'hidden' }}>
-      <motion.div style={{ y }}>
-        {children}
-      </motion.div>
+      <motion.div style={{ y }}>{children}</motion.div>
     </Box>
   );
 };

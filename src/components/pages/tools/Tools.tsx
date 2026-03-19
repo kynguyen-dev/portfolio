@@ -53,16 +53,16 @@ export const Tools = () => {
 
   return (
     <Box
-      component="section"
-      id="tools"
+      component='section'
+      id='tools'
       sx={{ py: { xs: 8, md: 12 }, px: { xs: 2, md: 4 } }}
     >
-      <Stack alignItems="center" spacing={2} sx={{ mb: { xs: 5, md: 7 } }}>
-        <PFGradientTypography variant="h4" fontWeight={800}>
+      <Stack alignItems='center' spacing={2} sx={{ mb: { xs: 5, md: 7 } }}>
+        <PFGradientTypography variant='h4' fontWeight={800}>
           {t('tools.heading')}
         </PFGradientTypography>
         <PFTypography
-          variant="body1"
+          variant='body1'
           sx={{
             color: palette.text.secondary,
             textAlign: 'center',
@@ -76,8 +76,8 @@ export const Tools = () => {
       {/* Tools grid with stagger animation */}
       <motion.div
         variants={staggerContainer(0.15, 0.1)}
-        initial="hidden"
-        whileInView="visible"
+        initial='hidden'
+        whileInView='visible'
         viewport={{ once: true, amount: 0.15 }}
       >
         <Box
@@ -92,13 +92,13 @@ export const Tools = () => {
             mx: 'auto',
           }}
         >
-          {TOOLS.map((tool) => (
+          {TOOLS.map(tool => (
             <motion.div key={tool.route} variants={staggerItem}>
               <Box
                 onClick={() => navigate({ to: tool.route })}
-                role="link"
+                role='link'
                 tabIndex={0}
-                onKeyDown={(e) => {
+                onKeyDown={e => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     navigate({ to: tool.route });
@@ -135,10 +135,15 @@ export const Tools = () => {
                   <Box sx={{ fontSize: '2.5rem', lineHeight: 1 }}>
                     {tool.image ? (
                       <Box
-                        component="img"
+                        component='img'
                         src={tool.image}
-                        alt=""
-                        sx={{ width: 48, height: 48, borderRadius: '50%', objectFit: 'cover' }}
+                        alt=''
+                        sx={{
+                          width: 48,
+                          height: 48,
+                          borderRadius: '50%',
+                          objectFit: 'cover',
+                        }}
                       />
                     ) : (
                       tool.emoji
@@ -147,7 +152,7 @@ export const Tools = () => {
 
                   {/* Title */}
                   <PFTypography
-                    variant="h6"
+                    variant='h6'
                     sx={{
                       fontWeight: 700,
                       color: palette.text.primary,
@@ -158,7 +163,7 @@ export const Tools = () => {
 
                   {/* Description */}
                   <PFTypography
-                    variant="body2"
+                    variant='body2'
                     sx={{
                       color: palette.text.secondary,
                       lineHeight: 1.6,

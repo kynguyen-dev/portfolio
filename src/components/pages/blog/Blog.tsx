@@ -2,7 +2,10 @@ import { Box, Chip, Stack, useTheme } from '@mui/material';
 import { motion } from 'framer-motion';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { useTranslation } from 'react-i18next';
-import { PFGradientTypography, PFTypography } from '@components/core/typography';
+import {
+  PFGradientTypography,
+  PFTypography,
+} from '@components/core/typography';
 import { APP_THEMES, APP_TYPOGRAPHIES } from '@constants';
 import { glassCardSx } from '@utils/styles/glassCard';
 
@@ -55,7 +58,11 @@ const cardVariants = {
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: { delay: i * 0.15, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
+    transition: {
+      delay: i * 0.15,
+      duration: 0.6,
+      ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
+    },
   }),
 };
 
@@ -66,20 +73,29 @@ export const Blog = () => {
 
   return (
     <Box
-      component="section"
+      component='section'
       aria-label={t('blog.heading')}
-      sx={{ py: { xs: 8, md: 12 }, px: { xs: 2, md: 6 }, maxWidth: 1100, mx: 'auto' }}
+      sx={{
+        py: { xs: 8, md: 12 },
+        px: { xs: 2, md: 6 },
+        maxWidth: 1100,
+        mx: 'auto',
+      }}
     >
       <PFGradientTypography
         variant={APP_TYPOGRAPHIES.HEADER_PRIMARY}
         theme={APP_THEMES.DARK}
-        fontWeight="bold"
-        align="center"
+        fontWeight='bold'
+        align='center'
         sx={{ mb: 1 }}
       >
         {t('blog.heading')}
       </PFGradientTypography>
-      <PFTypography variant="body1" align="center" sx={{ color: palette.text.secondary, opacity: 0.7, mb: 6 }}>
+      <PFTypography
+        variant='body1'
+        align='center'
+        sx={{ color: palette.text.secondary, opacity: 0.7, mb: 6 }}
+      >
         {t('blog.subtitle')}
       </PFTypography>
 
@@ -89,11 +105,11 @@ export const Blog = () => {
             key={i}
             component={motion.a}
             href={post.url}
-            target="_blank"
-            rel="noopener noreferrer"
+            target='_blank'
+            rel='noopener noreferrer'
             custom={i}
-            initial="hidden"
-            whileInView="visible"
+            initial='hidden'
+            whileInView='visible'
             viewport={{ once: true, amount: 0.3 }}
             variants={cardVariants}
             sx={{
@@ -109,29 +125,45 @@ export const Blog = () => {
               },
             }}
           >
-            <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
+            <Stack
+              direction='row'
+              justifyContent='space-between'
+              alignItems='flex-start'
+            >
               <Box flex={1}>
-                <Stack direction="row" alignItems="center" gap={1} mb={1}>
+                <Stack direction='row' alignItems='center' gap={1} mb={1}>
                   <PFTypography
-                    variant="h6"
+                    variant='h6'
                     sx={{ color: palette.text.primary, fontWeight: 700 }}
                   >
                     {post.titleKey}
                   </PFTypography>
-                  <OpenInNewIcon sx={{ color: 'rgba(245,208,96,0.4)', fontSize: 18 }} />
+                  <OpenInNewIcon
+                    sx={{ color: 'rgba(245,208,96,0.4)', fontSize: 18 }}
+                  />
                 </Stack>
                 <PFTypography
-                  variant="body2"
-                  sx={{ color: palette.text.secondary, opacity: 0.8, lineHeight: 1.7, mb: 2 }}
+                  variant='body2'
+                  sx={{
+                    color: palette.text.secondary,
+                    opacity: 0.8,
+                    lineHeight: 1.7,
+                    mb: 2,
+                  }}
                 >
                   {post.summaryKey}
                 </PFTypography>
-                <Stack direction="row" flexWrap="wrap" gap={1} alignItems="center">
+                <Stack
+                  direction='row'
+                  flexWrap='wrap'
+                  gap={1}
+                  alignItems='center'
+                >
                   {post.tags.map(tag => (
                     <Chip
                       key={tag}
                       label={tag}
-                      size="small"
+                      size='small'
                       sx={{
                         background: `${palette.primary.light}18`,
                         border: `1px solid ${palette.primary.light}33`,
@@ -142,7 +174,7 @@ export const Blog = () => {
                     />
                   ))}
                   <PFTypography
-                    variant="caption"
+                    variant='caption'
                     sx={{ color: palette.text.secondary, opacity: 0.5, ml: 1 }}
                   >
                     {post.date} · {t('blog.minRead', { min: post.minRead })}

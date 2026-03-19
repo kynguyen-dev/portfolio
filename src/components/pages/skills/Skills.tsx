@@ -1,12 +1,21 @@
-import {motion} from 'framer-motion';
-import {Stack, useTheme} from '@mui/material';
-import {PFGradientTypography} from '@components/core';
-import {HorizontalSkillList, HorizontalSkillListProps,} from '@components/customs/lists/HorizontalSkills';
+import { motion } from 'framer-motion';
+import { Stack, useTheme } from '@mui/material';
+import { PFGradientTypography } from '@components/core';
+import {
+  HorizontalSkillList,
+  HorizontalSkillListProps,
+} from '@components/customs/lists/HorizontalSkills';
 import { useTranslation } from 'react-i18next';
-import {APP_THEMES, APP_TYPOGRAPHIES} from "@constants";
-import { staggerContainer, staggerScaleUp } from '@utils/animations/scrollVariants';
+import { APP_THEMES, APP_TYPOGRAPHIES } from '@constants';
+import {
+  staggerContainer,
+  staggerScaleUp,
+} from '@utils/animations/scrollVariants';
 
-const skillGroups: { titleKey: string; skillBoxes: HorizontalSkillListProps['skillBoxes'] }[] = [
+const skillGroups: {
+  titleKey: string;
+  skillBoxes: HorizontalSkillListProps['skillBoxes'];
+}[] = [
   {
     titleKey: 'skills.core',
     skillBoxes: [
@@ -107,18 +116,15 @@ export const Skills = () => {
       <Stack
         component={motion.div}
         variants={staggerContainer(0.18, 0.1)}
-        initial="hidden"
-        whileInView="visible"
+        initial='hidden'
+        whileInView='visible'
         viewport={{ once: true, amount: 0.2 }}
         display={'flex'}
         alignItems={'center'}
         gap={6}
       >
         {skillGroups.map((skill, index) => (
-          <motion.div
-            key={index}
-            variants={staggerScaleUp}
-          >
+          <motion.div key={index} variants={staggerScaleUp}>
             <HorizontalSkillList
               title={t(skill.titleKey)}
               skillBoxes={skill.skillBoxes}

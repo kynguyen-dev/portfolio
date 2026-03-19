@@ -23,7 +23,9 @@ export const PFTypography = ({
 
   /** ⌨️ Typewriter Effect */
   if (animations.includes(APP_TYPOGRAPHIES_ANIMATION.TYPEWRITER)) {
-    animatedText = <TypewriterEffect text={children?.toString() ?? ''} speed={speed} />;
+    animatedText = (
+      <TypewriterEffect text={children?.toString() ?? ''} speed={speed} />
+    );
   }
 
   /** ✨ Outline to Solid Effect */
