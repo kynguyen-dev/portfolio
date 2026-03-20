@@ -46,7 +46,7 @@ import {
   SiJira,
   SiFigma,
   SiSpringboot,
-  SiJava,
+  SiOpenjdk,
   SiReactquery,
   SiAuth0,
   SiVite,
@@ -94,7 +94,7 @@ const skillGroups: {
     titleKey: 'skills.additional',
     skillBoxes: [
       {
-        icon: <SiJava size={ICON_SIZE} color='#007396' />,
+        icon: <SiOpenjdk size={ICON_SIZE} color='#007396' />,
         title: 'Java',
         link: JAVA_URLS,
       },

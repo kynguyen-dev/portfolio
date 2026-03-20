@@ -1,7 +1,0 @@
-﻿src/pages/tools/MarketInsights.tsx(1,44): error TS6133: 'memo' is declared but its value is never read.
-src/pages/tools/MarketInsights.tsx(198,13): error TS6133: 'rateData' is declared but its value is never read.
-src/pages/tools/MarketInsights.tsx(311,32): error TS18047: 'weatherVisual' is possibly 'null'.
-src/pages/tools/MarketInsights.tsx(356,34): error TS18047: 'weatherVisual' is possibly 'null'.
-src/pages/tools/MarketInsights.tsx(454,111): error TS2322: Type '{ children: string[]; variant: "button"; component: "a"; href: string; sx: { textDecoration: string; color: "#B8891F" | "#F5D060"; fontWeight: number; fontSize: string; }; }' is not assignable to type 'IntrinsicAttributes & PFTypographyProps'.
-  Property 'href' does not exist on type 'IntrinsicAttributes & PFTypographyProps'. Did you mean 'ref'?
-src/pages/tools/NewsList.tsx(59,10): error TS6133: 'page' is declared but its value is never read.

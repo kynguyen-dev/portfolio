@@ -163,14 +163,15 @@ export const MyProject = () => {
                     overflow: 'hidden',
                     borderRadius: theme.shape.borderRadius,
                     width: '100%',
-                    height: { xs: '280px', sm: '360px', md: '480px' },
-                    aspectRatio: '16/9',
+                    height: { xs: '320px', sm: '380px', md: '480px' },
                     cursor: 'pointer',
                     outline: 'none',
-                    transition: 'background-color 0.3s ease-in-out',
+                    transition:
+                      'background-color 0.3s ease-in-out, transform 0.3s ease-in-out',
                     ...(!isTouchDevice && {
                       '&:hover, &:focus-visible': {
                         backgroundColor: theme.palette.primary.dark,
+                        transform: 'translateY(-4px)',
                       },
                       '&:hover .project-image, &:focus-visible .project-image':
                         {
@@ -232,8 +233,8 @@ export const MyProject = () => {
                       right: 0,
                       textAlign: 'center',
                       background:
-                        'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.35) 60%, transparent 100%)',
-                      padding: '32px 20px 16px',
+                        'linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 60%, transparent 100%)',
+                      padding: { xs: '24px 16px 12px', md: '32px 20px 16px' },
                       transition: 'opacity 0.3s ease-in-out',
                     }}
                   >
@@ -241,7 +242,7 @@ export const MyProject = () => {
                       variant={APP_TYPOGRAPHIES.HEADER_SECONDARY}
                       color={theme.palette.common.white}
                       fontWeight={'bold'}
-                      fontSize={{ xs: '1rem', md: '1.5rem' }}
+                      fontSize={{ xs: '1.1rem', md: '1.5rem' }}
                       sx={{ textShadow: '2px 2px 6px rgba(0, 0, 0, 0.7)' }}
                     >
                       {title}
@@ -249,9 +250,10 @@ export const MyProject = () => {
                     <PFTypography
                       variant='caption'
                       sx={{
-                        color: 'rgba(255,255,255,0.7)',
+                        color: 'rgba(255,255,255,0.85)',
                         letterSpacing: 1,
-                        fontWeight: 500,
+                        fontWeight: 600,
+                        fontSize: { xs: '0.7rem', md: '0.75rem' },
                       }}
                     >
                       {role}
@@ -259,26 +261,32 @@ export const MyProject = () => {
                   </Box>
 
                   <Overlay className={'overlay'}>
-                    <OverlayContent className='overlay-content'>
+                    <OverlayContent
+                      className='overlay-content'
+                      sx={{ width: '100%', minHeight: 'min-content' }}
+                    >
                       <Stack
                         direction={'column'}
-                        gap={1.5}
+                        gap={{ xs: 1, md: 2 }}
                         alignItems={'center'}
-                        px={2}
+                        px={{ xs: 1, md: 3 }}
+                        py={2}
                       >
                         <PFGradientTypography
                           variant={APP_TYPOGRAPHIES.HEADER_SECONDARY}
                           theme={APP_THEMES.LIGHT}
+                          fontWeight='bold'
+                          fontSize={{ xs: '1rem', md: '1.25rem' }}
                         >
                           {role}
                         </PFGradientTypography>
                         <PFTypography
-                          color={theme.palette.text.primary}
+                          color={theme.palette.common.white}
                           sx={{
-                            typography: {
-                              xs: APP_TYPOGRAPHIES.CAPTION,
-                              md: APP_TYPOGRAPHIES.BODY_SECONDARY,
-                            },
+                            fontSize: { xs: '0.8rem', md: '0.9rem' },
+                            lineHeight: 1.6,
+                            opacity: 0.95,
+                            maxWidth: 450,
                           }}
                         >
                           {description}
@@ -287,32 +295,39 @@ export const MyProject = () => {
                         {Array.isArray(contributions) &&
                           contributions.length > 0 && (
                             <Stack
-                              gap={0.5}
-                              sx={{ width: '100%', maxWidth: 400 }}
+                              gap={1}
+                              sx={{
+                                width: '100%',
+                                maxWidth: 400,
+                                my: { xs: 1, md: 2 },
+                              }}
                             >
                               {contributions.slice(0, 3).map((c, ci) => (
                                 <Stack
                                   key={ci}
                                   direction='row'
                                   alignItems='flex-start'
-                                  gap={1}
+                                  gap={1.5}
                                 >
                                   <Box
                                     sx={{
-                                      width: 5,
-                                      height: 5,
+                                      width: 6,
+                                      height: 6,
                                       borderRadius: '50%',
-                                      background: theme.palette.primary.light,
+                                      background: theme.palette.secondary.light,
                                       mt: 0.8,
                                       flexShrink: 0,
                                     }}
                                   />
                                   <PFTypography
                                     sx={{
-                                      color: theme.palette.text.secondary,
-                                      opacity: 0.9,
-                                      fontSize: { xs: '0.65rem', md: '0.8rem' },
+                                      color: 'rgba(255,255,255,0.9)',
+                                      fontSize: {
+                                        xs: '0.75rem',
+                                        md: '0.85rem',
+                                      },
                                       lineHeight: 1.5,
+                                      textAlign: 'left',
                                     }}
                                   >
                                     {c}
@@ -322,26 +337,41 @@ export const MyProject = () => {
                             </Stack>
                           )}
 
-                        <Stack direction='row' gap={2} alignItems='center'>
+                        <Stack
+                          direction='row'
+                          gap={2}
+                          alignItems='center'
+                          sx={{ mt: { xs: 1, md: 2 } }}
+                        >
                           {project.url ? (
                             <StyledButton
-                              variant='outlined'
-                              size='large'
-                              onClick={() =>
+                              variant='contained'
+                              size='medium'
+                              color='secondary'
+                              sx={{
+                                borderRadius: '30px',
+                                px: { xs: 2, md: 4 },
+                                fontSize: { xs: '0.75rem', md: '0.875rem' },
+                              }}
+                              onClick={e => {
+                                e.stopPropagation();
                                 window.open(
                                   project.url,
                                   '_blank',
                                   'noopener,noreferrer'
-                                )
-                              }
+                                );
+                              }}
                             >
                               {t('projects.visitWebSite')}
                             </StyledButton>
                           ) : (
                             <PFTypography
                               variant='body2'
-                              color={theme.palette.text.secondary}
+                              color='rgba(255,255,255,0.7)'
                               fontStyle='italic'
+                              sx={{
+                                fontSize: { xs: '0.75rem', md: '0.875rem' },
+                              }}
                             >
                               {t('projects.privateProject')}
                             </PFTypography>
@@ -352,11 +382,12 @@ export const MyProject = () => {
                               href={project.githubUrl}
                               target='_blank'
                               rel='noopener noreferrer'
+                              onClick={e => e.stopPropagation()}
                               sx={{
-                                color: theme.palette.text.primary,
+                                color: theme.palette.common.white,
                                 display: 'flex',
                                 '&:hover': {
-                                  color: theme.palette.primary.light,
+                                  color: theme.palette.secondary.light,
                                 },
                               }}
                               aria-label={`View ${title} on GitHub`}

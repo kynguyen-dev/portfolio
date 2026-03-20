@@ -34,7 +34,14 @@ const ToolPageLayout = ({
         minHeight='100vh'
         alignItems='center'
         justifyContent='center'
-        sx={{ px: { xs: 2, md: 4 }, py: { xs: 10, md: 12 } }}
+        sx={{
+          px: { xs: 2, md: 4 },
+          py: { xs: 10, md: 12 },
+          width: '100%',
+          maxWidth: '100vw',
+          boxSizing: 'border-box',
+          overflowX: 'hidden',
+        }}
       >
         {/* Back button */}
         <Box sx={{ position: 'fixed', top: 20, left: 20, zIndex: 50 }}>
@@ -64,6 +71,7 @@ const ToolPageLayout = ({
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+          style={{ width: '100%', maxWidth: '100%' }}
         >
           <Stack
             alignItems='center'
@@ -71,7 +79,9 @@ const ToolPageLayout = ({
             sx={{
               textAlign: 'center',
               width: '100%',
-              px: { xs: 2, md: 4 },
+              maxWidth: '100%',
+              px: { xs: 0, sm: 2, md: 4 },
+              boxSizing: 'border-box',
             }}
           >
             {/* Emoji icon with pulse */}
@@ -84,7 +94,14 @@ const ToolPageLayout = ({
             </motion.div>
 
             {/* Title */}
-            <PFGradientTypography variant='h3' fontWeight={800}>
+            <PFGradientTypography
+              variant='h3'
+              fontWeight={800}
+              sx={{
+                fontSize: { xs: '1.75rem', sm: '2.5rem', md: '3rem' },
+                wordBreak: 'break-word',
+              }}
+            >
               {title}
             </PFGradientTypography>
 
@@ -94,14 +111,22 @@ const ToolPageLayout = ({
               sx={{
                 color: isLight ? '#5C4A32' : '#FFE4B5',
                 fontWeight: 400,
-                lineHeight: 1.6,
+                lineHeight: 1.4,
+                fontSize: { xs: '0.85rem', sm: '1.1rem', md: '1.25rem' },
+                maxWidth: '100%',
+                wordBreak: 'break-word',
+                px: { xs: 1, sm: 0 },
               }}
             >
               {description}
             </PFTypography>
 
             {/* Optional children for future tool content */}
-            {children}
+            <Box
+              sx={{ width: '100%', maxWidth: '100%', boxSizing: 'border-box' }}
+            >
+              {children}
+            </Box>
           </Stack>
         </motion.div>
       </Stack>
