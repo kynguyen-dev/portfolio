@@ -1,5 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react';
-import { Box, useMediaQuery, useTheme } from '@mui/material';
+import { useEffect, useRef, useCallback, useState } from 'react';
 
 /**
  * Custom animated cursor — a small dot + trailing ring.
@@ -7,9 +6,7 @@ import { Box, useMediaQuery, useTheme } from '@mui/material';
  * Uses a ref-based RAF loop so React doesn't re-render every frame.
  */
 export const CustomCursor = () => {
-  const { palette } = useTheme();
-  const prefersReduced = useMediaQuery('(prefers-reduced-motion: reduce)');
-  const isTouch = useMediaQuery('(pointer: coarse)');
+  const [enabled, setEnabled] = useState(false);
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
   const mouse = useRef({ x: -100, y: -100 });
@@ -22,7 +19,17 @@ export const CustomCursor = () => {
   }, []);
 
   useEffect(() => {
-    if (prefersReduced || isTouch) return;
+    const prefersReduced = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+    const isTouch = window.matchMedia('(pointer: coarse)').matches;
+
+    if (prefersReduced || isTouch) {
+      setEnabled(false);
+      return;
+    }
+
+    setEnabled(true);
 
     const animate = () => {
       ring.current.x += (mouse.current.x - ring.current.x) * 0.15;
@@ -64,47 +71,21 @@ export const CustomCursor = () => {
       document.removeEventListener('mouseover', onOver);
       document.removeEventListener('mouseout', onOut);
     };
-  }, [prefersReduced, isTouch, onMove]);
+  }, [onMove]);
 
-  if (prefersReduced || isTouch) return null;
-
-  const color =
-    palette.mode === 'light' ? palette.primary.dark : palette.primary.light;
+  if (!enabled) return null;
 
   return (
     <>
       {/* Small dot */}
-      <Box
+      <div
         ref={dotRef}
-        sx={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: 8,
-          height: 8,
-          borderRadius: '50%',
-          background: color,
-          pointerEvents: 'none',
-          zIndex: 99999,
-          mixBlendMode: 'difference',
-        }}
+        className='fixed top-0 left-0 w-2 h-2 rounded-full bg-primary-main pointer-events-none z-[99999] mix-blend-difference'
       />
       {/* Trailing ring */}
-      <Box
+      <div
         ref={ringRef}
-        sx={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: 36,
-          height: 36,
-          borderRadius: '50%',
-          border: `1.5px solid ${color}`,
-          pointerEvents: 'none',
-          zIndex: 99998,
-          transition: 'width 0.2s, height 0.2s, border-color 0.2s',
-          mixBlendMode: 'difference',
-        }}
+        className='fixed top-0 left-0 w-9 h-9 rounded-full border-[1.5px] border-primary-main pointer-events-none z-[99998] transition-[width,height,border-color] duration-200 mix-blend-difference'
       />
     </>
   );

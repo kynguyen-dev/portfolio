@@ -1,7 +1,5 @@
-import { Box, Stack, useTheme, Divider } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ViewListIcon from '@mui/icons-material/ViewList';
-import { motion } from 'framer-motion';
+import { ArrowLeft, LayoutList } from 'lucide-react';
+import { motion } from 'motion/react';
 import { PFTypography } from '@components/core';
 import { StatsRadarChart } from './StatsRadarChart';
 import { MultiFormatImage } from './MultiFormatImage';
@@ -11,6 +9,8 @@ import {
   STAT_KEYS,
 } from '@constants/three-kingdoms';
 import type { ThreeKingdomsCharacter } from '@constants/three-kingdoms';
+import { useThemeMode } from '@contexts/theme-mode';
+import { cn } from '@utils/core/cn';
 
 interface BattleCompareProps {
   fighter1: ThreeKingdomsCharacter;
@@ -25,8 +25,8 @@ export const BattleCompare = ({
   onBackToDetail,
   onBackToBrowse,
 }: BattleCompareProps) => {
-  const { palette } = useTheme();
-  const isLight = palette.mode === 'light';
+  const { mode } = useThemeMode();
+  const isLight = mode === 'light';
   const km1 = getKingdomMeta(fighter1.kingdom);
   const km2 = getKingdomMeta(fighter2.kingdom);
 
@@ -44,35 +44,31 @@ export const BattleCompare = ({
     km: ReturnType<typeof getKingdomMeta>,
     size: { xs: number; md: number }
   ) => (
-    <Box
-      sx={{
-        width: size,
-        height: size,
-        borderRadius: '50%',
-        border: `3px solid ${km.color}`,
+    <div
+      className='rounded-full border-[3px] overflow-hidden flex items-center justify-center flex-shrink-0'
+      style={{
+        width: size.md,
+        height: size.md,
+        borderColor: km.color,
         boxShadow: `0 2px 16px ${km.color}50`,
-        overflow: 'hidden',
         backgroundColor: `${km.color}20`,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexShrink: 0,
       }}
     >
       <MultiFormatImage
         basePath={`/images/three-kingdoms/avatar/${fighter.id}`}
         alt={fighter.name.en}
-        sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        className='w-full h-full object-cover'
         fallback={
           <PFTypography
             variant='h4'
-            sx={{ fontWeight: 800, color: km.color, lineHeight: 1 }}
+            className='font-extrabold leading-none'
+            style={{ color: km.color }}
           >
             {fighter.name.cn.charAt(0)}
           </PFTypography>
         }
       />
-    </Box>
+    </div>
   );
 
   return (
@@ -80,140 +76,85 @@ export const BattleCompare = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      style={{ flex: 1, minHeight: 0, overflow: 'auto' }}
+      className='flex-1 min-h-0 overflow-auto'
     >
-      <Box
-        sx={{
-          borderRadius: 3,
-          overflow: 'hidden',
-          position: 'relative',
-          border: `1px solid ${isLight ? 'rgba(184,137,31,0.2)' : 'rgba(245,208,96,0.2)'}`,
-        }}
+      <div
+        className={cn(
+          'rounded-3xl overflow-hidden relative border transition-all duration-300',
+          isLight
+            ? 'border-primary-main/20 shadow-xl'
+            : 'border-primary-main/20 shadow-black/40'
+        )}
       >
         {/* ── Full-height split background images ── */}
-        <Box
-          sx={{ position: 'absolute', inset: 0, display: 'flex', zIndex: 0 }}
-        >
+        <div className='absolute inset-0 flex z-0'>
           {/* Left background */}
-          <Box sx={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
-            <Box
-              sx={{
-                position: 'absolute',
-                inset: 0,
+          <div className='flex-1 relative overflow-hidden'>
+            <div
+              className='absolute inset-0 z-10'
+              style={{
                 background: `linear-gradient(135deg, ${km1.color}20 0%, transparent 100%)`,
               }}
             />
             <MultiFormatImage
               basePath={`/images/three-kingdoms/background/${fighter1.id}`}
-              sx={{
-                position: 'absolute',
-                inset: 0,
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                objectPosition: 'center 20%',
-              }}
+              className='absolute inset-0 w-full h-full object-cover object-center md:object-[center_20%]'
             />
-            <Box
-              sx={{
-                position: 'absolute',
-                inset: 0,
-                background: isLight
-                  ? 'linear-gradient(to right, rgba(255,248,240,0.15) 0%, rgba(255,248,240,0.7) 85%, rgba(255,248,240,0.95) 100%)'
-                  : 'linear-gradient(to right, rgba(11,13,46,0.2) 0%, rgba(11,13,46,0.7) 85%, rgba(11,13,46,0.95) 100%)',
-              }}
+            <div
+              className={cn(
+                'absolute inset-0 z-20',
+                isLight
+                  ? 'bg-gradient-to-r from-white/15 via-white/70 to-white/95'
+                  : 'bg-gradient-to-r from-background-default/20 via-background-default/70 to-background-default/95'
+              )}
             />
-            <Box
-              sx={{
-                position: 'absolute',
-                inset: 0,
-                background: isLight
-                  ? 'linear-gradient(to bottom, rgba(255,248,240,0.1) 0%, rgba(255,248,240,0.6) 100%)'
-                  : 'linear-gradient(to bottom, rgba(11,13,46,0.1) 0%, rgba(11,13,46,0.6) 100%)',
-              }}
+            <div
+              className='absolute top-0 left-0 right-0 h-1 z-30'
+              style={{ background: km1.color }}
             />
-            <Box
-              sx={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                height: 3,
-                background: km1.color,
-              }}
-            />
-          </Box>
+          </div>
 
-          <Box
-            sx={{
-              width: 2,
-              background: `linear-gradient(to bottom, ${isLight ? 'rgba(184,137,31,0.3)' : 'rgba(245,208,96,0.3)'}, transparent)`,
-              zIndex: 1,
-            }}
+          <div
+            className={cn(
+              'w-0.5 z-30',
+              isLight
+                ? 'bg-gradient-to-b from-primary-main/30 to-transparent'
+                : 'bg-gradient-to-b from-primary-main/30 to-transparent'
+            )}
           />
 
           {/* Right background */}
-          <Box sx={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
-            <Box
-              sx={{
-                position: 'absolute',
-                inset: 0,
+          <div className='flex-1 relative overflow-hidden'>
+            <div
+              className='absolute inset-0 z-10'
+              style={{
                 background: `linear-gradient(225deg, ${km2.color}20 0%, transparent 100%)`,
               }}
             />
             <MultiFormatImage
               basePath={`/images/three-kingdoms/background/${fighter2.id}`}
-              sx={{
-                position: 'absolute',
-                inset: 0,
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                objectPosition: 'center 20%',
-              }}
+              className='absolute inset-0 w-full h-full object-cover object-center md:object-[center_20%]'
             />
-            <Box
-              sx={{
-                position: 'absolute',
-                inset: 0,
-                background: isLight
-                  ? 'linear-gradient(to left, rgba(255,248,240,0.15) 0%, rgba(255,248,240,0.7) 85%, rgba(255,248,240,0.95) 100%)'
-                  : 'linear-gradient(to left, rgba(11,13,46,0.2) 0%, rgba(11,13,46,0.7) 85%, rgba(11,13,46,0.95) 100%)',
-              }}
+            <div
+              className={cn(
+                'absolute inset-0 z-20',
+                isLight
+                  ? 'bg-gradient-to-l from-white/15 via-white/70 to-white/95'
+                  : 'bg-gradient-to-l from-background-default/20 via-background-default/70 to-background-default/95'
+              )}
             />
-            <Box
-              sx={{
-                position: 'absolute',
-                inset: 0,
-                background: isLight
-                  ? 'linear-gradient(to bottom, rgba(255,248,240,0.1) 0%, rgba(255,248,240,0.6) 100%)'
-                  : 'linear-gradient(to bottom, rgba(11,13,46,0.1) 0%, rgba(11,13,46,0.6) 100%)',
-              }}
+            <div
+              className='absolute top-0 left-0 right-0 h-1 z-30'
+              style={{ background: km2.color }}
             />
-            <Box
-              sx={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                height: 3,
-                background: km2.color,
-              }}
-            />
-          </Box>
-        </Box>
+          </div>
+        </div>
 
         {/* ── Foreground content ── */}
-        <Box sx={{ position: 'relative', zIndex: 2, p: { xs: 2.5, md: 4 } }}>
+        <div className='relative z-40 p-6 md:p-10'>
           {/* VS Header with avatars */}
-          <Stack
-            direction='row'
-            alignItems='center'
-            justifyContent='center'
-            spacing={{ xs: 2, md: 4 }}
-            sx={{ mb: 4 }}
-          >
-            <Stack alignItems='center' spacing={1}>
+          <div className='flex items-center justify-center gap-4 md:gap-12 mb-10'>
+            <div className='flex flex-col items-center gap-2'>
               <motion.div
                 initial={{ scale: 0.7, opacity: 0, x: -30 }}
                 animate={{ scale: 1, opacity: 1, x: 0 }}
@@ -223,8 +164,8 @@ export const BattleCompare = ({
               </motion.div>
               <PFTypography
                 variant='h5'
-                sx={{
-                  fontWeight: 800,
+                className='font-black'
+                style={{
                   color: km1.color,
                   textShadow: isLight
                     ? '0 1px 8px rgba(255,255,255,0.9)'
@@ -235,8 +176,11 @@ export const BattleCompare = ({
               </PFTypography>
               <PFTypography
                 variant='caption'
-                sx={{
-                  color: isLight ? palette.text.primary : '#d4c9b8',
+                className={cn(
+                  'font-medium opacity-80',
+                  isLight ? 'text-text-primary' : 'text-[#d4c9b8]'
+                )}
+                style={{
                   textShadow: isLight
                     ? '0 1px 4px rgba(255,255,255,0.7)'
                     : '0 1px 4px rgba(0,0,0,0.5)',
@@ -244,43 +188,34 @@ export const BattleCompare = ({
               >
                 {fighter1.name.vi} · {fighter1.name.en}
               </PFTypography>
-            </Stack>
+            </div>
 
             <motion.div
               initial={{ scale: 0, rotate: -20 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ delay: 0.25, type: 'spring', stiffness: 200 }}
+              className={cn(
+                'w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center backdrop-blur-xl border-2 shadow-2xl z-50',
+                isLight
+                  ? 'bg-white/90 border-primary-main/40 shadow-black/10'
+                  : 'bg-background-default/85 border-primary-main/40 shadow-black/50'
+              )}
             >
-              <Box
-                sx={{
-                  width: { xs: 48, md: 56 },
-                  height: { xs: 48, md: 56 },
-                  borderRadius: '50%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  background: isLight
-                    ? 'rgba(255,248,240,0.9)'
-                    : 'rgba(11,13,46,0.85)',
-                  border: `2px solid ${isLight ? 'rgba(184,137,31,0.4)' : 'rgba(245,208,96,0.4)'}`,
-                  boxShadow: `0 4px 24px ${isLight ? 'rgba(0,0,0,0.12)' : 'rgba(0,0,0,0.5)'}`,
+              <PFTypography
+                variant='h6'
+                className='font-black'
+                style={{
+                  backgroundImage: `linear-gradient(135deg, ${km1.color}, ${km2.color})`,
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
                 }}
               >
-                <PFTypography
-                  variant='h6'
-                  sx={{
-                    fontWeight: 900,
-                    background: `linear-gradient(135deg, ${km1.color}, ${km2.color})`,
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                  }}
-                >
-                  VS
-                </PFTypography>
-              </Box>
+                VS
+              </PFTypography>
             </motion.div>
 
-            <Stack alignItems='center' spacing={1}>
+            <div className='flex flex-col items-center gap-2'>
               <motion.div
                 initial={{ scale: 0.7, opacity: 0, x: 30 }}
                 animate={{ scale: 1, opacity: 1, x: 0 }}
@@ -290,8 +225,8 @@ export const BattleCompare = ({
               </motion.div>
               <PFTypography
                 variant='h5'
-                sx={{
-                  fontWeight: 800,
+                className='font-black'
+                style={{
                   color: km2.color,
                   textShadow: isLight
                     ? '0 1px 8px rgba(255,255,255,0.9)'
@@ -302,8 +237,11 @@ export const BattleCompare = ({
               </PFTypography>
               <PFTypography
                 variant='caption'
-                sx={{
-                  color: isLight ? palette.text.primary : '#d4c9b8',
+                className={cn(
+                  'font-medium opacity-80',
+                  isLight ? 'text-text-primary' : 'text-[#d4c9b8]'
+                )}
+                style={{
                   textShadow: isLight
                     ? '0 1px 4px rgba(255,255,255,0.7)'
                     : '0 1px 4px rgba(0,0,0,0.5)',
@@ -311,11 +249,11 @@ export const BattleCompare = ({
               >
                 {fighter2.name.vi} · {fighter2.name.en}
               </PFTypography>
-            </Stack>
-          </Stack>
+            </div>
+          </div>
 
           {/* Radar chart */}
-          <Box sx={{ maxWidth: 360, mx: 'auto', mb: 3 }}>
+          <div className='max-w-sm mx-auto mb-10'>
             <StatsRadarChart
               stats={fighter1.stats}
               color={km1.color}
@@ -324,236 +262,158 @@ export const BattleCompare = ({
               compareColor={km2.color}
               compareLabel={fighter2.name.en}
             />
-          </Box>
+          </div>
 
           {/* Stat bars */}
-          <Stack spacing={1.5} sx={{ mb: 3 }}>
+          <div className='flex flex-col gap-6 mb-10'>
             {STAT_KEYS.map(key => {
               const v1 = fighter1.stats[key];
               const v2 = fighter2.stats[key];
               const max = Math.max(v1, v2);
               return (
-                <Stack key={key} spacing={0.5}>
-                  <Stack direction='row' justifyContent='space-between'>
+                <div key={key} className='flex flex-col gap-1.5'>
+                  <div className='flex justify-between items-center px-1'>
                     <PFTypography
                       variant='caption'
-                      sx={{
-                        fontWeight: 700,
-                        color: v1 > v2 ? km1.color : palette.text.secondary,
-                        textShadow: isLight
-                          ? '0 1px 3px rgba(255,255,255,0.6)'
-                          : 'none',
+                      className='font-black tabular-nums'
+                      style={{
+                        color: v1 > v2 ? km1.color : 'inherit',
+                        opacity: v1 > v2 ? 1 : 0.6,
                       }}
                     >
                       {v1}
                     </PFTypography>
                     <PFTypography
                       variant='caption'
-                      sx={{
-                        fontWeight: 600,
-                        color: palette.text.secondary,
-                        textShadow: isLight
-                          ? '0 1px 3px rgba(255,255,255,0.6)'
-                          : 'none',
-                      }}
+                      className='font-bold uppercase tracking-tighter opacity-70'
                     >
                       {STAT_LABELS[key].en}
                     </PFTypography>
                     <PFTypography
                       variant='caption'
-                      sx={{
-                        fontWeight: 700,
-                        color: v2 > v1 ? km2.color : palette.text.secondary,
-                        textShadow: isLight
-                          ? '0 1px 3px rgba(255,255,255,0.6)'
-                          : 'none',
+                      className='font-black tabular-nums'
+                      style={{
+                        color: v2 > v1 ? km2.color : 'inherit',
+                        opacity: v2 > v1 ? 1 : 0.6,
                       }}
                     >
                       {v2}
                     </PFTypography>
-                  </Stack>
-                  <Stack direction='row' spacing={0.5}>
-                    <Box
-                      sx={{
-                        flex: 1,
-                        display: 'flex',
-                        justifyContent: 'flex-end',
-                      }}
-                    >
+                  </div>
+                  <div className='flex gap-1 h-2'>
+                    <div className='flex-1 flex justify-end bg-white/5 rounded-l-full overflow-hidden'>
                       <motion.div
                         initial={{ width: 0 }}
                         animate={{ width: `${(v1 / max) * 100}%` }}
-                        transition={{ duration: 0.6, ease: 'easeOut' }}
+                        transition={{ duration: 0.8, ease: 'circOut' }}
+                        className='h-full rounded-full'
                         style={{
-                          height: 8,
-                          borderRadius: 4,
                           background:
                             v1 >= v2
                               ? `linear-gradient(90deg, ${km1.color}60, ${km1.color})`
                               : `${km1.color}40`,
                         }}
                       />
-                    </Box>
-                    <Box sx={{ flex: 1 }}>
+                    </div>
+                    <div className='flex-1 bg-white/5 rounded-r-full overflow-hidden'>
                       <motion.div
                         initial={{ width: 0 }}
                         animate={{ width: `${(v2 / max) * 100}%` }}
-                        transition={{ duration: 0.6, ease: 'easeOut' }}
+                        transition={{ duration: 0.8, ease: 'circOut' }}
+                        className='h-full rounded-full'
                         style={{
-                          height: 8,
-                          borderRadius: 4,
                           background:
                             v2 >= v1
                               ? `linear-gradient(90deg, ${km2.color}, ${km2.color}60)`
                               : `${km2.color}40`,
                         }}
                       />
-                    </Box>
-                  </Stack>
-                </Stack>
+                    </div>
+                  </div>
+                </div>
               );
             })}
-          </Stack>
+          </div>
 
-          <Divider
-            sx={{
-              mb: 2,
-              borderColor: isLight
-                ? 'rgba(0,0,0,0.08)'
-                : 'rgba(255,255,255,0.08)',
-            }}
-          />
+          <div className='h-px w-full bg-white/10 mb-8' />
 
           {/* Verdict */}
-          <Box
-            sx={{
-              textAlign: 'center',
-              p: 2,
-              borderRadius: 2,
-              background: isLight
-                ? 'rgba(255,248,240,0.85)'
-                : 'rgba(11,13,46,0.7)',
-              backdropFilter: 'blur(8px)',
-              border: `1px solid ${isLight ? 'rgba(184,137,31,0.15)' : 'rgba(245,208,96,0.15)'}`,
-            }}
+          <div
+            className={cn(
+              'p-6 rounded-2xl text-center backdrop-blur-xl border transition-all duration-500',
+              isLight
+                ? 'bg-white/85 border-primary-main/15'
+                : 'bg-background-default/70 border-primary-main/15'
+            )}
           >
             <PFTypography
               variant='subtitle2'
-              sx={{
-                fontWeight: 700,
-                mb: 0.5,
-                color: isLight ? '#B8891F' : '#F5D060',
-              }}
+              className='font-black uppercase tracking-widest text-primary-main mb-2'
             >
               ⚖️ Battle Verdict
             </PFTypography>
             <PFTypography
               variant='body2'
-              sx={{ color: palette.text.secondary, lineHeight: 1.6 }}
+              className='text-text-secondary leading-relaxed font-medium'
             >
-              <Box component='span' sx={{ fontWeight: 700, color: km1.color }}>
+              <span className='font-bold' style={{ color: km1.color }}>
                 {fighter1.name.en}
-              </Box>
+              </span>
               {' wins '}
-              <Box component='span' sx={{ fontWeight: 700 }}>
-                {wins1}
-              </Box>
+              <span className='font-black'>{wins1}</span>
               {' / 5 stats, '}
-              <Box component='span' sx={{ fontWeight: 700, color: km2.color }}>
+              <span className='font-bold' style={{ color: km2.color }}>
                 {fighter2.name.en}
-              </Box>
+              </span>
               {' wins '}
-              <Box component='span' sx={{ fontWeight: 700 }}>
-                {wins2}
-              </Box>
+              <span className='font-black'>{wins2}</span>
               {' / 5 stats. '}
-              Total: {total1} vs {total2}.
+              <br className='hidden md:block' />
+              Total Potential: <span className='font-black'>
+                {total1}
+              </span> vs <span className='font-black'>{total2}</span>.
               {total1 > total2
                 ? ` ${fighter1.name.cn} has the overall edge! 🏆`
                 : total2 > total1
                   ? ` ${fighter2.name.cn} has the overall edge! 🏆`
                   : " It's a dead even match! ⚔️"}
             </PFTypography>
-          </Box>
+          </div>
 
           {/* Navigation buttons */}
-          <Stack direction='row' spacing={1.5} sx={{ mt: 3 }}>
+          <div className='flex flex-wrap gap-4 mt-10'>
             {onBackToDetail && (
-              <Box
+              <button
                 onClick={() => onBackToDetail(fighter1)}
-                role='button'
-                tabIndex={0}
-                onKeyDown={e => {
-                  if (e.key === 'Enter') onBackToDetail(fighter1);
-                }}
-                sx={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 1,
-                  px: 2.5,
-                  py: 1,
-                  borderRadius: 2,
-                  cursor: 'pointer',
-                  fontWeight: 600,
-                  fontSize: '0.85rem',
-                  color: km1.color,
-                  background: isLight
-                    ? 'rgba(255,248,240,0.8)'
-                    : 'rgba(11,13,46,0.6)',
-                  backdropFilter: 'blur(6px)',
-                  border: `1px solid ${km1.color}40`,
-                  transition: 'all 0.2s',
-                  '&:hover': {
-                    backgroundColor: isLight
-                      ? 'rgba(255,248,240,0.95)'
-                      : 'rgba(11,13,46,0.85)',
-                    borderColor: km1.color,
-                  },
-                }}
+                className={cn(
+                  'inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm backdrop-blur-md border transition-all hover:scale-105 active:scale-95',
+                  isLight
+                    ? 'bg-white/80 border-primary-main/20 text-primary-dark'
+                    : 'bg-background-default/60 border-primary-main/20 text-primary-light'
+                )}
+                style={{ color: km1.color, borderColor: `${km1.color}40` }}
               >
-                <ArrowBackIcon fontSize='small' />
+                <ArrowLeft className='w-4 h-4' />
                 Back to {fighter1.name.en}
-              </Box>
+              </button>
             )}
             {onBackToBrowse && (
-              <Box
+              <button
                 onClick={onBackToBrowse}
-                role='button'
-                tabIndex={0}
-                onKeyDown={e => {
-                  if (e.key === 'Enter') onBackToBrowse();
-                }}
-                sx={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 1,
-                  px: 2.5,
-                  py: 1,
-                  borderRadius: 2,
-                  cursor: 'pointer',
-                  fontWeight: 600,
-                  fontSize: '0.85rem',
-                  color: isLight ? '#5C4A32' : '#FFE4B5',
-                  background: isLight
-                    ? 'rgba(255,248,240,0.8)'
-                    : 'rgba(11,13,46,0.6)',
-                  backdropFilter: 'blur(6px)',
-                  border: `1px solid ${isLight ? 'rgba(184,137,31,0.3)' : 'rgba(245,208,96,0.3)'}`,
-                  transition: 'all 0.2s',
-                  '&:hover': {
-                    backgroundColor: isLight
-                      ? 'rgba(255,248,240,0.95)'
-                      : 'rgba(11,13,46,0.85)',
-                  },
-                }}
+                className={cn(
+                  'inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm backdrop-blur-md border transition-all hover:scale-105 active:scale-95',
+                  isLight
+                    ? 'bg-white/80 border-primary-main/20 text-primary-dark'
+                    : 'bg-background-default/60 border-primary-main/20 text-primary-light'
+                )}
               >
-                <ViewListIcon fontSize='small' />
+                <LayoutList className='w-4 h-4' />
                 Browse All
-              </Box>
+              </button>
             )}
-          </Stack>
-        </Box>
-      </Box>
+          </div>
+        </div>
+      </div>
     </motion.div>
   );
 };

@@ -21,8 +21,10 @@ export default defineConfig(_configEnv => {
                 '@routers': resolve(__dirname, 'src/routers'),
                 '@utils': resolve(__dirname, 'src/utils'),
                 '@i18n': resolve(__dirname, 'src/i18n'),
+                '@lib': resolve(__dirname, 'src/lib'),
+                '@hooks': resolve(__dirname, 'src/hooks'),
             },
         },
-        optimizeDeps: {include: ['@mui/material']},
+        optimizeDeps: {include: []},
     };
 });

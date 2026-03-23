@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { Box, useTheme } from '@mui/material';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'motion/react';
+import { useThemeMode } from '@contexts/theme-mode';
+import { cn } from '@utils/core/cn';
 
 const KONAMI = [
   'ArrowUp',
@@ -20,7 +21,7 @@ const KONAMI = [
  * confetti-like particle burst on screen.
  */
 export const KonamiEasterEgg = () => {
-  const { palette } = useTheme();
+  const { mode } = useThemeMode();
   const [triggered, setTriggered] = useState(false);
   const bufferRef = useRef<string[]>([]);
 
@@ -47,9 +48,9 @@ export const KonamiEasterEgg = () => {
   /* Generate random particles */
   const particles = Array.from({ length: 40 }, (_, i) => {
     const colors = [
-      palette.primary.light,
-      palette.primary.main,
-      palette.secondary?.main ?? palette.primary.dark,
+      '#D4A843',
+      '#E8C96A',
+      '#C75B39',
       '#FF6B6B',
       '#4ECDC4',
       '#FFE66D',
@@ -72,45 +73,21 @@ export const KonamiEasterEgg = () => {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.6 }}
-          style={{
-            position: 'fixed',
-            inset: 0,
-            zIndex: 100001,
-            pointerEvents: 'none',
-            overflow: 'hidden',
-          }}
+          className='fixed inset-0 z-[100001] pointer-events-none overflow-hidden'
         >
           {/* Achievement banner */}
           <motion.div
-            initial={{ y: -80, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -80, opacity: 0 }}
+            initial={{ y: -80, opacity: 0, x: '-50%' }}
+            animate={{ y: 0, opacity: 1, x: '-50%' }}
+            exit={{ y: -80, opacity: 0, x: '-50%' }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            style={{
-              position: 'absolute',
-              top: 40,
-              left: '50%',
-              transform: 'translateX(-50%)',
-              zIndex: 2,
-            }}
+            className={cn(
+              'absolute top-10 left-1/2 px-8 py-3 rounded-xl font-bold text-lg tracking-widest text-center select-none shadow-2xl',
+              mode === 'dark' ? 'text-[#1A1410]' : 'text-[#FBF6EE]',
+              'bg-gradient-to-r from-primary-light to-primary-main shadow-primary-main/40'
+            )}
           >
-            <Box
-              sx={{
-                px: 4,
-                py: 1.5,
-                borderRadius: 3,
-                fontWeight: 700,
-                fontSize: '1.1rem',
-                letterSpacing: 2,
-                color: palette.mode === 'dark' ? '#1A1410' : '#FBF6EE',
-                background: `linear-gradient(135deg, ${palette.primary.light}, ${palette.primary.main})`,
-                boxShadow: `0 4px 30px ${palette.primary.main}66`,
-                textAlign: 'center',
-                userSelect: 'none',
-              }}
-            >
-              🎮 KONAMI CODE ACTIVATED! 🎮
-            </Box>
+            🎮 KONAMI CODE ACTIVATED! 🎮
           </motion.div>
 
           {/* Confetti particles */}
@@ -128,12 +105,17 @@ export const KonamiEasterEgg = () => {
                 delay: p.delay,
                 ease: 'easeIn',
               }}
+              className={cn(
+                'absolute',
+                p.id % 3 === 0
+                  ? 'rounded-full'
+                  : p.id % 3 === 1
+                    ? 'rounded-sm'
+                    : ''
+              )}
               style={{
-                position: 'absolute',
                 width: p.size,
                 height: p.size,
-                borderRadius:
-                  p.id % 3 === 0 ? '50%' : p.id % 3 === 1 ? '2px' : '0%',
                 background: p.color,
               }}
             />

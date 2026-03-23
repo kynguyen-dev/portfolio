@@ -1,13 +1,10 @@
-import { Box, Grid, Stack, useTheme } from '@mui/material';
-import { motion } from 'framer-motion';
-import { Code, Terminal } from '@mui/icons-material';
-import ConstructionIcon from '@mui/icons-material/Construction';
+import { Terminal, Code, Construction } from 'lucide-react';
+import { motion } from 'motion/react';
 import { GradientPaper } from '@components/customs/paper/GradientPaper.tsx';
 import { PFGradientTypography, PFTypography } from '@components/core';
 import { useTranslation } from 'react-i18next';
 import {
   APP_PAGES,
-  APP_SIZES,
   APP_TYPOGRAPHIES,
   APP_TYPOGRAPHIES_ANIMATION,
 } from '@constants';
@@ -33,9 +30,7 @@ interface SkillsDef {
 const skillDefs: SkillsDef[] = [
   {
     titleKey: 'profile.backEndDeveloper',
-    icon: (
-      <Terminal fontSize={APP_SIZES.LARGE} sx={{ color: 'primary.light' }} />
-    ),
+    icon: <Terminal className='w-12 h-12 text-primary-light' />,
     quoteKey: 'profile.backEndQuote',
     highlights: [
       {
@@ -62,7 +57,7 @@ const skillDefs: SkillsDef[] = [
   },
   {
     titleKey: 'profile.frontEndDeveloper',
-    icon: <Code fontSize={APP_SIZES.LARGE} sx={{ color: 'primary.light' }} />,
+    icon: <Code className='w-12 h-12 text-primary-light' />,
     quoteKey: 'profile.frontEndQuote',
     highlights: [
       {
@@ -92,12 +87,7 @@ const skillDefs: SkillsDef[] = [
   },
   {
     titleKey: 'profile.tools',
-    icon: (
-      <ConstructionIcon
-        fontSize={APP_SIZES.LARGE}
-        sx={{ color: 'primary.light' }}
-      />
-    ),
+    icon: <Construction className='w-12 h-12 text-primary-light' />,
     quoteKey: 'profile.toolEndQuote',
     highlights: [
       {
@@ -123,125 +113,100 @@ const skillDefs: SkillsDef[] = [
 ];
 
 export const Profile = () => {
-  const { palette } = useTheme();
   const { t } = useTranslation();
   const years = getYearsOfExperience();
 
   return (
-    <Box
-      component='section'
+    <section
       id={APP_PAGES.PROFILE.toLowerCase()}
       aria-label={t('profile.opening')}
-      sx={{
-        textAlign: 'center',
-        py: { xs: 8, md: 12 },
-        position: 'relative',
-        color: palette.text.primary,
-        px: { xs: 2, md: 6 },
-        maxWidth: 1100,
-        mx: 'auto',
-      }}
+      className='py-16 md:py-24 px-4 md:px-12 max-w-6xl mx-auto text-center relative'
     >
-      <Box>
+      <div className='mb-16'>
         <PFTypography
           variant={APP_TYPOGRAPHIES.HEADER_PRIMARY}
           animations={[APP_TYPOGRAPHIES_ANIMATION.TYPEWRITER]}
-          fontWeight='bold'
+          className='font-bold'
         >
           {t('profile.opening')}
         </PFTypography>
         <PFTypography
           variant={APP_TYPOGRAPHIES.BODY_SECONDARY}
-          sx={{ mt: 2, mx: 'auto' }}
+          className='mt-4 max-w-2xl mx-auto'
         >
           {t('profile.content', { years })}
         </PFTypography>
-      </Box>
+      </div>
 
-      <Grid
-        container
-        spacing={4}
-        sx={{ mt: 8, alignItems: 'stretch' }}
-        component={motion.div}
+      <motion.div
         variants={staggerContainer(0.2, 0.15)}
         initial='hidden'
         whileInView='visible'
         viewport={{ once: true, amount: 0.2 }}
+        className='grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch'
       >
         {skillDefs.map(role => (
-          <Grid
-            item
-            xs={12}
-            md={4}
+          <motion.div
             key={role.titleKey}
-            sx={{ display: 'flex' }}
+            variants={staggerItem}
+            whileHover={{ y: -8 }}
+            className='flex'
           >
-            <motion.div
-              variants={staggerItem}
-              style={{ flex: 1 }}
-              whileHover={{ y: -8, transition: { duration: 0.25 } }}
-            >
-              <GradientPaper
-                sx={{
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}
-              >
-                <Stack direction='column' gap={1} alignItems='center'>
-                  {role.icon}
-                  <PFGradientTypography
-                    variant={APP_TYPOGRAPHIES.HEADER_SECONDARY}
-                    fontWeight='bold'
-                  >
-                    {t(role.titleKey)}
-                  </PFGradientTypography>
-                  <PFTypography
-                    variant={APP_TYPOGRAPHIES.BODY_SECONDARY}
-                    animations={[APP_TYPOGRAPHIES_ANIMATION.TYPEWRITER]}
-                    speed={50}
-                    sx={{
-                      mt: 1,
-                      color: `${palette.text.secondary} !important`,
-                    }}
-                  >
-                    {t(role.quoteKey)}
-                  </PFTypography>
-                  <Box flexGrow={1} />
+            <GradientPaper className='flex-1 flex flex-col p-8'>
+              <div className='flex flex-col gap-4 items-center h-full'>
+                <div className='mb-2'>{role.icon}</div>
+
+                <PFGradientTypography
+                  variant={APP_TYPOGRAPHIES.HEADER_SECONDARY}
+                  className='font-bold'
+                >
+                  {t(role.titleKey)}
+                </PFGradientTypography>
+
+                <PFTypography
+                  variant={APP_TYPOGRAPHIES.BODY_SECONDARY}
+                  animations={[APP_TYPOGRAPHIES_ANIMATION.TYPEWRITER]}
+                  speed={50}
+                  className='mt-2 text-text-secondary italic min-h-[3em]'
+                >
+                  {t(role.quoteKey)}
+                </PFTypography>
+
+                <div className='flex-grow' />
+
+                <div className='w-full flex flex-col gap-6 mt-6'>
                   {role.highlights.map(highlight => (
-                    <Box key={highlight.labelKey} sx={{ mt: 2 }}>
+                    <div
+                      key={highlight.labelKey}
+                      className='flex flex-col gap-2'
+                    >
                       <PFGradientTypography
                         variant={APP_TYPOGRAPHIES.SUBTITLE_SECONDARY}
-                        fontWeight='bold'
-                        colors={[
-                          palette.primary.light,
-                          palette.primary.main,
-                          palette.secondary.main,
-                        ]}
+                        className='font-bold'
+                        colors={['#E8C96A', '#D4A843', '#C75B39']}
                       >
                         {t(highlight.labelKey)}
                       </PFGradientTypography>
-                      {highlight.items.map(item => (
-                        <PFTypography
-                          key={item}
-                          variant={APP_TYPOGRAPHIES.BODY_SECONDARY}
-                          sx={{
-                            mt: 1,
-                            color: `${palette.text.primary} !important`,
-                            fontWeight: 700,
-                          }}
-                        >
-                          {item}
-                        </PFTypography>
-                      ))}
-                    </Box>
+
+                      <div className='flex flex-wrap justify-center gap-x-3 gap-y-1'>
+                        {highlight.items.map(item => (
+                          <PFTypography
+                            key={item}
+                            variant={APP_TYPOGRAPHIES.BODY_SECONDARY}
+                            className='font-bold text-text-primary'
+                          >
+                            {item}
+                          </PFTypography>
+                        ))}
+                      </div>
+                    </div>
                   ))}
-                </Stack>
-              </GradientPaper>
-            </motion.div>
-          </Grid>
+                </div>
+              </div>
+            </GradientPaper>
+          </motion.div>
         ))}
-      </Grid>
-    </Box>
+      </motion.div>
+    </section>
   );
 };

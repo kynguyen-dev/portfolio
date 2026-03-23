@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react';
-import { motion } from 'framer-motion';
-import { Box, CardMedia, useTheme } from '@mui/material';
+import { motion } from 'motion/react';
 import { PFTypography } from '@components/core';
+import { cn } from '@utils/core/cn';
 
 export interface SkillBoxProps {
   imageUrl?: string;
@@ -10,60 +10,51 @@ export interface SkillBoxProps {
   titleColor?: string;
   link?: string;
 }
+
 export const SkillBox = (props: SkillBoxProps) => {
-  const { palette } = useTheme();
   const content = (
-    <Box
-      display='flex'
-      flexDirection='column'
-      alignItems={'center'}
-      justifyContent={'center'}
-      width={'96px'}
-      gap={1}
-      sx={{ cursor: props.link ? 'pointer' : 'default' }}
+    <div
+      className={cn(
+        'flex flex-col items-center justify-center w-24 gap-3',
+        props.link ? 'cursor-pointer' : 'cursor-default'
+      )}
     >
       <motion.div
         whileHover={{ y: -6 }}
         transition={{ type: 'spring', stiffness: 300, damping: 15 }}
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
+        className='flex items-center justify-center'
       >
         {props.icon ? (
           props.icon
         ) : (
-          <CardMedia
-            component='img'
-            image={props.imageUrl}
+          <img
+            src={props.imageUrl}
             alt={props.title}
             loading='lazy'
-            sx={{ width: '96px', height: '96px', objectFit: 'contain' }}
+            className='w-24 h-24 object-contain'
           />
         )}
       </motion.div>
       <PFTypography
         variant='body1'
-        color={props.titleColor ?? palette.primary.contrastText}
-        align='center'
+        className='text-center'
+        style={{ color: props.titleColor }}
       >
         {props.title}
       </PFTypography>
-    </Box>
+    </div>
   );
 
   if (props.link) {
     return (
-      <Box
-        component='a'
+      <a
         href={props.link}
         target='_blank'
         rel='noopener noreferrer'
-        sx={{ textDecoration: 'none', color: 'inherit' }}
+        className='no-underline color-inherit'
       >
         {content}
-      </Box>
+      </a>
     );
   }
 

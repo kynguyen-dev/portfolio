@@ -1,26 +1,14 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import MenuIcon from '@mui/icons-material/Menu';
-import CloseIcon from '@mui/icons-material/Close';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import { Menu, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from '@components/core/language-switcher/LanguageSwitcher';
 import { ThemeModeToggle } from '@components/core/theme-toggle/ThemeModeToggle';
 import { AuthButton } from '@components/core/auth';
 import { APP_PAGES } from '@constants';
-import { useTheme } from '@mui/material/styles';
+import { useThemeMode } from '@contexts/theme-mode';
+import { cn } from '@utils/core/cn';
+import { AnimatePresence, motion } from 'framer-motion';
 
-const drawerWidth = 240;
 const navItems = [
   APP_PAGES.HOME,
   APP_PAGES.PROFILE,
@@ -42,8 +30,8 @@ const navI18nMap: Record<string, string> = {
 
 export const PFAppBar = () => {
   const { t } = useTranslation();
-  const theme = useTheme();
-  const isLight = theme.palette.mode === 'light';
+  const { mode } = useThemeMode();
+  const isLight = mode === 'light';
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [activeSection, setActiveSection] = React.useState<string>(
     APP_PAGES.HOME.toLowerCase()
@@ -61,7 +49,6 @@ export const PFAppBar = () => {
         const el = document.getElementById(id);
         if (el) {
           const rect = el.getBoundingClientRect();
-          // Section top is above the threshold line → it's the current section
           if (rect.top <= threshold) {
             currentSection = id;
           }
@@ -89,172 +76,126 @@ export const PFAppBar = () => {
     setMobileOpen(false);
   };
 
-  const drawer = (
-    <Box sx={{ textAlign: 'center' }}>
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          px: 2,
-          my: 1,
-        }}
-      >
-        <Typography
-          variant='h6'
-          sx={{ fontWeight: 'bold', color: isLight ? '#5C4A32' : '#FFE4B5' }}
-        >
-          Ky Nguyen
-        </Typography>
-        <IconButton
-          onClick={handleDrawerToggle}
-          aria-label={t('common.closeMenu')}
-          sx={{ color: isLight ? '#5C4A32' : '#FFE4B5' }}
-        >
-          <CloseIcon />
-        </IconButton>
-      </Box>
-      <Divider
-        sx={{
-          borderColor: isLight
-            ? 'rgba(184,137,31,0.3)'
-            : 'rgba(245, 208, 96, 0.3)',
-        }}
-      />
-      <List>
-        {navItems.map(item => (
-          <ListItem key={item} disablePadding>
-            <ListItemButton
-              onClick={() => handleScrollTo(item)}
-              selected={activeSection === item.toLowerCase()}
-              sx={{ textAlign: 'center' }}
-            >
-              <ListItemText primary={t(navI18nMap[item])} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-        <ListItem sx={{ justifyContent: 'center', mt: 1, gap: 0.5 }}>
-          <ThemeModeToggle />
-          <LanguageSwitcher />
-          <AuthButton />
-        </ListItem>
-      </List>
-    </Box>
-  );
-
-  const container = undefined;
-
   return (
-    <Box sx={{ display: 'flex' }}>
-      <AppBar
-        component='nav'
-        sx={{
-          px: { md: '20%' },
-          backdropFilter: 'blur(12px)',
-          backgroundColor: isLight
-            ? 'rgba(251,246,238,0.85)'
-            : 'rgba(11, 13, 46, 0.7)',
-          boxShadow: isLight
-            ? '0 1px 20px rgba(0,0,0,0.08)'
-            : '0 1px 20px rgba(0,0,0,0.3)',
-        }}
+    <header className='fixed top-0 left-0 right-0 z-50'>
+      <nav
+        className={cn(
+          'px-4 md:px-[10%] lg:px-[20%] py-3 backdrop-blur-xl transition-all duration-300 border-b',
+          isLight
+            ? 'bg-white/80 border-black/5 shadow-sm'
+            : 'bg-background-default/70 border-white/5 shadow-2xl'
+        )}
       >
-        <Toolbar>
-          <IconButton
-            color='inherit'
-            aria-label='open drawer'
-            edge='start'
+        <div className='flex items-center justify-between h-14'>
+          {/* Mobile Menu Toggle */}
+          <button
             onClick={handleDrawerToggle}
-            sx={{
-              mr: 2,
-              display: { sm: 'none' },
-              color: isLight ? '#5C4A32' : '#FFE4B5',
-            }}
+            className='sm:hidden p-2 -ml-2 text-text-primary'
+            aria-label='Toggle menu'
           >
-            <MenuIcon />
-          </IconButton>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
+            {mobileOpen ? <X /> : <Menu />}
+          </button>
+
+          {/* Logo */}
+          <div className='flex-grow sm:flex-grow-0'>
             <img
               src='/icons/dashboard-icon.png'
               alt='Ky Nguyen Logo'
-              loading='eager'
-              style={{ height: 40, cursor: 'pointer' }}
+              className='h-10 cursor-pointer hover:scale-105 transition-transform'
               onClick={() => handleScrollTo(APP_PAGES.HOME)}
             />
-          </Box>
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+          </div>
+
+          {/* Desktop Nav */}
+          <div className='hidden sm:flex items-center gap-1 md:gap-4'>
             {navItems.map(item => (
-              <Button
+              <button
                 key={item}
-                sx={{
-                  color:
-                    activeSection === item.toLowerCase()
-                      ? isLight
-                        ? '#B8891F'
-                        : '#F5D060'
-                      : isLight
-                        ? '#5C4A32'
-                        : '#FFE4B5',
-                  fontWeight: activeSection === item.toLowerCase() ? 700 : 500,
-                  borderBottom:
-                    activeSection === item.toLowerCase()
-                      ? `2px solid ${isLight ? '#B8891F' : '#F5D060'}`
-                      : '2px solid transparent',
-                  borderRadius: 0,
-                  transition: 'all 0.3s ease',
-                  mx: 0.5,
-                  '&:hover': {
-                    color: isLight ? '#B8891F' : '#F5D060',
-                    backgroundColor: isLight
-                      ? 'rgba(184,137,31,0.1)'
-                      : 'rgba(245, 208, 96, 0.1)',
-                  },
-                }}
                 onClick={() => handleScrollTo(item)}
+                className={cn(
+                  'px-3 py-2 text-sm font-medium transition-all relative group',
+                  activeSection === item.toLowerCase()
+                    ? 'text-primary-main'
+                    : 'text-text-primary hover:text-primary-light'
+                )}
               >
                 {t(navI18nMap[item])}
-              </Button>
+                {activeSection === item.toLowerCase() && (
+                  <motion.div
+                    layoutId='nav-underline'
+                    className='absolute bottom-0 left-0 right-0 h-0.5 bg-primary-main'
+                  />
+                )}
+              </button>
             ))}
-          </Box>
-          <Box
-            sx={{
-              display: { xs: 'none', sm: 'flex' },
-              ml: 1,
-              alignItems: 'center',
-              gap: 0.5,
-            }}
-          >
+          </div>
+
+          {/* Actions */}
+          <div className='hidden sm:flex items-center gap-2 ml-4'>
             <ThemeModeToggle />
             <LanguageSwitcher />
             <AuthButton />
-          </Box>
-        </Toolbar>
-      </AppBar>
-      <nav>
-        <Drawer
-          container={container}
-          variant='temporary'
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true,
-          }}
-          sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': {
-              boxSizing: 'border-box',
-              width: drawerWidth,
-              backgroundColor: isLight
-                ? 'rgba(251,246,238,0.98)'
-                : 'rgba(11, 13, 46, 0.95)',
-              backdropFilter: 'blur(12px)',
-              color: isLight ? '#5C4A32' : '#FFE4B5',
-            },
-          }}
-        >
-          {drawer}
-        </Drawer>
+          </div>
+
+          {/* Mobile Right Actions (always visible) */}
+          <div className='flex sm:hidden items-center gap-2'>
+            <ThemeModeToggle />
+            <AuthButton />
+          </div>
+        </div>
       </nav>
-    </Box>
+
+      {/* Mobile Drawer */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={handleDrawerToggle}
+              className='fixed inset-0 bg-black/60 backdrop-blur-sm z-40 sm:hidden'
+            />
+            <motion.div
+              initial={{ x: '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '-100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className={cn(
+                'fixed top-0 left-0 bottom-0 w-64 z-50 sm:hidden flex flex-col',
+                isLight ? 'bg-white' : 'bg-background-paper'
+              )}
+            >
+              <div className='p-6 flex items-center justify-between border-b border-white/5'>
+                <span className='font-bold text-xl'>Ky Nguyen</span>
+                <button onClick={handleDrawerToggle} className='p-2'>
+                  <X />
+                </button>
+              </div>
+              <div className='flex-1 overflow-y-auto py-6'>
+                {navItems.map(item => (
+                  <button
+                    key={item}
+                    onClick={() => handleScrollTo(item)}
+                    className={cn(
+                      'w-full text-left px-8 py-4 text-lg font-medium transition-colors',
+                      activeSection === item.toLowerCase()
+                        ? 'bg-primary-main/10 text-primary-main border-l-4 border-primary-main'
+                        : 'text-text-primary hover:bg-white/5'
+                    )}
+                  >
+                    {t(navI18nMap[item])}
+                  </button>
+                ))}
+              </div>
+              <div className='p-6 border-t border-white/5 flex justify-center gap-4'>
+                <LanguageSwitcher />
+                <AuthButton />
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </header>
   );
 };

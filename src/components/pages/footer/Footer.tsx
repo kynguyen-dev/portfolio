@@ -1,64 +1,43 @@
-import { Stack, useTheme } from '@mui/material';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { useTranslation } from 'react-i18next';
 import { PFGradientTypography } from '@components/core';
 import { Contact } from '@components/pages/contacts/Contact.tsx';
 import { TechStack } from '@components/pages/footer/TechStack.tsx';
 import { APP_TYPOGRAPHIES } from '@constants';
 import { fadeUp, blurIn } from '@utils/animations/scrollVariants';
+import { useThemeMode } from '@contexts/theme-mode';
+import { cn } from '@utils/core/cn';
 
 export const Footer = () => {
   const { t } = useTranslation();
-  const { palette } = useTheme();
-  const isLight = palette.mode === 'light';
+  const { mode } = useThemeMode();
+  const isLight = mode === 'light';
+
   return (
-    <Stack
-      component='footer'
+    <footer
       id='footer'
-      display='flex'
-      justifyContent='space-between'
-      alignItems='center'
-      gap={7}
-      sx={{
-        position: 'relative',
-        background: isLight
-          ? `linear-gradient(
-              180deg,
-              transparent 0%,
-              rgba(184,137,31,0.04) 15%,
-              rgba(184,137,31,0.08) 40%,
-              rgba(184,137,31,0.14) 100%
-            )`
-          : `linear-gradient(
-              180deg,
-              transparent 0%,
-              rgba(0,0,0,0.06) 15%,
-              rgba(0,0,0,0.15) 40%,
-              rgba(11,13,46,0.35) 100%
-            )`,
-        backdropFilter: 'blur(2px)',
-      }}
-      px={3}
-      pb={4}
+      className={cn(
+        'relative flex flex-col items-center justify-between gap-16 px-6 pb-10 pt-20 backdrop-blur-[2px]',
+        isLight
+          ? 'bg-gradient-to-b from-transparent via-primary-main/5 to-primary-main/15'
+          : 'bg-gradient-to-b from-transparent via-black/10 to-background-default/40'
+      )}
     >
       {/* Centered Content */}
-      <Stack
-        component={motion.div}
+      <motion.div
         variants={fadeUp}
         initial='hidden'
         whileInView='visible'
         viewport={{ once: true }}
-        display='flex'
-        alignItems='center'
-        mt={10}
+        className='flex flex-col items-center'
       >
         <PFGradientTypography
           variant={APP_TYPOGRAPHIES.HEADER_SECONDARY}
-          textAlign={'center'}
+          className='text-center max-w-2xl px-4'
         >
           {t('footer.quote')}
         </PFGradientTypography>
-      </Stack>
+      </motion.div>
 
       {/* Social Icons */}
       <motion.div
@@ -66,12 +45,13 @@ export const Footer = () => {
         initial='hidden'
         whileInView='visible'
         viewport={{ once: true }}
+        className='w-full flex justify-center'
       >
         <Contact />
       </motion.div>
 
       {/* Footer - Stays at the Bottom */}
       <TechStack />
-    </Stack>
+    </footer>
   );
 };

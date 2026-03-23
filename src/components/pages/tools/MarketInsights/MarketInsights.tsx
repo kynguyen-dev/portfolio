@@ -1,46 +1,36 @@
 import { useState, useEffect, useCallback } from 'react';
 import {
-  Grid,
-  Paper,
-  Stack,
-  Box,
-  useTheme,
-  Divider,
-  Chip,
-  Skeleton,
-  Typography,
-  TextField,
-  Autocomplete,
-  Tabs,
-  Tab,
-  CircularProgress,
-  Tooltip,
-} from '@mui/material';
+  TrendingUp,
+  Fuel,
+  Sun,
+  Globe,
+  RotateCw,
+  Wind,
+  Droplets,
+  Eye,
+  Zap,
+  Cloud,
+  Umbrella,
+  Compass,
+  CloudSun,
+  CloudLightning,
+  Snowflake,
+  CloudDrizzle,
+  Waves,
+  AlertTriangle,
+  Clock,
+  Search,
+  ChevronLeft,
+  ChevronRight,
+  ExternalLink,
+  MapPin,
+} from 'lucide-react';
 import ToolPageLayout from '../ToolPageLayout';
 import { PFTypography } from '@components/core';
 import { useTranslation } from 'react-i18next';
-import { motion, AnimatePresence } from 'framer-motion';
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
-import WbSunnyIcon from '@mui/icons-material/WbSunny';
-import PublicIcon from '@mui/icons-material/Public';
-import RefreshIcon from '@mui/icons-material/Refresh';
-import AirIcon from '@mui/icons-material/Air';
-import WaterDropIcon from '@mui/icons-material/WaterDrop';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import SpeedIcon from '@mui/icons-material/Speed';
-import CloudIcon from '@mui/icons-material/Cloud';
-import UmbrellaIcon from '@mui/icons-material/Umbrella';
-import ExploreIcon from '@mui/icons-material/Explore';
-import LightModeIcon from '@mui/icons-material/LightMode';
-import ThunderstormIcon from '@mui/icons-material/Thunderstorm';
-import AcUnitIcon from '@mui/icons-material/AcUnit';
-import FilterDramaIcon from '@mui/icons-material/FilterDrama';
-import BlurOnIcon from '@mui/icons-material/BlurOn';
-import WavesIcon from '@mui/icons-material/Waves';
-import WarningAmberIcon from '@mui/icons-material/WarningAmber';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import type { SvgIconProps } from '@mui/material';
+import { motion, AnimatePresence } from 'motion/react';
+import { useThemeMode } from '@contexts/theme-mode';
+import { cn } from '@utils/core/cn';
 
 interface WeatherData {
   temperature_2m: number;
@@ -176,17 +166,12 @@ const LocalClock = ({ utcOffset }: { utcOffset: number }) => {
   }, [utcOffset]);
 
   return (
-    <Stack
-      direction='row'
-      spacing={1}
-      alignItems='center'
-      sx={{ opacity: 0.9, color: 'white', mb: 1 }}
-    >
-      <AccessTimeIcon sx={{ fontSize: 16 }} />
-      <PFTypography variant='caption' fontWeight={700}>
+    <div className='flex items-center gap-2 opacity-90 text-white mb-2'>
+      <Clock className='w-4 h-4' />
+      <PFTypography variant='caption' className='font-bold'>
         {t('tools.items.marketInsights.localTime')}: {time}
       </PFTypography>
-    </Stack>
+    </div>
   );
 };
 
@@ -195,51 +180,27 @@ const MarketInsightsSkeleton = ({
 }: {
   type: 'gold' | 'petrol' | 'weather' | 'news';
 }) => {
-  const isLight = useTheme().palette.mode === 'light';
-  const skeletonColor = isLight ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.05)';
   if (type === 'weather')
     return (
-      <Stack spacing={2} py={1} height='100%' justifyContent='center'>
-        <Stack alignItems='center' spacing={1}>
-          <Skeleton
-            variant='circular'
-            width={60}
-            height={60}
-            sx={{ bgcolor: skeletonColor }}
-          />
-          <Skeleton
-            variant='text'
-            width='40%'
-            height={40}
-            sx={{ bgcolor: skeletonColor }}
-          />
-        </Stack>
-        <Grid container spacing={1}>
+      <div className='flex flex-col gap-6 py-4 h-full justify-center'>
+        <div className='flex flex-col items-center gap-3'>
+          <div className='w-16 h-16 rounded-full bg-white/5 animate-pulse' />
+          <div className='w-24 h-8 bg-white/5 animate-pulse rounded-lg' />
+        </div>
+        <div className='grid grid-cols-3 gap-3'>
           {[1, 2, 3, 4, 5, 6].map(i => (
-            <Grid item xs={4} key={i}>
-              <Skeleton
-                variant='rectangular'
-                height={50}
-                sx={{ borderRadius: 1, bgcolor: skeletonColor }}
-              />
-            </Grid>
+            <div key={i} className='h-12 bg-white/5 animate-pulse rounded-xl' />
           ))}
-        </Grid>
-      </Stack>
+        </div>
+      </div>
     );
-  return (
-    <Skeleton
-      variant='rectangular'
-      height='100%'
-      sx={{ borderRadius: 4, bgcolor: skeletonColor }}
-    />
-  );
+  return <div className='w-full h-full bg-white/5 animate-pulse rounded-2xl' />;
 };
 
 const MarketInsights = () => {
-  const { palette } = useTheme();
+  const { mode } = useThemeMode();
   const { t } = useTranslation();
-  const isLight = palette.mode === 'light';
+  const isLight = mode === 'light';
 
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [weatherForecast, setWeatherForecast] = useState<WeatherForecast[]>([]);
@@ -267,35 +228,35 @@ const MarketInsights = () => {
   const getUVStatus = (uv: number) => {
     if (uv <= 2)
       return {
-        color: '#4caf50',
+        color: 'bg-green-500',
         glow: 'transparent',
         label: 'An toàn',
         danger: false,
       };
     if (uv <= 5)
       return {
-        color: '#ffeb3b',
+        color: 'bg-yellow-500',
         glow: 'transparent',
         label: 'Trung bình',
         danger: false,
       };
     if (uv <= 7)
       return {
-        color: '#ff9800',
-        glow: '#ff9800',
+        color: 'bg-orange-500',
+        glow: 'rgba(249, 115, 22, 0.5)',
         label: 'Nguy cơ cao',
         danger: true,
       };
     if (uv <= 10)
       return {
-        color: '#f44336',
-        glow: '#f44336',
+        color: 'bg-red-500',
+        glow: 'rgba(239, 68, 68, 0.5)',
         label: 'Rất nguy hiểm',
         danger: true,
       };
     return {
-      color: '#9c27b0',
-      glow: '#9c27b0',
+      color: 'bg-purple-500',
+      glow: 'rgba(168, 85, 247, 0.5)',
       label: 'Nguy hiểm cực độ',
       danger: true,
     };
@@ -304,14 +265,14 @@ const MarketInsights = () => {
   const getHumidityStatus = (h: number) => {
     if (h > 85)
       return {
-        color: '#0d47a1',
-        glow: '#0d47a1',
+        color: 'bg-blue-900',
+        glow: 'rgba(30, 58, 138, 0.5)',
         label: 'Rất ẩm/Oi bức',
         danger: true,
       };
     if (h > 70)
       return {
-        color: '#1976d2',
+        color: 'bg-blue-600',
         glow: 'transparent',
         label: 'Ẩm ướt',
         danger: false,
@@ -322,14 +283,14 @@ const MarketInsights = () => {
   const getRainStatus = (mm: number) => {
     if (mm > 10)
       return {
-        color: '#01579b',
-        glow: '#01579b',
+        color: 'bg-blue-800',
+        glow: 'rgba(30, 64, 175, 0.5)',
         label: 'Mưa rất lớn',
         danger: true,
       };
     if (mm > 2)
       return {
-        color: '#0288d1',
+        color: 'bg-blue-500',
         glow: 'transparent',
         label: 'Mưa vừa',
         danger: false,
@@ -341,14 +302,14 @@ const MarketInsights = () => {
     if (temp >= 40)
       return {
         label: 'NẮNG NÓNG CỰC ĐỘ!',
-        color: '#ff1744',
-        glow: '0 0 20px #ff1744',
+        color: 'bg-red-600',
+        glow: '0 0 20px #dc2626',
       };
     if (temp >= 35)
       return {
         label: 'Nắng nóng gay gắt',
-        color: '#ff9100',
-        glow: '0 0 15px #ff9100',
+        color: 'bg-orange-600',
+        glow: '0 0 15px #ea580c',
       };
     return null;
   };
@@ -357,64 +318,64 @@ const MarketInsights = () => {
     if (code === 0)
       return {
         label: 'Trời quang',
-        icon: WbSunnyIcon,
-        bg: 'linear-gradient(135deg, #FF8C00 0%, #FFD700 100%)',
+        icon: Sun,
+        bg: 'bg-gradient-to-br from-orange-500 to-yellow-400',
         animate: { rotate: 360 },
       };
     if (code === 1)
       return {
         label: 'Chủ yếu quang đãng',
-        icon: LightModeIcon,
-        bg: 'linear-gradient(135deg, #FFB75E 0%, #ED8F03 100%)',
+        icon: Sun,
+        bg: 'bg-gradient-to-br from-orange-400 to-yellow-500',
         animate: { scale: [1, 1.1, 1] },
       };
     if (code === 2)
       return {
         label: 'Mây rải rác',
-        icon: FilterDramaIcon,
-        bg: 'linear-gradient(135deg, #757F9A 0%, #D7DDE8 100%)',
+        icon: CloudSun,
+        bg: 'bg-gradient-to-br from-slate-500 to-blue-200',
         animate: { x: [-5, 5, -5] },
       };
     if (code === 3)
       return {
         label: 'Nhiều mây',
-        icon: CloudIcon,
-        bg: 'linear-gradient(135deg, #606c88 0%, #3f4c6b 100%)',
+        icon: Cloud,
+        bg: 'bg-gradient-to-br from-slate-600 to-slate-400',
         animate: { y: [0, -10, 0] },
       };
     if (code === 45 || code === 48)
       return {
         label: 'Sương mù',
-        icon: BlurOnIcon,
-        bg: 'linear-gradient(135deg, #e6e9f0 0%, #eef1f5 100%)',
+        icon: Cloud,
+        bg: 'bg-gradient-to-br from-slate-100 to-slate-300',
         animate: { opacity: [0.4, 1, 0.4] },
       };
     if (code >= 51 && code <= 57)
       return {
         label: 'Mưa phùn',
-        icon: UmbrellaIcon,
-        bg: 'linear-gradient(135deg, #4ca1af 0%, #c4e0e5 100%)',
+        icon: CloudDrizzle,
+        bg: 'bg-gradient-to-br from-cyan-600 to-blue-200',
         animate: { y: [0, 5, 0], rotate: [-5, 5, -5] },
       };
     if ((code >= 61 && code <= 67) || (code >= 80 && code <= 82))
       return {
         label: 'Có mưa',
-        icon: WaterDropIcon,
-        bg: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',
+        icon: Droplets,
+        bg: 'bg-gradient-to-br from-blue-800 to-blue-500',
         animate: { y: [0, 20, 0] },
       };
     if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86))
       return {
         label: 'Có tuyết',
-        icon: AcUnitIcon,
-        bg: 'linear-gradient(135deg, #83a4d4 0%, #b6fbff 100%)',
+        icon: Snowflake,
+        bg: 'bg-gradient-to-br from-blue-300 to-blue-100',
         animate: { rotate: 360, scale: [1, 1.2, 1] },
       };
     if (code >= 95)
       return {
         label: 'Dông bão',
-        icon: ThunderstormIcon,
-        bg: 'linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)',
+        icon: CloudLightning,
+        bg: 'bg-gradient-to-br from-indigo-900 via-purple-900 to-slate-900',
         animate: {
           scale: [1, 1.1, 1],
           filter: ['brightness(1)', 'brightness(1.5)', 'brightness(1)'],
@@ -422,8 +383,8 @@ const MarketInsights = () => {
       };
     return {
       label: 'Không xác định',
-      icon: WavesIcon,
-      bg: 'linear-gradient(135deg, #B8891F 0%, #F5D060 100%)',
+      icon: Waves,
+      bg: 'bg-gradient-to-br from-primary-main to-primary-light',
       animate: {},
     };
   };
@@ -631,14 +592,13 @@ const MarketInsights = () => {
   interface CardWrapperProps {
     children: React.ReactNode;
     title: string;
-    icon: React.ComponentType<SvgIconProps>;
+    icon: React.ElementType;
     loading: boolean;
     onRefresh?: () => void;
     type: 'gold' | 'petrol' | 'weather' | 'news';
     customBg?: string;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    iconAnimate?: any;
-    sx?: object;
+    iconAnimate?: import('motion/react').TargetAndTransition;
+    className?: string;
   }
 
   const CardWrapper = ({
@@ -650,90 +610,62 @@ const MarketInsights = () => {
     type,
     customBg,
     iconAnimate,
-    sx = {},
+    className,
   }: CardWrapperProps) => (
-    <Paper
-      elevation={0}
-      sx={{
-        p: { xs: 2, sm: 3 },
-        height: '100%',
-        background:
-          customBg ||
-          (isLight ? 'rgba(255, 255, 255, 0.4)' : 'rgba(11, 13, 46, 0.4)'),
-        backdropFilter: 'blur(20px)',
-        borderRadius: 4,
-        border: `1px solid ${isLight ? 'rgba(184,137,31,0.2)' : 'rgba(245,208,96,0.2)'}`,
-        transition: 'all 0.5s ease',
-        color: customBg ? 'white' : 'inherit',
-        display: 'flex',
-        flexDirection: 'column',
-        maxWidth: '100%',
-        overflow: 'hidden',
-        '&:hover': {
-          transform: 'translateY(-5px)',
-          borderColor: isLight
-            ? 'rgba(184,137,31,0.5)'
-            : 'rgba(245,208,96,0.5)',
-        },
-        ...sx,
-      }}
+    <div
+      className={cn(
+        'p-6 h-full backdrop-blur-2xl rounded-3xl border transition-all duration-500 flex flex-col overflow-hidden hover:-translate-y-1.5',
+        customBg ? 'text-white' : 'text-text-primary',
+        customBg ||
+          (isLight
+            ? 'bg-white/40 border-primary-main/20'
+            : 'bg-background-default/40 border-primary-main/20'),
+        !customBg &&
+          (isLight
+            ? 'hover:border-primary-main/50'
+            : 'hover:border-primary-main/50'),
+        className
+      )}
     >
-      <Stack spacing={2} sx={{ height: '100%', width: '100%' }}>
-        <Stack
-          direction='row'
-          spacing={1}
-          alignItems='center'
-          justifyContent='space-between'
-        >
-          <Stack direction='row' spacing={1} alignItems='center'>
+      <div className='flex flex-col h-full w-full gap-4'>
+        <div className='flex items-center justify-between'>
+          <div className='flex items-center gap-3'>
             <motion.div
               animate={iconAnimate}
               transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
             >
               <Icon
-                sx={{
-                  color: customBg ? 'white' : isLight ? '#B8891F' : '#F5D060',
-                  fontSize: { xs: 20, sm: 24 },
-                }}
+                className={cn(
+                  'w-6 h-6',
+                  customBg ? 'text-white' : 'text-primary-main'
+                )}
               />
             </motion.div>
             <PFTypography
               variant='h6'
-              fontWeight={700}
-              sx={{ fontSize: { xs: '0.95rem', sm: '1.25rem' } }}
+              className='font-extrabold tracking-tight text-lg sm:text-xl'
             >
               {title}
             </PFTypography>
-          </Stack>
+          </div>
           {onRefresh && (
-            <RefreshIcon
+            <RotateCw
               onClick={onRefresh}
-              sx={{
-                fontSize: { xs: 16, sm: 18 },
-                cursor: 'pointer',
-                opacity: 0.5,
-                '&:hover': { opacity: 1, transform: 'rotate(180deg)' },
-                transition: 'all 0.3s',
-              }}
+              className='w-5 h-5 cursor-pointer opacity-50 hover:opacity-100 hover:rotate-180 transition-all duration-500'
             />
           )}
-        </Stack>
-        <Divider
-          sx={{ opacity: 0.1, bgcolor: customBg ? 'white' : 'divider' }}
+        </div>
+        <div
+          className={cn(
+            'h-px w-full',
+            customBg ? 'bg-white/20' : 'bg-white/10'
+          )}
         />
-        <Box
-          sx={{
-            flexGrow: 1,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            width: '100%',
-          }}
-        >
+        <div className='flex-grow flex flex-col justify-center w-full'>
           {sectionLoading ? <MarketInsightsSkeleton type={type} /> : children}
-        </Box>
-      </Stack>
-    </Paper>
+        </div>
+      </div>
+    </div>
   );
 
   const weatherVisual = weatherData
@@ -750,919 +682,549 @@ const MarketInsights = () => {
       emoji='📊'
       description={t('tools.items.marketInsights.description')}
     >
-      <Box
-        sx={{
-          width: '100%',
-          maxWidth: '100%',
-          mt: 4,
-          px: { xs: 1, sm: 3, md: 0 },
-          boxSizing: 'border-box',
-          overflowX: 'hidden',
-        }}
-      >
-        <Grid container spacing={{ xs: 2, sm: 4 }} alignItems='stretch'>
-          <Grid
-            item
-            xs={12}
-            lg={5}
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              width: '100%',
-              maxWidth: '100%',
-            }}
-          >
-            <Stack spacing={{ xs: 2, sm: 3 }} sx={{ height: '100%' }}>
-              <Stack spacing={1.5}>
-                <Autocomplete
-                  value={selectedCity}
-                  onChange={(_, newValue) => {
-                    setSelectedCity(newValue);
-                    if (!newValue) {
-                      setWeatherData(null);
-                      setWeatherForecast([]);
-                    }
-                  }}
-                  onInputChange={(_, newInputValue, reason) => {
-                    if (reason === 'input') setSearchQuery(newInputValue);
-                    if (reason === 'clear') setSearchQuery('');
-                  }}
-                  options={cityOptions}
-                  loading={isSearching}
-                  filterOptions={x => x}
-                  getOptionLabel={option => option.label || ''}
-                  isOptionEqualToValue={(o, v) =>
-                    v && o.lat === v.lat && o.lon === v.lon
-                  }
-                  renderInput={params => (
-                    <TextField
-                      {...params}
-                      size='small'
-                      placeholder={t('tools.items.marketInsights.searchCity')}
-                      sx={{
-                        '& .MuiOutlinedInput-root': {
-                          borderRadius: 3,
-                          fontSize: { xs: '0.85rem', sm: '1rem' },
-                          background: isLight
-                            ? 'rgba(255,255,255,0.6)'
-                            : 'rgba(255,255,255,0.08)',
-                          backdropFilter: 'blur(10px)',
-                        },
-                      }}
-                      InputProps={{
-                        ...params.InputProps,
-                        endAdornment: (
-                          <>
-                            {isSearching ? (
-                              <CircularProgress color='inherit' size={16} />
-                            ) : null}
-                            {params.InputProps.endAdornment}
-                          </>
-                        ),
-                      }}
-                    />
+      <div className='w-full mt-8 px-2 sm:px-4 md:px-0 box-border overflow-hidden'>
+        <div className='grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch'>
+          {/* Left Column: Weather */}
+          <div className='lg:col-span-5 flex flex-col gap-6 sm:gap-8'>
+            <div className='flex flex-col gap-4'>
+              <div className='relative group'>
+                <div className='absolute left-3 top-1/2 -translate-y-1/2 z-10'>
+                  <Search className='w-4 h-4 text-primary-main' />
+                </div>
+                <input
+                  type='text'
+                  className={cn(
+                    'w-full pl-10 pr-4 py-3 rounded-xl backdrop-blur-xl border border-white/10 text-sm focus:outline-none focus:ring-2 focus:ring-primary-main/50 transition-all',
+                    isLight
+                      ? 'bg-white/60 text-primary-dark'
+                      : 'bg-white/5 text-primary-light'
                   )}
+                  placeholder={t('tools.items.marketInsights.searchCity')}
+                  value={searchQuery}
+                  onChange={e => setSearchQuery(e.target.value)}
                 />
-                {weatherForecast.length > 0 && (
-                  <Box
-                    sx={{
-                      background: isLight
-                        ? 'rgba(255,255,255,0.3)'
-                        : 'rgba(255,255,255,0.03)',
-                      borderRadius: 3,
-                      p: 0.5,
-                      width: '100%',
-                      overflow: 'hidden',
-                      maxWidth: 'calc(100vw - 16px)',
-                    }}
-                  >
-                    <Tabs
-                      value={selectedDayIdx}
-                      onChange={(_, v) => setSelectedDayIdx(v)}
-                      variant='scrollable'
-                      scrollButtons='auto'
-                      allowScrollButtonsMobile
-                      sx={{
-                        minHeight: 36,
-                        '& .MuiTab-root': {
-                          minHeight: 36,
-                          py: 0.5,
-                          px: { xs: 1.5, sm: 2 },
-                          fontSize: { xs: '0.65rem', sm: '0.75rem' },
-                          fontWeight: 700,
-                          borderRadius: 2,
-                          '&.Mui-selected': {
-                            color: isLight ? '#B8891F' : '#F5D060',
-                          },
-                        },
-                        '& .MuiTabs-indicator': { display: 'none' },
-                        '& .MuiTabs-scrollButtons': {
-                          width: { xs: 20, sm: 40 },
-                        },
-                      }}
-                    >
-                      {weatherForecast.map((f, i) => (
-                        <Tab
-                          key={i}
-                          label={
-                            i === 0
-                              ? t('tools.items.marketInsights.today')
-                              : f.date
-                          }
-                          sx={{
-                            background:
-                              selectedDayIdx === i
-                                ? isLight
-                                  ? 'white'
-                                  : 'rgba(255,255,255,0.1)'
-                                : 'transparent',
-                            mr: 0.5,
-                            transition: 'all 0.3s',
-                          }}
-                        />
-                      ))}
-                    </Tabs>
-                  </Box>
+                {isSearching && (
+                  <div className='absolute right-3 top-1/2 -translate-y-1/2'>
+                    <RotateCw className='w-4 h-4 animate-spin text-primary-main' />
+                  </div>
                 )}
-              </Stack>
 
-              <CardWrapper
-                title={t('tools.items.marketInsights.weather')}
-                icon={weatherVisual?.icon || WbSunnyIcon}
-                loading={loading.weather}
-                onRefresh={fetchWeather}
-                type='weather'
-                customBg={weatherVisual?.bg}
-                iconAnimate={weatherVisual?.animate}
-                sx={{ flexGrow: 1 }}
-              >
-                <AnimatePresence mode='wait'>
-                  {weatherData && weatherForecast.length > 0 ? (
-                    <motion.div
-                      key={selectedDayIdx}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.3 }}
-                      style={{
-                        height: '100%',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                      }}
-                    >
-                      {selectedDayIdx === 0 ? (
-                        <Stack spacing={2}>
-                          <Stack alignItems='center' spacing={0.5} py={1}>
-                            <LocalClock utcOffset={weatherData.utc_offset} />
-                            <motion.div
-                              animate={weatherVisual?.animate}
-                              transition={{
-                                duration: 4,
-                                repeat: Infinity,
-                                ease: 'linear',
-                              }}
-                            >
-                              {weatherVisual && (
-                                <weatherVisual.icon
-                                  sx={{
-                                    fontSize: { xs: 50, sm: 80 },
-                                    color: 'white',
-                                  }}
-                                />
-                              )}
-                            </motion.div>
-                            <Box sx={{ textAlign: 'center' }}>
-                              <PFTypography
-                                variant='h2'
-                                fontWeight={800}
-                                sx={{
-                                  fontSize: { xs: '2.5rem', sm: '3.75rem' },
-                                  color: 'white',
-                                  lineHeight: 1.1,
-                                  textShadow:
-                                    getTempWarning(weatherData.temperature_2m)
-                                      ?.glow || 'none',
-                                }}
-                              >
-                                {Math.round(weatherData.temperature_2m)}°C
-                              </PFTypography>
-                              {getTempWarning(weatherData.temperature_2m) && (
-                                <motion.div
-                                  animate={{ scale: [1, 1.1, 1] }}
-                                  transition={{
-                                    repeat: Infinity,
-                                    duration: 1.5,
-                                  }}
-                                >
-                                  <Chip
-                                    icon={
-                                      <WarningAmberIcon
-                                        sx={{
-                                          color: 'white !important',
-                                          fontSize: '12px',
-                                        }}
-                                      />
-                                    }
-                                    label={
-                                      getTempWarning(weatherData.temperature_2m)
-                                        ?.label
-                                    }
-                                    size='small'
-                                    sx={{
-                                      bgcolor: getTempWarning(
-                                        weatherData.temperature_2m
-                                      )?.color,
-                                      color: 'white',
-                                      fontWeight: 800,
-                                      mt: 1,
-                                      fontSize: '0.65rem',
-                                      border: '1px solid white',
-                                      boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
-                                      height: '20px',
-                                    }}
-                                  />
-                                </motion.div>
-                              )}
-                            </Box>
-                            <PFTypography
-                              variant='h6'
-                              fontWeight={700}
-                              color='white'
-                              sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}
-                            >
-                              {weatherVisual?.label}
-                            </PFTypography>
-                            <PFTypography
-                              variant='caption'
-                              sx={{
-                                opacity: 0.9,
-                                color: 'white',
-                                fontSize: '0.7rem',
-                              }}
-                            >
-                              {t('tools.items.marketInsights.realFeel')}:{' '}
-                              {Math.round(weatherData.apparent_temperature)}°C
-                            </PFTypography>
-                          </Stack>
-                          <Grid container spacing={1}>
-                            {[
-                              {
-                                icon: WaterDropIcon,
-                                label: t('tools.items.marketInsights.humidity'),
-                                value: `${weatherData.relative_humidity_2m}%`,
-                                highlight: getHumidityStatus(
-                                  weatherData.relative_humidity_2m
-                                ),
-                              },
-                              {
-                                icon: SpeedIcon,
-                                label: t('tools.items.marketInsights.pressure'),
-                                value: `${Math.round(weatherData.surface_pressure)}`,
-                                unit: 'hPa',
-                              },
-                              {
-                                icon: AirIcon,
-                                label: t(
-                                  'tools.items.marketInsights.windSpeed'
-                                ),
-                                value: `${weatherData.wind_speed_10m}`,
-                                unit: 'km/h',
-                              },
-                              {
-                                icon: ExploreIcon,
-                                label: t(
-                                  'tools.items.marketInsights.windDirection'
-                                ),
-                                value: getWindDirection(
-                                  weatherData.wind_direction_10m
-                                ),
-                              },
-                              {
-                                icon: VisibilityIcon,
-                                label: t(
-                                  'tools.items.marketInsights.visibility'
-                                ),
-                                value: `${(weatherData.visibility / 1000).toFixed(1)}`,
-                                unit: 'km',
-                              },
-                              {
-                                icon: CloudIcon,
-                                label: t(
-                                  'tools.items.marketInsights.cloudCover'
-                                ),
-                                value: `${weatherData.cloud_cover}%`,
-                              },
-                              {
-                                icon: UmbrellaIcon,
-                                label: t(
-                                  'tools.items.marketInsights.rainAmount'
-                                ),
-                                value: `${weatherData.precipitation}`,
-                                unit: 'mm',
-                                highlight: getRainStatus(
-                                  weatherData.precipitation
-                                ),
-                              },
-                              {
-                                icon: LightModeIcon,
-                                label: t('tools.items.marketInsights.uvIndex'),
-                                value: weatherForecast[0].uv.toString(),
-                                highlight: getUVStatus(weatherForecast[0].uv),
-                              },
-                            ].map((item, i) => (
-                              <Grid item xs={6} sm={4} key={i}>
-                                <Tooltip
-                                  title={
-                                    item.highlight
-                                      ? `Mức độ: ${item.highlight.label}`
-                                      : item.label
-                                  }
-                                  arrow
-                                >
-                                  <motion.div
-                                    animate={
-                                      item.highlight?.danger
-                                        ? {
-                                            scale: [1, 1.05, 1],
-                                            boxShadow: `0 0 20px ${item.highlight.glow}`,
-                                          }
-                                        : {}
-                                    }
-                                    transition={{
-                                      repeat: Infinity,
-                                      duration: 2,
-                                    }}
-                                    style={{ height: '100%' }}
-                                  >
-                                    <Box
-                                      sx={{
-                                        p: 1,
-                                        borderRadius: 2,
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        alignItems: 'center',
-                                        background: item.highlight?.danger
-                                          ? item.highlight.color
-                                          : 'rgba(255,255,255,0.15)',
-                                        textAlign: 'center',
-                                        color: 'white',
-                                        border: item.highlight?.danger
-                                          ? '2px solid white'
-                                          : 'none',
-                                        height: '100%',
-                                        justifyContent: 'center',
-                                      }}
-                                    >
-                                      <item.icon
-                                        sx={{
-                                          fontSize: { xs: 14, sm: 18 },
-                                          mb: 0.5,
-                                          color: 'white',
-                                        }}
-                                      />
-                                      <PFTypography
-                                        variant='caption'
-                                        sx={{
-                                          display: 'block',
-                                          opacity: 0.9,
-                                          fontSize: '0.55rem',
-                                          fontWeight: 700,
-                                          mb: 0.2,
-                                          whiteSpace: 'nowrap',
-                                          overflow: 'hidden',
-                                          textOverflow: 'ellipsis',
-                                          width: '100%',
-                                        }}
-                                      >
-                                        {item.label}
-                                      </PFTypography>
-                                      <PFTypography
-                                        variant='caption'
-                                        fontWeight={800}
-                                        sx={{
-                                          fontSize: {
-                                            xs: '0.65rem',
-                                            sm: '0.8rem',
-                                          },
-                                        }}
-                                      >
-                                        {item.value} {item.unit}
-                                      </PFTypography>
-                                    </Box>
-                                  </motion.div>
-                                </Tooltip>
-                              </Grid>
-                            ))}
-                          </Grid>
-                        </Stack>
-                      ) : (
-                        <Stack spacing={2} color='white'>
-                          <Stack
-                            direction={{ xs: 'column', sm: 'row' }}
-                            justifyContent='space-between'
-                            alignItems='center'
-                            py={1}
-                            spacing={1}
+                <AnimatePresence>
+                  {cityOptions.length > 0 &&
+                    searchQuery !== selectedCity?.label && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10 }}
+                        className='absolute top-full left-0 right-0 mt-2 z-50 rounded-xl border border-white/10 bg-background-paper/95 backdrop-blur-xl shadow-2xl overflow-hidden'
+                      >
+                        {cityOptions.map((city, idx) => (
+                          <button
+                            key={idx}
+                            onClick={() => {
+                              setSelectedCity(city);
+                              setSearchQuery(city.label);
+                              setCityOptions([]);
+                            }}
+                            className='w-full px-4 py-3 text-left text-sm hover:bg-white/10 transition-colors flex items-center gap-2'
                           >
-                            <Box
-                              sx={{ textAlign: { xs: 'center', sm: 'left' } }}
-                            >
-                              <motion.div
-                                animate={weatherVisual?.animate}
-                                transition={{ duration: 4, repeat: Infinity }}
-                              >
-                                {weatherVisual && (
-                                  <weatherVisual.icon
-                                    sx={{
-                                      fontSize: { xs: 30, sm: 40 },
-                                      mb: 0.5,
-                                    }}
-                                  />
-                                )}
-                              </motion.div>
-                              <PFTypography
-                                variant='h4'
-                                fontWeight={800}
-                                sx={{
-                                  fontSize: { xs: '1.5rem', sm: '2.125rem' },
-                                  textShadow:
-                                    getTempWarning(
-                                      weatherForecast[selectedDayIdx].maxTemp
-                                    )?.glow || 'none',
-                                }}
-                              >
-                                {weatherForecast[selectedDayIdx].maxTemp}° /{' '}
-                                {weatherForecast[selectedDayIdx].minTemp}°
-                              </PFTypography>
-                              <PFTypography
-                                variant='body1'
-                                fontWeight={700}
-                                sx={{
-                                  mt: 0.5,
-                                  fontSize: { xs: '0.9rem', sm: '1rem' },
-                                }}
-                              >
-                                {weatherVisual?.label}
-                              </PFTypography>
-                            </Box>
-                            <Tooltip
-                              title={`Mức độ: ${getUVStatus(weatherForecast[selectedDayIdx].uv).label}`}
-                            >
-                              <motion.div
-                                animate={
-                                  getUVStatus(
-                                    weatherForecast[selectedDayIdx].uv
-                                  ).danger
-                                    ? { scale: [1, 1.1, 1] }
-                                    : {}
-                                }
-                                transition={{ repeat: Infinity, duration: 2 }}
-                              >
-                                <Chip
-                                  label={`UV: ${weatherForecast[selectedDayIdx].uv}`}
-                                  size='small'
-                                  sx={{
-                                    borderColor: 'white',
-                                    color: 'white',
-                                    fontWeight: 800,
-                                    bgcolor: getUVStatus(
-                                      weatherForecast[selectedDayIdx].uv
-                                    ).danger
-                                      ? getUVStatus(
-                                          weatherForecast[selectedDayIdx].uv
-                                        ).color
-                                      : 'transparent',
-                                    border: '1.5px solid white',
-                                    fontSize: '0.65rem',
-                                    height: '20px',
-                                  }}
-                                  variant='outlined'
-                                />
-                              </motion.div>
-                            </Tooltip>
-                          </Stack>
-                          <Divider sx={{ opacity: 0.2, bgcolor: 'white' }} />
-                          <Grid container spacing={1}>
-                            {[
-                              {
-                                icon: UmbrellaIcon,
-                                label: t('tools.items.marketInsights.rainProb'),
-                                value: `${weatherForecast[selectedDayIdx].rainProb}%`,
-                              },
-                              {
-                                icon: WaterDropIcon,
-                                label: t(
-                                  'tools.items.marketInsights.rainAmount'
-                                ),
-                                value: `${weatherForecast[selectedDayIdx].rainSum} mm`,
-                              },
-                              {
-                                icon: AirIcon,
-                                label: t(
-                                  'tools.items.marketInsights.windSpeed'
-                                ),
-                                value: `${weatherForecast[selectedDayIdx].windMax} km/h`,
-                              },
-                              {
-                                icon: LightModeIcon,
-                                label: t(
-                                  'tools.items.marketInsights.solarRadiation'
-                                ),
-                                value: `${weatherForecast[selectedDayIdx].radiation} MJ/m²`,
-                              },
-                            ].map((item, i) => (
-                              <Grid item xs={6} key={i}>
-                                <Box
-                                  sx={{
-                                    p: 1,
-                                    borderRadius: 2,
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: 1,
-                                    background: 'rgba(255,255,255,0.1)',
-                                  }}
-                                >
-                                  <item.icon sx={{ fontSize: 16 }} />
-                                  <Box sx={{ overflow: 'hidden' }}>
-                                    <PFTypography
-                                      variant='caption'
-                                      sx={{
-                                        display: 'block',
-                                        opacity: 0.8,
-                                        fontSize: '0.5rem',
-                                        whiteSpace: 'nowrap',
-                                        overflow: 'hidden',
-                                        textOverflow: 'ellipsis',
-                                      }}
-                                    >
-                                      {item.label}
-                                    </PFTypography>
-                                    <PFTypography
-                                      variant='caption'
-                                      fontWeight={700}
-                                      sx={{ fontSize: '0.7rem' }}
-                                    >
-                                      {item.value}
-                                    </PFTypography>
-                                  </Box>
-                                </Box>
-                              </Grid>
-                            ))}
-                          </Grid>
-                          <Divider sx={{ opacity: 0.2, bgcolor: 'white' }} />
-                          <Stack
-                            direction='row'
-                            spacing={2}
-                            justifyContent='center'
-                            alignItems='center'
-                          >
-                            <Box textAlign='center'>
-                              <PFTypography
-                                variant='caption'
-                                sx={{
-                                  opacity: 0.8,
-                                  display: 'block',
-                                  mb: 0.2,
-                                  fontSize: '0.55rem',
-                                }}
-                              >
-                                {t('tools.items.marketInsights.sunrise')}
-                              </PFTypography>
-                              <PFTypography
-                                variant='caption'
-                                fontWeight={700}
-                                sx={{ fontSize: '0.75rem' }}
-                              >
-                                {weatherForecast[selectedDayIdx].sunrise}
-                              </PFTypography>
-                            </Box>
-                            <Box textAlign='center'>
-                              <PFTypography
-                                variant='caption'
-                                sx={{
-                                  opacity: 0.8,
-                                  display: 'block',
-                                  mb: 0.2,
-                                  fontSize: '0.55rem',
-                                }}
-                              >
-                                {t('tools.items.marketInsights.sunset')}
-                              </PFTypography>
-                              <PFTypography
-                                variant='caption'
-                                fontWeight={700}
-                                sx={{ fontSize: '0.75rem' }}
-                              >
-                                {weatherForecast[selectedDayIdx].sunset}
-                              </PFTypography>
-                            </Box>
-                          </Stack>
-                        </Stack>
-                      )}
-                    </motion.div>
-                  ) : (
-                    !loading.weather && (
-                      <Box py={6} textAlign='center'>
-                        <PFTypography variant='body2' sx={{ opacity: 0.5 }}>
-                          {t(
-                            'tools.items.marketInsights.selectCityToViewWeather'
-                          )}
-                        </PFTypography>
-                      </Box>
-                    )
-                  )}
+                            <MapPin className='w-4 h-4 text-primary-main' />
+                            {city.label}
+                          </button>
+                        ))}
+                      </motion.div>
+                    )}
                 </AnimatePresence>
-              </CardWrapper>
-            </Stack>
-          </Grid>
+              </div>
 
-          <Grid item xs={12} lg={7}>
-            <Grid container spacing={{ xs: 2, sm: 3 }}>
-              <Grid item xs={12} sm={6}>
-                <CardWrapper
-                  title={t('tools.items.marketInsights.goldPrice')}
-                  icon={TrendingUpIcon}
-                  loading={loading.gold}
-                  onRefresh={fetchGold}
-                  type='gold'
+              {weatherForecast.length > 0 && (
+                <div
+                  className={cn(
+                    'rounded-xl p-1 w-full overflow-hidden backdrop-blur-md border border-white/10 bg-white/5 flex gap-1 items-center px-2'
+                  )}
                 >
-                  <Stack spacing={1.5}>
-                    {goldData.map(item => (
-                      <Stack
-                        key={item.type}
-                        direction={{ xs: 'row', sm: 'row' }}
-                        justifyContent='space-between'
-                        alignItems='center'
-                        spacing={1}
-                        sx={{
-                          p: { xs: 1, sm: 0 },
-                          background: {
-                            xs: 'rgba(0,0,0,0.03)',
-                            sm: 'transparent',
-                          },
-                          borderRadius: 2,
-                        }}
+                  <button className='p-1 hover:bg-white/10 rounded-lg shrink-0 opacity-50'>
+                    <ChevronLeft className='w-4 h-4' />
+                  </button>
+                  <div className='flex-grow overflow-x-auto scrollbar-hide flex gap-1 py-1 px-1'>
+                    {weatherForecast.map((f, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setSelectedDayIdx(i)}
+                        className={cn(
+                          'shrink-0 px-4 py-1.5 rounded-lg text-[10px] sm:text-xs font-bold transition-all whitespace-nowrap',
+                          selectedDayIdx === i
+                            ? 'bg-primary-main text-white shadow-lg'
+                            : 'text-text-secondary hover:bg-white/10'
+                        )}
                       >
-                        <PFTypography
-                          variant='body2'
-                          fontWeight={700}
-                          sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}
-                        >
-                          {item.type}
-                        </PFTypography>
-                        <Stack
-                          direction='row'
-                          spacing={1.5}
-                          alignItems='center'
-                        >
-                          <Box textAlign='right'>
-                            <PFTypography
-                              variant='caption'
-                              sx={{
-                                opacity: 0.5,
-                                display: 'block',
-                                fontSize: '0.6rem',
-                              }}
-                            >
-                              {t('tools.items.marketInsights.buy')}
-                            </PFTypography>
-                            <PFTypography
-                              variant='caption'
-                              fontWeight={700}
-                              sx={{ fontSize: { xs: '0.75rem', sm: '0.8rem' } }}
-                            >
-                              {item.buy}
-                            </PFTypography>
-                          </Box>
-                          <Box textAlign='right'>
-                            <PFTypography
-                              variant='caption'
-                              sx={{
-                                opacity: 0.5,
-                                display: 'block',
-                                fontSize: '0.6rem',
-                              }}
-                            >
-                              {t('tools.items.marketInsights.sell')}
-                            </PFTypography>
-                            <PFTypography
-                              variant='caption'
-                              fontWeight={700}
-                              sx={{ fontSize: { xs: '0.75rem', sm: '0.8rem' } }}
-                            >
-                              {item.sell}
-                            </PFTypography>
-                          </Box>
-                        </Stack>
-                      </Stack>
+                        {i === 0
+                          ? t('tools.items.marketInsights.today')
+                          : f.date}
+                      </button>
                     ))}
-                  </Stack>
-                </CardWrapper>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <CardWrapper
-                  title={t('tools.items.marketInsights.petrolPrice')}
-                  icon={LocalGasStationIcon}
-                  loading={loading.petrol}
-                  onRefresh={fetchPetrol}
-                  type='petrol'
-                >
-                  <Stack spacing={1.5}>
-                    {petrolData.map(item => (
-                      <Stack
-                        key={item.type}
-                        direction='row'
-                        justifyContent='space-between'
-                        alignItems='center'
-                        sx={{
-                          p: { xs: 1, sm: 0 },
-                          background: {
-                            xs: 'rgba(0,0,0,0.03)',
-                            sm: 'transparent',
-                          },
-                          borderRadius: 2,
-                        }}
-                      >
-                        <PFTypography
-                          variant='body2'
-                          fontWeight={700}
-                          sx={{
-                            flex: 1,
-                            fontSize: { xs: '0.8rem', sm: '0.875rem' },
-                          }}
-                        >
-                          {item.type}
-                        </PFTypography>
-                        <Stack
-                          direction='row'
-                          spacing={0.5}
-                          alignItems='baseline'
-                        >
+                  </div>
+                  <button className='p-1 hover:bg-white/10 rounded-lg shrink-0 opacity-50'>
+                    <ChevronRight className='w-4 h-4' />
+                  </button>
+                </div>
+              )}
+            </div>
+
+            <CardWrapper
+              title={t('tools.items.marketInsights.weather')}
+              icon={weatherVisual?.icon || Sun}
+              loading={loading.weather}
+              onRefresh={fetchWeather}
+              type='weather'
+              customBg={weatherVisual?.bg}
+              iconAnimate={weatherVisual?.animate}
+              className='flex-grow'
+            >
+              <AnimatePresence mode='wait'>
+                {weatherData && weatherForecast.length > 0 ? (
+                  <motion.div
+                    key={selectedDayIdx}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.3 }}
+                    className='h-full flex flex-col justify-center'
+                  >
+                    {selectedDayIdx === 0 ? (
+                      <div className='flex flex-col gap-6'>
+                        <div className='flex flex-col items-center gap-2 py-2'>
+                          <LocalClock utcOffset={weatherData.utc_offset} />
+                          <motion.div
+                            animate={weatherVisual?.animate}
+                            transition={{
+                              duration: 4,
+                              repeat: Infinity,
+                              ease: 'linear',
+                            }}
+                          >
+                            {weatherVisual && (
+                              <weatherVisual.icon className='w-16 h-16 sm:w-24 sm:h-24 text-white' />
+                            )}
+                          </motion.div>
+                          <div className='text-center'>
+                            <PFTypography
+                              variant='h2'
+                              className={cn(
+                                'text-5xl sm:text-7xl font-black text-white leading-none tracking-tighter'
+                              )}
+                              style={{
+                                textShadow:
+                                  getTempWarning(weatherData.temperature_2m)
+                                    ?.glow || 'none',
+                              }}
+                            >
+                              {Math.round(weatherData.temperature_2m)}°C
+                            </PFTypography>
+                            {getTempWarning(weatherData.temperature_2m) && (
+                              <motion.div
+                                animate={{ scale: [1, 1.1, 1] }}
+                                transition={{ repeat: Infinity, duration: 1.5 }}
+                                className={cn(
+                                  'mt-3 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-white shadow-xl inline-flex items-center gap-1.5',
+                                  getTempWarning(weatherData.temperature_2m)
+                                    ?.color
+                                )}
+                              >
+                                <AlertTriangle className='w-3 h-3' />
+                                {
+                                  getTempWarning(weatherData.temperature_2m)
+                                    ?.label
+                                }
+                              </motion.div>
+                            )}
+                          </div>
                           <PFTypography
                             variant='h6'
-                            fontWeight={800}
-                            sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}
+                            className='text-white font-extrabold text-xl sm:text-2xl mt-2'
                           >
-                            {item.price}
+                            {weatherVisual?.label}
                           </PFTypography>
                           <PFTypography
                             variant='caption'
-                            sx={{ opacity: 0.5, fontSize: '0.6rem' }}
+                            className='text-white/80 font-bold text-xs'
                           >
-                            VND
+                            {t('tools.items.marketInsights.realFeel')}:{' '}
+                            {Math.round(weatherData.apparent_temperature)}°C
                           </PFTypography>
-                        </Stack>
-                      </Stack>
-                    ))}
-                  </Stack>
-                </CardWrapper>
-              </Grid>
-              <Grid item xs={12}>
-                <CardWrapper
-                  title={t('tools.items.marketInsights.news')}
-                  icon={PublicIcon}
-                  loading={loading.news}
-                  onRefresh={fetchNews}
-                  type='news'
-                  iconAnimate={{ rotateY: 360 }}
-                >
-                  <Stack spacing={1.5}>
-                    {newsData.length > 0 ? (
-                      <>
-                        {newsData.map((news, idx) => (
-                          <Box
-                            key={idx}
-                            component='a'
-                            href={news.url || '#'}
-                            target='_blank'
-                            sx={{
-                              textDecoration: 'none',
-                              color: 'inherit',
-                              display: 'flex',
-                              flexDirection: 'row',
-                              gap: 1.5,
-                              p: 1,
-                              borderRadius: 2,
-                              background: {
-                                xs: 'rgba(0,0,0,0.02)',
-                                sm: 'transparent',
-                              },
-                              '&:hover': {
-                                background: isLight
-                                  ? 'rgba(0,0,0,0.03)'
-                                  : 'rgba(255,255,255,0.05)',
-                              },
-                            }}
-                          >
-                            {news.image && (
-                              <Box
-                                sx={{
-                                  width: { xs: 50, sm: 60 },
-                                  height: { xs: 50, sm: 60 },
-                                  borderRadius: 2,
-                                  overflow: 'hidden',
-                                  flexShrink: 0,
-                                }}
-                              >
-                                <img
-                                  src={news.image}
-                                  alt={news.title}
-                                  style={{
-                                    width: '100%',
-                                    height: '100%',
-                                    objectFit: 'cover',
-                                  }}
-                                />
-                              </Box>
-                            )}
-                            <Stack
-                              sx={{
-                                flex: 1,
-                                justifyContent: 'center',
-                                overflow: 'hidden',
+                        </div>
+
+                        <div className='grid grid-cols-3 sm:grid-cols-4 gap-3'>
+                          {[
+                            {
+                              icon: Droplets,
+                              label: t('tools.items.marketInsights.humidity'),
+                              value: `${weatherData.relative_humidity_2m}%`,
+                              highlight: getHumidityStatus(
+                                weatherData.relative_humidity_2m
+                              ),
+                            },
+                            {
+                              icon: Zap,
+                              label: t('tools.items.marketInsights.pressure'),
+                              value: `${Math.round(weatherData.surface_pressure)}`,
+                              unit: 'hPa',
+                            },
+                            {
+                              icon: Wind,
+                              label: t('tools.items.marketInsights.windSpeed'),
+                              value: `${weatherData.wind_speed_10m}`,
+                              unit: 'km/h',
+                            },
+                            {
+                              icon: Compass,
+                              label: t(
+                                'tools.items.marketInsights.windDirection'
+                              ),
+                              value: getWindDirection(
+                                weatherData.wind_direction_10m
+                              ),
+                            },
+                            {
+                              icon: Eye,
+                              label: t('tools.items.marketInsights.visibility'),
+                              value: `${(weatherData.visibility / 1000).toFixed(1)}`,
+                              unit: 'km',
+                            },
+                            {
+                              icon: Cloud,
+                              label: t('tools.items.marketInsights.cloudCover'),
+                              value: `${weatherData.cloud_cover}%`,
+                            },
+                            {
+                              icon: Umbrella,
+                              label: t('tools.items.marketInsights.rainAmount'),
+                              value: `${weatherData.precipitation}`,
+                              unit: 'mm',
+                              highlight: getRainStatus(
+                                weatherData.precipitation
+                              ),
+                            },
+                            {
+                              icon: Sun,
+                              label: t('tools.items.marketInsights.uvIndex'),
+                              value: weatherForecast[0].uv.toString(),
+                              highlight: getUVStatus(weatherForecast[0].uv),
+                            },
+                          ].map((item, i) => (
+                            <motion.div
+                              key={i}
+                              animate={
+                                item.highlight?.danger
+                                  ? { scale: [1, 1.05, 1] }
+                                  : {}
+                              }
+                              transition={{ repeat: Infinity, duration: 2 }}
+                              className={cn(
+                                'p-3 rounded-2xl flex flex-col items-center justify-center text-center gap-1.5 border transition-all',
+                                item.highlight?.danger
+                                  ? cn(
+                                      item.highlight.color,
+                                      'border-white shadow-lg'
+                                    )
+                                  : 'bg-white/15 border-white/5'
+                              )}
+                            >
+                              <item.icon className='w-4 h-4 text-white' />
+                              <span className='text-[8px] font-black uppercase opacity-80 leading-tight'>
+                                {item.label}
+                              </span>
+                              <span className='text-[10px] font-black whitespace-nowrap'>
+                                {item.value} {item.unit}
+                              </span>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className='flex flex-col gap-6 text-white'>
+                        <div className='flex flex-col sm:flex-row items-center justify-between gap-4 py-4'>
+                          <div className='text-center sm:text-left'>
+                            <motion.div
+                              animate={weatherVisual?.animate}
+                              transition={{ duration: 4, repeat: Infinity }}
+                            >
+                              {weatherVisual && (
+                                <weatherVisual.icon className='w-12 h-12 mb-2 mx-auto sm:mx-0' />
+                              )}
+                            </motion.div>
+                            <PFTypography
+                              variant='h4'
+                              className='text-3xl sm:text-4xl font-black'
+                              style={{
+                                textShadow:
+                                  getTempWarning(
+                                    weatherForecast[selectedDayIdx].maxTemp
+                                  )?.glow || 'none',
                               }}
                             >
-                              <PFTypography
-                                variant='body2'
-                                fontWeight={700}
-                                sx={{
-                                  lineHeight: 1.2,
-                                  display: '-webkit-box',
-                                  WebkitLineClamp: 2,
-                                  WebkitBoxOrient: 'vertical',
-                                  overflow: 'hidden',
-                                  fontSize: { xs: '0.75rem', sm: '0.875rem' },
-                                }}
-                              >
-                                {news.title}
-                              </PFTypography>
-                              <Stack
-                                direction='row'
-                                spacing={1}
-                                alignItems='center'
-                                sx={{ mt: 0.5 }}
-                              >
-                                <Chip
-                                  label={news.source}
-                                  size='small'
-                                  sx={{
-                                    height: 16,
-                                    fontSize: '0.55rem',
-                                    fontWeight: 700,
-                                  }}
-                                />
-                                <PFTypography
-                                  variant='caption'
-                                  sx={{ opacity: 0.5, fontSize: '0.55rem' }}
-                                >
-                                  {news.time}
-                                </PFTypography>
-                              </Stack>
-                            </Stack>
-                          </Box>
-                        ))}
-                        <Box sx={{ textAlign: 'center' }}>
-                          <Typography
-                            variant='button'
-                            component='a'
-                            href='/tools/market-insights/news'
-                            sx={{
-                              textDecoration: 'none',
-                              color: isLight ? '#B8891F' : '#F5D060',
-                              fontWeight: 700,
-                              fontSize: '0.7rem',
-                            }}
+                              {weatherForecast[selectedDayIdx].maxTemp}° /{' '}
+                              {weatherForecast[selectedDayIdx].minTemp}°
+                            </PFTypography>
+                            <PFTypography
+                              variant='body1'
+                              className='font-bold mt-1 text-lg opacity-90'
+                            >
+                              {weatherVisual?.label}
+                            </PFTypography>
+                          </div>
+                          <motion.div
+                            animate={
+                              getUVStatus(weatherForecast[selectedDayIdx].uv)
+                                .danger
+                                ? { scale: [1, 1.1, 1] }
+                                : {}
+                            }
+                            transition={{ repeat: Infinity, duration: 2 }}
+                            className={cn(
+                              'px-4 py-2 rounded-xl border-2 border-white font-black text-xs inline-flex items-center gap-2',
+                              getUVStatus(weatherForecast[selectedDayIdx].uv)
+                                .danger
+                                ? getUVStatus(
+                                    weatherForecast[selectedDayIdx].uv
+                                  ).color
+                                : 'bg-transparent'
+                            )}
                           >
-                            {t('tools.items.marketInsights.viewAll')} →
-                          </Typography>
-                        </Box>
-                      </>
-                    ) : (
-                      <Typography variant='caption' sx={{ opacity: 0.5 }}>
-                        {t('tools.items.marketInsights.noNews')}
-                      </Typography>
+                            UV: {weatherForecast[selectedDayIdx].uv}
+                          </motion.div>
+                        </div>
+
+                        <div className='h-px w-full bg-white/20' />
+
+                        <div className='grid grid-cols-2 gap-3'>
+                          {[
+                            {
+                              icon: Umbrella,
+                              label: t('tools.items.marketInsights.rainProb'),
+                              value: `${weatherForecast[selectedDayIdx].rainProb}%`,
+                            },
+                            {
+                              icon: Droplets,
+                              label: t('tools.items.marketInsights.rainAmount'),
+                              value: `${weatherForecast[selectedDayIdx].rainSum} mm`,
+                            },
+                            {
+                              icon: Wind,
+                              label: t('tools.items.marketInsights.windSpeed'),
+                              value: `${weatherForecast[selectedDayIdx].windMax} km/h`,
+                            },
+                            {
+                              icon: Sun,
+                              label: t(
+                                'tools.items.marketInsights.solarRadiation'
+                              ),
+                              value: `${weatherForecast[selectedDayIdx].radiation} MJ/m²`,
+                            },
+                          ].map((item, i) => (
+                            <div
+                              key={i}
+                              className='p-3 rounded-2xl flex items-center gap-3 bg-white/10 border border-white/5'
+                            >
+                              <item.icon className='w-5 h-5 shrink-0' />
+                              <div className='flex flex-col overflow-hidden'>
+                                <span className='text-[8px] font-black uppercase opacity-70 truncate'>
+                                  {item.label}
+                                </span>
+                                <span className='text-xs font-black'>
+                                  {item.value}
+                                </span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+
+                        <div className='h-px w-full bg-white/20' />
+
+                        <div className='flex justify-center gap-12'>
+                          <div className='text-center'>
+                            <span className='block text-[8px] font-black uppercase opacity-70 mb-1'>
+                              {t('tools.items.marketInsights.sunrise')}
+                            </span>
+                            <span className='text-sm font-black'>
+                              {weatherForecast[selectedDayIdx].sunrise}
+                            </span>
+                          </div>
+                          <div className='text-center'>
+                            <span className='block text-[8px] font-black uppercase opacity-70 mb-1'>
+                              {t('tools.items.marketInsights.sunset')}
+                            </span>
+                            <span className='text-sm font-black'>
+                              {weatherForecast[selectedDayIdx].sunset}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
                     )}
-                  </Stack>
-                </CardWrapper>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Box
-          sx={{
-            mt: 6,
-            p: 3,
-            borderRadius: 4,
-            background: 'rgba(0,0,0,0.05)',
-            textAlign: 'center',
-          }}
-        >
-          <PFTypography variant='caption' sx={{ opacity: 0.6 }}>
+                  </motion.div>
+                ) : (
+                  !loading.weather && (
+                    <div className='py-12 text-center opacity-50'>
+                      <PFTypography variant='body2'>
+                        {t(
+                          'tools.items.marketInsights.selectCityToViewWeather'
+                        )}
+                      </PFTypography>
+                    </div>
+                  )
+                )}
+              </AnimatePresence>
+            </CardWrapper>
+          </div>
+
+          {/* Right Column: Market Data */}
+          <div className='lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8'>
+            <div className='sm:col-span-1'>
+              <CardWrapper
+                title={t('tools.items.marketInsights.goldPrice')}
+                icon={TrendingUp}
+                loading={loading.gold}
+                onRefresh={fetchGold}
+                type='gold'
+              >
+                <div className='flex flex-col gap-4'>
+                  {goldData.map(item => (
+                    <div
+                      key={item.type}
+                      className='p-4 rounded-2xl flex items-center justify-between gap-4 bg-white/5 border border-white/5 transition-all hover:bg-white/10'
+                    >
+                      <span className='font-black text-sm'>{item.type}</span>
+                      <div className='flex items-center gap-4'>
+                        <div className='text-right'>
+                          <span className='block text-[8px] font-black uppercase opacity-50'>
+                            {t('tools.items.marketInsights.buy')}
+                          </span>
+                          <span className='text-xs font-black tracking-tighter'>
+                            {item.buy}
+                          </span>
+                        </div>
+                        <div className='text-right'>
+                          <span className='block text-[8px] font-black uppercase opacity-50'>
+                            {t('tools.items.marketInsights.sell')}
+                          </span>
+                          <span className='text-xs font-black tracking-tighter'>
+                            {item.sell}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardWrapper>
+            </div>
+
+            <div className='sm:col-span-1'>
+              <CardWrapper
+                title={t('tools.items.marketInsights.petrolPrice')}
+                icon={Fuel}
+                loading={loading.petrol}
+                onRefresh={fetchPetrol}
+                type='petrol'
+              >
+                <div className='flex flex-col gap-4'>
+                  {petrolData.map(item => (
+                    <div
+                      key={item.type}
+                      className='p-4 rounded-2xl flex items-center justify-between gap-4 bg-white/5 border border-white/5 transition-all hover:bg-white/10'
+                    >
+                      <span className='font-black text-sm truncate flex-1'>
+                        {item.type}
+                      </span>
+                      <div className='flex items-baseline gap-1'>
+                        <span className='text-xl font-black tracking-tighter text-primary-main'>
+                          {item.price}
+                        </span>
+                        <span className='text-[8px] font-black opacity-50'>
+                          VND
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardWrapper>
+            </div>
+
+            <div className='sm:col-span-2'>
+              <CardWrapper
+                title={t('tools.items.marketInsights.news')}
+                icon={Globe}
+                loading={loading.news}
+                onRefresh={fetchNews}
+                type='news'
+                iconAnimate={{ rotateY: 360 }}
+              >
+                <div className='flex flex-col gap-4'>
+                  {newsData.length > 0 ? (
+                    <>
+                      {newsData.map((news, idx) => (
+                        <a
+                          key={idx}
+                          href={news.url}
+                          target='_blank'
+                          rel='noopener noreferrer'
+                          className='p-3 rounded-2xl flex gap-4 bg-white/5 border border-white/5 hover:bg-white/10 transition-all group overflow-hidden'
+                        >
+                          {news.image && (
+                            <div className='w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden shrink-0 border border-white/10'>
+                              <img
+                                src={news.image}
+                                alt=''
+                                className='w-full h-full object-cover group-hover:scale-110 transition-transform duration-500'
+                              />
+                            </div>
+                          )}
+                          <div className='flex flex-col justify-center flex-grow min-w-0'>
+                            <h4 className='font-bold text-xs sm:text-sm line-clamp-2 leading-tight group-hover:text-primary-main transition-colors'>
+                              {news.title}
+                            </h4>
+                            <div className='flex items-center gap-3 mt-2'>
+                              <span className='px-2 py-0.5 rounded-md bg-primary-main/10 text-primary-main text-[8px] font-black uppercase tracking-wider border border-primary-main/20'>
+                                {news.source}
+                              </span>
+                              <span className='text-[8px] font-bold opacity-50 flex items-center gap-1'>
+                                <Clock className='w-2.5 h-2.5' />
+                                {news.time}
+                              </span>
+                            </div>
+                          </div>
+                          <ExternalLink className='w-4 h-4 opacity-0 group-hover:opacity-50 self-center shrink-0 transition-opacity' />
+                        </a>
+                      ))}
+                      <div className='text-center mt-2'>
+                        <a
+                          href='/tools/market-insights/news'
+                          className='inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-primary-main hover:gap-3 transition-all'
+                        >
+                          {t('tools.items.marketInsights.viewAll')}{' '}
+                          <ChevronRight className='w-3 h-3' />
+                        </a>
+                      </div>
+                    </>
+                  ) : (
+                    <div className='py-8 text-center opacity-50 text-xs font-bold'>
+                      {t('tools.items.marketInsights.noNews')}
+                    </div>
+                  )}
+                </div>
+              </CardWrapper>
+            </div>
+          </div>
+        </div>
+
+        <div className='mt-12 p-6 rounded-3xl bg-black/10 text-center backdrop-blur-md border border-white/5'>
+          <PFTypography
+            variant='caption'
+            className='opacity-60 font-medium tracking-tight'
+          >
             {t('tools.items.marketInsights.dataSources')}
           </PFTypography>
-        </Box>
-      </Box>
+        </div>
+      </div>
     </ToolPageLayout>
   );
 };

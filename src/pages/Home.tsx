@@ -1,6 +1,5 @@
-import { Stack, Box, useTheme } from '@mui/material';
 import { lazy, Suspense } from 'react';
-import { motion, type Variants } from 'framer-motion';
+import { motion, type Variants } from 'motion/react';
 import { Intro } from '@components/pages/Intro/Intro.tsx';
 import { AboutMe } from '@components/pages/about-me/AboutMe';
 import { SunriseBackground } from '@components/customs/backgrounds/SunriseBackground';
@@ -65,7 +64,7 @@ const SpeedDialCustom = lazy(() =>
   }))
 );
 
-/** Animated scroll-reveal wrapper — accepts a framer-motion variant */
+/** Animated scroll-reveal wrapper — accepts a motion/react variant */
 const Section = ({
   children,
   variants = fadeUp,
@@ -85,31 +84,10 @@ const Section = ({
 
 /** Lightweight placeholder shown while lazy sections load */
 const SectionSkeleton = () => {
-  const { palette } = useTheme();
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        py: { xs: 8, md: 12 },
-        minHeight: 200,
-      }}
-    >
-      <Box
-        sx={{
-          width: 40,
-          height: 40,
-          borderRadius: '50%',
-          border: `3px solid ${palette.primary.light}30`,
-          borderTopColor: palette.primary.light,
-          animation: 'spin 0.8s linear infinite',
-          '@keyframes spin': {
-            to: { transform: 'rotate(360deg)' },
-          },
-        }}
-      />
-    </Box>
+    <div className='flex justify-center items-center py-20 md:py-32 min-h-[200px]'>
+      <div className='w-10 h-10 rounded-full border-3 border-primary-light/30 border-t-primary-light animate-spin' />
+    </div>
   );
 };
 
@@ -120,40 +98,13 @@ const HomePage = () => {
       {/* Skip-to-content for keyboard / screen-reader users */}
       <a
         href='#main-content'
-        style={{
-          position: 'absolute',
-          left: '-9999px',
-          top: 'auto',
-          width: '1px',
-          height: '1px',
-          overflow: 'hidden',
-          zIndex: 9999,
-        }}
-        onFocus={e => {
-          e.currentTarget.style.position = 'fixed';
-          e.currentTarget.style.left = '16px';
-          e.currentTarget.style.top = '16px';
-          e.currentTarget.style.width = 'auto';
-          e.currentTarget.style.height = 'auto';
-          e.currentTarget.style.padding = '12px 24px';
-          e.currentTarget.style.background = '#0B0D2E';
-          e.currentTarget.style.color = '#F5D060';
-          e.currentTarget.style.borderRadius = '8px';
-          e.currentTarget.style.fontSize = '1rem';
-          e.currentTarget.style.textDecoration = 'none';
-        }}
-        onBlur={e => {
-          e.currentTarget.style.position = 'absolute';
-          e.currentTarget.style.left = '-9999px';
-          e.currentTarget.style.width = '1px';
-          e.currentTarget.style.height = '1px';
-        }}
+        className='absolute left-[-9999px] top-auto w-1 h-1 overflow-hidden z-[9999] focus:fixed focus:left-4 focus:top-4 focus:w-auto focus:h-auto focus:p-3 focus:px-6 focus:bg-[#0B0D2E] focus:text-[#F5D060] focus:rounded-lg focus:text-base focus:no-underline'
       >
         Skip to content
       </a>
       <PFAppBar />
       <main id='main-content'>
-        <Stack component='div' direction={'column'}>
+        <div className='flex flex-col'>
           <Intro />
           <ParallaxSection offset={40}>
             <Section variants={blurIn}>
@@ -195,7 +146,7 @@ const HomePage = () => {
             </Section>
             <Footer />
           </Suspense>
-        </Stack>
+        </div>
         <Suspense fallback={<SectionSkeleton />}>
           <SpeedDialCustom />
         </Suspense>

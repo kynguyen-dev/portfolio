@@ -1,7 +1,5 @@
-import { Box, Stack, IconButton, Chip, useTheme, Divider } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
-import { motion } from 'framer-motion';
+import { X, ArrowRightLeft } from 'lucide-react';
+import { motion } from 'motion/react';
 import { PFTypography } from '@components/core';
 import { StatsRadarChart } from './StatsRadarChart';
 import { MultiFormatImage } from './MultiFormatImage';
@@ -11,6 +9,8 @@ import {
   STAT_KEYS,
 } from '@constants/three-kingdoms';
 import type { ThreeKingdomsCharacter } from '@constants/three-kingdoms';
+import { useThemeMode } from '@contexts/theme-mode';
+import { cn } from '@utils/core/cn';
 
 interface CharacterDetailProps {
   character: ThreeKingdomsCharacter;
@@ -23,8 +23,8 @@ export const CharacterDetail = ({
   onClose,
   onCompare,
 }: CharacterDetailProps) => {
-  const { palette } = useTheme();
-  const isLight = palette.mode === 'light';
+  const { mode } = useThemeMode();
+  const isLight = mode === 'light';
   const km = getKingdomMeta(character.kingdom);
 
   return (
@@ -33,134 +33,93 @@ export const CharacterDetail = ({
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 40 }}
       transition={{ duration: 0.3 }}
-      style={{ flex: 1, minHeight: 0, overflow: 'auto' }}
+      className='flex-1 min-h-0 overflow-auto'
     >
-      <Box
-        sx={{
-          borderRadius: 3,
-          position: 'relative',
-          overflow: 'hidden',
-          border: `1px solid ${isLight ? 'rgba(184,137,31,0.2)' : 'rgba(245,208,96,0.2)'}`,
-        }}
+      <div
+        className={cn(
+          'rounded-3xl border overflow-hidden relative shadow-2xl transition-all duration-300',
+          isLight
+            ? 'border-primary-main/20 shadow-primary-main/5'
+            : 'border-primary-main/20 shadow-black/40'
+        )}
       >
         {/* ── Hero banner with background ── */}
-        <Box
-          sx={{
-            position: 'relative',
-            height: { xs: 200, md: 260 },
-            overflow: 'hidden',
+        <div
+          className='relative h-52 md:h-64 overflow-hidden'
+          style={{
             background: `linear-gradient(135deg, ${km.color}30 0%, ${isLight ? 'rgba(255,248,240,0.7)' : 'rgba(11,13,46,0.7)'} 60%, ${km.color}15 100%)`,
           }}
         >
           <MultiFormatImage
             basePath={`/images/three-kingdoms/background/${character.id}`}
-            sx={{
-              position: 'absolute',
-              inset: 0,
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              objectPosition: 'center 20%',
-            }}
+            className='absolute inset-0 w-full h-full object-cover object-center md:object-[center_20%]'
           />
 
-          <Box
-            sx={{
-              position: 'absolute',
-              inset: 0,
-              background: isLight
-                ? 'linear-gradient(to bottom, transparent 30%, rgba(255,248,240,0.6) 70%, rgba(255,248,240,0.97) 100%)'
-                : 'linear-gradient(to bottom, transparent 30%, rgba(11,13,46,0.5) 70%, rgba(11,13,46,0.95) 100%)',
-            }}
+          <div
+            className={cn(
+              'absolute inset-0',
+              isLight
+                ? 'bg-gradient-to-b from-transparent via-white/60 to-white/95'
+                : 'bg-gradient-to-b from-transparent via-background-default/50 to-background-default/95'
+            )}
           />
 
-          <Box
-            sx={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              height: 4,
+          <div
+            className='absolute top-0 left-0 right-0 h-1'
+            style={{
               background: `linear-gradient(90deg, ${km.color}, ${km.color}80, transparent)`,
             }}
           />
 
-          <IconButton
+          <button
             onClick={onClose}
             aria-label='Close detail'
-            sx={{
-              position: 'absolute',
-              top: 12,
-              right: 12,
-              zIndex: 5,
-              color: isLight ? '#5C4A32' : '#FFE4B5',
-              background: isLight
-                ? 'rgba(255,248,240,0.7)'
-                : 'rgba(11,13,46,0.5)',
-              backdropFilter: 'blur(8px)',
-              '&:hover': {
-                background: isLight
-                  ? 'rgba(255,248,240,0.95)'
-                  : 'rgba(11,13,46,0.8)',
-              },
-            }}
+            className={cn(
+              'absolute top-3 right-3 z-10 p-2 rounded-xl backdrop-blur-md transition-all hover:scale-110 active:scale-95',
+              isLight
+                ? 'bg-white/70 text-primary-dark hover:bg-white/95'
+                : 'bg-background-default/50 text-primary-light hover:bg-background-default/80'
+            )}
           >
-            <CloseIcon />
-          </IconButton>
+            <X className='w-5 h-5' />
+          </button>
 
-          <Stack
-            direction='row'
-            alignItems='flex-end'
-            spacing={2}
-            sx={{
-              position: 'absolute',
-              bottom: 16,
-              left: { xs: 16, md: 28 },
-              right: { xs: 16, md: 28 },
-              zIndex: 3,
-            }}
-          >
+          <div className='absolute bottom-4 left-4 md:left-7 right-4 md:right-7 z-10 flex items-end gap-4'>
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.15, duration: 0.35 }}
             >
-              <Box
-                sx={{
-                  width: { xs: 80, md: 100 },
-                  height: { xs: 80, md: 100 },
-                  borderRadius: '50%',
-                  border: `3px solid ${km.color}`,
+              <div
+                className='w-20 h-20 md:w-24 md:h-24 rounded-full border-2 overflow-hidden flex-shrink-0 flex items-center justify-center shadow-lg'
+                style={{
+                  borderColor: km.color,
                   boxShadow: `0 4px 20px ${km.color}40`,
-                  overflow: 'hidden',
-                  flexShrink: 0,
                   backgroundColor: `${km.color}20`,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
                 }}
               >
                 <MultiFormatImage
                   basePath={`/images/three-kingdoms/avatar/${character.id}`}
                   alt={character.name.en}
-                  sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  className='w-full h-full object-cover'
                   fallback={
                     <PFTypography
                       variant='h3'
-                      sx={{ fontWeight: 800, color: km.color, lineHeight: 1 }}
+                      className='font-extrabold'
+                      style={{ color: km.color }}
                     >
                       {character.name.cn.charAt(0)}
                     </PFTypography>
                   }
                 />
-              </Box>
+              </div>
             </motion.div>
 
-            <Box sx={{ pb: 0.5 }}>
+            <div className='pb-1'>
               <PFTypography
                 variant='h4'
-                sx={{
-                  fontWeight: 800,
+                className='font-extrabold tracking-tight'
+                style={{
                   color: km.color,
                   textShadow: isLight
                     ? '0 1px 8px rgba(255,255,255,0.8)'
@@ -171,8 +130,11 @@ export const CharacterDetail = ({
               </PFTypography>
               <PFTypography
                 variant='subtitle1'
-                sx={{
-                  color: isLight ? palette.text.primary : '#e0d5c5',
+                className={cn(
+                  'font-medium opacity-90',
+                  isLight ? 'text-text-primary' : 'text-[#e0d5c5]'
+                )}
+                style={{
                   textShadow: isLight
                     ? '0 1px 4px rgba(255,255,255,0.6)'
                     : '0 1px 4px rgba(0,0,0,0.5)',
@@ -180,169 +142,97 @@ export const CharacterDetail = ({
               >
                 {character.name.vi} · {character.name.en}
               </PFTypography>
-            </Box>
-          </Stack>
-        </Box>
+            </div>
+          </div>
+        </div>
 
         {/* ── Body content ── */}
-        <Box
-          sx={{
-            background: isLight
-              ? 'rgba(255,248,240,0.92)'
-              : 'rgba(11,13,46,0.8)',
-            backdropFilter: 'blur(16px)',
-            p: { xs: 2.5, md: 4 },
-            pt: { xs: 2, md: 3 },
-          }}
+        <div
+          className={cn(
+            'backdrop-blur-2xl p-6 md:p-10 pt-4 md:pt-6',
+            isLight ? 'bg-white/90' : 'bg-background-default/80'
+          )}
         >
-          <Stack
-            direction='row'
-            spacing={1}
-            flexWrap='wrap'
-            useFlexGap
-            sx={{ mb: 3 }}
-          >
-            <Chip
-              label={`${km.name.en} (${km.name.cn})`}
-              size='small'
-              sx={{
+          <div className='flex flex-row flex-wrap gap-2 mb-8'>
+            <span
+              className='px-3 py-1 rounded-full text-xs font-bold'
+              style={{
                 backgroundColor: `${km.color}18`,
                 color: km.color,
-                fontWeight: 600,
                 border: `1px solid ${km.color}40`,
               }}
-            />
-            <Chip
-              label={`📍 ${character.hometown}`}
-              size='small'
-              variant='outlined'
-              sx={{
-                borderColor: isLight
-                  ? 'rgba(0,0,0,0.15)'
-                  : 'rgba(255,255,255,0.15)',
-              }}
-            />
-            <Chip
-              label={character.weapon}
-              size='small'
-              variant='outlined'
-              sx={{
-                borderColor: isLight
-                  ? 'rgba(0,0,0,0.15)'
-                  : 'rgba(255,255,255,0.15)',
-              }}
-            />
-          </Stack>
+            >
+              {km.name.en} ({km.name.cn})
+            </span>
+            <span className='px-3 py-1 rounded-full text-xs font-medium border border-white/10 bg-white/5'>
+              📍 {character.hometown}
+            </span>
+            <span className='px-3 py-1 rounded-full text-xs font-medium border border-white/10 bg-white/5'>
+              ⚔️ {character.weapon}
+            </span>
+          </div>
 
-          <Box sx={{ maxWidth: 320, mx: 'auto', mb: 3 }}>
+          <div className='max-w-xs mx-auto mb-10'>
             <StatsRadarChart
               stats={character.stats}
               color={km.color}
               label={character.name.en}
             />
-          </Box>
+          </div>
 
-          <Stack spacing={1} sx={{ mb: 3 }}>
+          <div className='flex flex-col gap-4 mb-10'>
             {STAT_KEYS.map(key => (
-              <Stack
-                key={key}
-                direction='row'
-                alignItems='center'
-                spacing={1.5}
-              >
+              <div key={key} className='flex items-center gap-4'>
                 <PFTypography
                   variant='caption'
-                  sx={{
-                    width: 80,
-                    fontWeight: 600,
-                    color: palette.text.secondary,
-                    textAlign: 'right',
-                  }}
+                  className='w-20 font-bold text-text-secondary text-right uppercase tracking-tighter'
                 >
                   {STAT_LABELS[key].en}
                 </PFTypography>
-                <Box
-                  sx={{
-                    flex: 1,
-                    height: 8,
-                    borderRadius: 1,
-                    backgroundColor: isLight
-                      ? 'rgba(0,0,0,0.06)'
-                      : 'rgba(255,255,255,0.08)',
-                  }}
-                >
+                <div className='flex-grow h-2 rounded-full bg-white/10 overflow-hidden'>
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${character.stats[key]}%` }}
-                    transition={{ duration: 0.6, ease: 'easeOut' }}
+                    transition={{ duration: 0.8, ease: 'circOut' }}
+                    className='h-full rounded-full'
                     style={{
-                      height: '100%',
-                      borderRadius: 4,
                       background: `linear-gradient(90deg, ${km.color}, ${km.color}AA)`,
                     }}
                   />
-                </Box>
+                </div>
                 <PFTypography
                   variant='caption'
-                  sx={{
-                    width: 28,
-                    fontWeight: 700,
-                    fontVariantNumeric: 'tabular-nums',
-                  }}
+                  className='w-8 font-extrabold tabular-nums'
                 >
                   {character.stats[key]}
                 </PFTypography>
-              </Stack>
+              </div>
             ))}
-          </Stack>
+          </div>
 
-          <Divider
-            sx={{
-              mb: 2,
-              borderColor: isLight
-                ? 'rgba(0,0,0,0.08)'
-                : 'rgba(255,255,255,0.08)',
-            }}
-          />
+          <div className='h-px w-full bg-white/10 mb-6' />
 
           <PFTypography
             variant='body2'
-            sx={{ color: palette.text.secondary, lineHeight: 1.7, mb: 3 }}
+            className='text-text-secondary leading-relaxed mb-10'
           >
             {character.bio}
           </PFTypography>
 
-          <Box
+          <button
             onClick={() => onCompare(character)}
-            role='button'
-            tabIndex={0}
-            onKeyDown={e => {
-              if (e.key === 'Enter') onCompare(character);
-            }}
-            sx={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 1,
-              px: 2.5,
-              py: 1,
-              borderRadius: 2,
-              cursor: 'pointer',
-              fontWeight: 600,
-              fontSize: '0.85rem',
+            className='inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition-all hover:scale-105 active:scale-95 group border'
+            style={{
               color: km.color,
-              border: `1px solid ${km.color}40`,
-              transition: 'all 0.2s',
-              '&:hover': {
-                backgroundColor: `${km.color}12`,
-                borderColor: km.color,
-              },
+              borderColor: `${km.color}40`,
+              backgroundColor: `${km.color}05`,
             }}
           >
-            <CompareArrowsIcon fontSize='small' />
+            <ArrowRightLeft className='w-4 h-4 transition-transform group-hover:rotate-180' />
             Compare with another warrior…
-          </Box>
-        </Box>
-      </Box>
+          </button>
+        </div>
+      </div>
     </motion.div>
   );
 };

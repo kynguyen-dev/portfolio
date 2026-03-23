@@ -1,9 +1,9 @@
-import { Box, Stack, useTheme } from '@mui/material';
-import { motion, type Variants } from 'framer-motion';
+import { motion, type Variants } from 'motion/react';
 import { useTranslation } from 'react-i18next';
 import { PFGradientTypography, PFTypography } from '@components/core';
 import { APP_THEMES, APP_TYPOGRAPHIES } from '@constants';
-import { glassCardSx } from '@utils/styles/glassCard';
+import { useThemeMode } from '@contexts/theme-mode';
+import { cn } from '@utils/core/cn';
 
 interface TimelineEntry {
   company: string;
@@ -81,20 +81,15 @@ const workHistory: TimelineEntry[] = [
 
 export const WorkTimeline = () => {
   const { t } = useTranslation();
-  const { palette } = useTheme();
-  const isLight = palette.mode === 'light';
+  const { mode } = useThemeMode();
+  const isLight = mode === 'light';
+
   return (
-    <Box
-      component='section'
+    <section
       id='experience'
-      sx={{
-        px: { xs: 2, md: 6 },
-        py: { xs: 8, md: 12 },
-        maxWidth: 1100,
-        mx: 'auto',
-      }}
+      className='px-4 md:px-12 py-16 md:py-24 max-w-[1100px] mx-auto'
     >
-      <Stack alignItems='center' gap={6}>
+      <div className='flex flex-col items-center gap-12'>
         <PFGradientTypography
           variant={APP_TYPOGRAPHIES.HEADER_PRIMARY}
           theme={APP_THEMES.DARK}
@@ -103,21 +98,13 @@ export const WorkTimeline = () => {
           {t('workExperience.heading')}
         </PFGradientTypography>
 
-        {/* Timeline */}
-        <Stack
-          direction='column'
-          sx={{ position: 'relative', width: '100%', maxWidth: 800 }}
-        >
+        <div className='relative w-full max-w-[800px] flex flex-col'>
           {/* Vertical line */}
-          <Box
-            sx={{
-              position: 'absolute',
-              left: { xs: 16, md: '50%' },
-              transform: { md: 'translateX(-50%)' },
-              top: 0,
-              bottom: 0,
-              width: 2,
-              background: `linear-gradient(to bottom, ${palette.primary.light}00, ${palette.primary.light}, ${palette.primary.main}, ${palette.primary.main}, ${palette.secondary.main}, ${palette.secondary.main}00)`,
+          <div
+            className='absolute left-4 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-[2px]'
+            style={{
+              background:
+                'linear-gradient(to bottom, transparent, #E8C96A, #D4A843, #D4A843, #C75B39, transparent)',
             }}
           />
 
@@ -137,153 +124,96 @@ export const WorkTimeline = () => {
               },
             };
             return (
-              <Box
+              <motion.div
                 key={entry.company}
-                component={motion.div}
                 variants={cardVariant}
                 initial='hidden'
                 whileInView='visible'
                 viewport={{ once: true, amount: 0.3 }}
                 whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
-                sx={{
-                  display: 'flex',
-                  justifyContent: {
-                    xs: 'flex-start',
-                    md: isLeft ? 'flex-end' : 'flex-start',
-                  },
-                  pl: { xs: 5, md: isLeft ? 0 : '52%' },
-                  pr: { xs: 0, md: isLeft ? '52%' : 0 },
-                  mb: 5,
-                  position: 'relative',
-                }}
+                className={cn(
+                  'relative flex mb-10 w-full',
+                  'pl-12 md:pl-0',
+                  isLeft
+                    ? 'md:justify-end md:pr-[52%]'
+                    : 'md:justify-start md:pl-[52%]'
+                )}
               >
                 {/* Dot on timeline */}
-                <Box
-                  sx={{
-                    position: 'absolute',
-                    left: { xs: 11, md: '50%' },
-                    transform: { md: 'translateX(-50%)' },
-                    top: 8,
-                    width: 12,
-                    height: 12,
-                    borderRadius: '50%',
-                    background: palette.primary.light,
-                    boxShadow: `0 0 12px ${palette.primary.light}80`,
-                    zIndex: 1,
-                  }}
+                <div
+                  className={cn(
+                    'absolute top-2 w-3 h-3 rounded-full z-10',
+                    'left-[11px] md:left-1/2 md:-translate-x-1/2',
+                    'bg-primary-light shadow-[0_0_12px_rgba(232,201,106,0.5)]'
+                  )}
                 />
 
                 {/* Card */}
-                <Box
-                  sx={{
-                    ...glassCardSx(isLight, {
-                      blur: 10,
-                      borderRadius: 2,
-                      hoverLift: false,
-                    }),
-                    p: 3,
-                    width: '100%',
-                  }}
+                <div
+                  className={cn(
+                    'p-6 w-full transition-all duration-300 rounded-lg backdrop-blur-[10px] border',
+                    isLight
+                      ? 'bg-[#FFF8F0]/85 border-[#B8891F]/15 hover:border-[#B8891F]/45 hover:shadow-[0_0_24px_rgba(184,137,31,0.08)]'
+                      : 'bg-[#0B0D2E]/55 border-[#F5D060]/15 hover:border-[#F5D060]/45 hover:shadow-[0_0_24px_rgba(245,208,96,0.08)]'
+                  )}
                 >
                   <PFTypography
                     variant='caption'
-                    sx={{
-                      color: palette.primary.light,
-                      fontWeight: 600,
-                      letterSpacing: 1,
-                    }}
+                    fontWeight={600}
+                    className='text-primary-light uppercase tracking-wider'
                   >
                     {entry.period}
                   </PFTypography>
                   <PFTypography
                     variant='h6'
-                    sx={{
-                      color: palette.text.primary,
-                      fontWeight: 700,
-                      mt: 0.5,
-                    }}
+                    fontWeight={700}
+                    className='mt-1 text-text-primary'
                   >
                     {entry.role}
                   </PFTypography>
                   <PFTypography
-                    variant='subtitle2'
-                    sx={{ color: palette.primary.main, fontWeight: 600 }}
+                    variant='body1'
+                    fontWeight={600}
+                    className='text-primary-main'
                   >
                     {entry.company}
                   </PFTypography>
                   <PFTypography
                     variant='body2'
-                    sx={{
-                      color: palette.text.secondary,
-                      mt: 1.5,
-                      lineHeight: 1.7,
-                      opacity: 0.85,
-                    }}
+                    className='mt-3 text-text-secondary leading-relaxed opacity-85'
                   >
                     {entry.description}
                   </PFTypography>
                   {entry.highlights.length > 0 && (
-                    <Box
-                      component='ul'
-                      sx={{
-                        mt: 1.5,
-                        pl: 2,
-                        listStyle: 'none',
-                        '& li': {
-                          position: 'relative',
-                          pl: 2,
-                          mb: 0.75,
-                          '&::before': {
-                            content: '"▸"',
-                            position: 'absolute',
-                            left: 0,
-                            color: palette.primary.light,
-                            fontWeight: 700,
-                          },
-                        },
-                      }}
-                    >
+                    <ul className='mt-4 pl-0 list-none'>
                       {entry.highlights.map((h, i) => (
                         <PFTypography
                           key={i}
                           component='li'
                           variant='body2'
-                          sx={{
-                            color: palette.text.secondary,
-                            lineHeight: 1.6,
-                            opacity: 0.85,
-                          }}
+                          className='relative pl-5 mb-2 text-text-secondary leading-relaxed opacity-85 before:content-["▸"] before:absolute before:left-0 before:text-primary-light before:font-bold'
                         >
                           {h}
                         </PFTypography>
                       ))}
-                    </Box>
+                    </ul>
                   )}
-                  <Stack direction='row' flexWrap='wrap' gap={1} mt={2}>
+                  <div className='flex flex-wrap gap-2 mt-4'>
                     {entry.technologies.map(tech => (
-                      <Box
+                      <div
                         key={tech}
-                        sx={{
-                          px: 1.5,
-                          py: 0.5,
-                          borderRadius: 1,
-                          fontSize: '0.75rem',
-                          fontWeight: 600,
-                          color: palette.primary.light,
-                          background: `${palette.primary.light}18`,
-                          border: `1px solid ${palette.primary.light}33`,
-                        }}
+                        className='px-3 py-1 rounded bg-primary-light/10 border border-primary-light/20 text-[0.75rem] font-semibold text-primary-light'
                       >
                         {tech}
-                      </Box>
+                      </div>
                     ))}
-                  </Stack>
-                </Box>
-              </Box>
+                  </div>
+                </div>
+              </motion.div>
             );
           })}
-        </Stack>
-      </Stack>
-    </Box>
+        </div>
+      </div>
+    </section>
   );
 };

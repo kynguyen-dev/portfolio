@@ -1,5 +1,5 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
-import { Box, Button, Stack, Typography } from '@mui/material';
+import { PFTypography, PFButton } from '@components/core';
 
 interface Props {
   children: ReactNode;
@@ -38,36 +38,22 @@ export class ErrorBoundary extends Component<Props, State> {
       if (this.props.fallback) return this.props.fallback;
 
       return (
-        <Box
-          sx={{
-            minHeight: '100vh',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            background:
-              'linear-gradient(180deg, #0B0D2E 0%, #1B1145 40%, #4A1942 100%)',
-            p: 3,
-          }}
-        >
-          <Stack alignItems='center' spacing={3} sx={{ textAlign: 'center' }}>
-            <Typography variant='h3' sx={{ color: '#F5D060', fontWeight: 700 }}>
+        <div className='min-h-screen flex items-center justify-center bg-gradient-to-b from-[#0B0D2E] via-[#1B1145] to-[#4A1942] p-6'>
+          <div className='flex flex-col items-center gap-6 text-center max-w-lg'>
+            <PFTypography variant='h1' className='text-[#F5D060] font-bold'>
               Oops!
-            </Typography>
-            <Typography variant='h6' sx={{ color: '#FFE4B5', maxWidth: 480 }}>
+            </PFTypography>
+            <PFTypography variant='h3' className='text-[#FFE4B5]'>
               Something went wrong. Please try again.
-            </Typography>
-            <Button
-              variant='contained'
+            </PFTypography>
+            <PFButton
               onClick={this.handleRetry}
-              sx={{
-                backgroundColor: '#D4A843',
-                '&:hover': { backgroundColor: '#E8C96A' },
-              }}
+              className='bg-[#D4A843] hover:bg-[#E8C96A]'
             >
               Try Again
-            </Button>
-          </Stack>
-        </Box>
+            </PFButton>
+          </div>
+        </div>
       );
     }
 

@@ -1,5 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react';
-import { Box, useTheme, useMediaQuery } from '@mui/material';
+import { useEffect, useRef, useCallback, useState } from 'react';
 
 /**
  * A glowing spotlight that lazily follows the mouse cursor.
@@ -7,9 +6,7 @@ import { Box, useTheme, useMediaQuery } from '@mui/material';
  * Uses a ref-based approach to avoid React re-renders every frame.
  */
 export const MouseSpotlight = () => {
-  const { palette } = useTheme();
-  const prefersReduced = useMediaQuery('(prefers-reduced-motion: reduce)');
-  const isMobile = useMediaQuery('(max-width:768px)');
+  const [enabled, setEnabled] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
@@ -20,33 +17,27 @@ export const MouseSpotlight = () => {
   }, []);
 
   useEffect(() => {
-    if (prefersReduced || isMobile) return;
+    const prefersReduced = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+    const isMobile = window.matchMedia('(max-width:768px)').matches;
+
+    if (prefersReduced || isMobile) {
+      setEnabled(false);
+      return;
+    }
+
+    setEnabled(true);
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [prefersReduced, isMobile, handleMouseMove]);
+  }, [handleMouseMove]);
 
-  if (prefersReduced || isMobile) return null;
-
-  const color =
-    palette.mode === 'light' ? palette.primary.main : palette.primary.light;
+  if (!enabled) return null;
 
   return (
-    <Box
+    <div
       ref={ref}
-      sx={{
-        position: 'fixed',
-        pointerEvents: 'none',
-        zIndex: 9998,
-        width: 320,
-        height: 320,
-        borderRadius: '50%',
-        background: `radial-gradient(circle, ${color}15, ${color}08, transparent 70%)`,
-        transform: 'translate(-50%, -50%)',
-        transition: 'left 0.15s ease-out, top 0.15s ease-out',
-        left: -200,
-        top: -200,
-        filter: 'blur(2px)',
-      }}
+      className='fixed pointer-events-none z-[9998] w-80 h-80 rounded-full bg-[radial-gradient(circle,var(--color-primary-main)_15%,var(--color-primary-main)_8%,transparent_70%)] opacity-10 -translate-x-1/2 -translate-y-1/2 transition-[left,top] duration-150 ease-out blur-[2px] -left-[200px] -top-[200px]'
     />
   );
 };

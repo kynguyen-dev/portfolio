@@ -1,6 +1,6 @@
-import { motion } from 'framer-motion';
-import { Stack, useTheme } from '@mui/material';
+import { motion } from 'motion/react';
 import { PFGradientTypography } from '@components/core';
+import { useThemeMode } from '@contexts/theme-mode';
 import {
   HorizontalSkillList,
   HorizontalSkillListProps,
@@ -174,41 +174,27 @@ const skillGroups: {
 
 export const Skills = () => {
   const { t } = useTranslation();
-  const { palette } = useTheme();
+  const { mode } = useThemeMode();
   return (
-    <Stack
-      component='section'
+    <section
       id='skills'
       aria-label={t('skills.heading')}
-      justifyContent='center'
-      alignItems='center'
-      gap={8}
-      sx={{
-        px: { xs: 2, md: 6 },
-        py: { xs: 8, md: 12 },
-        maxWidth: 1100,
-        mx: 'auto',
-        position: 'relative',
-      }}
+      className='flex flex-col justify-center items-center gap-16 px-4 md:px-12 py-16 md:py-24 max-w-[1100px] mx-auto relative'
     >
-      <Stack display={'flex'} direction={'column'}>
+      <div className='flex flex-col'>
         <PFGradientTypography
           variant={APP_TYPOGRAPHIES.HEADER_PRIMARY}
-          color={palette.text.primary}
-          theme={APP_THEMES.DARK}
+          theme={mode === 'dark' ? APP_THEMES.DARK : APP_THEMES.LIGHT}
         >
           {t('skills.heading')}
         </PFGradientTypography>
-      </Stack>
-      <Stack
-        component={motion.div}
+      </div>
+      <motion.div
         variants={staggerContainer(0.18, 0.1)}
         initial='hidden'
         whileInView='visible'
         viewport={{ once: true, amount: 0.2 }}
-        display={'flex'}
-        alignItems={'center'}
-        gap={6}
+        className='flex flex-col items-center gap-12'
       >
         {skillGroups.map((skill, index) => (
           <motion.div key={index} variants={staggerScaleUp}>
@@ -218,7 +204,7 @@ export const Skills = () => {
             />
           </motion.div>
         ))}
-      </Stack>
-    </Stack>
+      </motion.div>
+    </section>
   );
 };

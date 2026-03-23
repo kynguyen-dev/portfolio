@@ -1,6 +1,5 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { PFTypography } from '@components/core';
-import { Stack, useTheme } from '@mui/material';
 import { SkillBox, SkillBoxProps } from '../boxs/skill-box';
 
 export interface HorizontalSkillListProps {
@@ -12,16 +11,9 @@ export const HorizontalSkillList = ({
   title,
   skillBoxes,
 }: HorizontalSkillListProps) => {
-  const { palette } = useTheme();
-
   return (
-    <Stack
-      direction={'column'}
-      justifyContent={'center'}
-      alignItems={'center'}
-      gap={2}
-    >
-      <PFTypography variant='h6' color={palette.text.primary}>
+    <div className='flex flex-col justify-center items-center gap-6'>
+      <PFTypography variant='h6' className='text-text-primary'>
         {title}
       </PFTypography>
       <motion.div
@@ -33,12 +25,7 @@ export const HorizontalSkillList = ({
           visible: { opacity: 1, y: 0, transition: { staggerChildren: 0.2 } },
         }}
       >
-        <Stack
-          gap={{ xs: 3, sm: 5, md: 8 }}
-          direction={'row'}
-          flexWrap='wrap'
-          justifyContent='center'
-        >
+        <div className='flex flex-row flex-wrap justify-center gap-6 sm:gap-12 md:gap-20'>
           {skillBoxes.map((skillBox, index) => (
             <motion.div
               key={index}
@@ -55,8 +42,8 @@ export const HorizontalSkillList = ({
               />
             </motion.div>
           ))}
-        </Stack>
+        </div>
       </motion.div>
-    </Stack>
+    </div>
   );
 };

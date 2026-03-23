@@ -1,31 +1,25 @@
-import { styled } from '@mui/material';
-import { motion } from 'framer-motion';
+import { motion, HTMLMotionProps } from 'motion/react';
+import { cn } from '@lib/utils';
 
-export const Overlay = styled(motion.div)(({ theme }) => ({
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  backgroundColor: 'rgba(30, 58, 138, 0.95)', // Increased opacity for better readability
-  color: theme.palette.common.white,
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center', // Can switch to 'flex-start' if scrolling is needed
-  alignItems: 'center',
-  textAlign: 'center',
-  transition: 'opacity 0.3s ease-in-out, background-color 0.3s ease-in-out',
-  opacity: 0,
-  overflowY: 'auto',
-  scrollbarWidth: 'none',
-  '&::-webkit-scrollbar': {
-    display: 'none',
-  },
-  padding: theme.spacing(2),
-}));
+export const Overlay = ({ className, ...props }: HTMLMotionProps<'div'>) => (
+  <motion.div
+    className={cn(
+      'absolute top-0 left-0 w-full h-full bg-[#1e3aba]/95 text-white flex flex-col justify-center items-center text-center transition-[opacity,background-color] duration-300 opacity-0 overflow-y-auto scrollbar-none p-4',
+      className
+    )}
+    {...props}
+  />
+);
 
-export const OverlayContent = styled(motion.div)({
-  opacity: 0, // Initially hidden
-  transition: 'opacity 0.3s ease-in-out, transform 0.3s ease-in-out',
-  transform: 'translateY(10px)', // Slight movement
-});
+export const OverlayContent = ({
+  className,
+  ...props
+}: HTMLMotionProps<'div'>) => (
+  <motion.div
+    className={cn(
+      'opacity-0 transition-[opacity,transform] duration-300 translate-y-2.5',
+      className
+    )}
+    {...props}
+  />
+);
