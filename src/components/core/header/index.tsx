@@ -4,75 +4,39 @@ import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from '@components/core/language-switcher/LanguageSwitcher';
 import { ThemeModeToggle } from '@components/core/theme-toggle/ThemeModeToggle';
 import { AuthButton } from '@components/core/auth';
-import { APP_PAGES } from '@constants';
-import { useThemeMode } from '@contexts/theme-mode';
 import { cn } from '@utils/core/cn';
 import { AnimatePresence, motion } from 'framer-motion';
 
-const navItems = [
-  APP_PAGES.HOME,
-  APP_PAGES.PROFILE,
-  APP_PAGES.SKILLS,
-  APP_PAGES.PROJECTS,
-  APP_PAGES.TOOLS,
-  APP_PAGES.CONTACT,
-];
+interface NavItem {
+  id: string;
+  labelKey: string;
+  href: string;
+}
 
-/* Map page enum to i18n key */
-const navI18nMap: Record<string, string> = {
-  [APP_PAGES.HOME]: 'nav.home',
-  [APP_PAGES.PROFILE]: 'nav.profile',
-  [APP_PAGES.SKILLS]: 'nav.skills',
-  [APP_PAGES.PROJECTS]: 'nav.projects',
-  [APP_PAGES.TOOLS]: 'nav.tools',
-  [APP_PAGES.CONTACT]: 'nav.contact',
-};
+const navItems: NavItem[] = [
+  { id: 'path', labelKey: 'nav.tacticalPath', href: '#projects' },
+  { id: 'arsenal', labelKey: 'nav.theArsenal', href: '#skills' },
+  { id: 'projects', labelKey: 'nav.projects', href: '#projects' },
+];
 
 export const PFAppBar = () => {
   const { t } = useTranslation();
-  const { mode } = useThemeMode();
-  const isLight = mode === 'light';
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [activeSection, setActiveSection] = React.useState<string>(
-    APP_PAGES.HOME.toLowerCase()
-  );
+  const [scrolled, setScrolled] = React.useState(false);
 
-  // Track active section on scroll
   React.useEffect(() => {
-    const sectionIds = navItems.map(item => item.toLowerCase());
-
-    const handleScroll = () => {
-      let currentSection = sectionIds[0];
-      const threshold = window.innerHeight * 0.35;
-
-      for (const id of sectionIds) {
-        const el = document.getElementById(id);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= threshold) {
-            currentSection = id;
-          }
-        }
-      }
-      setActiveSection(currentSection);
-    };
-
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(prevState => !prevState);
-  };
+  const handleDrawerToggle = () => setMobileOpen(prev => !prev);
 
-  const handleScrollTo = (id: string) => {
-    const lowerId = id.toLowerCase();
-    const element = document.getElementById(lowerId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setActiveSection(lowerId);
-    }
+  const handleScrollTo = (href: string) => {
+    const id = href.replace('#', '');
+    const element = document.getElementById(id);
+    if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     setMobileOpen(false);
   };
 
@@ -80,68 +44,56 @@ export const PFAppBar = () => {
     <header className='fixed top-0 left-0 right-0 z-50'>
       <nav
         className={cn(
-          'px-4 md:px-[10%] lg:px-[20%] py-3 backdrop-blur-xl transition-all duration-300 border-b',
-          isLight
-            ? 'bg-white/80 border-black/5 shadow-sm'
-            : 'bg-background-default/70 border-white/5 shadow-2xl'
+          'border-b border-ct-outline-variant/20 transition-all duration-300',
+          scrolled
+            ? 'bg-ct-surface/80 backdrop-blur-xl'
+            : 'bg-transparent backdrop-blur-none'
         )}
       >
-        <div className='flex items-center justify-between h-14'>
+        <div className='flex justify-between items-center w-full px-8 py-4 max-w-screen-2xl mx-auto'>
+          {/* Logo / Brand */}
+          <div
+            className='text-xl font-bold tracking-tighter text-ct-on-surface font-headline uppercase cursor-pointer'
+            onClick={() => handleScrollTo('#home')}
+          >
+            Ky Nguyen //{' '}
+            <span className='text-ct-secondary italic'>
+              The Digital Alchemist
+            </span>
+          </div>
+
+          {/* Desktop Nav */}
+          <div className='hidden md:flex items-center gap-8 font-label-grotesk text-sm'>
+            {navItems.map(item => (
+              <a
+                key={item.id}
+                className='text-ct-on-surface/60 font-medium hover:text-ct-on-surface transition-colors cursor-pointer'
+                onClick={() => handleScrollTo(item.href)}
+              >
+                {t(item.labelKey)}
+              </a>
+            ))}
+            <a
+              className='bg-ct-primary-container text-ct-on-primary px-6 py-2 rounded-full font-bold hover:scale-95 transition-all duration-200 cursor-pointer'
+              onClick={() => handleScrollTo('#contact')}
+            >
+              {t('nav.initContact')}
+            </a>
+            <div className='flex items-center gap-2 ml-2'>
+              <ThemeModeToggle />
+              <LanguageSwitcher />
+              <AuthButton />
+            </div>
+          </div>
+
           {/* Mobile Menu Toggle */}
           <button
             onClick={handleDrawerToggle}
-            className='sm:hidden p-2 -ml-2 text-text-primary'
+            className='md:hidden p-2 text-ct-secondary'
             aria-label='Toggle menu'
           >
             {mobileOpen ? <X /> : <Menu />}
           </button>
-
-          {/* Logo */}
-          <div className='flex-grow sm:flex-grow-0'>
-            <img
-              src='/icons/dashboard-icon.png'
-              alt='Ky Nguyen Logo'
-              className='h-10 cursor-pointer hover:scale-105 transition-transform'
-              onClick={() => handleScrollTo(APP_PAGES.HOME)}
-            />
-          </div>
-
-          {/* Desktop Nav */}
-          <div className='hidden sm:flex items-center gap-1 md:gap-4'>
-            {navItems.map(item => (
-              <button
-                key={item}
-                onClick={() => handleScrollTo(item)}
-                className={cn(
-                  'px-3 py-2 text-sm font-medium transition-all relative group',
-                  activeSection === item.toLowerCase()
-                    ? 'text-primary-main'
-                    : 'text-text-primary hover:text-primary-light'
-                )}
-              >
-                {t(navI18nMap[item])}
-                {activeSection === item.toLowerCase() && (
-                  <motion.div
-                    layoutId='nav-underline'
-                    className='absolute bottom-0 left-0 right-0 h-0.5 bg-primary-main'
-                  />
-                )}
-              </button>
-            ))}
-          </div>
-
-          {/* Actions */}
-          <div className='hidden sm:flex items-center gap-2 ml-4'>
-            <ThemeModeToggle />
-            <LanguageSwitcher />
-            <AuthButton />
-          </div>
-
-          {/* Mobile Right Actions (always visible) */}
-          <div className='flex sm:hidden items-center gap-2'>
-            <ThemeModeToggle />
-            <AuthButton />
-          </div>
         </div>
       </nav>
 
@@ -154,41 +106,46 @@ export const PFAppBar = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={handleDrawerToggle}
-              className='fixed inset-0 bg-black/60 backdrop-blur-sm z-40 sm:hidden'
+              className='fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden'
             />
             <motion.div
               initial={{ x: '-100%' }}
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className={cn(
-                'fixed top-0 left-0 bottom-0 w-64 z-50 sm:hidden flex flex-col',
-                isLight ? 'bg-white' : 'bg-background-paper'
-              )}
+              className='fixed top-0 left-0 bottom-0 w-64 z-50 md:hidden flex flex-col bg-ct-surface'
             >
-              <div className='p-6 flex items-center justify-between border-b border-white/5'>
-                <span className='font-bold text-xl'>Ky Nguyen</span>
-                <button onClick={handleDrawerToggle} className='p-2'>
+              <div className='p-6 flex items-center justify-between border-b border-ct-outline-variant/10'>
+                <span className='font-bold text-xl text-ct-on-surface'>
+                  Ky Nguyen
+                </span>
+                <button
+                  onClick={handleDrawerToggle}
+                  className='p-2 text-ct-on-surface'
+                  aria-label={t('common.closeMenu')}
+                >
                   <X />
                 </button>
               </div>
               <div className='flex-1 overflow-y-auto py-6'>
                 {navItems.map(item => (
                   <button
-                    key={item}
-                    onClick={() => handleScrollTo(item)}
-                    className={cn(
-                      'w-full text-left px-8 py-4 text-lg font-medium transition-colors',
-                      activeSection === item.toLowerCase()
-                        ? 'bg-primary-main/10 text-primary-main border-l-4 border-primary-main'
-                        : 'text-text-primary hover:bg-white/5'
-                    )}
+                    key={item.id}
+                    onClick={() => handleScrollTo(item.href)}
+                    className='w-full text-left px-8 py-4 text-lg font-medium text-ct-on-surface hover:bg-ct-surface-container transition-colors'
                   >
-                    {t(navI18nMap[item])}
+                    {t(item.labelKey)}
                   </button>
                 ))}
+                <button
+                  onClick={() => handleScrollTo('#contact')}
+                  className='w-full text-left px-8 py-4 text-lg font-bold text-ct-primary-container'
+                >
+                  {t('nav.initContact')}
+                </button>
               </div>
-              <div className='p-6 border-t border-white/5 flex justify-center gap-4'>
+              <div className='p-6 border-t border-ct-outline-variant/10 flex justify-center gap-4'>
+                <ThemeModeToggle />
                 <LanguageSwitcher />
                 <AuthButton />
               </div>

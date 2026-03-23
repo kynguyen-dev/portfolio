@@ -1,37 +1,57 @@
-@import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
-@import "@fontsource-variable/geist";
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+@import '@fontsource-variable/geist';
 
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --color-primary-main: #D4A843;
-  --color-primary-light: #E8C96A;
-  --color-primary-dark: #8B6914;
-  --color-primary-contrast: #FFF8F0;
+  --color-primary-main: #d4a843;
+  --color-primary-light: #e8c96a;
+  --color-primary-dark: #8b6914;
+  --color-primary-contrast: #fff8f0;
 
-  --color-secondary-main: #C75B39;
-  --color-secondary-light: #E07850;
-  --color-secondary-dark: #8B3A22;
+  --color-secondary-main: #c75b39;
+  --color-secondary-light: #e07850;
+  --color-secondary-dark: #8b3a22;
 
-  --color-background-default: #1A1410;
-  --color-background-paper: #241E18;
+  --color-background-default: #1a1410;
+  --color-background-paper: #241e18;
 
-  --color-text-primary: #FFF3E0;
-  --color-text-secondary: #FFCC80;
-  --color-text-disabled: #C4AA96;
+  --color-text-primary: #fff3e0;
+  --color-text-secondary: #ffcc80;
+  --color-text-disabled: #c4aa96;
 
-  --color-gold: #C5A059;
+  --color-gold: #c5a059;
 
-  --font-roboto: "Roboto", sans-serif;
+  /* ─── Cyber-Tactical Palette ─── */
+  --color-ct-bg: #0d0e12;
+  --color-ct-surface: #121317;
+  --color-ct-surface-container: #1f1f24;
+  --color-ct-surface-container-low: #1a1b20;
+  --color-ct-surface-container-high: #292a2e;
+  --color-ct-surface-container-highest: #343439;
+  --color-ct-on-surface: #e3e2e8;
+  --color-ct-on-surface-variant: #baccb0;
+  --color-ct-outline: #85967c;
+  --color-ct-outline-variant: #3c4b35;
+  --color-ct-primary-container: #39ff14;
+  --color-ct-secondary: #e9c349;
+  --color-ct-on-secondary: #3c2f00;
+  --color-ct-on-primary: #053900;
+
+  --font-roboto: 'Roboto', sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-label: 'Space Grotesk', 'Inter', sans-serif;
+  --font-headline: 'Inter', sans-serif;
 }
 
 @layer base {
   html {
-    font-family: var(--font-roboto);
-    background-color: var(--color-background-default);
-    color: var(--color-text-primary);
+    font-family: var(--font-headline);
+    background-color: var(--color-ct-bg);
+    color: var(--color-ct-on-surface);
     @apply font-sans;
   }
   * {
@@ -39,7 +59,48 @@
   }
   body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
   }
+}
+
+/* ─── Glassmorphism Utility ─── */
+.glass {
+  background: rgba(41, 42, 46, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(60, 75, 53, 0.2);
+}
+
+.gold-glow:hover {
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.15);
+  border-color: rgba(212, 175, 55, 0.4);
+}
+
+/* ─── Dot Grid Background ─── */
+.vanta-bg {
+  background-image: radial-gradient(
+    circle at 2px 2px,
+    rgba(212, 175, 55, 0.05) 1px,
+    transparent 0
+  );
+  background-size: 40px 40px;
+}
+
+/* ─── Font Families ─── */
+.font-serif-display {
+  font-family: var(--font-serif);
+}
+.font-mono-code {
+  font-family: var(--font-mono);
+}
+.font-label-grotesk {
+  font-family: var(--font-label);
+}
+
+/* ─── Selection Color ─── */
+::selection {
+  background-color: rgba(233, 195, 73, 0.3);
+  color: #e9c349;
 }
 
 @theme inline {

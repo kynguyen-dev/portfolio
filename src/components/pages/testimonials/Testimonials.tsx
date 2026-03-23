@@ -1,16 +1,9 @@
-import { Box, Stack, useTheme } from '@mui/material';
 import { motion } from 'framer-motion';
-import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
 import { useTranslation } from 'react-i18next';
-import {
-  PFGradientTypography,
-  PFTypography,
-} from '@components/core/typography';
-import { APP_THEMES, APP_TYPOGRAPHIES } from '@constants';
-import { glassCardSx } from '@utils/styles/glassCard';
+import PersonIcon from '@mui/icons-material/Person';
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 50, scale: 0.9 },
+  hidden: { opacity: 0, y: 50, scale: 0.95 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
@@ -25,8 +18,6 @@ const cardVariants = {
 
 export const Testimonials = () => {
   const { t } = useTranslation();
-  const { palette } = useTheme();
-  const isLight = palette.mode === 'light';
   const items = t('testimonials.items', { returnObjects: true }) as Array<{
     quote: string;
     name: string;
@@ -34,107 +25,89 @@ export const Testimonials = () => {
     relationship: string;
   }>;
 
-  return (
-    <Box
-      component='section'
-      aria-label={t('testimonials.heading')}
-      sx={{
-        py: { xs: 8, md: 12 },
-        px: { xs: 2, md: 6 },
-        maxWidth: 1100,
-        mx: 'auto',
-      }}
-    >
-      <PFGradientTypography
-        variant={APP_TYPOGRAPHIES.HEADER_PRIMARY}
-        theme={APP_THEMES.DARK}
-        fontWeight='bold'
-        align='center'
-        sx={{ mb: 1 }}
-      >
-        {t('testimonials.heading')}
-      </PFGradientTypography>
-      <PFTypography
-        variant='body1'
-        align='center'
-        sx={{ color: palette.text.secondary, opacity: 0.7, mb: 6 }}
-      >
-        {t('testimonials.subtitle')}
-      </PFTypography>
+  const borderColors = [
+    'border-l-ct-secondary',
+    'border-l-ct-primary-container',
+    'border-l-ct-secondary',
+  ];
+  const tagColors = [
+    'text-ct-secondary/40',
+    'text-ct-primary-container/40',
+    'text-ct-secondary/40',
+  ];
+  const iconColors = [
+    'text-ct-secondary',
+    'text-ct-primary-container',
+    'text-ct-secondary',
+  ];
 
-      <Stack
-        direction={{ xs: 'column', md: 'row' }}
-        spacing={3}
-        alignItems='stretch'
+  return (
+    <section
+      aria-label={t('testimonials.heading')}
+      className='max-w-4xl mx-auto px-8 py-24 md:py-32 relative'
+    >
+      {/* Decorative quote mark */}
+      <div className='absolute top-0 right-0 font-serif-display text-[16rem] md:text-[24rem] text-ct-secondary/5 leading-none select-none -z-10 translate-x-1/2 -translate-y-1/4'>
+        &ldquo;
+      </div>
+
+      {/* Section header */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className='mb-16'
       >
+        <h2 className='font-serif-display text-4xl text-ct-secondary mb-4'>
+          {t('testimonials.sectionTitle')}
+        </h2>
+        <div className='h-1 w-12 bg-ct-primary-container' />
+      </motion.div>
+
+      {/* Testimonial cards */}
+      <div className='space-y-12'>
         {items.map((item, i) => (
           <motion.div
             key={i}
             custom={i}
             initial='hidden'
             whileInView='visible'
-            whileHover={{ y: -6, transition: { duration: 0.25 } }}
             viewport={{ once: true, amount: 0.3 }}
             variants={cardVariants}
-            style={{ flex: 1, display: 'flex', flexDirection: 'column' }}
+            className={`glass p-10 rounded-2xl border-l-4 ${borderColors[i % borderColors.length]} relative overflow-hidden`}
           >
-            <Box
-              sx={{
-                flex: 1,
-                display: 'flex',
-                flexDirection: 'column',
-                ...glassCardSx(isLight, { hoverLift: false }),
-                p: 4,
-                position: 'relative',
-              }}
+            {/* Decrypted message tag */}
+            <div
+              className={`font-mono-code text-[10px] ${tagColors[i % tagColors.length]} absolute top-4 right-6`}
             >
-              <FormatQuoteIcon
-                sx={{
-                  position: 'absolute',
-                  top: 12,
-                  right: 16,
-                  color: `${palette.primary.light}12`,
-                  fontSize: 80,
-                  transform: 'scaleX(-1)',
-                  pointerEvents: 'none',
-                }}
-              />
-              <PFTypography
-                variant='body2'
-                sx={{
-                  color: palette.text.primary,
-                  lineHeight: 1.8,
-                  fontStyle: 'italic',
-                  flex: 1,
-                  opacity: 0.9,
-                }}
-              >
-                &ldquo;{item.quote}&rdquo;
-              </PFTypography>
-              <Box
-                sx={{
-                  mt: 3,
-                  pt: 2,
-                  borderTop: `1px solid ${isLight ? 'rgba(184,137,31,0.1)' : 'rgba(245,208,96,0.1)'}`,
-                }}
-              >
-                <PFTypography
-                  variant='subtitle2'
-                  sx={{ color: palette.primary.light, fontWeight: 700 }}
-                >
-                  {item.name}
-                </PFTypography>
-                <PFTypography
-                  variant='caption'
-                  sx={{ color: palette.text.secondary, opacity: 0.7 }}
-                >
-                  {item.relationship} · {item.title}
-                </PFTypography>
-              </Box>
-            </Box>
+              DECRYPTED_MESSAGE_TX_{String(i + 9).padStart(2, '0')}
+            </div>
+
+            {/* Quote */}
+            <p className='text-xl md:text-2xl italic leading-relaxed text-ct-on-surface mb-8'>
+              &ldquo;{item.quote}&rdquo;
+            </p>
+
+            {/* Author */}
+            <div className='flex items-center gap-4'>
+              <div className='w-12 h-12 rounded-full bg-ct-surface-container-highest border border-ct-outline-variant/30 flex items-center justify-center'>
+                <PersonIcon
+                  className={iconColors[i % iconColors.length]}
+                  fontSize='medium'
+                />
+              </div>
+              <div>
+                <div className='font-bold text-ct-on-surface'>{item.name}</div>
+                <div className='font-mono-code text-[10px] text-ct-on-surface-variant uppercase tracking-widest'>
+                  {item.relationship} {'// '}
+                  {item.title}
+                </div>
+              </div>
+            </div>
           </motion.div>
         ))}
-      </Stack>
-    </Box>
+      </div>
+    </section>
   );
 };

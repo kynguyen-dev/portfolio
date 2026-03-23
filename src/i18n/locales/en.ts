@@ -11,6 +11,9 @@ export const en = {
     projects: 'Projects',
     tools: 'Tools',
     contact: 'Contact',
+    tacticalPath: 'Tactical Path',
+    theArsenal: 'The Arsenal',
+    initContact: 'INIT_CONTACT',
   },
   intro: {
     title: 'Ky Nguyen — Full-Stack Developer',
@@ -21,6 +24,12 @@ export const en = {
     yearsExperience: '{{years}}+ Years Experience',
     productionApps: '4 Production Apps',
     techStack: 'React · TypeScript · Next.js',
+    systemStatus: '[ SYSTEM_STATUS: SYNTHESIZING_REALITY ]',
+    heroTitle: 'Synthesizing Architecture into',
+    heroTitleAccent: 'PURE_LOGIC',
+    heroSubtitle:
+      'Strategic full-stack engineer specializing in the intersection of high-performance technical systems and elite aesthetic execution.',
+    techBadges: ['ReactJS', 'Vite', 'Vercel', 'Storybook', 'Motion'],
   },
   aboutMe: {
     heading: 'About Me',
@@ -63,6 +72,10 @@ export const en = {
     core: 'Core Technologies',
     additional: 'Additional Skills',
     toolsAndMethods: 'Tools & Methodologies',
+    sectionTitle: 'THE_ARSENAL.DB',
+    coreFrontend: 'Core Front-end Systems',
+    dataArchitecture: 'Data & Architecture',
+    toolingOps: 'Tooling & Ops',
   },
   projects: {
     recentWork: 'My Recent Work',
@@ -75,6 +88,10 @@ export const en = {
     visitWebSite: 'Visit Website >',
     viewDetails: 'View details for {{title}}',
     privateProject: 'Private / Internal Project',
+    sectionTitle: 'THE_PROJECT_ARSENAL',
+    repositoryDump: '[ REPOSITORY_DUMP_012 ]',
+    filterAll: 'FILTER: ALL_OPERATIONS',
+    accessCore: 'ACCESS_CORE',
     logistic: {
       title: 'DrivaLink — Logistics & Driver Safety',
       description:
@@ -122,10 +139,14 @@ export const en = {
   },
   workExperience: {
     heading: 'Work Experience',
+    sectionTitle: 'TACTICAL_PATH',
+    sectionTitleSuffix: '.LOG',
+    archiveLabel: 'ARCHIVE_SUCCESSION_01-04',
   },
   testimonials: {
     heading: 'What People Say',
     subtitle: "Feedback from colleagues and managers I've worked with",
+    sectionTitle: 'FIELD_REPORTS',
     items: [
       {
         quote:
@@ -169,9 +190,16 @@ export const en = {
     sendMeEmail: 'Send me an email',
     callMe: 'Call me',
     phoneCopied: 'Phone number copied to clipboard!',
+    ctaTitle: 'Ready to',
+    ctaTitleAccent: 'Architect?',
+    ctaDescription:
+      'Currently accepting select high-end strategic partnerships and architectural consulting engagements.',
+    ctaButton: 'INIT_CONTACT',
   },
   footer: {
     quote: 'Living, learning, & improving one day at a time.',
+    copyright: '© KY NGUYEN // THE DIGITAL ALCHEMIST. STATUS: AVAILABLE',
+    builtFor: 'Built for the Digital Vanguard // v2.0.4',
   },
   blog: {
     heading: 'Blog & Insights',
