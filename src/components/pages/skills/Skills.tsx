@@ -1,16 +1,11 @@
-import { motion } from 'motion/react';
+import { animated, useTrail } from '@react-spring/web';
 import { useTranslation } from 'react-i18next';
-import {
-  staggerContainer,
-  staggerScaleUp,
-} from '@utils/animations/scrollVariants';
+import { useInView } from '@utils/animations/springVariants';
 
 interface ArsenalPanel {
   titleKey: string;
   icon: string;
   accentClass: string;
-  borderClass: string;
-  hoverClass: string;
   skills: string[];
 }
 
@@ -18,9 +13,7 @@ const arsenalPanels: ArsenalPanel[] = [
   {
     titleKey: 'skills.coreFrontend',
     icon: '⌨',
-    accentClass: 'text-ct-primary-container',
-    borderClass: 'border-t-ct-primary-container/30',
-    hoverClass: 'hover:text-ct-primary-container',
+    accentClass: 'text-ct-secondary',
     skills: [
       'React 18',
       'TypeScript',
@@ -33,80 +26,85 @@ const arsenalPanels: ArsenalPanel[] = [
   {
     titleKey: 'skills.dataArchitecture',
     icon: '🗄',
-    accentClass: 'text-ct-secondary',
-    borderClass: 'border-t-ct-secondary/30',
-    hoverClass: 'hover:text-ct-secondary',
+    accentClass: 'text-primary-main',
     skills: ['PostgreSQL', 'GraphQL', 'Redis', 'Firebase', 'Prisma', 'Node.js'],
   },
   {
     titleKey: 'skills.toolingOps',
     icon: '⚙',
-    accentClass: 'text-ct-on-surface',
-    borderClass: 'border-t-ct-on-surface/30',
-    hoverClass: 'hover:text-white',
+    accentClass: 'text-ct-secondary',
     skills: ['Docker', 'GitHub Actions', 'Vite', 'AWS EC2', 'Jest', 'Cypress'],
+  },
+  {
+    titleKey: 'skills.execution',
+    icon: '🔧',
+    accentClass: 'text-primary-main',
+    skills: ['CI/CD', 'Vercel', 'Storybook', 'TanStack'],
   },
 ];
 
 export const Skills = () => {
   const { t } = useTranslation();
+  const { ref, inView } = useInView({ threshold: 0.2 });
+
+  const trail = useTrail(arsenalPanels.length, {
+    from: { opacity: 0, y: 30 },
+    to: inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 },
+    config: { tension: 200, friction: 20 },
+  });
 
   return (
     <section
       id='skills'
       aria-label={t('skills.heading')}
-      className='bg-ct-surface-container-low py-24 md:py-32'
+      className='py-24 md:py-32 bg-ct-surface-container-lowest'
     >
-      <div className='max-w-7xl mx-auto px-8'>
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className='mb-16 flex flex-col items-center'
-        >
-          <h2 className='font-serif-display text-4xl text-ct-secondary text-center mb-4'>
-            {t('skills.sectionTitle')}
+      <div className='max-w-screen-2xl mx-auto px-8 lg:px-16'>
+        {/* Section Header — centered, prototype style */}
+        <div className='text-center mb-20'>
+          <h2 className='text-primary-main font-label-grotesk text-xs font-black tracking-[0.3em] uppercase mb-2'>
+            02 // DATA_BANK
           </h2>
-          <div className='h-px w-24 bg-ct-secondary' />
-        </motion.div>
+          <h3 className='font-serif-display text-4xl md:text-5xl text-ct-on-surface'>
+            {t('skills.sectionTitle')}
+          </h3>
+        </div>
 
-        {/* 3-Column Grid */}
-        <motion.div
-          variants={staggerContainer(0.15, 0.1)}
-          initial='hidden'
-          whileInView='visible'
-          viewport={{ once: true, amount: 0.2 }}
-          className='grid grid-cols-1 md:grid-cols-3 gap-6'
+        {/* Matrix Grid — gap-px for subtle dividers (No-Line Rule) */}
+        <div
+          ref={ref}
+          className='grid grid-cols-2 md:grid-cols-4 gap-px bg-ct-outline-variant/10'
         >
-          {arsenalPanels.map(panel => (
-            <motion.div
-              key={panel.titleKey}
-              variants={staggerScaleUp}
-              className={`glass p-8 rounded-xl border-t-2 ${panel.borderClass}`}
-            >
-              <div className='flex items-center gap-3 mb-8'>
-                <span className={`text-2xl ${panel.accentClass}`}>
-                  {panel.icon}
-                </span>
-                <h3 className='font-mono-code text-sm tracking-widest uppercase font-bold text-ct-on-surface'>
+          {trail.map((style, i) => {
+            const panel = arsenalPanels[i];
+            return (
+              <animated.div
+                key={panel.titleKey}
+                style={style}
+                className='bg-ct-bg p-10 group hover:bg-ct-surface-container-low transition-all duration-300'
+              >
+                <div
+                  className={`mb-4 opacity-50 group-hover:opacity-100 transition-opacity ${panel.accentClass}`}
+                >
+                  <span className='text-4xl'>{panel.icon}</span>
+                </div>
+                <h5 className='text-xs font-black tracking-[0.2em] mb-3 text-ct-on-surface uppercase font-label-grotesk'>
                   {t(panel.titleKey)}
-                </h3>
-              </div>
-              <div className='flex flex-wrap gap-3'>
-                {panel.skills.map(skill => (
-                  <span
-                    key={skill}
-                    className={`px-3 py-1 bg-ct-surface-container-high rounded text-[11px] font-mono-code text-ct-on-surface-variant ${panel.hoverClass} transition-colors cursor-default`}
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+                </h5>
+                <ul className='text-ct-on-surface-variant text-sm space-y-1.5'>
+                  {panel.skills.map(skill => (
+                    <li
+                      key={skill}
+                      className='hover:text-primary-main transition-colors cursor-default'
+                    >
+                      {skill}
+                    </li>
+                  ))}
+                </ul>
+              </animated.div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

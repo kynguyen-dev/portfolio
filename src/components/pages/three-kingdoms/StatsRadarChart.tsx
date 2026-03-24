@@ -7,7 +7,7 @@ import {
   Tooltip,
 } from 'chart.js';
 import { Radar } from 'react-chartjs-2';
-import { useTheme } from '@mui/material';
+import { useThemeMode } from '@contexts/theme-mode';
 import type { CharacterStats } from '@constants/three-kingdoms';
 import { STAT_LABELS, STAT_KEYS } from '@constants/three-kingdoms';
 
@@ -17,7 +17,6 @@ interface StatsRadarChartProps {
   stats: CharacterStats;
   color: string;
   label: string;
-  /** Optional second dataset for comparison overlay */
   compareStats?: CharacterStats;
   compareColor?: string;
   compareLabel?: string;
@@ -31,8 +30,8 @@ export const StatsRadarChart = ({
   compareColor = '#6B7280',
   compareLabel,
 }: StatsRadarChartProps) => {
-  const { palette } = useTheme();
-  const isLight = palette.mode === 'light';
+  const { mode } = useThemeMode();
+  const isLight = mode === 'light';
 
   const labels = STAT_KEYS.map(k => STAT_LABELS[k].en);
   const values = STAT_KEYS.map(k => stats[k]);
@@ -74,10 +73,7 @@ export const StatsRadarChart = ({
             min: 0,
             max: 100,
             beginAtZero: true,
-            ticks: {
-              stepSize: 20,
-              display: false,
-            },
+            ticks: { stepSize: 20, display: false },
             grid: {
               color: isLight ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.1)',
             },

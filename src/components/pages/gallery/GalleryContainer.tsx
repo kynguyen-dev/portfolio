@@ -1,10 +1,10 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { Stack, Box, IconButton, useTheme, Tooltip } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from '@tanstack/react-router';
 import { PFGradientTypography, PFTypography } from '@components/core';
 import { SunriseBackground } from '@components/customs/backgrounds/SunriseBackground';
-import { motion } from 'framer-motion';
+import { animated, useSpring } from '@react-spring/web';
+import { useThemeMode } from '@contexts/theme-mode';
 import type { GalleryPhoto } from './types';
 import { useGalleryPhotos } from './useGalleryPhotos';
 import { useFps } from './useFps';
@@ -12,15 +12,10 @@ import { VirtualizedGalleryGrid } from './VirtualizedGalleryGrid';
 import { StatsBar } from './StatsBar';
 import { Lightbox } from './Lightbox';
 
-/**
- * Infinite Photo Gallery — showcases TanStack Virtual performance.
- * Renders thousands of photos from Lorem Picsum using virtualised
- * rows, infinite scroll, and real-time FPS metrics.
- */
 export const GalleryContainer = () => {
   const navigate = useNavigate();
-  const { palette } = useTheme();
-  const isLight = palette.mode === 'light';
+  const { mode } = useThemeMode();
+  const isLight = mode === 'light';
 
   const { photos, isLoading, loadMore } = useGalleryPhotos();
   const fps = useFps();
@@ -28,7 +23,6 @@ export const GalleryContainer = () => {
   const gridRef = useRef<HTMLDivElement>(null);
   const [renderedCount, setRenderedCount] = useState(0);
 
-  /* Poll rendered count from the grid's data attribute */
   useEffect(() => {
     const interval = setInterval(() => {
       const el = gridRef.current?.querySelector(
@@ -41,174 +35,115 @@ export const GalleryContainer = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const handlePhotoClick = useCallback((photo: GalleryPhoto) => {
-    setSelectedPhoto(photo);
-  }, []);
+  const handlePhotoClick = useCallback(
+    (photo: GalleryPhoto) => setSelectedPhoto(photo),
+    []
+  );
+  const handleLightboxClose = useCallback(() => setSelectedPhoto(null), []);
 
-  const handleLightboxClose = useCallback(() => {
-    setSelectedPhoto(null);
+  const titleSpring = useSpring({
+    from: { opacity: 0, y: 20 },
+    to: { opacity: 1, y: 0 },
+    config: { duration: 500 },
+  });
+
+  const [emojiToggle, setEmojiToggle] = useState(false);
+  useEffect(() => {
+    const interval = setInterval(() => setEmojiToggle(prev => !prev), 1500);
+    return () => clearInterval(interval);
   }, []);
+  const emojiSpring = useSpring({
+    rotateZ: emojiToggle ? 5 : -5,
+    config: { duration: 1500 },
+  });
+  const footnoteSpring = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+    delay: 1000,
+    config: { duration: 500 },
+  });
 
   return (
     <SunriseBackground sun={false} rays={false} particles={false}>
-      <Stack
-        component='main'
-        minHeight='100vh'
-        sx={{ px: { xs: 1.5, sm: 2, md: 4 }, py: { xs: 2, md: 3 } }}
-      >
-        {/* ── Header ── */}
-        <Box sx={{ position: 'fixed', top: 20, left: 20, zIndex: 50 }}>
-          <Tooltip title='Back to portfolio' arrow>
-            <IconButton
-              onClick={() => navigate({ to: '/' })}
-              aria-label='Back to portfolio'
-              sx={{
-                color: isLight ? '#5C4A32' : '#FFE4B5',
-                background: isLight
-                  ? 'rgba(255,248,240, 0.8)'
-                  : 'rgba(11, 13, 46, 0.6)',
-                backdropFilter: 'blur(12px)',
-                border: `1px solid ${isLight ? 'rgba(184,137,31,0.2)' : 'rgba(245,208,96,0.2)'}`,
-                '&:hover': {
-                  background: isLight
-                    ? 'rgba(255,248,240, 0.95)'
-                    : 'rgba(11, 13, 46, 0.85)',
-                },
-              }}
-            >
-              <ArrowBackIcon />
-            </IconButton>
-          </Tooltip>
-        </Box>
-
-        {/* ── Title section ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <Stack
-            alignItems='center'
-            spacing={1}
-            sx={{ pt: { xs: 7, md: 4 }, pb: 2 }}
+      <main className='min-h-screen px-3 sm:px-4 md:px-8 py-4 md:py-6 flex flex-col'>
+        {/* Back button */}
+        <div className='fixed top-5 left-5 z-50'>
+          <button
+            onClick={() => navigate({ to: '/' })}
+            aria-label='Back to portfolio'
+            title='Back to portfolio'
+            className='flex items-center justify-center w-10 h-10 rounded-full text-ct-on-surface bg-ct-surface-container/80 backdrop-blur-xl border border-ct-outline-variant/20 hover:bg-ct-surface-container-high/90 transition-colors cursor-pointer'
           >
-            <Box
-              component={motion.div}
-              animate={{ rotate: [0, -5, 5, 0] }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
-              sx={{ fontSize: '2.5rem', lineHeight: 1 }}
+            <ArrowLeft size={20} />
+          </button>
+        </div>
+
+        {/* Title */}
+        <animated.div style={titleSpring}>
+          <div className='flex flex-col items-center gap-2 pt-14 md:pt-8 pb-4'>
+            <animated.div
+              style={{ ...emojiSpring, fontSize: '2.5rem', lineHeight: 1 }}
             >
               🖼️
-            </Box>
-
+            </animated.div>
             <PFGradientTypography variant='h4' fontWeight={800}>
               Infinite Photo Gallery
             </PFGradientTypography>
-
             <PFTypography
               variant='body2'
-              sx={{
-                color: isLight ? '#8B7355' : '#C8B88A',
-                textAlign: 'center',
-                maxWidth: 600,
-                lineHeight: 1.5,
-              }}
+              className='text-center max-w-[600px] leading-relaxed text-ct-on-surface-variant'
             >
               Rendering{' '}
-              <Box
-                component='span'
-                sx={{
-                  fontWeight: 700,
-                  color: isLight ? '#B8891F' : '#F5D060',
-                  fontFamily: 'monospace',
-                }}
-              >
+              <span className='font-bold font-mono text-ct-secondary'>
                 {photos.length.toLocaleString()}+
-              </Box>{' '}
+              </span>{' '}
               photos at 60 FPS with TanStack Virtual — only{' '}
-              <Box
-                component='span'
-                sx={{
-                  fontWeight: 700,
-                  color: isLight ? '#B8891F' : '#F5D060',
-                  fontFamily: 'monospace',
-                }}
-              >
+              <span className='font-bold font-mono text-ct-secondary'>
                 {renderedCount}
-              </Box>{' '}
+              </span>{' '}
               DOM nodes are actually rendered.
             </PFTypography>
-          </Stack>
-        </motion.div>
+          </div>
+        </animated.div>
 
-        {/* ── Stats ── */}
         <StatsBar
           totalPhotos={photos.length}
           renderedPhotos={renderedCount}
           fps={fps}
         />
 
-        {/* ── Grid ── */}
-        <Box ref={gridRef} sx={{ flex: 1, minHeight: 0 }}>
+        <div ref={gridRef} className='flex-1 min-h-0'>
           <VirtualizedGalleryGrid
             photos={photos}
             isLoading={isLoading}
             onLoadMore={loadMore}
             onPhotoClick={handlePhotoClick}
           />
-        </Box>
+        </div>
 
-        {/* ── Tech footnote ── */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 0.5 }}
-        >
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              gap: 2,
-              flexWrap: 'wrap',
-              mt: 2,
-              pb: 1,
-            }}
-          >
+        <animated.div style={footnoteSpring}>
+          <div className='flex justify-center gap-4 flex-wrap mt-4 pb-2'>
             {[
               'TanStack Virtual',
               'Infinite Scroll',
               'Lazy Loading',
               'Memo Cards',
             ].map(tech => (
-              <Box
+              <span
                 key={tech}
-                sx={{
-                  px: 1.5,
-                  py: 0.5,
-                  borderRadius: 1,
-                  fontSize: '0.65rem',
-                  fontWeight: 600,
-                  letterSpacing: 0.5,
-                  textTransform: 'uppercase',
-                  color: isLight ? '#B8891F' : '#F5D060',
-                  border: `1px solid ${isLight ? 'rgba(184,137,31,0.15)' : 'rgba(245,208,96,0.15)'}`,
-                  background: isLight
-                    ? 'rgba(184,137,31,0.04)'
-                    : 'rgba(245,208,96,0.04)',
-                }}
+                className={`px-3 py-1 rounded text-[0.65rem] font-semibold tracking-wide uppercase border ${
+                  isLight
+                    ? 'text-[#B8891F] border-[rgba(184,137,31,0.15)] bg-[rgba(184,137,31,0.04)]'
+                    : 'text-[#F5D060] border-[rgba(245,208,96,0.15)] bg-[rgba(245,208,96,0.04)]'
+                }`}
               >
                 {tech}
-              </Box>
+              </span>
             ))}
-          </Box>
-        </motion.div>
-      </Stack>
+          </div>
+        </animated.div>
+      </main>
 
-      {/* ── Lightbox ── */}
       <Lightbox photo={selectedPhoto} onClose={handleLightboxClose} />
     </SunriseBackground>
   );

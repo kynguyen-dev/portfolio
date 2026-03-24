@@ -1,14 +1,9 @@
-import { Stack, Box, useTheme } from '@mui/material';
 import { useNavigate } from '@tanstack/react-router';
-import { motion } from 'framer-motion';
-import { PFTypography, PFGradientTypography } from '@components/core';
+import { animated, useTrail } from '@react-spring/web';
+import { ArrowUpRight } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { ROUTES } from '@constants/router';
-import { glassCardSx } from '@utils/styles/glassCard';
-import {
-  staggerContainer,
-  staggerItem,
-} from '@utils/animations/scrollVariants';
+import { useInView } from '@utils/animations/springVariants';
 
 interface ToolItem {
   emoji?: string;
@@ -16,6 +11,12 @@ interface ToolItem {
   titleKey: string;
   descriptionKey: string;
   route: string;
+  /** Grid column span on md+ */
+  colSpan: number;
+  /** Card height */
+  height: string;
+  /** Optional tech label */
+  techLabel?: string;
 }
 
 const TOOLS: ToolItem[] = [
@@ -24,167 +25,149 @@ const TOOLS: ToolItem[] = [
     titleKey: 'tools.items.gallery.title',
     descriptionKey: 'tools.items.gallery.description',
     route: ROUTES.TOOLS.GALLERY,
+    colSpan: 8,
+    height: 'h-[500px]',
+    techLabel: 'VIRTUALIZED / 60FPS',
   },
   {
     image: '/images/three-kingdoms/logo.jpg',
     titleKey: 'tools.items.threeKingdoms.title',
     descriptionKey: 'tools.items.threeKingdoms.description',
     route: ROUTES.TOOLS.THREE_KINGDOMS,
+    colSpan: 4,
+    height: 'h-[500px]',
+    techLabel: 'AI / DATA',
   },
   {
     emoji: '🤖',
     titleKey: 'tools.items.aiSqlHelper.title',
     descriptionKey: 'tools.items.aiSqlHelper.description',
     route: ROUTES.TOOLS.AI_SQL_HELPER,
+    colSpan: 4,
+    height: 'h-80',
+    techLabel: 'GEMINI_API',
   },
   {
     emoji: '📊',
     titleKey: 'tools.items.marketInsights.title',
     descriptionKey: 'tools.items.marketInsights.description',
     route: ROUTES.TOOLS.MARKET_INSIGHTS,
+    colSpan: 4,
+    height: 'h-80',
+    techLabel: 'REAL_TIME / DASHBOARD',
   },
 ];
 
 export const Tools = () => {
-  const { palette } = useTheme();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const isLight = palette.mode === 'light';
+  const { ref, inView } = useInView({ threshold: 0.1 });
+
+  const trail = useTrail(TOOLS.length + 1, {
+    from: { opacity: 0, y: 40, scale: 0.95 },
+    to: inView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 40, scale: 0.95 },
+    config: { tension: 200, friction: 20 },
+  });
 
   return (
-    <Box
-      component='section'
-      id='tools'
-      sx={{ py: { xs: 8, md: 12 }, px: { xs: 2, md: 4 } }}
-    >
-      <Stack alignItems='center' spacing={2} sx={{ mb: { xs: 5, md: 7 } }}>
-        <PFGradientTypography variant='h4' fontWeight={800}>
+    <section id='tools' className='py-24 px-8 max-w-screen-2xl mx-auto'>
+      {/* ─── Masterwork Grid Header ─── */}
+      <div className='flex items-center gap-6 mb-16'>
+        <h2 className='font-serif-display text-5xl flex-shrink-0'>
           {t('tools.heading')}
-        </PFGradientTypography>
-        <PFTypography
-          variant='body1'
-          textAlign='center'
-          className='max-w-[560px]'
-          style={{ color: palette.text.secondary }}
+        </h2>
+        <div className='h-1 flex-grow bg-gradient-to-r from-ct-secondary to-transparent' />
+      </div>
+
+      {/* ─── 12-Column Grid ─── */}
+      <div ref={ref} className='grid grid-cols-1 md:grid-cols-12 gap-6'>
+        {TOOLS.map((tool, i) => (
+          <animated.div
+            key={tool.route}
+            style={trail[i]}
+            className={`md:col-span-${tool.colSpan} group relative overflow-hidden rounded-2xl ${tool.height} glass-panel cursor-pointer`}
+            onClick={() => navigate({ to: tool.route })}
+            role='link'
+            tabIndex={0}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                navigate({ to: tool.route });
+              }
+            }}
+          >
+            {/* Background Image or Gradient */}
+            {tool.image ? (
+              <img
+                alt={t(tool.titleKey)}
+                className='w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-40'
+                src={tool.image}
+              />
+            ) : (
+              <div className='absolute inset-0 bg-gradient-to-br from-ct-surface-container-high/50 to-ct-surface-container-lowest transition-all duration-500 group-hover:from-primary-main/5' />
+            )}
+
+            {/* Content Overlay */}
+            <div className='absolute inset-0 bg-gradient-to-t from-ct-bg via-ct-bg/20 to-transparent p-8 md:p-12 flex flex-col justify-end'>
+              {/* Emoji/Icon */}
+              {tool.emoji && (
+                <div className='text-4xl mb-4 opacity-80 group-hover:opacity-100 transition-opacity'>
+                  {tool.emoji}
+                </div>
+              )}
+
+              {/* Tech Label */}
+              {tool.techLabel && (
+                <div className='text-ct-secondary font-label-grotesk text-sm tracking-widest mb-2'>
+                  [ {tool.techLabel} ]
+                </div>
+              )}
+
+              {/* Title */}
+              <h4 className={`font-serif-display mb-3 ${tool.colSpan >= 8 ? 'text-3xl md:text-4xl' : 'text-2xl md:text-3xl'}`}>
+                {t(tool.titleKey)}
+              </h4>
+
+              {/* Description */}
+              <p className='text-ct-on-surface-variant text-sm max-w-lg leading-relaxed'>
+                {t(tool.descriptionKey)}
+              </p>
+
+              {/* CTA */}
+              <div className='mt-6 flex gap-4'>
+                <span className='px-6 py-2 bg-ct-secondary text-ct-on-secondary text-xs font-bold rounded inline-flex items-center gap-2 group-hover:shadow-[0_0_20px_rgba(78,222,163,0.3)] transition-shadow'>
+                  {t('tools.explore')}
+                  <ArrowUpRight size={14} weight='bold' />
+                </span>
+                <span className='text-ct-outline-variant flex items-center gap-2 text-xs'>
+                  {'// '}{tool.techLabel}
+                </span>
+              </div>
+            </div>
+          </animated.div>
+        ))}
+
+        {/* ─── CTA Card: "Interested in Synthesis?" ─── */}
+        <animated.div
+          style={trail[TOOLS.length]}
+          className='md:col-span-4 bg-ct-surface-container-high p-12 rounded-2xl flex items-center justify-between border border-ct-outline-variant/10'
         >
-          {t('tools.subtitle')}
-        </PFTypography>
-      </Stack>
-
-      {/* Tools grid with stagger animation */}
-      <motion.div
-        variants={staggerContainer(0.15, 0.1)}
-        initial='hidden'
-        whileInView='visible'
-        viewport={{ once: true, amount: 0.15 }}
-      >
-        <Box
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: {
-              xs: '1fr',
-              sm: 'repeat(2, 1fr)',
-            },
-            gap: { xs: 2, md: 3 },
-            maxWidth: 900,
-            mx: 'auto',
-          }}
-        >
-          {TOOLS.map(tool => (
-            <motion.div key={tool.route} variants={staggerItem}>
-              <Box
-                onClick={() => navigate({ to: tool.route })}
-                role='link'
-                tabIndex={0}
-                onKeyDown={e => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    navigate({ to: tool.route });
-                  }
-                }}
-                sx={{
-                  ...glassCardSx(isLight, { hoverLift: true }),
-                  p: { xs: 3, md: 4 },
-                  cursor: 'pointer',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  '&:focus-visible': {
-                    outline: `2px solid ${palette.primary.main}`,
-                    outlineOffset: 2,
-                  },
-                }}
-              >
-                {/* Decorative gradient corner */}
-                <Box
-                  sx={{
-                    position: 'absolute',
-                    top: -40,
-                    right: -40,
-                    width: 120,
-                    height: 120,
-                    borderRadius: '50%',
-                    background: `radial-gradient(circle, ${palette.primary.main}15, transparent 70%)`,
-                    pointerEvents: 'none',
-                  }}
-                />
-
-                <Stack spacing={2}>
-                  {/* Icon */}
-                  <Box sx={{ fontSize: '2.5rem', lineHeight: 1 }}>
-                    {tool.image ? (
-                      <Box
-                        component='img'
-                        src={tool.image}
-                        alt=''
-                        sx={{
-                          width: 48,
-                          height: 48,
-                          borderRadius: '50%',
-                          objectFit: 'cover',
-                        }}
-                      />
-                    ) : (
-                      tool.emoji
-                    )}
-                  </Box>
-
-                  {/* Title */}
-                  <PFTypography
-                    variant='h6'
-                    fontWeight={700}
-                    className='text-ct-on-surface'
-                  >
-                    {t(tool.titleKey)}
-                  </PFTypography>
-
-                  {/* Description */}
-                  <PFTypography
-                    variant='body2'
-                    className='text-ct-on-surface-variant leading-relaxed'
-                  >
-                    {t(tool.descriptionKey)}
-                  </PFTypography>
-
-                  {/* Arrow indicator */}
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 0.5,
-                      color: isLight ? '#B8891F' : '#F5D060',
-                      fontWeight: 600,
-                      fontSize: '0.85rem',
-                      mt: 1,
-                    }}
-                  >
-                    {t('tools.explore')} →
-                  </Box>
-                </Stack>
-              </Box>
-            </motion.div>
-          ))}
-        </Box>
-      </motion.div>
-    </Box>
+          <div className='max-w-md'>
+            <h4 className='text-3xl font-serif-display mb-4'>
+              {t('nav.initContact')}
+            </h4>
+            <p className='text-ct-on-surface-variant'>
+              {t('tools.subtitle')}
+            </p>
+          </div>
+          <a
+            href='#contact'
+            className='w-16 h-16 rounded-full bg-primary-main text-ct-on-primary flex items-center justify-center hover:scale-110 transition-transform flex-shrink-0'
+          >
+            <ArrowUpRight size={24} weight='bold' />
+          </a>
+        </animated.div>
+      </div>
+    </section>
   );
 };

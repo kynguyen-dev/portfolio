@@ -1,5 +1,6 @@
-import { motion, type Variants } from 'motion/react';
+import { animated, useTrail } from '@react-spring/web';
 import { useTranslation } from 'react-i18next';
+import { useInView } from '@utils/animations/springVariants';
 
 interface TimelineEntry {
   company: string;
@@ -52,84 +53,212 @@ const workHistory: TimelineEntry[] = [
 
 export const WorkTimeline = () => {
   const { t } = useTranslation();
+  const { ref: beamRef, inView: beamInView } = useInView({ threshold: 0.1 });
+  const { ref: gridRef, inView: gridInView } = useInView({ threshold: 0.15 });
+
+  // We animate the first 2 floating nodes + the bento grid items
+  const nodeTrail = useTrail(2, {
+    from: { opacity: 0, y: 40, scale: 0.9 },
+    to: beamInView
+      ? { opacity: 1, y: 0, scale: 1 }
+      : { opacity: 0, y: 40, scale: 0.9 },
+    config: { tension: 180, friction: 22 },
+  });
+
+  const gridTrail = useTrail(workHistory.length + 2, {
+    from: { opacity: 0, y: 40, scale: 0.95 },
+    to: gridInView
+      ? { opacity: 1, y: 0, scale: 1 }
+      : { opacity: 0, y: 40, scale: 0.95 },
+    config: { tension: 200, friction: 20 },
+  });
 
   return (
     <section
       id='path'
       aria-label={t('workExperience.heading')}
-      className='max-w-7xl mx-auto px-8 py-24 md:py-32'
+      className='py-24 px-8 max-w-screen-2xl mx-auto relative'
     >
-      <div className='flex flex-col md:flex-row gap-16'>
-        {/* Left — Sticky heading */}
-        <div className='md:w-1/3'>
-          <h2 className='font-serif-display text-4xl text-ct-secondary sticky top-32'>
-            {t('workExperience.sectionTitle')}
-            <span className='text-ct-on-surface'>
-              {t('workExperience.sectionTitleSuffix')}
-            </span>
+      {/* ─── Section Header ─── */}
+      <div className='flex items-end justify-between mb-16'>
+        <div>
+          <h2 className='text-ct-secondary font-label-grotesk text-xs font-black tracking-[0.3em] uppercase mb-2'>
+            01 {'// '}THE_EVOLUTION
           </h2>
-          <p className='mt-4 text-ct-on-surface-variant font-mono-code text-sm'>
-            {t('workExperience.archiveLabel')}
-          </p>
+          <h3 className='font-serif-display text-4xl md:text-5xl text-ct-on-surface'>
+            {t('workExperience.sectionTitle')}
+          </h3>
         </div>
+        <div className='hidden md:block h-[1px] flex-grow mx-12 bg-gradient-to-r from-ct-outline-variant/30 to-transparent' />
+      </div>
 
-        {/* Right — Timeline */}
-        <div className='md:w-2/3 relative pl-12 border-l border-ct-secondary/20 space-y-24'>
-          {workHistory.map((entry, index) => {
-            const cardVariant: Variants = {
-              hidden: { opacity: 0, x: 60, scale: 0.95 },
-              visible: {
-                opacity: 1,
-                x: 0,
-                scale: 1,
-                transition: {
-                  duration: 0.6,
-                  delay: index * 0.15,
-                  ease: [0.25, 0.46, 0.45, 0.94],
-                },
-              },
-            };
-            return (
-              <motion.div
-                key={`${entry.company}-${entry.period}`}
-                variants={cardVariant}
-                initial='hidden'
-                whileInView='visible'
-                viewport={{ once: true, amount: 0.3 }}
-                className='relative'
-              >
-                {/* Timeline dot */}
-                <div className='absolute -left-[54px] top-0 w-3 h-3 rounded-full bg-ct-secondary shadow-[0_0_15px_#D4AF37]' />
+      {/* ─── Tracing Beam + Floating Nodes ─── */}
+      <div
+        ref={beamRef}
+        className='relative w-full min-h-[400px] md:min-h-[500px] flex items-center justify-center mb-16'
+      >
+        {/* Aceternity Tracing Beam SVG */}
+        <svg
+          className='absolute top-0 left-0 w-full h-full pointer-events-none z-0'
+          preserveAspectRatio='none'
+          viewBox='0 0 1000 400'
+        >
+          <path
+            className='opacity-30'
+            d='M0,200 C150,50 350,350 500,200 C650,50 850,350 1000,200'
+            fill='none'
+            stroke='#4edea3'
+            strokeWidth='2'
+            strokeDasharray='10 5'
+            style={{ animation: 'pulse-beam 3s infinite linear' }}
+          />
+          <path
+            className='opacity-60'
+            d='M0,200 C150,50 350,350 500,200 C650,50 850,350 1000,200'
+            fill='none'
+            stroke='#4edea3'
+            strokeWidth='0.5'
+          />
+        </svg>
 
-                {/* Card */}
-                <div className='glass p-8 rounded-xl gold-glow transition-all duration-300'>
-                  <span className='font-mono-code text-ct-secondary text-sm mb-2 block'>
-                    {entry.period}
+        {/* Floating Glassmorphism Data Nodes */}
+        <div className='relative z-10 w-full flex flex-col md:flex-row justify-between items-center gap-16 md:gap-8 px-4'>
+          {/* Node 01 (latest) */}
+          <animated.div
+            style={nodeTrail[0]}
+            className='w-full max-w-md'
+            // Float animation via CSS
+          >
+            <div
+              className='glass-panel p-8 rounded-2xl border-2 border-primary-main/40 shadow-[0_0_30px_rgba(208,188,255,0.15)] relative overflow-hidden hover:border-primary-main/80 transition-all duration-500 group'
+              style={{ animation: 'float 6s ease-in-out infinite' }}
+            >
+              <div className='absolute -top-10 -right-10 w-32 h-32 bg-primary-main/10 rounded-full blur-3xl group-hover:bg-primary-main/20 transition-all' />
+              <div className='text-ct-secondary font-label-grotesk text-sm mb-4 tracking-widest'>
+                [ {workHistory[0].period.toUpperCase()} ]
+              </div>
+              <h4 className='text-2xl font-bold text-ct-on-surface mb-3 tracking-tight'>
+                {workHistory[0].role}
+              </h4>
+              <div className='text-xs text-ct-outline uppercase tracking-widest mb-4'>
+                {workHistory[0].company}
+              </div>
+              <p className='text-ct-on-surface-variant text-sm leading-relaxed mb-6'>
+                {workHistory[0].description}
+              </p>
+              <div className='flex flex-wrap gap-2'>
+                {workHistory[0].technologies.map(tech => (
+                  <span
+                    key={tech}
+                    className='px-2 py-1 bg-ct-surface-container text-primary-main text-[10px] font-bold rounded border border-primary-main/20'
+                  >
+                    {tech}
                   </span>
-                  <h3 className='text-2xl font-bold mb-1 text-ct-on-surface'>
-                    {entry.role}
-                  </h3>
-                  <p className='text-ct-primary-container text-sm font-semibold mb-4'>
-                    {entry.company}
-                  </p>
-                  <p className='text-ct-on-surface-variant mb-6 leading-relaxed'>
-                    {entry.description}
-                  </p>
-                  <div className='flex flex-wrap gap-2'>
-                    {entry.technologies.map(tech => (
-                      <span
-                        key={tech}
-                        className='text-[10px] font-mono-code px-2 py-1 border border-ct-primary-container/20 text-ct-primary-container bg-ct-primary-container/5 uppercase'
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
+                ))}
+              </div>
+            </div>
+          </animated.div>
+
+          {/* Node 02 (offset) */}
+          <animated.div
+            style={nodeTrail[1]}
+            className='w-full max-w-md md:mt-32'
+          >
+            <div
+              className='glass-panel p-8 rounded-2xl border-2 border-primary-main/40 shadow-[0_0_30px_rgba(208,188,255,0.15)] relative overflow-hidden hover:border-primary-main/80 transition-all duration-500 group'
+              style={{
+                animation: 'float 6s ease-in-out infinite',
+                animationDelay: '-3s',
+              }}
+            >
+              <div className='absolute -bottom-10 -left-10 w-32 h-32 bg-primary-main/10 rounded-full blur-3xl group-hover:bg-primary-main/20 transition-all' />
+              <div className='text-ct-secondary font-label-grotesk text-sm mb-4 tracking-widest'>
+                [ {workHistory[1].period.toUpperCase()} ]
+              </div>
+              <h4 className='text-2xl font-bold text-ct-on-surface mb-3 tracking-tight'>
+                {workHistory[1].role}
+              </h4>
+              <div className='text-xs text-ct-outline uppercase tracking-widest mb-4'>
+                {workHistory[1].company}
+              </div>
+              <p className='text-ct-on-surface-variant text-sm leading-relaxed mb-6'>
+                {workHistory[1].description}
+              </p>
+              <div className='flex flex-wrap gap-2'>
+                {workHistory[1].technologies.map(tech => (
+                  <span
+                    key={tech}
+                    className='px-2 py-1 bg-ct-surface-container text-primary-main text-[10px] font-bold rounded border border-primary-main/20'
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </animated.div>
         </div>
+      </div>
+
+      {/* ─── Bento Grid ─── */}
+      <div ref={gridRef} className='grid grid-cols-1 md:grid-cols-4 gap-6'>
+        {workHistory.slice(2).map((entry, index) => (
+          <animated.div
+            key={`${entry.company}-${entry.period}`}
+            style={gridTrail[index]}
+            className='md:col-span-2 bg-ct-surface-container-low p-8 rounded-2xl hover:bg-ct-surface-container-high transition-colors duration-300 group'
+          >
+            <div className='text-ct-secondary font-label-grotesk text-sm mb-4 tracking-wider'>
+              {entry.period}
+            </div>
+            <h4 className='text-xl font-bold mb-1 text-ct-on-surface'>
+              {entry.role}
+            </h4>
+            <p className='text-primary-main text-sm font-semibold mb-4'>
+              {entry.company}
+            </p>
+            <p className='text-ct-on-surface-variant text-sm leading-relaxed mb-6'>
+              {entry.description}
+            </p>
+            <div className='flex flex-wrap gap-2'>
+              {entry.technologies.map(tech => (
+                <span
+                  key={tech}
+                  className='text-[10px] font-label-grotesk px-2.5 py-1 bg-primary-main/5 text-primary-main uppercase tracking-wider'
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </animated.div>
+        ))}
+
+        {/* Accent Card — Philosophy */}
+        <animated.div
+          style={gridTrail[workHistory.length]}
+          className='md:col-span-1 bg-ct-secondary text-ct-on-secondary p-8 rounded-2xl flex flex-col justify-between'
+        >
+          <h4 className='font-black text-2xl tracking-tighter leading-tight'>
+            PRECISION
+            <br />
+            OVER
+            <br />
+            POLISH.
+          </h4>
+          <span className='self-end text-2xl'>✦</span>
+        </animated.div>
+
+        {/* Accent Card — Stats */}
+        <animated.div
+          style={gridTrail[workHistory.length + 1]}
+          className='md:col-span-1 bg-ct-surface-container-low p-8 rounded-2xl border-l-2 border-ct-secondary/20'
+        >
+          <div className='text-3xl font-serif-display italic mb-2'>
+            {workHistory.length}+
+          </div>
+          <div className='text-[10px] text-ct-outline uppercase tracking-widest'>
+            Successful Missions
+          </div>
+        </animated.div>
       </div>
     </section>
   );

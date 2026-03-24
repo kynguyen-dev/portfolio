@@ -1,23 +1,19 @@
-import { Box, useTheme } from '@mui/material';
-import { motion, AnimatePresence } from 'framer-motion';
-import type { GalleryPhoto } from './types';
-import CloseIcon from '@mui/icons-material/Close';
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import { animated, useTransition, useSpring } from '@react-spring/web';
+import { X, ExternalLink } from 'lucide-react';
 import { PFTypography } from '@components/core';
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
+import { useThemeMode } from '@contexts/theme-mode';
+import type { GalleryPhoto } from './types';
 
 interface LightboxProps {
   photo: GalleryPhoto | null;
   onClose: () => void;
 }
 
-/**
- * Full-screen lightbox overlay for viewing a single photo.
- * Closes on backdrop click, ESC key, or close button.
- */
 export const Lightbox = ({ photo, onClose }: LightboxProps) => {
-  const { palette } = useTheme();
-  const isLight = palette.mode === 'light';
+  const { mode } = useThemeMode();
+  const isLight = mode === 'light';
+  const [closeHovered, setCloseHovered] = useState(false);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -37,136 +33,112 @@ export const Lightbox = ({ photo, onClose }: LightboxProps) => {
     };
   }, [photo, handleKeyDown]);
 
+  const overlayTransition = useTransition(photo, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+    config: { duration: 250 },
+  });
+
+  const closeSpring = useSpring({
+    scale: closeHovered ? 1.1 : 1,
+    config: { tension: 300, friction: 10 },
+  });
+
   return (
-    <AnimatePresence>
-      {photo && (
-        <motion.div
-          key='lightbox'
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.25 }}
-          onClick={onClose}
-          style={{
-            position: 'fixed',
-            inset: 0,
-            zIndex: 9999,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            background: 'rgba(0, 0, 0, 0.85)',
-            backdropFilter: 'blur(20px)',
-            cursor: 'zoom-out',
-          }}
-        >
-          {/* Close button */}
-          <Box
-            component={motion.button}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={onClose}
-            sx={{
-              position: 'absolute',
-              top: 20,
-              right: 20,
-              zIndex: 10,
-              width: 44,
-              height: 44,
-              borderRadius: '50%',
-              border: '1px solid rgba(255,255,255,0.2)',
-              background: 'rgba(255,255,255,0.1)',
-              backdropFilter: 'blur(8px)',
+    <>
+      {overlayTransition((style, item) =>
+        item ? (
+          <animated.div
+            key='lightbox'
+            style={{
+              ...style,
+              position: 'fixed',
+              inset: 0,
+              zIndex: 9999,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              cursor: 'pointer',
-              color: '#fff',
-              '&:hover': {
-                background: 'rgba(255,255,255,0.2)',
-              },
+              background: 'rgba(0, 0, 0, 0.85)',
+              backdropFilter: 'blur(20px)',
+              cursor: 'zoom-out',
             }}
+            onClick={onClose}
           >
-            <CloseIcon />
-          </Box>
-
-          {/* Image container */}
-          <motion.div
-            initial={{ scale: 0.9, y: 20 }}
-            animate={{ scale: 1, y: 0 }}
-            exit={{ scale: 0.9, y: 20 }}
-            transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-            onClick={e => e.stopPropagation()}
-            style={{
-              maxWidth: '90vw',
-              maxHeight: '85vh',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: 16,
-              cursor: 'default',
-            }}
-          >
-            <Box
-              component='img'
-              src={photo.src}
-              alt={`Photo by ${photo.author}`}
-              loading='lazy'
-              sx={{
-                maxWidth: '100%',
-                maxHeight: '78vh',
-                objectFit: 'contain',
-                borderRadius: 2,
-                boxShadow: '0 20px 80px rgba(0,0,0,0.5)',
-              }}
-            />
-
-            {/* Photo info */}
-            <Box
-              sx={{
+            <animated.button
+              style={{
+                ...closeSpring,
+                position: 'absolute',
+                top: 20,
+                right: 20,
+                zIndex: 10,
+                width: 44,
+                height: 44,
+                borderRadius: '50%',
+                border: '1px solid rgba(255,255,255,0.2)',
+                background: 'rgba(255,255,255,0.1)',
+                backdropFilter: 'blur(8px)',
                 display: 'flex',
                 alignItems: 'center',
-                gap: 2,
-                px: 3,
-                py: 1.5,
-                borderRadius: 2,
-                background: isLight
-                  ? 'rgba(255,248,240,0.9)'
-                  : 'rgba(11, 13, 46, 0.7)',
-                backdropFilter: 'blur(12px)',
-                border: `1px solid ${isLight ? 'rgba(184,137,31,0.2)' : 'rgba(245,208,96,0.2)'}`,
+                justifyContent: 'center',
+                cursor: 'pointer',
+                color: '#fff',
               }}
+              onMouseEnter={() => setCloseHovered(true)}
+              onMouseLeave={() => setCloseHovered(false)}
+              onClick={onClose}
             >
-              <PFTypography
-                variant='body2'
-                sx={{ color: isLight ? '#5C4A32' : '#FFE4B5', fontWeight: 600 }}
-              >
-                📸 {photo.author}
-              </PFTypography>
-              <PFTypography
-                variant='caption'
-                sx={{ color: isLight ? '#8B7355' : '#C8B88A' }}
-              >
-                {photo.width * 2} × {photo.height * 2}
-              </PFTypography>
-              <Box
-                component='a'
-                href={photo.src}
-                target='_blank'
-                rel='noopener noreferrer'
-                onClick={e => e.stopPropagation()}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  color: isLight ? '#B8891F' : '#F5D060',
-                  '&:hover': { opacity: 0.8 },
+              <X size={20} />
+            </animated.button>
+
+            <div
+              onClick={e => e.stopPropagation()}
+              className='max-w-[90vw] max-h-[85vh] flex flex-col items-center gap-4 cursor-default'
+            >
+              <img
+                src={item.src}
+                alt={`Photo by ${item.author}`}
+                loading='lazy'
+                className='max-w-full max-h-[78vh] object-contain rounded-lg shadow-[0_20px_80px_rgba(0,0,0,0.5)]'
+              />
+
+              <div
+                className='flex items-center gap-4 px-6 py-3 rounded-lg backdrop-blur-xl'
+                style={{
+                  background: isLight
+                    ? 'rgba(255,248,240,0.9)'
+                    : 'rgba(11,13,46,0.7)',
+                  border: `1px solid ${isLight ? 'rgba(184,137,31,0.2)' : 'rgba(245,208,96,0.2)'}`,
                 }}
               >
-                <OpenInNewIcon sx={{ fontSize: 16 }} />
-              </Box>
-            </Box>
-          </motion.div>
-        </motion.div>
+                <PFTypography
+                  variant='body2'
+                  fontWeight={600}
+                  style={{ color: isLight ? '#5C4A32' : '#FFE4B5' }}
+                >
+                  📸 {item.author}
+                </PFTypography>
+                <PFTypography
+                  variant='caption'
+                  style={{ color: isLight ? '#8B7355' : '#C8B88A' }}
+                >
+                  {item.width * 2} × {item.height * 2}
+                </PFTypography>
+                <a
+                  href={item.src}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  onClick={e => e.stopPropagation()}
+                  className='flex items-center hover:opacity-80'
+                  style={{ color: isLight ? '#B8891F' : '#F5D060' }}
+                >
+                  <ExternalLink size={16} />
+                </a>
+              </div>
+            </div>
+          </animated.div>
+        ) : null
       )}
-    </AnimatePresence>
+    </>
   );
 };

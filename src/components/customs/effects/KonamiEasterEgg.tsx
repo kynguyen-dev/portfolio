@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
+import { animated, useTransition, useSpring } from '@react-spring/web';
 import { useThemeMode } from '@contexts/theme-mode';
 import { cn } from '@utils/core/cn';
 
@@ -16,10 +16,6 @@ const KONAMI = [
   'a',
 ];
 
-/**
- * Easter egg – type the Konami code (↑↑↓↓←→←→BA) to trigger a fun
- * confetti-like particle burst on screen.
- */
 export const KonamiEasterEgg = () => {
   const { mode } = useThemeMode();
   const [triggered, setTriggered] = useState(false);
@@ -45,7 +41,6 @@ export const KonamiEasterEgg = () => {
     return () => window.removeEventListener('keydown', handler);
   }, [check]);
 
-  /* Generate random particles */
   const particles = Array.from({ length: 40 }, (_, i) => {
     const colors = [
       '#D4A843',
@@ -57,71 +52,84 @@ export const KonamiEasterEgg = () => {
     ];
     return {
       id: i,
-      x: Math.random() * 100, // vw
+      x: Math.random() * 100,
       delay: Math.random() * 0.5,
       size: 6 + Math.random() * 10,
       color: colors[i % colors.length],
       rotate: Math.random() * 720 - 360,
+      duration: 2.5 + Math.random(),
     };
   });
 
-  return (
-    <AnimatePresence>
-      {triggered && (
-        <motion.div
-          key='konami-overlay'
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.6 }}
-          className='fixed inset-0 z-[100001] pointer-events-none overflow-hidden'
-        >
-          {/* Achievement banner */}
-          <motion.div
-            initial={{ y: -80, opacity: 0, x: '-50%' }}
-            animate={{ y: 0, opacity: 1, x: '-50%' }}
-            exit={{ y: -80, opacity: 0, x: '-50%' }}
-            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            className={cn(
-              'absolute top-10 left-1/2 px-8 py-3 rounded-xl font-bold text-lg tracking-widest text-center select-none shadow-2xl',
-              mode === 'dark' ? 'text-[#1A1410]' : 'text-[#FBF6EE]',
-              'bg-gradient-to-r from-primary-light to-primary-main shadow-primary-main/40'
-            )}
-          >
-            🎮 KONAMI CODE ACTIVATED! 🎮
-          </motion.div>
+  const overlayTransition = useTransition(triggered, {
+    from: { opacity: 1 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+    config: { duration: 600 },
+  });
 
-          {/* Confetti particles */}
-          {particles.map(p => (
-            <motion.div
-              key={p.id}
-              initial={{ y: '-10vh', x: `${p.x}vw`, opacity: 1, rotate: 0 }}
-              animate={{
-                y: '110vh',
-                rotate: p.rotate,
-                opacity: [1, 1, 0],
-              }}
-              transition={{
-                duration: 2.5 + Math.random(),
-                delay: p.delay,
-                ease: 'easeIn',
+  const bannerSpring = useSpring({
+    from: { y: -80, opacity: 0 },
+    to: triggered ? { y: 0, opacity: 1 } : { y: -80, opacity: 0 },
+    config: { tension: 300, friction: 20 },
+  });
+
+  return (
+    <>
+      {overlayTransition((style, show) =>
+        show ? (
+          <animated.div
+            key='konami-overlay'
+            style={style}
+            className='fixed inset-0 z-[100001] pointer-events-none overflow-hidden'
+          >
+            <animated.div
+              style={{
+                ...bannerSpring,
+                position: 'absolute',
+                top: 40,
+                left: '50%',
+                transform: 'translateX(-50%)',
               }}
               className={cn(
-                'absolute',
-                p.id % 3 === 0
-                  ? 'rounded-full'
-                  : p.id % 3 === 1
-                    ? 'rounded-sm'
-                    : ''
+                'px-8 py-3 rounded-xl font-bold text-lg tracking-widest text-center select-none shadow-2xl',
+                mode === 'dark' ? 'text-[#1A1410]' : 'text-[#FBF6EE]',
+                'bg-gradient-to-r from-primary-light to-primary-main shadow-primary-main/40'
               )}
-              style={{
-                width: p.size,
-                height: p.size,
-                background: p.color,
-              }}
-            />
-          ))}
-        </motion.div>
+            >
+              🎮 KONAMI CODE ACTIVATED! 🎮
+            </animated.div>
+
+            {particles.map(p => (
+              <div
+                key={p.id}
+                className={cn(
+                  'absolute',
+                  p.id % 3 === 0
+                    ? 'rounded-full'
+                    : p.id % 3 === 1
+                      ? 'rounded-sm'
+                      : ''
+                )}
+                style={{
+                  left: `${p.x}vw`,
+                  width: p.size,
+                  height: p.size,
+                  background: p.color,
+                  animation: `konami-fall ${p.duration}s ${p.delay}s ease-in forwards`,
+                }}
+              />
+            ))}
+          </animated.div>
+        ) : null
       )}
-    </AnimatePresence>
+      <style>{`
+        @keyframes konami-fall {
+          0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+          80% { opacity: 1; }
+          100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+      `}</style>
+    </>
   );
 };

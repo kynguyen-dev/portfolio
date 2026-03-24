@@ -1,5 +1,5 @@
-import { ReactNode, ElementType } from 'react';
-import { motion } from 'framer-motion';
+import { ReactNode, ElementType, useEffect, useState } from 'react';
+import { animated, useSpring } from '@react-spring/web';
 import {
   APP_THEMES,
   APP_TYPOGRAPHIES_ANIMATION,
@@ -28,6 +28,8 @@ export interface PFGradientTypographyProps {
   speed?: number; // typewriter speed
   className?: string;
   fontWeight?: string | number;
+  align?: string;
+  sx?: Record<string, unknown>;
 }
 
 export const PFGradientTypography = ({
@@ -99,19 +101,26 @@ export const PFGradientTypography = ({
     );
   }
 
+  return <GradientAnimatedWrapper>{content}</GradientAnimatedWrapper>;
+};
+
+/** Looping background-position animation via react-spring */
+const GradientAnimatedWrapper = ({ children }: { children: ReactNode }) => {
+  const [toggle, setToggle] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => setToggle(prev => !prev), 2000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const spring = useSpring({
+    backgroundPosition: toggle ? '100% 50%' : '0% 50%',
+    config: { duration: 2000 },
+  });
+
   return (
-    <motion.div
-      animate={{
-        backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-      }}
-      transition={{
-        duration: 2,
-        repeat: Infinity,
-        ease: 'linear',
-      }}
-      className='inline-block'
-    >
-      {content}
-    </motion.div>
+    <animated.div style={spring} className='inline-block'>
+      {children}
+    </animated.div>
   );
 };

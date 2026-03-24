@@ -1,12 +1,5 @@
-import { CircularProgress, Stack } from '@mui/material';
-
 export const FullScreenLoading = () => (
-  <Stack
-    justifyContent={'center'}
-    alignItems={'center'}
-    width={'100%'}
-    minHeight={'100vh'}
-  >
-    <CircularProgress />
-  </Stack>
+  <div className='flex items-center justify-center w-full min-h-screen'>
+    <div className='w-8 h-8 border-2 border-primary-main border-t-transparent rounded-full animate-spin' />
+  </div>
 );

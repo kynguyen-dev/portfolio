@@ -10,51 +10,57 @@ import {
   type ColumnDef,
 } from '@tanstack/react-table';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { Box, useTheme, useMediaQuery } from '@mui/material';
+import { useThemeMode } from '@contexts/theme-mode';
 import type { ThreeKingdomsCharacter } from '@constants/three-kingdoms';
 import { getKingdomMeta } from '@constants/three-kingdoms';
 import { MultiFormatImage } from './MultiFormatImage';
 
-/* Small component so we can use MultiFormatImage (which uses hooks) inside a table cell */
+const useIsMobile = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 600px)');
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+  return isMobile;
+};
+
+import { useState, useEffect } from 'react';
+
 const AvatarCell = ({ character }: { character: ThreeKingdomsCharacter }) => {
   const km = getKingdomMeta(character.kingdom);
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-      <Box
-        sx={{
-          width: 36,
-          height: 36,
-          borderRadius: '50%',
+    <div className='flex items-center gap-2'>
+      <div
+        className='w-9 h-9 rounded-full flex-shrink-0 overflow-hidden flex items-center justify-center'
+        style={{
           border: `2px solid ${km.color}`,
-          flexShrink: 0,
-          overflow: 'hidden',
           backgroundColor: `${km.color}20`,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
         }}
       >
         <MultiFormatImage
           basePath={`/images/three-kingdoms/avatar/${character.id}`}
           alt={character.name.en}
-          sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          className='w-full h-full object-cover'
           fallback={
-            <Box
-              component='span'
-              sx={{ fontWeight: 700, fontSize: '0.85rem', color: km.color }}
+            <span
+              className='font-bold text-[0.85rem]'
+              style={{ color: km.color }}
             >
               {character.name.cn.charAt(0)}
-            </Box>
+            </span>
           }
         />
-      </Box>
-      <Box>
-        <Box sx={{ fontWeight: 700, lineHeight: 1.2 }}>{character.name.cn}</Box>
-        <Box sx={{ fontSize: '0.75rem', opacity: 0.7 }}>
+      </div>
+      <div>
+        <div className='font-bold leading-tight'>{character.name.cn}</div>
+        <div className='text-xs opacity-70'>
           {character.name.vi} · {character.name.en}
-        </Box>
-      </Box>
-    </Box>
+        </div>
+      </div>
+    </div>
   );
 };
 
@@ -75,9 +81,9 @@ export const CharacterTable = ({
   onSortingChange,
   onRowClick,
 }: CharacterTableProps) => {
-  const { palette, breakpoints } = useTheme();
-  const isLight = palette.mode === 'light';
-  const isMobile = useMediaQuery(breakpoints.down('sm'));
+  const { mode } = useThemeMode();
+  const isLight = mode === 'light';
+  const isMobile = useIsMobile();
   const parentRef = useRef<HTMLDivElement>(null);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -98,9 +104,12 @@ export const CharacterTable = ({
         cell: info => {
           const km = getKingdomMeta(info.getValue());
           return (
-            <Box sx={{ color: km.color, fontWeight: 600, fontSize: '0.85rem' }}>
+            <span
+              className='font-semibold text-[0.85rem]'
+              style={{ color: km.color }}
+            >
               {km.emoji} {km.name.en}
-            </Box>
+            </span>
           );
         },
         size: 140,
@@ -123,9 +132,7 @@ export const CharacterTable = ({
           id: 'hometown',
           header: '📍 Hometown',
           cell: info => (
-            <Box sx={{ fontSize: '0.82rem', opacity: 0.85 }}>
-              {info.getValue()}
-            </Box>
+            <span className='text-[0.82rem] opacity-85'>{info.getValue()}</span>
           ),
           size: 160,
           minSize: 120,
@@ -198,8 +205,6 @@ export const CharacterTable = ({
     overscan: 10,
   });
 
-  const headerColor = isLight ? '#5C4A32' : '#FFE4B5';
-  const rowHover = isLight ? 'rgba(184,137,31,0.06)' : 'rgba(245,208,96,0.06)';
   const borderColor = isLight
     ? 'rgba(184,137,31,0.15)'
     : 'rgba(245,208,96,0.15)';
@@ -214,16 +219,13 @@ export const CharacterTable = ({
       : '1fr';
 
   return (
-    <Box
+    <div
       ref={parentRef}
-      sx={{
+      className='w-full rounded-lg overflow-x-auto overflow-y-auto'
+      style={{
         maxHeight: 'calc(100vh - 440px)',
         minHeight: 200,
-        overflowY: 'auto',
-        overflowX: 'auto',
-        borderRadius: 2,
         border: `1px solid ${borderColor}`,
-        width: '100%',
         backgroundColor: isLight
           ? 'rgba(255,248,240,0.5)'
           : 'rgba(11,13,46,0.35)',
@@ -231,13 +233,11 @@ export const CharacterTable = ({
       }}
     >
       {/* Table header */}
-      <Box
-        sx={{
+      <div
+        className='sticky top-0 z-[2]'
+        style={{
           display: 'grid',
           gridTemplateColumns: gridCols,
-          position: 'sticky',
-          top: 0,
-          zIndex: 2,
           backgroundColor: isLight
             ? 'rgba(251,246,238,0.95)'
             : 'rgba(11,13,46,0.9)',
@@ -247,41 +247,36 @@ export const CharacterTable = ({
       >
         {table.getHeaderGroups().map(hg =>
           hg.headers.map(header => (
-            <Box
+            <div
               key={header.id}
               onClick={header.column.getToggleSortingHandler()}
-              sx={{
-                px: 1.5,
-                py: 1.5,
-                fontSize: '0.8rem',
-                fontWeight: 700,
-                color: headerColor,
+              className='px-3 py-3 text-[0.8rem] font-bold whitespace-nowrap select-none'
+              style={{
+                color: isLight ? '#5C4A32' : '#FFE4B5',
                 cursor: header.column.getCanSort() ? 'pointer' : 'default',
-                userSelect: 'none',
-                whiteSpace: 'nowrap',
-                '&:hover': header.column.getCanSort()
-                  ? { backgroundColor: rowHover }
-                  : {},
               }}
             >
               {flexRender(header.column.columnDef.header, header.getContext())}
               {header.column.getIsSorted() === 'asc' && ' ▲'}
               {header.column.getIsSorted() === 'desc' && ' ▼'}
-            </Box>
+            </div>
           ))
         )}
-      </Box>
+      </div>
 
       {/* Virtualized rows */}
-      <Box
-        sx={{ height: `${virtualizer.getTotalSize()}px`, position: 'relative' }}
+      <div
+        style={{
+          height: `${virtualizer.getTotalSize()}px`,
+          position: 'relative',
+        }}
       >
         {virtualizer.getVirtualItems().map(vRow => {
           const row = rows[vRow.index];
           const km = getKingdomMeta(row.original.kingdom);
 
           return (
-            <Box
+            <div
               key={row.id}
               onClick={() => onRowClick(row.original)}
               role='button'
@@ -289,7 +284,8 @@ export const CharacterTable = ({
               onKeyDown={e => {
                 if (e.key === 'Enter') onRowClick(row.original);
               }}
-              sx={{
+              className='cursor-pointer transition-colors duration-150 hover:bg-white/5 focus-visible:outline-2 focus-visible:outline-primary-main focus-visible:-outline-offset-2'
+              style={{
                 display: 'grid',
                 gridTemplateColumns: gridCols,
                 position: 'absolute',
@@ -300,49 +296,28 @@ export const CharacterTable = ({
                 transform: `translateY(${vRow.start}px)`,
                 borderBottom: `1px solid ${borderColor}`,
                 borderLeft: `3px solid ${km.color}`,
-                cursor: 'pointer',
-                transition: 'background-color 0.15s',
-                '&:hover': { backgroundColor: rowHover },
-                '&:focus-visible': {
-                  outline: `2px solid ${palette.primary.main}`,
-                  outlineOffset: -2,
-                },
               }}
             >
               {row.getVisibleCells().map(cell => (
-                <Box
+                <div
                   key={cell.id}
-                  sx={{
-                    px: 1.5,
-                    display: 'flex',
-                    alignItems: 'center',
-                    fontSize: '0.85rem',
-                    color: palette.text.primary,
-                    overflow: 'hidden',
-                  }}
+                  className='px-3 flex items-center text-[0.85rem] text-ct-on-surface overflow-hidden'
                 >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </Box>
+                </div>
               ))}
-            </Box>
+            </div>
           );
         })}
-      </Box>
+      </div>
 
       {/* Empty state */}
       {rows.length === 0 && (
-        <Box
-          sx={{
-            textAlign: 'center',
-            py: 6,
-            color: palette.text.secondary,
-            fontSize: '0.9rem',
-          }}
-        >
+        <div className='text-center py-12 text-ct-on-surface-variant text-[0.9rem]'>
           No warriors found 🏯
-        </Box>
+        </div>
       )}
-    </Box>
+    </div>
   );
 };
 
@@ -357,14 +332,11 @@ const StatCell = ({ value }: { value: number }) => {
           ? '#2E5090'
           : '#6B7280';
   return (
-    <Box
-      sx={{
-        fontWeight: value >= 90 ? 700 : 500,
-        color,
-        fontVariantNumeric: 'tabular-nums',
-      }}
+    <span
+      className='tabular-nums'
+      style={{ fontWeight: value >= 90 ? 700 : 500, color }}
     >
       {value}
-    </Box>
+    </span>
   );
 };

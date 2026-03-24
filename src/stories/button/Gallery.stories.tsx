@@ -6,69 +6,55 @@ import {
   PFWhiteButton,
 } from '@components/core';
 import { fn } from '@storybook/test';
-import { Stack, Typography } from '@mui/material';
-import SendIcon from '@mui/icons-material/Send';
-import DownloadIcon from '@mui/icons-material/Download';
+import { Send, Download } from 'lucide-react';
 
 const meta = {
   title: 'Core/Button/Gallery',
   component: PFButton,
-  parameters: {
-    layout: 'centered',
-  },
+  parameters: { layout: 'centered' },
 } satisfies Meta<typeof PFButton>;
 
 export default meta;
 
-/** Side-by-side comparison of all button variants */
 export const AllVariants = () => (
-  <Stack spacing={4} alignItems='center'>
-    <Typography variant='h5' fontWeight={700}>
-      Button Variants
-    </Typography>
-    <Stack direction='row' spacing={2} flexWrap='wrap' justifyContent='center'>
-      <PFButton variant='contained' color='primary' onClick={fn()}>
-        Primary Contained
+  <div className='flex flex-col items-center gap-8'>
+    <h2 className='text-xl font-bold text-ct-on-surface'>Button Variants</h2>
+    <div className='flex flex-row gap-4 flex-wrap justify-center'>
+      <PFButton variant='solid' onClick={fn()}>
+        Solid (Purple Glow)
       </PFButton>
-      <PFButton variant='outlined' color='primary' onClick={fn()}>
-        Primary Outlined
+      <PFButton variant='stroke' onClick={fn()}>
+        Stroke (Ghost Border)
       </PFButton>
-      <PFButton variant='text' color='primary' onClick={fn()}>
-        Primary Text
+      <PFButton variant='ghost' onClick={fn()}>
+        Ghost
       </PFButton>
-    </Stack>
+      <PFButton variant='mint' onClick={fn()}>
+        Mint Logic
+      </PFButton>
+    </div>
 
-    <Typography variant='h6' fontWeight={600}>
+    <h3 className='text-lg font-semibold text-ct-on-surface'>
       Pre-styled Buttons
-    </Typography>
-    <Stack direction='row' spacing={2} flexWrap='wrap' justifyContent='center'>
+    </h3>
+    <div className='flex flex-row gap-4 flex-wrap justify-center'>
       <PFSolidButton onClick={fn()}>Solid</PFSolidButton>
       <PFStrokeButton onClick={fn()}>Stroke</PFStrokeButton>
       <PFWhiteButton onClick={fn()}>White</PFWhiteButton>
-    </Stack>
+    </div>
 
-    <Typography variant='h6' fontWeight={600}>
-      With Icons
-    </Typography>
-    <Stack direction='row' spacing={2} flexWrap='wrap' justifyContent='center'>
-      <PFSolidButton startIcon={<SendIcon />} onClick={fn()}>
+    <h3 className='text-lg font-semibold text-ct-on-surface'>With Icons</h3>
+    <div className='flex flex-row gap-4 flex-wrap justify-center'>
+      <PFSolidButton startIcon={<Send size={16} />} onClick={fn()}>
         Send
       </PFSolidButton>
-      <PFStrokeButton endIcon={<DownloadIcon />} onClick={fn()}>
+      <PFStrokeButton endIcon={<Download size={16} />} onClick={fn()}>
         Download
       </PFStrokeButton>
-    </Stack>
+    </div>
 
-    <Typography variant='h6' fontWeight={600}>
-      Sizes
-    </Typography>
-    <Stack
-      direction='row'
-      spacing={2}
-      alignItems='center'
-      flexWrap='wrap'
-      justifyContent='center'
-    >
+    <h3 className='text-lg font-semibold text-ct-on-surface'>Sizes</h3>
+    <div className='flex flex-row gap-4 items-center flex-wrap justify-center'>
       <PFSolidButton size='small' onClick={fn()}>
         Small
       </PFSolidButton>
@@ -78,14 +64,12 @@ export const AllVariants = () => (
       <PFSolidButton size='large' onClick={fn()}>
         Large
       </PFSolidButton>
-    </Stack>
+    </div>
 
-    <Typography variant='h6' fontWeight={600}>
-      States
-    </Typography>
-    <Stack direction='row' spacing={2} flexWrap='wrap' justifyContent='center'>
+    <h3 className='text-lg font-semibold text-ct-on-surface'>States</h3>
+    <div className='flex flex-row gap-4 flex-wrap justify-center'>
       <PFSolidButton disabled>Disabled</PFSolidButton>
       <PFStrokeButton disabled>Disabled Stroke</PFStrokeButton>
-    </Stack>
-  </Stack>
+    </div>
+  </div>
 );

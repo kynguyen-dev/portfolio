@@ -1,14 +1,4 @@
-import { Components, Theme } from '@mui/material';
-
-export const muiButtonTheme = (): Pick<
-  Components<Omit<Theme, 'components'>>,
-  'MuiButton'
-> => ({
-  MuiButton: {
-    styleOverrides: {
-      root: {
-        borderRadius: `32px`,
-      },
-    },
-  },
-});
+/**
+ * @deprecated MUI button theme overrides removed — styling is now via Tailwind.
+ */
+export const muiButtonTheme = () => ({});

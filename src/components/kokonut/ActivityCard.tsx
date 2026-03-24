@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'motion/react';
+import { animated, useSpring } from '@react-spring/web';
 import { Activity, Zap, ArrowUp } from 'lucide-react';
 import { cn } from '@utils/core/cn';
 
@@ -23,6 +23,13 @@ const ActivityRing = ({
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (progress / 100) * circumference;
 
+  const spring = useSpring({
+    from: { strokeDashoffset: circumference },
+    to: { strokeDashoffset: offset },
+    delay: delay * 1000,
+    config: { duration: 1500 },
+  });
+
   return (
     <svg width={size} height={size} className='rotate-[-90deg]'>
       {/* Background Ring */}
@@ -36,7 +43,7 @@ const ActivityRing = ({
         className='text-white/5'
       />
       {/* Progress Ring */}
-      <motion.circle
+      <animated.circle
         cx={size / 2}
         cy={size / 2}
         r={radius}
@@ -44,9 +51,7 @@ const ActivityRing = ({
         strokeWidth={strokeWidth}
         fill='transparent'
         strokeDasharray={circumference}
-        initial={{ strokeDashoffset: circumference }}
-        animate={{ strokeDashoffset: offset }}
-        transition={{ duration: 1.5, delay, ease: 'easeOut' }}
+        strokeDashoffset={spring.strokeDashoffset}
         strokeLinecap='round'
       />
     </svg>

@@ -1,5 +1,5 @@
 import { Terminal, Code, Construction } from 'lucide-react';
-import { motion } from 'motion/react';
+import { animated, useTrail } from '@react-spring/web';
 import { GradientPaper } from '@components/customs/paper/GradientPaper.tsx';
 import { PFGradientTypography, PFTypography } from '@components/core';
 import { useTranslation } from 'react-i18next';
@@ -9,10 +9,7 @@ import {
   APP_TYPOGRAPHIES_ANIMATION,
 } from '@constants';
 import { ReactNode } from 'react';
-import {
-  staggerContainer,
-  staggerItem,
-} from '@utils/animations/scrollVariants';
+import { useInView } from '@utils/animations/springVariants';
 import { getYearsOfExperience } from '@utils/core/career';
 
 interface HighlightSkill {
@@ -33,10 +30,7 @@ const skillDefs: SkillsDef[] = [
     icon: <Terminal className='w-12 h-12 text-primary-light' />,
     quoteKey: 'profile.backEndQuote',
     highlights: [
-      {
-        labelKey: 'profile.enjoyCoding',
-        items: ['Java', 'TypeScript'],
-      },
+      { labelKey: 'profile.enjoyCoding', items: ['Java', 'TypeScript'] },
       {
         labelKey: 'profile.devTech',
         items: [
@@ -60,10 +54,7 @@ const skillDefs: SkillsDef[] = [
     icon: <Code className='w-12 h-12 text-primary-light' />,
     quoteKey: 'profile.frontEndQuote',
     highlights: [
-      {
-        labelKey: 'profile.languages',
-        items: ['HTML', 'CSS', 'TypeScript'],
-      },
+      { labelKey: 'profile.languages', items: ['HTML', 'CSS', 'TypeScript'] },
       {
         labelKey: 'profile.devTech',
         items: [
@@ -90,10 +81,7 @@ const skillDefs: SkillsDef[] = [
     icon: <Construction className='w-12 h-12 text-primary-light' />,
     quoteKey: 'profile.toolEndQuote',
     highlights: [
-      {
-        labelKey: 'profile.methods',
-        items: ['Scrum/Agile'],
-      },
+      { labelKey: 'profile.methods', items: ['Scrum/Agile'] },
       {
         labelKey: 'profile.toolsIUse',
         items: [
@@ -115,6 +103,13 @@ const skillDefs: SkillsDef[] = [
 export const Profile = () => {
   const { t } = useTranslation();
   const years = getYearsOfExperience();
+  const { ref, inView } = useInView({ threshold: 0.2 });
+
+  const trail = useTrail(skillDefs.length, {
+    from: { opacity: 0, y: 30 },
+    to: inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 },
+    config: { tension: 200, friction: 20 },
+  });
 
   return (
     <section
@@ -138,75 +133,74 @@ export const Profile = () => {
         </PFTypography>
       </div>
 
-      <motion.div
-        variants={staggerContainer(0.2, 0.15)}
-        initial='hidden'
-        whileInView='visible'
-        viewport={{ once: true, amount: 0.2 }}
+      <div
+        ref={ref}
         className='grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch'
       >
-        {skillDefs.map(role => (
-          <motion.div
-            key={role.titleKey}
-            variants={staggerItem}
-            whileHover={{ y: -8 }}
-            className='flex'
-          >
-            <GradientPaper className='flex-1 flex flex-col p-8'>
-              <div className='flex flex-col gap-4 items-center h-full'>
-                <div className='mb-2'>{role.icon}</div>
+        {trail.map((style, i) => {
+          const role = skillDefs[i];
+          return (
+            <animated.div
+              key={role.titleKey}
+              style={style}
+              className='flex hover:-translate-y-2 transition-transform duration-300'
+            >
+              <GradientPaper className='flex-1 flex flex-col p-8'>
+                <div className='flex flex-col gap-4 items-center h-full'>
+                  <div className='mb-2'>{role.icon}</div>
 
-                <PFGradientTypography
-                  variant={APP_TYPOGRAPHIES.HEADER_SECONDARY}
-                  className='font-bold'
-                >
-                  {t(role.titleKey)}
-                </PFGradientTypography>
+                  <PFGradientTypography
+                    variant={APP_TYPOGRAPHIES.HEADER_SECONDARY}
+                    className='font-bold'
+                  >
+                    {t(role.titleKey)}
+                  </PFGradientTypography>
 
-                <PFTypography
-                  variant={APP_TYPOGRAPHIES.BODY_SECONDARY}
-                  animations={[APP_TYPOGRAPHIES_ANIMATION.TYPEWRITER]}
-                  speed={50}
-                  className='mt-2 text-text-secondary italic min-h-[3em]'
-                >
-                  {t(role.quoteKey)}
-                </PFTypography>
+                  <PFTypography
+                    variant={APP_TYPOGRAPHIES.BODY_SECONDARY}
+                    animations={[APP_TYPOGRAPHIES_ANIMATION.TYPEWRITER]}
+                    speed={50}
+                    className='mt-2 text-text-secondary italic min-h-[3em]'
+                  >
+                    {t(role.quoteKey)}
+                  </PFTypography>
 
-                <div className='flex-grow' />
+                  <div className='flex-grow' />
 
-                <div className='w-full flex flex-col gap-6 mt-6'>
-                  {role.highlights.map(highlight => (
-                    <div
-                      key={highlight.labelKey}
-                      className='flex flex-col gap-2'
-                    >
-                      <PFGradientTypography
-                        variant={APP_TYPOGRAPHIES.SUBTITLE_SECONDARY}
-                        className='font-bold'
-                        colors={['#E8C96A', '#D4A843', '#C75B39']}
+                  <div className='w-full flex flex-col gap-6 mt-6'>
+                    {role.highlights.map(highlight => (
+                      <div
+                        key={highlight.labelKey}
+                        className='flex flex-col gap-2'
                       >
-                        {t(highlight.labelKey)}
-                      </PFGradientTypography>
+                        <PFGradientTypography
+                          variant={APP_TYPOGRAPHIES.SUBTITLE_SECONDARY}
+                          className='font-bold'
+                          colors={['#E8C96A', '#D4A843', '#C75B39']}
+                        >
+                          {t(highlight.labelKey)}
+                        </PFGradientTypography>
 
-                      <div className='flex flex-wrap justify-center gap-x-3 gap-y-1'>
-                        {highlight.items.map(item => (
-                          <PFTypography
-                            key={item}
-                            variant={APP_TYPOGRAPHIES.BODY_SECONDARY}
-                            className='font-bold text-text-primary'
-                          >
-                            {item}
-                          </PFTypography>
-                        ))}
+                        <div className='flex flex-wrap justify-center gap-x-3 gap-y-1'>
+                          {highlight.items.map(item => (
+                            <PFTypography
+                              key={item}
+                              variant={APP_TYPOGRAPHIES.BODY_SECONDARY}
+                              className='font-bold text-text-primary'
+                            >
+                              {item}
+                            </PFTypography>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </GradientPaper>
-          </motion.div>
-        ))}
-      </motion.div>
+              </GradientPaper>
+            </animated.div>
+          );
+        })}
+      </div>
     </section>
   );
 };

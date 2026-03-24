@@ -1,32 +1,19 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { OverridableComponent } from '@mui/material/OverridableComponent';
+import { animated, useSpring } from '@react-spring/web';
 import {
-  Snackbar,
-  Stack,
-  SvgIconTypeMap,
-  Tooltip,
-  useTheme,
-} from '@mui/material';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import SmartphoneIcon from '@mui/icons-material/Smartphone';
+  Github,
+  Linkedin,
+  Mail,
+  Smartphone,
+  type LucideIcon,
+} from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import {
-  APP_INFORMATION,
-  APP_SIZES,
-  EMAIL,
-  GITHUB,
-  LINKEDIN,
-  PHONE,
-} from '@constants';
-import { PFTypography } from '@components/core';
+import { APP_INFORMATION, EMAIL, GITHUB, LINKEDIN, PHONE } from '@constants';
+
+import { useThemeMode } from '@contexts/theme-mode';
 
 interface ContactProps {
-  icon: OverridableComponent<SvgIconTypeMap<object, 'svg'>> & {
-    muiName: string;
-  };
+  icon: LucideIcon;
   id: string;
   href: string;
   messageKey: string;
@@ -34,35 +21,80 @@ interface ContactProps {
 
 const contacts: ContactProps[] = [
   {
-    icon: GitHubIcon,
+    icon: Github,
     id: GITHUB,
     href: APP_INFORMATION.GITHUB_URL,
     messageKey: 'contact.visitMyGithub',
   },
   {
-    icon: LinkedInIcon,
+    icon: Linkedin,
     id: LINKEDIN,
     href: APP_INFORMATION.LINKEDIN_URL,
     messageKey: 'contact.visitMyLinkedIn',
   },
   {
-    icon: MailOutlineIcon,
+    icon: Mail,
     id: EMAIL,
     href: APP_INFORMATION.EMAIL_TO,
     messageKey: 'contact.sendMeEmail',
   },
   {
-    icon: SmartphoneIcon,
+    icon: Smartphone,
     id: PHONE,
     href: APP_INFORMATION.PHONE_NUMBER_TO,
     messageKey: 'contact.callMe',
   },
 ];
 
-export const Contact = () => {
-  const { palette } = useTheme();
+const ContactIcon = ({
+  Icon,
+  href,
+  messageKey,
+  id,
+  onClickAction,
+}: {
+  Icon: ContactProps['icon'];
+  href: string;
+  messageKey: string;
+  id: string;
+  onClickAction: (href: string, key: string) => void;
+}) => {
   const { t } = useTranslation();
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [hovered, setHovered] = useState(false);
+
+  const spring = useSpring({
+    scale: hovered ? 1.2 : 1,
+    config: { tension: 300, friction: 10 },
+  });
+
+  return (
+    <animated.div
+      style={spring}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      role='link'
+      aria-label={t(messageKey)}
+      title={t(messageKey)}
+      tabIndex={0}
+      onKeyDown={(e: React.KeyboardEvent) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClickAction(href, id);
+        }
+      }}
+      onClick={() => onClickAction(href, id)}
+      className='flex items-center justify-center cursor-pointer text-ct-on-surface hover:text-primary-dark transition-colors duration-300'
+    >
+      <Icon size={28} />
+    </animated.div>
+  );
+};
+
+export const Contact = () => {
+  const { t } = useTranslation();
+  const { mode } = useThemeMode();
+  const isLight = mode === 'light';
+  const [toast, setToast] = useState<string | null>(null);
 
   const handleClick = (href: string, key: string) => {
     if (key === GITHUB || key === LINKEDIN) {
@@ -71,10 +103,10 @@ export const Contact = () => {
       if (/Mobi|Android/i.test(navigator.userAgent)) {
         window.location.href = href;
       } else {
-        // Desktop: copy number to clipboard instead of alert()
         const phoneNumber = href.replace('tel:', '');
         navigator.clipboard.writeText(phoneNumber).then(() => {
-          setSnackbarOpen(true);
+          setToast(t('contact.phoneCopied'));
+          setTimeout(() => setToast(null), 3000);
         });
       }
     } else {
@@ -84,56 +116,31 @@ export const Contact = () => {
 
   return (
     <>
-      <Stack gap={{ xs: 4, sm: 6, md: 10 }} direction='row'>
+      <div className='flex flex-row gap-6 sm:gap-10 md:gap-16'>
         {contacts.map(({ icon: Icon, href, messageKey, id }) => (
-          <Tooltip
+          <ContactIcon
             key={id}
-            title={<PFTypography variant='body2'>{t(messageKey)}</PFTypography>}
-            arrow
-          >
-            <motion.div
-              whileHover={{ scale: 1.2 }}
-              whileTap={{ scale: 0.9 }}
-              transition={{ type: 'spring', stiffness: 300 }}
-              role='link'
-              aria-label={t(messageKey)}
-              tabIndex={0}
-              onKeyDown={(e: React.KeyboardEvent) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  handleClick(href, id);
-                }
-              }}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: 'pointer',
-              }}
-              onClick={() => handleClick(href, id)}
-            >
-              <Icon
-                fontSize={APP_SIZES.LARGE}
-                sx={{
-                  color: palette.text.primary,
-                  transition:
-                    'color 0.3s ease-in-out, transform 0.3s ease-in-out',
-                  '&:hover': {
-                    color: palette.primary.dark,
-                  },
-                }}
-              />
-            </motion.div>
-          </Tooltip>
+            Icon={Icon}
+            href={href}
+            messageKey={messageKey}
+            id={id}
+            onClickAction={handleClick}
+          />
         ))}
-      </Stack>
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={3000}
-        onClose={() => setSnackbarOpen(false)}
-        message={t('contact.phoneCopied')}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      />
+      </div>
+
+      {/* Toast notification */}
+      {toast && (
+        <div
+          className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-[9999] px-6 py-3 rounded-lg shadow-lg text-sm font-semibold transition-opacity ${
+            isLight
+              ? 'bg-ct-surface-container-highest text-ct-on-surface'
+              : 'bg-ct-surface-bright text-ct-on-surface'
+          }`}
+        >
+          {toast}
+        </div>
+      )}
     </>
   );
 };

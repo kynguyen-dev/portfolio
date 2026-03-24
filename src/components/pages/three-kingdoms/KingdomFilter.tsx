@@ -1,6 +1,6 @@
-import { Chip, Stack, useTheme } from '@mui/material';
 import { KINGDOMS } from '@constants/three-kingdoms';
 import type { Kingdom } from '@constants/three-kingdoms';
+import { cn } from '@utils/core/cn';
 
 interface KingdomFilterProps {
   selected: Kingdom | 'all';
@@ -8,46 +8,42 @@ interface KingdomFilterProps {
 }
 
 export const KingdomFilter = ({ selected, onChange }: KingdomFilterProps) => {
-  const { palette } = useTheme();
-  const isLight = palette.mode === 'light';
-
   return (
-    <Stack direction='row' spacing={1} flexWrap='wrap' useFlexGap>
-      <Chip
-        label='🏯 All'
-        variant={selected === 'all' ? 'filled' : 'outlined'}
+    <div className='flex flex-row gap-2 flex-wrap'>
+      <button
         onClick={() => onChange('all')}
-        sx={{
-          fontWeight: selected === 'all' ? 700 : 500,
-          borderColor: isLight
-            ? 'rgba(184,137,31,0.3)'
-            : 'rgba(245,208,96,0.3)',
-          ...(selected === 'all' && {
-            background: isLight
-              ? 'linear-gradient(135deg, rgba(184,137,31,0.15), rgba(196,30,58,0.08))'
-              : 'linear-gradient(135deg, rgba(245,208,96,0.15), rgba(196,30,58,0.08))',
-            color: isLight ? '#B8891F' : '#F5D060',
-            borderColor: isLight ? '#B8891F' : '#F5D060',
-          }),
-        }}
-      />
+        className={cn(
+          'px-3 py-1 rounded-full text-sm border transition-colors cursor-pointer',
+          selected === 'all'
+            ? 'font-bold bg-primary-main/15 text-primary-light border-primary-light'
+            : 'font-medium text-ct-on-surface-variant border-ct-outline-variant/30 hover:border-ct-outline-variant/60'
+        )}
+      >
+        🏯 All
+      </button>
       {KINGDOMS.map(k => (
-        <Chip
+        <button
           key={k.id}
-          label={`${k.emoji} ${k.name.en}`}
-          variant={selected === k.id ? 'filled' : 'outlined'}
           onClick={() => onChange(k.id)}
-          sx={{
-            fontWeight: selected === k.id ? 700 : 500,
-            borderColor: `${k.color}50`,
-            ...(selected === k.id && {
-              backgroundColor: `${k.color}20`,
-              color: k.color,
-              borderColor: k.color,
-            }),
-          }}
-        />
+          className={cn(
+            'px-3 py-1 rounded-full text-sm border transition-colors cursor-pointer',
+            selected === k.id
+              ? 'font-bold'
+              : 'font-medium text-ct-on-surface-variant hover:border-opacity-60'
+          )}
+          style={
+            selected === k.id
+              ? {
+                  backgroundColor: `${k.color}20`,
+                  color: k.color,
+                  borderColor: k.color,
+                }
+              : { borderColor: `${k.color}50` }
+          }
+        >
+          {k.emoji} {k.name.en}
+        </button>
       ))}
-    </Stack>
+    </div>
   );
 };

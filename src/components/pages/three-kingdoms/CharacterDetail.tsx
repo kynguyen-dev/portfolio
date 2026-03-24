@@ -1,5 +1,5 @@
 import { X, ArrowRightLeft } from 'lucide-react';
-import { motion } from 'motion/react';
+import { animated, useSpring } from '@react-spring/web';
 import { PFTypography } from '@components/core';
 import { StatsRadarChart } from './StatsRadarChart';
 import { MultiFormatImage } from './MultiFormatImage';
@@ -27,14 +27,21 @@ export const CharacterDetail = ({
   const isLight = mode === 'light';
   const km = getKingdomMeta(character.kingdom);
 
+  const fadeSlide = useSpring({
+    from: { opacity: 0, x: 40 },
+    to: { opacity: 1, x: 0 },
+    config: { duration: 300 },
+  });
+
+  const avatarSpring = useSpring({
+    from: { scale: 0.8, opacity: 0 },
+    to: { scale: 1, opacity: 1 },
+    delay: 150,
+    config: { duration: 350 },
+  });
+
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 40 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: 40 }}
-      transition={{ duration: 0.3 }}
-      className='flex-1 min-h-0 overflow-auto'
-    >
+    <animated.div style={fadeSlide} className='flex-1 min-h-0 overflow-auto'>
       <div
         className={cn(
           'rounded-3xl border overflow-hidden relative shadow-2xl transition-all duration-300',
@@ -85,11 +92,7 @@ export const CharacterDetail = ({
           </button>
 
           <div className='absolute bottom-4 left-4 md:left-7 right-4 md:right-7 z-10 flex items-end gap-4'>
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.15, duration: 0.35 }}
-            >
+            <animated.div style={avatarSpring}>
               <div
                 className='w-20 h-20 md:w-24 md:h-24 rounded-full border-2 overflow-hidden flex-shrink-0 flex items-center justify-center shadow-lg'
                 style={{
@@ -113,7 +116,7 @@ export const CharacterDetail = ({
                   }
                 />
               </div>
-            </motion.div>
+            </animated.div>
 
             <div className='pb-1'>
               <PFTypography
@@ -182,31 +185,12 @@ export const CharacterDetail = ({
 
           <div className='flex flex-col gap-4 mb-10'>
             {STAT_KEYS.map(key => (
-              <div key={key} className='flex items-center gap-4'>
-                <PFTypography
-                  variant='caption'
-                  className='w-20 font-bold text-text-secondary text-right uppercase tracking-tighter'
-                >
-                  {STAT_LABELS[key].en}
-                </PFTypography>
-                <div className='flex-grow h-2 rounded-full bg-white/10 overflow-hidden'>
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: `${character.stats[key]}%` }}
-                    transition={{ duration: 0.8, ease: 'circOut' }}
-                    className='h-full rounded-full'
-                    style={{
-                      background: `linear-gradient(90deg, ${km.color}, ${km.color}AA)`,
-                    }}
-                  />
-                </div>
-                <PFTypography
-                  variant='caption'
-                  className='w-8 font-extrabold tabular-nums'
-                >
-                  {character.stats[key]}
-                </PFTypography>
-              </div>
+              <StatBar
+                key={key}
+                label={STAT_LABELS[key].en}
+                value={character.stats[key]}
+                color={km.color}
+              />
             ))}
           </div>
 
@@ -233,6 +217,49 @@ export const CharacterDetail = ({
           </button>
         </div>
       </div>
-    </motion.div>
+    </animated.div>
+  );
+};
+
+/** Animated stat bar using react-spring */
+const StatBar = ({
+  label,
+  value,
+  color,
+}: {
+  label: string;
+  value: number;
+  color: string;
+}) => {
+  const spring = useSpring({
+    from: { width: '0%' },
+    to: { width: `${value}%` },
+    config: { duration: 800 },
+  });
+
+  return (
+    <div className='flex items-center gap-4'>
+      <PFTypography
+        variant='caption'
+        className='w-20 font-bold text-text-secondary text-right uppercase tracking-tighter'
+      >
+        {label}
+      </PFTypography>
+      <div className='flex-grow h-2 rounded-full bg-white/10 overflow-hidden'>
+        <animated.div
+          style={{
+            ...spring,
+            background: `linear-gradient(90deg, ${color}, ${color}AA)`,
+          }}
+          className='h-full rounded-full'
+        />
+      </div>
+      <PFTypography
+        variant='caption'
+        className='w-8 font-extrabold tabular-nums'
+      >
+        {value}
+      </PFTypography>
+    </div>
   );
 };

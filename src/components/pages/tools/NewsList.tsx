@@ -1,20 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import {
-  Grid,
-  Box,
-  Stack,
-  useTheme,
-  Card,
-  CardContent,
-  Chip,
-  Button,
-  CircularProgress,
-  Skeleton,
-} from '@mui/material';
+import { ArrowLeft } from 'lucide-react';
 import ToolPageLayout from './ToolPageLayout';
 import { PFTypography } from '@components/core';
 import { useTranslation } from 'react-i18next';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useThemeMode } from '@contexts/theme-mode';
 
 interface NewsItem {
   title: string;
@@ -39,85 +28,39 @@ interface MarketNewsResponse {
 }
 
 const NewsCardSkeleton = () => {
-  const isLight = useTheme().palette.mode === 'light';
-  const skeletonColor = isLight ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.05)';
+  const { mode } = useThemeMode();
+  const isLight = mode === 'light';
 
   return (
-    <Card
-      sx={{
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        background: isLight
-          ? 'rgba(255, 255, 255, 0.4)'
-          : 'rgba(11, 13, 46, 0.4)',
-        backdropFilter: 'blur(20px)',
-        borderRadius: 4,
+    <div
+      className='h-full flex flex-col rounded-2xl overflow-hidden backdrop-blur-xl animate-pulse'
+      style={{
+        background: isLight ? 'rgba(255,255,255,0.4)' : 'rgba(11,13,46,0.4)',
         border: `1px solid ${isLight ? 'rgba(184,137,31,0.2)' : 'rgba(245,208,96,0.2)'}`,
       }}
     >
-      <Skeleton
-        variant='rectangular'
-        height={180}
-        sx={{ bgcolor: skeletonColor }}
-      />
-      <CardContent
-        sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: 1.5 }}
-      >
-        <Skeleton
-          variant='text'
-          width='90%'
-          height={28}
-          sx={{ bgcolor: skeletonColor }}
-        />
-        <Skeleton
-          variant='text'
-          width='80%'
-          height={28}
-          sx={{ bgcolor: skeletonColor }}
-        />
-        <Skeleton
-          variant='text'
-          width='100%'
-          height={20}
-          sx={{ bgcolor: skeletonColor }}
-        />
-        <Skeleton
-          variant='text'
-          width='100%'
-          height={20}
-          sx={{ bgcolor: skeletonColor }}
-        />
-        <Box sx={{ mt: 'auto', pt: 2 }}>
-          <Stack direction='row' justifyContent='space-between' sx={{ mb: 2 }}>
-            <Skeleton
-              variant='rectangular'
-              width={60}
-              height={24}
-              sx={{ borderRadius: 1, bgcolor: skeletonColor }}
-            />
-            <Skeleton
-              variant='text'
-              width={40}
-              sx={{ bgcolor: skeletonColor }}
-            />
-          </Stack>
-          <Skeleton
-            variant='rectangular'
-            width='100%'
-            height={36}
-            sx={{ borderRadius: 2, bgcolor: skeletonColor }}
-          />
-        </Box>
-      </CardContent>
-    </Card>
+      <div className='h-[180px] bg-white/5' />
+      <div className='flex-1 flex flex-col gap-3 p-4'>
+        <div className='h-7 bg-white/5 rounded w-[90%]' />
+        <div className='h-7 bg-white/5 rounded w-[80%]' />
+        <div className='h-5 bg-white/5 rounded w-full' />
+        <div className='h-5 bg-white/5 rounded w-full' />
+        <div className='mt-auto pt-4'>
+          <div className='flex justify-between items-center mb-4'>
+            <div className='h-6 w-15 bg-white/5 rounded' />
+            <div className='h-4 w-10 bg-white/5 rounded' />
+          </div>
+          <div className='h-9 bg-white/5 rounded-lg w-full' />
+        </div>
+      </div>
+    </div>
   );
 };
 
 const NewsList = () => {
-  const { palette } = useTheme();
+  const { mode } = useThemeMode();
   const { t } = useTranslation();
-  const isLight = palette.mode === 'light';
+  const isLight = mode === 'light';
 
   const [news, setNews] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(false);
@@ -137,7 +80,6 @@ const NewsList = () => {
         const date = new Date();
         date.setDate(date.getDate() - 28);
         const fromDate = date.toISOString().split('T')[0];
-
         const query = encodeURIComponent('kinh tế Việt Nam');
         const url = `https://newsapi.org/v2/everything?q=${query}&from=${fromDate}&sortBy=publishedAt&pageSize=${pageSize}&page=${pageNum}&apiKey=${apiKey}`;
 
@@ -159,7 +101,6 @@ const NewsList = () => {
             url: a.url,
             image: a.urlToImage,
           }));
-
           setNews(prev =>
             pageNum === 1 ? newArticles : [...prev, ...newArticles]
           );
@@ -217,180 +158,119 @@ const NewsList = () => {
     [loading, hasMore, fetchNews]
   );
 
+  const accentColor = isLight ? '#B8891F' : '#F5D060';
+  const borderClr = isLight ? 'rgba(184,137,31,0.2)' : 'rgba(245,208,96,0.2)';
+
   return (
     <ToolPageLayout
       title={t('tools.items.marketInsights.latestFinancialNews')}
       emoji='📰'
       description={t('tools.items.marketInsights.description')}
     >
-      <Box sx={{ width: '100%', maxWidth: 1200, mt: 4 }}>
-        <Button
-          startIcon={<ArrowBackIcon />}
+      <div className='w-full max-w-[1200px] mt-8 mx-auto'>
+        <a
           href='/tools/market-insights'
-          sx={{
-            mb: 4,
-            color: isLight ? '#B8891F' : '#F5D060',
-            fontWeight: 700,
-            '&:hover': { background: 'rgba(184,137,31,0.1)' },
-          }}
+          className='inline-flex items-center gap-2 mb-8 font-bold text-sm transition-colors hover:opacity-80'
+          style={{ color: accentColor }}
         >
+          <ArrowLeft size={16} />
           {t('tools.items.marketInsights.backToDashboard')}
-        </Button>
+        </a>
 
-        <Grid container spacing={3}>
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6'>
           {loading && news.length === 0
-            ? [1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => (
-                <Grid item xs={12} sm={6} md={4} key={i}>
-                  <NewsCardSkeleton />
-                </Grid>
-              ))
+            ? [1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => <NewsCardSkeleton key={i} />)
             : news.map((item, idx) => (
-                <Grid item xs={12} sm={6} md={4} key={`${item.url}-${idx}`}>
-                  <Card
-                    sx={{
-                      height: '100%',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      background: isLight
-                        ? 'rgba(255, 255, 255, 0.4)'
-                        : 'rgba(11, 13, 46, 0.4)',
-                      backdropFilter: 'blur(20px)',
-                      borderRadius: 4,
-                      border: `1px solid ${isLight ? 'rgba(184,137,31,0.2)' : 'rgba(245,208,96,0.2)'}`,
-                      transition: 'all 0.3s ease',
-                      '&:hover': {
-                        transform: 'translateY(-8px)',
-                        borderColor: isLight
-                          ? 'rgba(184,137,31,0.5)'
-                          : 'rgba(245,208,96,0.5)',
-                        boxShadow: '0 12px 24px rgba(0,0,0,0.1)',
-                      },
-                    }}
-                  >
-                    {item.image && (
-                      <Box sx={{ height: 180, overflow: 'hidden' }}>
-                        <img
-                          src={item.image}
-                          alt={item.title}
-                          style={{
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'cover',
-                          }}
-                          onError={(
-                            e: React.SyntheticEvent<HTMLImageElement, Event>
-                          ) =>
-                            ((e.target as HTMLImageElement).style.display =
-                              'none')
-                          }
-                        />
-                      </Box>
-                    )}
-                    <CardContent
-                      sx={{
-                        flexGrow: 1,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: 1.5,
-                      }}
+                <div
+                  key={`${item.url}-${idx}`}
+                  className='h-full flex flex-col rounded-2xl overflow-hidden backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:shadow-xl'
+                  style={{
+                    background: isLight
+                      ? 'rgba(255,255,255,0.4)'
+                      : 'rgba(11,13,46,0.4)',
+                    border: `1px solid ${borderClr}`,
+                  }}
+                >
+                  {item.image && (
+                    <div className='h-[180px] overflow-hidden'>
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className='w-full h-full object-cover'
+                        onError={(e: React.SyntheticEvent<HTMLImageElement>) =>
+                          ((e.target as HTMLImageElement).style.display =
+                            'none')
+                        }
+                      />
+                    </div>
+                  )}
+                  <div className='flex-1 flex flex-col gap-3 p-4'>
+                    <PFTypography
+                      variant='body1'
+                      fontWeight={700}
+                      className='line-clamp-2 leading-[1.4]'
                     >
-                      <PFTypography
-                        variant='body1'
-                        fontWeight={700}
-                        sx={{
-                          lineHeight: 1.4,
-                          display: '-webkit-box',
-                          WebkitLineClamp: 2,
-                          WebkitBoxOrient: 'vertical',
-                          overflow: 'hidden',
-                        }}
-                      >
-                        {item.title}
-                      </PFTypography>
-                      <PFTypography
-                        variant='body2'
-                        sx={{
-                          opacity: 0.7,
-                          display: '-webkit-box',
-                          WebkitLineClamp: 3,
-                          WebkitBoxOrient: 'vertical',
-                          overflow: 'hidden',
-                        }}
-                      >
-                        {item.description}
-                      </PFTypography>
-                      <Box sx={{ mt: 'auto' }}>
-                        <Stack
-                          direction='row'
-                          justifyContent='space-between'
-                          alignItems='center'
-                          sx={{ mb: 2 }}
-                        >
-                          <Chip
-                            label={item.source}
-                            size='small'
-                            sx={{
-                              background: isLight
-                                ? 'rgba(184,137,31,0.1)'
-                                : 'rgba(245,208,96,0.1)',
-                              color: isLight ? '#B8891F' : '#F5D060',
-                              fontWeight: 700,
-                            }}
-                          />
-                          <PFTypography variant='caption' sx={{ opacity: 0.6 }}>
-                            {item.time}
-                          </PFTypography>
-                        </Stack>
-                        <Button
-                          variant='outlined'
-                          fullWidth
-                          href={item.url}
-                          target='_blank'
-                          sx={{
-                            borderRadius: 2,
-                            borderColor: isLight
-                              ? 'rgba(184,137,31,0.3)'
-                              : 'rgba(245,208,96,0.3)',
-                            color: isLight ? '#B8891F' : '#F5D060',
-                            fontWeight: 700,
-                            '&:hover': {
-                              borderColor: isLight ? '#B8891F' : '#F5D060',
-                              background: 'transparent',
-                            },
+                      {item.title}
+                    </PFTypography>
+                    <PFTypography
+                      variant='body2'
+                      className='opacity-70 line-clamp-3'
+                    >
+                      {item.description}
+                    </PFTypography>
+                    <div className='mt-auto'>
+                      <div className='flex justify-between items-center mb-4'>
+                        <span
+                          className='text-xs font-bold px-2 py-0.5 rounded-full'
+                          style={{
+                            background: `${accentColor}18`,
+                            color: accentColor,
                           }}
                         >
-                          Đọc tiếp
-                        </Button>
-                      </Box>
-                    </CardContent>
-                  </Card>
-                </Grid>
+                          {item.source}
+                        </span>
+                        <PFTypography variant='caption' className='opacity-60'>
+                          {item.time}
+                        </PFTypography>
+                      </div>
+                      <a
+                        href={item.url}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        className='block w-full text-center py-2 rounded-lg font-bold text-sm transition-colors'
+                        style={{
+                          border: `1px solid ${isLight ? 'rgba(184,137,31,0.3)' : 'rgba(245,208,96,0.3)'}`,
+                          color: accentColor,
+                        }}
+                      >
+                        Đọc tiếp
+                      </a>
+                    </div>
+                  </div>
+                </div>
               ))}
-        </Grid>
+        </div>
 
-        <Box
+        <div
           ref={lastElementRef}
-          sx={{
-            height: 100,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            mt: 4,
-          }}
+          className='h-[100px] flex justify-center items-center mt-8'
         >
           {hasMore && news.length > 0 && (
-            <CircularProgress
-              size={32}
-              sx={{ color: isLight ? '#B8891F' : '#F5D060' }}
+            <div
+              className='w-8 h-8 border-2 border-t-transparent rounded-full animate-spin'
+              style={{
+                borderColor: accentColor,
+                borderTopColor: 'transparent',
+              }}
             />
           )}
           {!hasMore && news.length > 0 && (
-            <PFTypography variant='caption' sx={{ opacity: 0.5 }}>
+            <PFTypography variant='caption' className='opacity-50'>
               Đã hiển thị tất cả tin tức có sẵn.
             </PFTypography>
           )}
-        </Box>
-      </Box>
+        </div>
+      </div>
     </ToolPageLayout>
   );
 };

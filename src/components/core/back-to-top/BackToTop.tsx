@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Fab, Zoom, useTheme } from '@mui/material';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { CaretUp } from '@phosphor-icons/react';
+import { animated, useSpring } from '@react-spring/web';
 
 /**
  * Floating "back to top" button that appears after scrolling
  * past a threshold (default 400px).
  */
 export const BackToTop = ({ threshold = 400 }: { threshold?: number }) => {
-  const { palette } = useTheme();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -16,29 +15,22 @@ export const BackToTop = ({ threshold = 400 }: { threshold?: number }) => {
     return () => window.removeEventListener('scroll', onScroll);
   }, [threshold]);
 
+  const spring = useSpring({
+    opacity: visible ? 1 : 0,
+    scale: visible ? 1 : 0.6,
+    config: { tension: 300, friction: 20 },
+  });
+
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
-    <Zoom in={visible}>
-      <Fab
-        onClick={scrollToTop}
-        aria-label='Back to top'
-        size='small'
-        sx={{
-          position: 'fixed',
-          bottom: 24,
-          left: 24,
-          zIndex: 1500,
-          background: `linear-gradient(135deg, ${palette.primary.main}, ${palette.secondary.main})`,
-          color: '#fff',
-          boxShadow: `0 4px 20px ${palette.primary.main}60`,
-          '&:hover': {
-            background: `linear-gradient(135deg, ${palette.primary.light}, ${palette.secondary.light})`,
-          },
-        }}
-      >
-        <KeyboardArrowUpIcon />
-      </Fab>
-    </Zoom>
+    <animated.button
+      onClick={scrollToTop}
+      aria-label='Back to top'
+      style={spring}
+      className='fixed bottom-6 left-6 z-[1500] w-10 h-10 flex items-center justify-center rounded-full weaver-gradient text-white shadow-[0_4px_20px_rgba(208,188,255,0.4)] hover:shadow-[0_6px_28px_rgba(208,188,255,0.5)] transition-shadow cursor-pointer'
+    >
+      <CaretUp size={20} weight='bold' />
+    </animated.button>
   );
 };

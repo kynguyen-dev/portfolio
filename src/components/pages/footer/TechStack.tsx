@@ -1,7 +1,6 @@
 import {
   ESLINT_URLS,
   HUSKY_URLS,
-  MOTION_URLS,
   PRETTIER_URLS,
   REACTJS_URLS,
   STORYBOOK_URLS,
@@ -20,8 +19,8 @@ interface TechStackProps {
 const techStacks: TechStackProps[] = [
   { name: 'ReactJS', link: REACTJS_URLS },
   { name: 'Tailwind CSS', link: 'https://tailwindcss.com' },
-  { name: 'Shadcn/UI', link: 'https://ui.shadcn.com' },
-  { name: 'Motion', link: MOTION_URLS },
+  { name: 'Aceternity UI', link: 'https://ui.aceternity.com' },
+  { name: 'react-spring', link: 'https://www.react-spring.dev' },
   { name: 'VantaJS', link: VANTA_URLS },
   { name: 'Storybook', link: STORYBOOK_URLS },
   { name: 'ESLint', link: ESLINT_URLS },

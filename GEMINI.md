@@ -1,23 +1,26 @@
 # Project Mandates (GEMINI.md)
 
-This project is a high-quality React Portfolio application built with Vite, MUI, and TypeScript. Adhere to these rules for all development tasks.
+This project is a high-quality React Portfolio application built with Vite, Tailwind CSS v4, and TypeScript, following the **Algorithmic Atelier** design system.
 
 ## 1. Technical Stack & Environment
 
 - **Node.js:** Use version `>= 22.0.0`.
 - **Package Manager:** Use **Yarn 4.7.0** with `nodeLinker: node-modules`.
 - **Framework:** React 18.2 (Vite).
-- **Styling:** Material UI (MUI) 5.15+ with Emotion.
+- **Styling:** Tailwind CSS v4 with `@tailwindcss/vite` plugin. Design tokens defined in `src/index.css` via `@theme`.
 - **Routing:** `@tanstack/react-router`.
 - **State Management:** Use React Contexts located in `src/contexts/`.
 - **Internationalization:** `i18next` with `react-i18next`. Translation files are in `src/i18n/locales/`.
+- **Animation:** `@react-spring/web` for physics-based animations. `motion` (framer-motion) is available for Aceternity UI components.
+- **UI Components:** Aceternity UI patterns in `src/components/customs/aceternity/`. These are copy-paste components adapted for react-spring.
 
 ## 2. Component Architecture
 
 Maintain the established directory structure in `src/components/`:
 
 - **core/**: Base UI elements (Buttons, Typography, Headers).
-- **customs/**: Specialized UI patterns (Backgrounds, Effects, Lists).
+- **customs/**: Specialized UI patterns (Backgrounds, Effects, Lists, Aceternity UI).
+- **customs/aceternity/**: Aceternity UI components (HoverEffect, SpotlightCard, MovingBorder, TextGenerateEffect, Lamp, ThreeDCard, WavyBackground).
 - **pages/**: Large components specific to sections of the site (About, Skills, Experience).
 - **stories/**: All new UI components **MUST** have a corresponding `.stories.tsx` file in `src/stories/`.
 
@@ -25,26 +28,36 @@ Maintain the established directory structure in `src/components/`:
 
 - **TypeScript:** Strict typing is mandatory. Avoid `any`. Use interfaces for component props.
 - **Styling Guidelines:**
-  - Prefer MUI's `sx` prop for one-off styles.
-  - Use `styled()` from `@mui/material/styles` for reusable styled components.
-  - Centralize theme values in `src/assets/themes/`.
+  - Use Tailwind CSS utility classes exclusively for styling.
+  - Use the `cn()` utility from `@utils/core/cn` (clsx + tailwind-merge) for conditional class merging.
+  - Use design tokens from `src/index.css` — never hardcode colors. Reference via Tailwind classes like `text-ct-secondary`, `bg-ct-surface-container-low`, etc.
+  - Use CSS utility classes from `src/index.css`: `glass-panel`, `glass-elevated`, `topology-grid`, `ghost-border`, `tonal-hover`, `hud-label`, `hud-breadcrumb`, `primary-glow`, `mint-glow`, `weaver-gradient`.
 - **Constants:** Always use centralized constants from `src/constants/` for:
   - Theme names (`APP_THEMES`).
   - Typography variants (`APP_TYPOGRAPHIES`).
   - Router paths (`ROUTER_PATHS`).
 - **Icons:**
-  - Use `@mui/icons-material` for standard system icons.
-  - Use `@icons-pack/react-simple-icons` (fixed at **version 12.0.0**) for brand icons.
+  - Use `@phosphor-icons/react` as the **primary icon library** for all UI icons.
+  - Use `@icons-pack/react-simple-icons` (fixed at **version 12.0.0**) for **brand/logo icons only** (e.g., GitHub, LinkedIn, Twitter).
+  - **Do NOT** use `lucide-react`, `@mui/icons-material`, or any other icon library.
 
-## 4. Workflows
+## 4. Design System — Algorithmic Atelier
+
+- **Design Reference:** Always refer to `stitch/DESIGN.md` for philosophy and `stitch/prototype.html` for layout specs.
+- **Color Palette:** Purple primary (#d0bcff), Mint secondary (#4edea3), Obsidian surfaces (#10141a).
+- **Typography:** `Noto Serif` for display/headline ("The Weaver"), `Space Grotesk` for body/labels ("The Architect").
+- **No-Line Rule:** Replace solid borders with tonal shifts and glassmorphism. Use `glass-panel` class for card containers.
+- **Section Headers:** Use the pattern `<h2 class="text-ct-secondary text-xs font-black tracking-[0.3em] uppercase">01 // SECTION_LABEL</h2>`.
+
+## 5. Workflows
 
 - **I18n:** Never hardcode strings in components. Always use the `useTranslation` hook and add keys to `src/i18n/locales/en.ts` (and other locales).
-- **Animations:** Use `framer-motion`. Prefer using existing variants from `src/utils/animations/`.
+- **Animations:** Use `@react-spring/web` for component animations. Prefer using existing variants from `src/utils/animations/`.
 - **Quality Control:**
   - Run `yarn lint:fix` and `yarn prettier:fix` after any modification.
   - Ensure `yarn build` succeeds before finishing a task.
   - If a component is modified, verify its appearance in Storybook using `yarn storybook`.
 
-## 5. Deployment & Compatibility
+## 6. Deployment & Compatibility
 
 - **Vercel:** Maintain compatibility with Vercel's deployment environment. Do not upgrade `@icons-pack/react-simple-icons` beyond `12.x` unless the environment supports Node 24.

@@ -1,4 +1,4 @@
-import { Sun, Moon } from 'lucide-react';
+import { Sun, Moon } from '@phosphor-icons/react';
 import { useThemeMode } from '@contexts/theme-mode';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@lib/utils';
@@ -22,7 +22,7 @@ export const ThemeModeToggle = () => {
           : 'text-[#FFE4B5] hover:text-[#F5D060] hover:bg-[#FFE4B5]/10'
       )}
     >
-      {isLight ? <Moon className='w-5 h-5' /> : <Sun className='w-5 h-5' />}
+      {isLight ? <Moon size={20} /> : <Sun size={20} />}
     </button>
   );
 };

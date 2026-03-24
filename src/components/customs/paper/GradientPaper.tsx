@@ -1,5 +1,5 @@
-import { ReactNode, HTMLAttributes } from 'react';
-import { motion } from 'motion/react';
+import { ReactNode, HTMLAttributes, useState } from 'react';
+import { animated, useSpring } from '@react-spring/web';
 import { useThemeMode } from '@contexts/theme-mode';
 import { cn } from '@utils/core/cn';
 
@@ -14,11 +14,20 @@ export const GradientPaper = ({
 }: GradientPaperProps) => {
   const { mode } = useThemeMode();
   const isLight = mode === 'light';
+  const [hovered, setHovered] = useState(false);
+
+  const hoverSpring = useSpring({
+    scale: hovered ? 1.03 : 1,
+    rotateX: hovered ? 5 : 0,
+    rotateY: hovered ? 5 : 0,
+    config: { duration: 300 },
+  });
 
   return (
-    <motion.div
-      whileHover={{ scale: 1.03, rotateX: 5, rotateY: 5 }}
-      transition={{ duration: 0.3, ease: 'easeInOut' }}
+    <animated.div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={hoverSpring}
       className={cn(
         'p-8 rounded-xl text-center backdrop-blur-lg border transition-all duration-300',
         isLight
@@ -29,6 +38,6 @@ export const GradientPaper = ({
       {...props}
     >
       {children}
-    </motion.div>
+    </animated.div>
   );
 };

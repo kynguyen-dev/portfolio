@@ -8,7 +8,6 @@ import { KonamiEasterEgg } from '@components/customs/effects/KonamiEasterEgg';
 import { ErrorBoundary } from '@components/core/error-boundary/ErrorBoundary';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MotionConfig } from 'motion/react';
 import { RouterProvider } from '@tanstack/react-router';
 
 const HtmlLangSync = () => {
@@ -22,18 +21,16 @@ const HtmlLangSync = () => {
 export const App = () => {
   return (
     <ErrorBoundary>
-      <MotionConfig reducedMotion='user'>
-        <ThemeModeProvider>
-          <PFThemeProvider>
-            <HtmlLangSync />
-            <SplashScreen />
-            <CustomCursor />
-            <MouseSpotlight />
-            <KonamiEasterEgg />
-            <RouterProvider router={router} />
-          </PFThemeProvider>
-        </ThemeModeProvider>
-      </MotionConfig>
+      <ThemeModeProvider>
+        <PFThemeProvider>
+          <HtmlLangSync />
+          <SplashScreen />
+          <CustomCursor />
+          <MouseSpotlight />
+          <KonamiEasterEgg />
+          <RouterProvider router={router} />
+        </PFThemeProvider>
+      </ThemeModeProvider>
     </ErrorBoundary>
   );
 };

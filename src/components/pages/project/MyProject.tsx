@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
+import { animated, useTrail } from '@react-spring/web';
 import { PFGradientTypography, PFTypography } from '@components/core';
 import { Overlay, OverlayContent } from '@components/core/overlay';
-import { Github } from 'lucide-react';
+import { GithubLogo } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import {
   APP_INFORMATION,
@@ -14,20 +14,11 @@ import {
 } from '@constants';
 import { StyledButton } from '@components/core/button';
 import { cn } from '@utils/core/cn';
+import { useInView } from '@utils/animations/springVariants';
 
-/** Path to the 2×2 sprite sheet containing all project images */
 const SPRITE_URL = '/images/projects-sprite.jpg';
 
-/**
- * CSS background-position values for each quadrant of a 2×2 sprite sheet.
- * With `background-size: 200% 200%`, each position maps to one quarter.
- */
-const SPRITE_POSITIONS = [
-  '0% 0%', // top-left     → DrivaLink
-  '100% 0%', // top-right    → Healthcare
-  '0% 100%', // bottom-left  → Learner Dashboard
-  '100% 100%', // bottom-right → AirConSub
-] as const;
+const SPRITE_POSITIONS = ['0% 0%', '100% 0%', '0% 100%', '100% 100%'] as const;
 
 interface ProjectCardProps {
   titleKey: string;
@@ -80,6 +71,7 @@ export const MyProject = () => {
   const { t } = useTranslation();
   const [isTouchDevice, setIsTouchDevice] = useState(false);
   const [activeCard, setActiveCard] = useState<string | null>(null);
+  const { ref, inView } = useInView();
 
   useEffect(() => {
     setIsTouchDevice(window.matchMedia('(hover: none)').matches);
@@ -88,6 +80,12 @@ export const MyProject = () => {
   const toggleCard = (title: string) => {
     setActiveCard(prev => (prev === title ? null : title));
   };
+
+  const trail = useTrail(projectDefs.length, {
+    from: { opacity: 0, y: 50 },
+    to: inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 },
+    config: { tension: 200, friction: 20 },
+  });
 
   return (
     <div
@@ -114,8 +112,9 @@ export const MyProject = () => {
           </a>
         </PFTypography>
       </div>
-      <div className='grid grid-cols-1 sm:grid-cols-2 gap-8 w-full'>
-        {projectDefs.map((project, index) => {
+      <div ref={ref} className='grid grid-cols-1 sm:grid-cols-2 gap-8 w-full'>
+        {trail.map((style, index) => {
+          const project = projectDefs[index];
           const title = t(project.titleKey);
           const description = t(project.descriptionKey);
           const role = t(project.roleKey);
@@ -124,15 +123,12 @@ export const MyProject = () => {
           }) as string[];
 
           return (
-            <motion.div
+            <animated.div
               key={project.titleKey}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.2 }}
+              style={style}
               className='flex-1'
             >
-              <motion.div
+              <div
                 tabIndex={0}
                 role='button'
                 aria-expanded={activeCard === title}
@@ -167,7 +163,6 @@ export const MyProject = () => {
                   'focus-visible:ring-2 focus-visible:ring-primary-light'
                 )}
               >
-                {/* CSS Sprite image using background-image + background-position */}
                 <div
                   className='project-image w-full h-full absolute top-0 left-0 bg-no-repeat bg-[200%_200%] transition-opacity duration-300'
                   role='img'
@@ -193,11 +188,7 @@ export const MyProject = () => {
                   </PFTypography>
                 </div>
 
-                <Overlay
-                  className={
-                    'overlay opacity-0 transition-opacity duration-300'
-                  }
-                >
+                <Overlay className='overlay opacity-0 transition-opacity duration-300'>
                   <OverlayContent className='overlay-content opacity-0 translate-y-4 transition-all duration-300 w-full min-h-fit'>
                     <div className='flex flex-col gap-4 md:gap-8 items-center px-4 md:px-12 py-8'>
                       <PFGradientTypography
@@ -261,15 +252,15 @@ export const MyProject = () => {
                             className='text-white flex hover:text-secondary-light transition-colors'
                             aria-label={`View ${title} on GitHub`}
                           >
-                            <Github />
+                            <GithubLogo size={24} />
                           </a>
                         )}
                       </div>
                     </div>
                   </OverlayContent>
                 </Overlay>
-              </motion.div>
-            </motion.div>
+              </div>
+            </animated.div>
           );
         })}
       </div>

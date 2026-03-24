@@ -1,17 +1,36 @@
 import { PFGradientTypography, PFTypography } from '@components/core';
-import { motion } from 'framer-motion';
+import { animated, useTrail, useSpring } from '@react-spring/web';
 import { useTranslation } from 'react-i18next';
 import { APP_THEMES, APP_TYPOGRAPHIES, APP_INFORMATION } from '@constants';
-import {
-  staggerContainer,
-  staggerItem,
-  blurIn,
-} from '@utils/animations/scrollVariants';
+import { useInView } from '@utils/animations/springVariants';
 import { getYearsOfExperience } from '@utils/core/career';
 
 export const AboutMe = () => {
   const { t } = useTranslation();
   const years = getYearsOfExperience();
+  const { ref, inView } = useInView({ threshold: 0.2 });
+
+  const paragraphs = [
+    t('aboutMe.p1', { years }),
+    t('aboutMe.p2'),
+    t('aboutMe.p3'),
+    t('aboutMe.p4'),
+  ];
+
+  const trail = useTrail(paragraphs.length, {
+    from: { opacity: 0, y: 40 },
+    to: inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 },
+    config: { tension: 170, friction: 26 },
+  });
+
+  const linkSpring = useSpring({
+    from: { opacity: 0, filter: 'blur(12px)', y: 20 },
+    to: inView
+      ? { opacity: 1, filter: 'blur(0px)', y: 0 }
+      : { opacity: 0, filter: 'blur(12px)', y: 20 },
+    delay: 600,
+    config: { duration: 800 },
+  });
 
   return (
     <section
@@ -19,7 +38,7 @@ export const AboutMe = () => {
       aria-label={t('aboutMe.heading')}
       className='px-4 md:px-12 py-16 md:py-24 max-w-5xl mx-auto'
     >
-      <div className='flex flex-col items-center gap-10'>
+      <div ref={ref} className='flex flex-col items-center gap-10'>
         <PFGradientTypography
           variant={APP_TYPOGRAPHIES.HEADER_PRIMARY}
           theme={APP_THEMES.DARK}
@@ -28,46 +47,18 @@ export const AboutMe = () => {
           {t('aboutMe.heading')}
         </PFGradientTypography>
 
-        <motion.div
-          variants={staggerContainer(0.15, 0.1)}
-          initial='hidden'
-          whileInView='visible'
-          viewport={{ once: true, amount: 0.2 }}
-          className='flex flex-col gap-6 max-w-2xl text-center'
-        >
-          <motion.div variants={staggerItem}>
-            <PFTypography
-              variant='body1'
-              className='text-text-primary leading-loose'
-            >
-              {t('aboutMe.p1', { years })}
-            </PFTypography>
-          </motion.div>
-          <motion.div variants={staggerItem}>
-            <PFTypography
-              variant='body1'
-              className='text-text-primary leading-loose'
-            >
-              {t('aboutMe.p2')}
-            </PFTypography>
-          </motion.div>
-          <motion.div variants={staggerItem}>
-            <PFTypography
-              variant='body1'
-              className='text-text-primary leading-loose'
-            >
-              {t('aboutMe.p3')}
-            </PFTypography>
-          </motion.div>
-          <motion.div variants={staggerItem}>
-            <PFTypography
-              variant='body1'
-              className='text-text-primary leading-loose'
-            >
-              {t('aboutMe.p4')}
-            </PFTypography>
-          </motion.div>
-          <motion.div variants={blurIn}>
+        <div className='flex flex-col gap-6 max-w-2xl text-center'>
+          {trail.map((style, i) => (
+            <animated.div key={i} style={style}>
+              <PFTypography
+                variant='body1'
+                className='text-text-primary leading-loose'
+              >
+                {paragraphs[i]}
+              </PFTypography>
+            </animated.div>
+          ))}
+          <animated.div style={linkSpring}>
             <div className='flex flex-row gap-6 justify-center mt-4'>
               <a
                 href={APP_INFORMATION.GITHUB_URL}
@@ -86,8 +77,8 @@ export const AboutMe = () => {
                 {t('aboutMe.linkedin')}
               </a>
             </div>
-          </motion.div>
-        </motion.div>
+          </animated.div>
+        </div>
       </div>
     </section>
   );

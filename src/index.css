@@ -1,61 +1,84 @@
 @import 'tailwindcss';
-@import 'tw-animate-css';
-@import 'shadcn/tailwind.css';
-@import '@fontsource-variable/geist';
+@import '@fontsource-variable/noto-serif';
+@import '@fontsource-variable/space-grotesk';
 
 @custom-variant dark (&:is(.dark *));
 
+/* ─────────────────────────────────────────────
+   The Algorithmic Atelier — Design Tokens
+   Obsidian depth · Purple narrative · Mint logic
+   ───────────────────────────────────────────── */
 @theme {
-  --color-primary-main: #d4a843;
-  --color-primary-light: #e8c96a;
-  --color-primary-dark: #8b6914;
-  --color-primary-contrast: #fff8f0;
+  /* ─── Primary: Purple ("Human" narrative) ─── */
+  --color-primary-main: #d0bcff;
+  --color-primary-light: #e9ddff;
+  --color-primary-dark: #6d3bd7;
+  --color-primary-contrast: #1d1b20;
+  --color-primary-container: #a078ff;
+  --color-primary-fixed-dim: #d0bcff;
 
-  --color-secondary-main: #c75b39;
-  --color-secondary-light: #e07850;
-  --color-secondary-dark: #8b3a22;
+  /* ─── Secondary: Mint ("Logic" accent) ─── */
+  --color-secondary-main: #4edea3;
+  --color-secondary-light: #6ffbbe;
+  --color-secondary-dark: #00a572;
+  --color-secondary-container: #00a572;
 
-  --color-background-default: #1a1410;
-  --color-background-paper: #241e18;
+  /* ─── Tertiary: Blue ─── */
+  --color-tertiary: #adc6ff;
+  --color-tertiary-container: #4d8eff;
 
-  --color-text-primary: #fff3e0;
-  --color-text-secondary: #ffcc80;
-  --color-text-disabled: #c4aa96;
+  /* ─── Surface Hierarchy (Obsidian Tiers) ─── */
+  --color-background-default: #10141a;
+  --color-background-paper: #181c22;
 
-  --color-gold: #c5a059;
+  --color-text-primary: #dfe2eb;
+  --color-text-secondary: #cbc3d7;
+  --color-text-disabled: #78767e;
 
-  /* ─── Cyber-Tactical Palette ─── */
-  --color-ct-bg: #0d0e12;
-  --color-ct-surface: #121317;
-  --color-ct-surface-container: #1f1f24;
-  --color-ct-surface-container-low: #1a1b20;
-  --color-ct-surface-container-high: #292a2e;
-  --color-ct-surface-container-highest: #343439;
-  --color-ct-on-surface: #e3e2e8;
-  --color-ct-on-surface-variant: #baccb0;
-  --color-ct-outline: #85967c;
-  --color-ct-outline-variant: #3c4b35;
-  --color-ct-primary-container: #39ff14;
-  --color-ct-secondary: #e9c349;
-  --color-ct-on-secondary: #3c2f00;
-  --color-ct-on-primary: #053900;
+  /* ─── Obsidian Surface System ─── */
+  --color-ct-bg: #10141a;
+  --color-ct-surface: #10141a;
+  --color-ct-surface-container: #1c2026;
+  --color-ct-surface-container-low: #181c22;
+  --color-ct-surface-container-high: #262a31;
+  --color-ct-surface-container-highest: #31353c;
+  --color-ct-surface-container-lowest: #0a0e14;
+  --color-ct-surface-bright: #353940;
+  --color-ct-on-surface: #dfe2eb;
+  --color-ct-on-surface-variant: #cbc3d7;
+  --color-ct-outline: #958ea0;
+  --color-ct-outline-variant: #494454;
+  --color-ct-primary-container: #a078ff;
+  --color-ct-secondary: #4edea3;
+  --color-ct-on-secondary: #003824;
+  --color-ct-on-primary: #3c0091;
 
-  --font-roboto: 'Roboto', sans-serif;
-  --font-serif: 'Playfair Display', Georgia, serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-  --font-label: 'Space Grotesk', 'Inter', sans-serif;
-  --font-headline: 'Inter', sans-serif;
+  /* ─── Error ─── */
+  --color-error: #ffb4ab;
+  --color-error-container: #93000a;
+
+  /* ─── Typography: The Weaver & The Architect ─── */
+  --font-serif-display: 'Noto Serif Variable', Georgia, serif;
+  --font-mono-code: 'Space Grotesk Variable', monospace;
+  --font-label-grotesk: 'Space Grotesk Variable', sans-serif;
+  --font-headline: 'Noto Serif Variable', Georgia, serif;
+  --font-sans: 'Space Grotesk Variable', sans-serif;
+
+  --color-border: oklch(1 0 0 / 8%);
+  --color-ring: oklch(0.556 0 0);
+  --color-background: #10141a;
+  --color-foreground: #dfe2eb;
 }
 
 @layer base {
   html {
-    font-family: var(--font-headline);
+    font-family: var(--font-sans);
     background-color: var(--color-ct-bg);
     color: var(--color-ct-on-surface);
     @apply font-sans;
   }
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
@@ -63,154 +86,150 @@
   }
 }
 
-/* ─── Glassmorphism Utility ─── */
-.glass {
-  background: rgba(41, 42, 46, 0.6);
+/* ─────────────────────────────────────────────
+   Glass Panel — Frosted obsidian pane effect
+   The primary card/container treatment
+   ───────────────────────────────────────────── */
+.glass-panel {
+  background: rgba(16, 20, 26, 0.6);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(60, 75, 53, 0.2);
+  border: 1px solid rgba(73, 68, 84, 0.15);
 }
 
-.gold-glow:hover {
-  box-shadow: 0 0 30px rgba(212, 175, 55, 0.15);
-  border-color: rgba(212, 175, 55, 0.4);
+/* Legacy alias */
+.glass {
+  background: rgba(16, 20, 26, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(73, 68, 84, 0.15);
 }
 
-/* ─── Dot Grid Background ─── */
+.glass-elevated {
+  background: rgba(28, 32, 38, 0.65);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(73, 68, 84, 0.12);
+}
+
+/* ─── Topology Grid Background ─── */
+.topology-grid {
+  background-image: radial-gradient(#31353c 0.5px, transparent 0.5px);
+  background-size: 30px 30px;
+}
+
+/* ─── No-Line Rule: tonal shift hover ─── */
+.tonal-hover {
+  transition: background-color 300ms ease;
+}
+.tonal-hover:hover {
+  background-color: var(--color-ct-surface-container-high);
+}
+
+/* ─── Ghost Border (for inputs & accessibility) ─── */
+.ghost-border {
+  border: 1px solid rgba(73, 68, 84, 0.15);
+}
+.ghost-border:focus,
+.ghost-border:focus-within {
+  border-color: rgba(78, 222, 163, 0.4);
+}
+
+/* ─── Primary Glow (Purple) ─── */
+.primary-glow {
+  box-shadow: 0 0 24px rgba(208, 188, 255, 0.2);
+}
+.primary-glow:hover {
+  box-shadow: 0 0 36px rgba(208, 188, 255, 0.3);
+}
+
+/* ─── Mint Glow ─── */
+.mint-glow {
+  box-shadow: 0 0 20px rgba(78, 222, 163, 0.15);
+}
+
+/* ─── Ambient Shadow (for modals, floating elements) ─── */
+.ambient-shadow {
+  box-shadow: 0 20px 50px rgba(13, 17, 23, 0.5);
+}
+
+/* ─── The "Weaver" Progress Bar gradient ─── */
+.weaver-gradient {
+  background: linear-gradient(
+    90deg,
+    var(--color-primary-main),
+    var(--color-secondary-main)
+  );
+}
+
+/* ─── Dot Grid Background (legacy) ─── */
 .vanta-bg {
   background-image: radial-gradient(
     circle at 2px 2px,
-    rgba(212, 175, 55, 0.05) 1px,
+    rgba(208, 188, 255, 0.04) 1px,
     transparent 0
   );
   background-size: 40px 40px;
 }
 
-/* ─── Font Families ─── */
+/* ─── Font Family Utilities ─── */
 .font-serif-display {
-  font-family: var(--font-serif);
+  font-family: var(--font-serif-display);
 }
 .font-mono-code {
-  font-family: var(--font-mono);
+  font-family: var(--font-mono-code);
 }
 .font-label-grotesk {
-  font-family: var(--font-label);
+  font-family: var(--font-label-grotesk);
+}
+
+/* ─── HUD Label Treatment ─── */
+.hud-label {
+  font-family: var(--font-label-grotesk);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-ct-secondary);
+}
+
+/* ─── Logic HUD Breadcrumbs ─── */
+.hud-breadcrumb {
+  font-family: var(--font-label-grotesk);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-ct-secondary);
+}
+.hud-breadcrumb-separator {
+  color: rgba(78, 222, 163, 0.4);
+  margin: 0 0.5rem;
 }
 
 /* ─── Selection Color ─── */
 ::selection {
-  background-color: rgba(233, 195, 73, 0.3);
-  color: #e9c349;
+  background-color: rgba(78, 222, 163, 0.3);
+  color: #4edea3;
 }
 
-@theme inline {
-  --font-heading: var(--font-sans);
-  --font-sans: 'Geist Variable', sans-serif;
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --color-foreground: var(--foreground);
-  --color-background: var(--background);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+/* ─── Tracing Beam Pulse Animation ─── */
+@keyframes pulse-beam {
+  0%,
+  100% {
+    opacity: 0.4;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    opacity: 1;
+    stroke-dashoffset: 20;
+  }
 }
 
-:root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
-
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+/* ─── Floating Node Animation ─── */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) rotateX(0deg) rotateY(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotateX(2deg) rotateY(1deg);
+  }
 }

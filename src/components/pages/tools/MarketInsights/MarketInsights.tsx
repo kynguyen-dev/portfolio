@@ -28,7 +28,7 @@ import {
 import ToolPageLayout from '../ToolPageLayout';
 import { PFTypography } from '@components/core';
 import { useTranslation } from 'react-i18next';
-import { motion, AnimatePresence } from 'motion/react';
+
 import { useThemeMode } from '@contexts/theme-mode';
 import { cn } from '@utils/core/cn';
 
@@ -597,7 +597,6 @@ const MarketInsights = () => {
     onRefresh?: () => void;
     type: 'gold' | 'petrol' | 'weather' | 'news';
     customBg?: string;
-    iconAnimate?: import('motion/react').TargetAndTransition;
     className?: string;
   }
 
@@ -609,7 +608,6 @@ const MarketInsights = () => {
     onRefresh,
     type,
     customBg,
-    iconAnimate,
     className,
   }: CardWrapperProps) => (
     <div
@@ -630,17 +628,14 @@ const MarketInsights = () => {
       <div className='flex flex-col h-full w-full gap-4'>
         <div className='flex items-center justify-between'>
           <div className='flex items-center gap-3'>
-            <motion.div
-              animate={iconAnimate}
-              transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
-            >
+            <div>
               <Icon
                 className={cn(
                   'w-6 h-6',
                   customBg ? 'text-white' : 'text-primary-main'
                 )}
               />
-            </motion.div>
+            </div>
             <PFTypography
               variant='h6'
               className='font-extrabold tracking-tight text-lg sm:text-xl'
@@ -709,15 +704,10 @@ const MarketInsights = () => {
                   </div>
                 )}
 
-                <AnimatePresence>
+                <>
                   {cityOptions.length > 0 &&
                     searchQuery !== selectedCity?.label && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 10 }}
-                        className='absolute top-full left-0 right-0 mt-2 z-50 rounded-xl border border-white/10 bg-background-paper/95 backdrop-blur-xl shadow-2xl overflow-hidden'
-                      >
+                      <div className='absolute top-full left-0 right-0 mt-2 z-50 rounded-xl border border-white/10 bg-background-paper/95 backdrop-blur-xl shadow-2xl overflow-hidden animate-in fade-in slide-in-from-bottom-2'>
                         {cityOptions.map((city, idx) => (
                           <button
                             key={idx}
@@ -732,9 +722,9 @@ const MarketInsights = () => {
                             {city.label}
                           </button>
                         ))}
-                      </motion.div>
+                      </div>
                     )}
-                </AnimatePresence>
+                </>
               </div>
 
               {weatherForecast.length > 0 && (
@@ -778,35 +768,23 @@ const MarketInsights = () => {
               onRefresh={fetchWeather}
               type='weather'
               customBg={weatherVisual?.bg}
-              iconAnimate={weatherVisual?.animate}
               className='flex-grow'
             >
-              <AnimatePresence mode='wait'>
+              <>
                 {weatherData && weatherForecast.length > 0 ? (
-                  <motion.div
+                  <div
                     key={selectedDayIdx}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.3 }}
-                    className='h-full flex flex-col justify-center'
+                    className='h-full flex flex-col justify-center transition-opacity duration-300'
                   >
                     {selectedDayIdx === 0 ? (
                       <div className='flex flex-col gap-6'>
                         <div className='flex flex-col items-center gap-2 py-2'>
                           <LocalClock utcOffset={weatherData.utc_offset} />
-                          <motion.div
-                            animate={weatherVisual?.animate}
-                            transition={{
-                              duration: 4,
-                              repeat: Infinity,
-                              ease: 'linear',
-                            }}
-                          >
+                          <div>
                             {weatherVisual && (
                               <weatherVisual.icon className='w-16 h-16 sm:w-24 sm:h-24 text-white' />
                             )}
-                          </motion.div>
+                          </div>
                           <div className='text-center'>
                             <PFTypography
                               variant='h2'
@@ -822,11 +800,9 @@ const MarketInsights = () => {
                               {Math.round(weatherData.temperature_2m)}°C
                             </PFTypography>
                             {getTempWarning(weatherData.temperature_2m) && (
-                              <motion.div
-                                animate={{ scale: [1, 1.1, 1] }}
-                                transition={{ repeat: Infinity, duration: 1.5 }}
+                              <div
                                 className={cn(
-                                  'mt-3 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-white shadow-xl inline-flex items-center gap-1.5',
+                                  'mt-3 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-white shadow-xl inline-flex items-center gap-1.5 animate-pulse',
                                   getTempWarning(weatherData.temperature_2m)
                                     ?.color
                                 )}
@@ -836,7 +812,7 @@ const MarketInsights = () => {
                                   getTempWarning(weatherData.temperature_2m)
                                     ?.label
                                 }
-                              </motion.div>
+                              </div>
                             )}
                           </div>
                           <PFTypography
@@ -912,20 +888,14 @@ const MarketInsights = () => {
                               highlight: getUVStatus(weatherForecast[0].uv),
                             },
                           ].map((item, i) => (
-                            <motion.div
+                            <div
                               key={i}
-                              animate={
-                                item.highlight?.danger
-                                  ? { scale: [1, 1.05, 1] }
-                                  : {}
-                              }
-                              transition={{ repeat: Infinity, duration: 2 }}
                               className={cn(
                                 'p-3 rounded-2xl flex flex-col items-center justify-center text-center gap-1.5 border transition-all',
                                 item.highlight?.danger
                                   ? cn(
                                       item.highlight.color,
-                                      'border-white shadow-lg'
+                                      'border-white shadow-lg animate-pulse'
                                     )
                                   : 'bg-white/15 border-white/5'
                               )}
@@ -937,7 +907,7 @@ const MarketInsights = () => {
                               <span className='text-[10px] font-black whitespace-nowrap'>
                                 {item.value} {item.unit}
                               </span>
-                            </motion.div>
+                            </div>
                           ))}
                         </div>
                       </div>
@@ -945,14 +915,11 @@ const MarketInsights = () => {
                       <div className='flex flex-col gap-6 text-white'>
                         <div className='flex flex-col sm:flex-row items-center justify-between gap-4 py-4'>
                           <div className='text-center sm:text-left'>
-                            <motion.div
-                              animate={weatherVisual?.animate}
-                              transition={{ duration: 4, repeat: Infinity }}
-                            >
+                            <div>
                               {weatherVisual && (
                                 <weatherVisual.icon className='w-12 h-12 mb-2 mx-auto sm:mx-0' />
                               )}
-                            </motion.div>
+                            </div>
                             <PFTypography
                               variant='h4'
                               className='text-3xl sm:text-4xl font-black'
@@ -973,26 +940,22 @@ const MarketInsights = () => {
                               {weatherVisual?.label}
                             </PFTypography>
                           </div>
-                          <motion.div
-                            animate={
-                              getUVStatus(weatherForecast[selectedDayIdx].uv)
-                                .danger
-                                ? { scale: [1, 1.1, 1] }
-                                : {}
-                            }
-                            transition={{ repeat: Infinity, duration: 2 }}
+                          <div
                             className={cn(
                               'px-4 py-2 rounded-xl border-2 border-white font-black text-xs inline-flex items-center gap-2',
                               getUVStatus(weatherForecast[selectedDayIdx].uv)
                                 .danger
-                                ? getUVStatus(
-                                    weatherForecast[selectedDayIdx].uv
-                                  ).color
+                                ? cn(
+                                    getUVStatus(
+                                      weatherForecast[selectedDayIdx].uv
+                                    ).color,
+                                    'animate-pulse'
+                                  )
                                 : 'bg-transparent'
                             )}
                           >
                             UV: {weatherForecast[selectedDayIdx].uv}
-                          </motion.div>
+                          </div>
                         </div>
 
                         <div className='h-px w-full bg-white/20' />
@@ -1061,7 +1024,7 @@ const MarketInsights = () => {
                         </div>
                       </div>
                     )}
-                  </motion.div>
+                  </div>
                 ) : (
                   !loading.weather && (
                     <div className='py-12 text-center opacity-50'>
@@ -1073,7 +1036,7 @@ const MarketInsights = () => {
                     </div>
                   )
                 )}
-              </AnimatePresence>
+              </>
             </CardWrapper>
           </div>
 
@@ -1156,7 +1119,6 @@ const MarketInsights = () => {
                 loading={loading.news}
                 onRefresh={fetchNews}
                 type='news'
-                iconAnimate={{ rotateY: 360 }}
               >
                 <div className='flex flex-col gap-4'>
                   {newsData.length > 0 ? (

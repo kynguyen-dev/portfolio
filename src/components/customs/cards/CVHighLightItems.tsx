@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { animated, useSpring } from '@react-spring/web';
 import { PFGradientTypography, PFTypography } from '@components/core';
-import { Chip, useTheme } from '@mui/material';
-import Box from '@mui/material/Box';
 
 export const CVHighLightItems = ({
   number,
@@ -13,13 +11,17 @@ export const CVHighLightItems = ({
   label: string;
   details: string;
 }) => {
-  const { palette } = useTheme();
   const [isFlipped, setIsFlipped] = useState(false);
 
   const handleFlip = () => setIsFlipped(prev => !prev);
 
+  const flipSpring = useSpring({
+    rotateY: isFlipped ? 180 : 0,
+    config: { duration: 500 },
+  });
+
   return (
-    <motion.div
+    <div
       className='flip-card'
       onClick={handleFlip}
       style={{
@@ -31,11 +33,10 @@ export const CVHighLightItems = ({
         cursor: 'pointer',
       }}
     >
-      <motion.div
+      <animated.div
         className='flip-card-inner'
-        animate={{ rotateY: isFlipped ? 180 : 0 }}
-        transition={{ duration: 0.5 }}
         style={{
+          ...flipSpring,
           width: '100%',
           height: '100%',
           position: 'relative',
@@ -43,8 +44,7 @@ export const CVHighLightItems = ({
         }}
       >
         {/* Front Side */}
-        <Box
-          component={motion.div}
+        <div
           className='flip-card-front'
           style={{
             width: '100%',
@@ -68,44 +68,38 @@ export const CVHighLightItems = ({
             {number}
           </PFGradientTypography>
           <PFTypography variant='body1'>{label}</PFTypography>
-        </Box>
+        </div>
 
         {/* Back Side */}
-        <Box
-          component={motion.div}
+        <div
           className='flip-card-back'
-          sx={{
+          style={{
             width: '100%',
             height: '100%',
             position: 'absolute',
             backfaceVisibility: 'hidden',
             display: 'flex',
             flexWrap: 'wrap',
-            gap: 0.5,
+            gap: '4px',
             justifyContent: 'center',
-            padding: 1,
-            borderRadius: 2,
+            padding: '8px',
+            borderRadius: '8px',
             backdropFilter: 'blur(15px)',
             boxShadow: '0 6px 12px rgba(0,0,0,0.25)',
             transform: 'rotateY(180deg)',
-            color: palette.common.white,
+            color: '#fff',
           }}
         >
           {details.split('-').map(tech => (
-            <Chip
+            <span
               key={tech}
-              label={tech}
-              sx={{
-                background: palette.primary.main,
-                color: palette.common.white,
-                fontSize: '12px',
-                fontWeight: 'bold',
-                padding: '2px 6px',
-              }}
-            />
+              className='inline-block bg-primary-main text-white text-xs font-bold px-2 py-0.5 rounded-full'
+            >
+              {tech}
+            </span>
           ))}
-        </Box>
-      </motion.div>
-    </motion.div>
+        </div>
+      </animated.div>
+    </div>
   );
 };

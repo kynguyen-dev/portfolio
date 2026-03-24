@@ -1,5 +1,5 @@
 import { ArrowLeft, LayoutList } from 'lucide-react';
-import { motion } from 'motion/react';
+import { animated, useSpring } from '@react-spring/web';
 import { PFTypography } from '@components/core';
 import { StatsRadarChart } from './StatsRadarChart';
 import { MultiFormatImage } from './MultiFormatImage';
@@ -18,6 +18,40 @@ interface BattleCompareProps {
   onBackToDetail?: (character: ThreeKingdomsCharacter) => void;
   onBackToBrowse?: () => void;
 }
+
+const AnimatedBar = ({
+  value,
+  max,
+  color,
+  isWinner,
+  direction,
+}: {
+  value: number;
+  max: number;
+  color: string;
+  isWinner: boolean;
+  direction: 'left' | 'right';
+}) => {
+  const spring = useSpring({
+    from: { width: '0%' },
+    to: { width: `${(value / max) * 100}%` },
+    config: { duration: 800 },
+  });
+
+  return (
+    <animated.div
+      style={{
+        ...spring,
+        background: isWinner
+          ? direction === 'left'
+            ? `linear-gradient(90deg, ${color}60, ${color})`
+            : `linear-gradient(90deg, ${color}, ${color}60)`
+          : `${color}40`,
+      }}
+      className='h-full rounded-full'
+    />
+  );
+};
 
 export const BattleCompare = ({
   fighter1,
@@ -38,6 +72,33 @@ export const BattleCompare = ({
   const wins2 = STAT_KEYS.filter(
     k => fighter2.stats[k] > fighter1.stats[k]
   ).length;
+
+  const enterSpring = useSpring({
+    from: { opacity: 0, y: 20 },
+    to: { opacity: 1, y: 0 },
+    config: { duration: 400 },
+  });
+
+  const avatar1Spring = useSpring({
+    from: { scale: 0.7, opacity: 0, x: -30 },
+    to: { scale: 1, opacity: 1, x: 0 },
+    delay: 100,
+    config: { duration: 400 },
+  });
+
+  const avatar2Spring = useSpring({
+    from: { scale: 0.7, opacity: 0, x: 30 },
+    to: { scale: 1, opacity: 1, x: 0 },
+    delay: 150,
+    config: { duration: 400 },
+  });
+
+  const vsSpring = useSpring({
+    from: { scale: 0, rotate: -20 },
+    to: { scale: 1, rotate: 0 },
+    delay: 250,
+    config: { tension: 200, friction: 15 },
+  });
 
   const renderAvatar = (
     fighter: ThreeKingdomsCharacter,
@@ -72,12 +133,7 @@ export const BattleCompare = ({
   );
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-      className='flex-1 min-h-0 overflow-auto'
-    >
+    <animated.div style={enterSpring} className='flex-1 min-h-0 overflow-auto'>
       <div
         className={cn(
           'rounded-3xl overflow-hidden relative border transition-all duration-300',
@@ -88,7 +144,6 @@ export const BattleCompare = ({
       >
         {/* ── Full-height split background images ── */}
         <div className='absolute inset-0 flex z-0'>
-          {/* Left background */}
           <div className='flex-1 relative overflow-hidden'>
             <div
               className='absolute inset-0 z-10'
@@ -113,17 +168,12 @@ export const BattleCompare = ({
               style={{ background: km1.color }}
             />
           </div>
-
           <div
             className={cn(
               'w-0.5 z-30',
-              isLight
-                ? 'bg-gradient-to-b from-primary-main/30 to-transparent'
-                : 'bg-gradient-to-b from-primary-main/30 to-transparent'
+              'bg-gradient-to-b from-primary-main/30 to-transparent'
             )}
           />
-
-          {/* Right background */}
           <div className='flex-1 relative overflow-hidden'>
             <div
               className='absolute inset-0 z-10'
@@ -152,16 +202,11 @@ export const BattleCompare = ({
 
         {/* ── Foreground content ── */}
         <div className='relative z-40 p-6 md:p-10'>
-          {/* VS Header with avatars */}
           <div className='flex items-center justify-center gap-4 md:gap-12 mb-10'>
             <div className='flex flex-col items-center gap-2'>
-              <motion.div
-                initial={{ scale: 0.7, opacity: 0, x: -30 }}
-                animate={{ scale: 1, opacity: 1, x: 0 }}
-                transition={{ delay: 0.1, duration: 0.4 }}
-              >
+              <animated.div style={avatar1Spring}>
                 {renderAvatar(fighter1, km1, { xs: 64, md: 80 })}
-              </motion.div>
+              </animated.div>
               <PFTypography
                 variant='h5'
                 className='font-black'
@@ -190,10 +235,8 @@ export const BattleCompare = ({
               </PFTypography>
             </div>
 
-            <motion.div
-              initial={{ scale: 0, rotate: -20 }}
-              animate={{ scale: 1, rotate: 0 }}
-              transition={{ delay: 0.25, type: 'spring', stiffness: 200 }}
+            <animated.div
+              style={vsSpring}
               className={cn(
                 'w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center backdrop-blur-xl border-2 shadow-2xl z-50',
                 isLight
@@ -213,16 +256,12 @@ export const BattleCompare = ({
               >
                 VS
               </PFTypography>
-            </motion.div>
+            </animated.div>
 
             <div className='flex flex-col items-center gap-2'>
-              <motion.div
-                initial={{ scale: 0.7, opacity: 0, x: 30 }}
-                animate={{ scale: 1, opacity: 1, x: 0 }}
-                transition={{ delay: 0.15, duration: 0.4 }}
-              >
+              <animated.div style={avatar2Spring}>
                 {renderAvatar(fighter2, km2, { xs: 64, md: 80 })}
-              </motion.div>
+              </animated.div>
               <PFTypography
                 variant='h5'
                 className='font-black'
@@ -302,31 +341,21 @@ export const BattleCompare = ({
                   </div>
                   <div className='flex gap-1 h-2'>
                     <div className='flex-1 flex justify-end bg-white/5 rounded-l-full overflow-hidden'>
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: `${(v1 / max) * 100}%` }}
-                        transition={{ duration: 0.8, ease: 'circOut' }}
-                        className='h-full rounded-full'
-                        style={{
-                          background:
-                            v1 >= v2
-                              ? `linear-gradient(90deg, ${km1.color}60, ${km1.color})`
-                              : `${km1.color}40`,
-                        }}
+                      <AnimatedBar
+                        value={v1}
+                        max={max}
+                        color={km1.color}
+                        isWinner={v1 >= v2}
+                        direction='left'
                       />
                     </div>
                     <div className='flex-1 bg-white/5 rounded-r-full overflow-hidden'>
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: `${(v2 / max) * 100}%` }}
-                        transition={{ duration: 0.8, ease: 'circOut' }}
-                        className='h-full rounded-full'
-                        style={{
-                          background:
-                            v2 >= v1
-                              ? `linear-gradient(90deg, ${km2.color}, ${km2.color}60)`
-                              : `${km2.color}40`,
-                        }}
+                      <AnimatedBar
+                        value={v2}
+                        max={max}
+                        color={km2.color}
+                        isWinner={v2 >= v1}
+                        direction='right'
                       />
                     </div>
                   </div>
@@ -380,7 +409,6 @@ export const BattleCompare = ({
             </PFTypography>
           </div>
 
-          {/* Navigation buttons */}
           <div className='flex flex-wrap gap-4 mt-10'>
             {onBackToDetail && (
               <button
@@ -393,8 +421,7 @@ export const BattleCompare = ({
                 )}
                 style={{ color: km1.color, borderColor: `${km1.color}40` }}
               >
-                <ArrowLeft className='w-4 h-4' />
-                Back to {fighter1.name.en}
+                <ArrowLeft className='w-4 h-4' /> Back to {fighter1.name.en}
               </button>
             )}
             {onBackToBrowse && (
@@ -407,13 +434,12 @@ export const BattleCompare = ({
                     : 'bg-background-default/60 border-primary-main/20 text-primary-light'
                 )}
               >
-                <LayoutList className='w-4 h-4' />
-                Browse All
+                <LayoutList className='w-4 h-4' /> Browse All
               </button>
             )}
           </div>
         </div>
       </div>
-    </motion.div>
+    </animated.div>
   );
 };

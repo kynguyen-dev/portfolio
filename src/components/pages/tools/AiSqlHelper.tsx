@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import ToolPageLayout from './ToolPageLayout';
 import { PFTypography, PFButton } from '@components/core';
-import { motion, AnimatePresence } from 'motion/react';
+import { animated, useTransition, useSpring } from '@react-spring/web';
 import { useThemeMode } from '@contexts/theme-mode';
 import { cn } from '@utils/core/cn';
 
@@ -150,6 +150,12 @@ const AiSqlHelper = () => {
     navigator.clipboard.writeText(text.replace(/```sql|```/g, '').trim());
   };
 
+  const errorTransition = useTransition(errorMsg, {
+    from: { opacity: 0, y: 50 },
+    enter: { opacity: 1, y: 0 },
+    leave: { opacity: 0, y: 50 },
+  });
+
   return (
     <ToolPageLayout
       title='AI SQL Assistant'
@@ -192,50 +198,14 @@ const AiSqlHelper = () => {
           ref={scrollRef}
           className='flex-grow overflow-y-auto p-6 flex flex-col gap-4 scrollbar-thin scrollbar-thumb-primary-main/20 scrollbar-track-transparent'
         >
-          <AnimatePresence initial={false}>
-            {messages.map((msg, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                className={cn(
-                  'max-w-[85%] relative group transition-all',
-                  msg.role === 'user' ? 'self-end' : 'self-start'
-                )}
-              >
-                <div
-                  className={cn(
-                    'p-4 rounded-2xl shadow-sm transition-all',
-                    msg.role === 'user'
-                      ? isLight
-                        ? 'bg-primary-main text-white'
-                        : 'bg-primary-main text-background-default'
-                      : 'bg-white/5 text-text-primary border border-white/5 backdrop-blur-sm'
-                  )}
-                >
-                  <PFTypography
-                    variant='body2'
-                    className='whitespace-pre-wrap leading-relaxed'
-                  >
-                    {msg.content}
-                  </PFTypography>
-
-                  {msg.role === 'ai' && (
-                    <button
-                      onClick={() => copyToClipboard(msg.content)}
-                      className={cn(
-                        'absolute -bottom-8 right-0 p-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-all hover:bg-white/10',
-                        isLight ? 'text-primary-dark' : 'text-primary-light'
-                      )}
-                      title='Copy SQL'
-                    >
-                      <Copy className='w-4 h-4' />
-                    </button>
-                  )}
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
+          {messages.map((msg, index) => (
+            <MessageBubble
+              key={index}
+              msg={msg}
+              isLight={isLight}
+              onCopy={copyToClipboard}
+            />
+          ))}
           {isLoading && (
             <div className='self-center mt-4 flex items-center gap-2 text-primary-main'>
               <Loader2 className='w-5 h-5 animate-spin' />
@@ -278,17 +248,15 @@ const AiSqlHelper = () => {
       </div>
 
       {/* Error Toast */}
-      <AnimatePresence>
-        {errorMsg && (
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 50 }}
+      {errorTransition((style, msg) =>
+        msg ? (
+          <animated.div
+            style={style}
             className='fixed bottom-8 left-1/2 -translate-x-1/2 z-[200000]'
           >
             <div className='bg-red-500/90 backdrop-blur-md text-white px-6 py-3 rounded-2xl shadow-2xl flex items-center gap-3 border border-red-400/20'>
               <AlertCircle className='w-5 h-5' />
-              <span className='text-sm font-medium'>{errorMsg}</span>
+              <span className='text-sm font-medium'>{msg}</span>
               <button
                 onClick={() => setErrorMsg(null)}
                 className='p-1 hover:bg-white/10 rounded-lg'
@@ -296,10 +264,67 @@ const AiSqlHelper = () => {
                 <X className='w-4 h-4' />
               </button>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </animated.div>
+        ) : null
+      )}
     </ToolPageLayout>
+  );
+};
+
+/** Animated chat message bubble */
+const MessageBubble = ({
+  msg,
+  isLight,
+  onCopy,
+}: {
+  msg: Message;
+  isLight: boolean;
+  onCopy: (text: string) => void;
+}) => {
+  const spring = useSpring({
+    from: { opacity: 0, y: 10, scale: 0.95 },
+    to: { opacity: 1, y: 0, scale: 1 },
+  });
+
+  return (
+    <animated.div
+      style={spring}
+      className={cn(
+        'max-w-[85%] relative group transition-all',
+        msg.role === 'user' ? 'self-end' : 'self-start'
+      )}
+    >
+      <div
+        className={cn(
+          'p-4 rounded-2xl shadow-sm transition-all',
+          msg.role === 'user'
+            ? isLight
+              ? 'bg-primary-main text-white'
+              : 'bg-primary-main text-background-default'
+            : 'bg-white/5 text-text-primary border border-white/5 backdrop-blur-sm'
+        )}
+      >
+        <PFTypography
+          variant='body2'
+          className='whitespace-pre-wrap leading-relaxed'
+        >
+          {msg.content}
+        </PFTypography>
+
+        {msg.role === 'ai' && (
+          <button
+            onClick={() => onCopy(msg.content)}
+            className={cn(
+              'absolute -bottom-8 right-0 p-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-all hover:bg-white/10',
+              isLight ? 'text-primary-dark' : 'text-primary-light'
+            )}
+            title='Copy SQL'
+          >
+            <Copy className='w-4 h-4' />
+          </button>
+        )}
+      </div>
+    </animated.div>
   );
 };
 

@@ -1,15 +1,10 @@
-import { lazy, Suspense } from 'react';
-import { motion, type Variants } from 'motion/react';
+import { lazy, Suspense, ReactNode } from 'react';
+import { useSpring, animated } from '@react-spring/web';
 import { Intro } from '@components/pages/Intro/Intro.tsx';
 import { PFAppBar } from '@components/core/header';
 import { ScrollProgressBar } from '@components/core/scroll-progress/ScrollProgressBar';
 import { BackToTop } from '@components/core/back-to-top/BackToTop';
-import {
-  fadeUp,
-  slideInLeft,
-  blurIn,
-  scaleUp,
-} from '@utils/animations/scrollVariants';
+import { useInView } from '@utils/animations/springVariants';
 
 /* Below-the-fold sections — lazy loaded for faster initial paint */
 const Footer = lazy(() =>
@@ -27,11 +22,7 @@ const Skills = lazy(() =>
     default: m.Skills,
   }))
 );
-const MyProject = lazy(() =>
-  import('@components/pages/project/MyProject.tsx').then(m => ({
-    default: m.MyProject,
-  }))
-);
+
 const Testimonials = lazy(() =>
   import('@components/pages/testimonials/Testimonials.tsx').then(m => ({
     default: m.Testimonials,
@@ -53,29 +44,52 @@ const SpeedDialCustom = lazy(() =>
   }))
 );
 
-/** Animated scroll-reveal wrapper — accepts a motion/react variant */
+/** Animated scroll-reveal wrapper using react-spring */
 const Section = ({
   children,
-  variants = fadeUp,
+  variant = 'fadeUp',
 }: {
-  children: React.ReactNode;
-  variants?: Variants;
-}) => (
-  <motion.div
-    variants={variants}
-    initial='hidden'
-    whileInView='visible'
-    viewport={{ once: true, amount: 0.15 }}
-  >
-    {children}
-  </motion.div>
-);
+  children: ReactNode;
+  variant?: 'fadeUp' | 'slideInLeft' | 'blurIn' | 'scaleUp';
+}) => {
+  const { ref, inView } = useInView({ threshold: 0.15 });
+
+  const configs: Record<string, Record<string, unknown>> = {
+    fadeUp: {
+      from: { opacity: 0, y: 60 },
+      to: inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 },
+    },
+    slideInLeft: {
+      from: { opacity: 0, x: -80 },
+      to: inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -80 },
+    },
+    blurIn: {
+      from: { opacity: 0, scale: 0.95 },
+      to: inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 },
+    },
+    scaleUp: {
+      from: { opacity: 0, scale: 0.85 },
+      to: inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.85 },
+    },
+  };
+
+  const spring = useSpring({
+    ...configs[variant],
+    config: { tension: 170, friction: 26 },
+  });
+
+  return (
+    <animated.div ref={ref} style={spring}>
+      {children}
+    </animated.div>
+  );
+};
 
 /** Lightweight placeholder shown while lazy sections load */
 const SectionSkeleton = () => {
   return (
     <div className='flex justify-center items-center py-20 md:py-32 min-h-[200px]'>
-      <div className='w-10 h-10 rounded-full border-3 border-ct-primary-container/30 border-t-ct-primary-container animate-spin' />
+      <div className='w-10 h-10 rounded-full border-3 border-primary-main/30 border-t-primary-main animate-spin' />
     </div>
   );
 };
@@ -87,31 +101,28 @@ const HomePage = () => {
       {/* Skip-to-content for keyboard / screen-reader users */}
       <a
         href='#main-content'
-        className='absolute left-[-9999px] top-auto w-1 h-1 overflow-hidden z-[9999] focus:fixed focus:left-4 focus:top-4 focus:w-auto focus:h-auto focus:p-3 focus:px-6 focus:bg-ct-surface focus:text-ct-primary-container focus:rounded-lg focus:text-base focus:no-underline'
+        className='absolute left-[-9999px] top-auto w-1 h-1 overflow-hidden z-[9999] focus:fixed focus:left-4 focus:top-4 focus:w-auto focus:h-auto focus:p-3 focus:px-6 focus:bg-ct-surface focus:text-primary-main focus:rounded-lg focus:text-base focus:no-underline'
       >
         Skip to content
       </a>
       <PFAppBar />
-      <main id='main-content' className='vanta-bg'>
+      <main id='main-content'>
         <div className='flex flex-col'>
           <Intro />
           <Suspense fallback={<SectionSkeleton />}>
-            <Section variants={slideInLeft}>
+            <Section variant='slideInLeft'>
               <WorkExperience />
             </Section>
-            <Section variants={fadeUp}>
+            <Section variant='fadeUp'>
               <Skills />
             </Section>
-            <Section variants={scaleUp}>
-              <div className='max-w-[1400px] mx-auto px-8 py-24 md:py-32'>
-                <MyProject />
-              </div>
+            <Section variant='scaleUp'>
+              <Tools />
             </Section>
-            <Tools />
-            <Section variants={blurIn}>
+            <Section variant='blurIn'>
               <Testimonials />
             </Section>
-            <Section variants={scaleUp}>
+            <Section variant='scaleUp'>
               <ContactForm />
             </Section>
             <Footer />
