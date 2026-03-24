@@ -90,7 +90,10 @@ export const MyProject = () => {
   };
 
   return (
-    <div className='w-full flex flex-col justify-center items-center gap-8 md:gap-16'>
+    <div
+      id='projects'
+      className='w-full flex flex-col justify-center items-center gap-8 md:gap-16'
+    >
       <PFGradientTypography
         variant={APP_TYPOGRAPHIES.HEADER_PRIMARY}
         theme={APP_THEMES.DARK}

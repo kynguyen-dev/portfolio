@@ -14,9 +14,10 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { id: 'path', labelKey: 'nav.tacticalPath', href: '#projects' },
+  { id: 'path', labelKey: 'nav.tacticalPath', href: '#path' },
   { id: 'arsenal', labelKey: 'nav.theArsenal', href: '#skills' },
   { id: 'projects', labelKey: 'nav.projects', href: '#projects' },
+  { id: 'tools', labelKey: 'nav.tools', href: '#tools' },
 ];
 
 export const PFAppBar = () => {

@@ -1,6 +1,5 @@
 import { motion, type Variants } from 'motion/react';
 import { useTranslation } from 'react-i18next';
-import { APP_PAGES } from '@constants';
 
 interface TimelineEntry {
   company: string;
@@ -56,7 +55,7 @@ export const WorkTimeline = () => {
 
   return (
     <section
-      id={APP_PAGES.PROJECTS.toLowerCase()}
+      id='path'
       aria-label={t('workExperience.heading')}
       className='max-w-7xl mx-auto px-8 py-24 md:py-32'
     >

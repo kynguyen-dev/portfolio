@@ -63,11 +63,9 @@ export const Tools = () => {
         </PFGradientTypography>
         <PFTypography
           variant='body1'
-          sx={{
-            color: palette.text.secondary,
-            textAlign: 'center',
-            maxWidth: 560,
-          }}
+          textAlign='center'
+          className='max-w-[560px]'
+          style={{ color: palette.text.secondary }}
         >
           {t('tools.subtitle')}
         </PFTypography>
@@ -153,10 +151,8 @@ export const Tools = () => {
                   {/* Title */}
                   <PFTypography
                     variant='h6'
-                    sx={{
-                      fontWeight: 700,
-                      color: palette.text.primary,
-                    }}
+                    fontWeight={700}
+                    className='text-ct-on-surface'
                   >
                     {t(tool.titleKey)}
                   </PFTypography>
@@ -164,10 +160,7 @@ export const Tools = () => {
                   {/* Description */}
                   <PFTypography
                     variant='body2'
-                    sx={{
-                      color: palette.text.secondary,
-                      lineHeight: 1.6,
-                    }}
+                    className='text-ct-on-surface-variant leading-relaxed'
                   >
                     {t(tool.descriptionKey)}
                   </PFTypography>

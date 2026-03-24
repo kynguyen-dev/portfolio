@@ -42,6 +42,11 @@ const ContactForm = lazy(() =>
     default: m.ContactForm,
   }))
 );
+const Tools = lazy(() =>
+  import('@components/pages/tools/Tools.tsx').then(m => ({
+    default: m.Tools,
+  }))
+);
 const SpeedDialCustom = lazy(() =>
   import('@components/customs/speed-dial').then(m => ({
     default: m.SpeedDialCustom,
@@ -102,6 +107,7 @@ const HomePage = () => {
                 <MyProject />
               </div>
             </Section>
+            <Tools />
             <Section variants={blurIn}>
               <Testimonials />
             </Section>
