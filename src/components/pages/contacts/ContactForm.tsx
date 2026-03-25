@@ -29,7 +29,7 @@ export const ContactForm = () => {
       <animated.div
         ref={ref}
         style={containerSpring}
-        className='max-w-screen-xl mx-auto glass p-12 md:p-20 rounded-[3rem] text-center relative overflow-hidden border-2 border-ct-secondary/10'
+        className='glass p-12 md:p-20 rounded-[3rem] text-center relative overflow-hidden border-2 border-ct-secondary/10'
       >
         {/* Background gradient overlay */}
         <div className='absolute inset-0 bg-gradient-to-b from-transparent to-ct-surface-container-low/50' />

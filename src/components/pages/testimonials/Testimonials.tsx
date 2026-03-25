@@ -47,7 +47,7 @@ export const Testimonials = () => {
   return (
     <section
       aria-label={t('testimonials.heading')}
-      className='max-w-screen-lg mx-auto px-8 lg:px-16 py-24 md:py-32 relative'
+      className='px-8 lg:px-16 py-24 md:py-32 relative'
     >
       {/* Decorative quote mark */}
       <div className='absolute top-0 right-0 font-serif-display text-[16rem] md:text-[24rem] text-ct-secondary/5 leading-none select-none -z-10 translate-x-1/2 -translate-y-1/4'>

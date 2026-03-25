@@ -16,7 +16,7 @@ export const Footer = () => {
   return (
     <footer
       id='footer'
-      className='py-12 border-t border-ct-outline-variant/10 max-w-screen-2xl mx-auto px-8 lg:px-16'
+      className='py-12 border-t border-ct-outline-variant/10 px-8 lg:px-16'
     >
       <animated.div
         ref={ref}

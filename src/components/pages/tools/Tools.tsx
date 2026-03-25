@@ -65,12 +65,14 @@ export const Tools = () => {
 
   const trail = useTrail(TOOLS.length + 1, {
     from: { opacity: 0, y: 40, scale: 0.95 },
-    to: inView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 40, scale: 0.95 },
+    to: inView
+      ? { opacity: 1, y: 0, scale: 1 }
+      : { opacity: 0, y: 40, scale: 0.95 },
     config: { tension: 200, friction: 20 },
   });
 
   return (
-    <section id='tools' className='py-24 px-8 max-w-screen-2xl mx-auto'>
+    <section id='tools' className='py-24 px-8 lg:px-16'>
       {/* ─── Masterwork Grid Header ─── */}
       <div className='flex items-center gap-6 mb-16'>
         <h2 className='font-serif-display text-5xl flex-shrink-0'>
@@ -124,7 +126,9 @@ export const Tools = () => {
               )}
 
               {/* Title */}
-              <h4 className={`font-serif-display mb-3 ${tool.colSpan >= 8 ? 'text-3xl md:text-4xl' : 'text-2xl md:text-3xl'}`}>
+              <h4
+                className={`font-serif-display mb-3 ${tool.colSpan >= 8 ? 'text-3xl md:text-4xl' : 'text-2xl md:text-3xl'}`}
+              >
                 {t(tool.titleKey)}
               </h4>
 
@@ -140,7 +144,8 @@ export const Tools = () => {
                   <ArrowUpRight size={14} weight='bold' />
                 </span>
                 <span className='text-ct-outline-variant flex items-center gap-2 text-xs'>
-                  {'// '}{tool.techLabel}
+                  {'// '}
+                  {tool.techLabel}
                 </span>
               </div>
             </div>
@@ -156,9 +161,7 @@ export const Tools = () => {
             <h4 className='text-3xl font-serif-display mb-4'>
               {t('nav.initContact')}
             </h4>
-            <p className='text-ct-on-surface-variant'>
-              {t('tools.subtitle')}
-            </p>
+            <p className='text-ct-on-surface-variant'>{t('tools.subtitle')}</p>
           </div>
           <a
             href='#contact'

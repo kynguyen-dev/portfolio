@@ -59,7 +59,7 @@ export const Skills = () => {
       aria-label={t('skills.heading')}
       className='py-24 md:py-32 bg-ct-surface-container-lowest'
     >
-      <div className='max-w-screen-2xl mx-auto px-8 lg:px-16'>
+      <div className='px-8 lg:px-16'>
         {/* Section Header — centered, prototype style */}
         <div className='text-center mb-20'>
           <h2 className='text-primary-main font-label-grotesk text-xs font-black tracking-[0.3em] uppercase mb-2'>

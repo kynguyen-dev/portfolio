@@ -12,11 +12,6 @@ const Footer = lazy(() =>
     default: m.Footer,
   }))
 );
-const WorkExperience = lazy(() =>
-  import('@components/pages/work-experience/WorkExperience.tsx').then(m => ({
-    default: m.WorkExperience,
-  }))
-);
 const Skills = lazy(() =>
   import('@components/pages/skills/Skills.tsx').then(m => ({
     default: m.Skills,
@@ -110,9 +105,6 @@ const HomePage = () => {
         <div className='flex flex-col'>
           <Intro />
           <Suspense fallback={<SectionSkeleton />}>
-            <Section variant='slideInLeft'>
-              <WorkExperience />
-            </Section>
             <Section variant='fadeUp'>
               <Skills />
             </Section>

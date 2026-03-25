@@ -5,69 +5,177 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ─────────────────────────────────────────────
-   The Algorithmic Atelier — Design Tokens
-   Obsidian depth · Purple narrative · Mint logic
+   The Dual Theme System
+   Light: The Pristine Blueprint (Clinical High-Tech)
+   Dark: The Algorithmic Atelier (Obsidian, Purple, Mint)
    ───────────────────────────────────────────── */
+:root {
+  /* ─── LIGHT MODE ("The Pristine Blueprint") ─── */
+  --sys-primary-main: #630ed4;
+  --sys-primary-light: #7c3aed;
+  --sys-primary-dark: #4b0aa1;
+  --sys-primary-contrast: #ffffff;
+  --sys-primary-container: #7c3aed;
+  --sys-primary-fixed-dim: #630ed4;
+
+  --sys-secondary-main: #006c49;
+  --sys-secondary-light: #10b981;
+  --sys-secondary-dark: #004d34;
+  --sys-secondary-container: #6cf8bb;
+
+  --sys-tertiary: #adc6ff;
+  --sys-tertiary-container: #4d8eff;
+
+  /* Surface Hierarchy */
+  --sys-bg: #f7f9fb;
+  --sys-surface: #f7f9fb;
+  --sys-surface-container: #eceef0;
+  --sys-surface-container-low: #f2f4f6;
+  --sys-surface-container-high: #e1e3e5;
+  --sys-surface-container-highest: #d8dadc;
+  --sys-surface-container-lowest: #ffffff;
+  --sys-surface-bright: #f7f9fb;
+
+  /* On-Surface Text */
+  --sys-on-surface: #10141a;
+  --sys-on-surface-variant: #31353c;
+  --sys-outline: #8c9094;
+  --sys-outline-variant: rgba(216, 218, 220, 0.4);
+
+  --sys-on-secondary: #ffffff;
+  --sys-on-primary: #ffffff;
+
+  --sys-error: #ba1a1a;
+  --sys-error-container: #ffdad6;
+
+  --sys-border: oklch(0 0 0 / 8%);
+
+  /* Effects */
+  --sys-glass-bg: rgba(255, 255, 255, 0.7);
+  --sys-glass-border: rgba(255, 255, 255, 0.4);
+  --sys-glass-elevated: rgba(255, 255, 255, 0.85);
+
+  --sys-weaver-gradient: linear-gradient(135deg, #630ed4, #7c3aed);
+  --sys-topology-color: #d8dadc;
+
+  --sys-glow-primary: rgba(99, 14, 212, 0.2);
+  --sys-glow-primary-hover: rgba(99, 14, 212, 0.3);
+  --sys-glow-mint: rgba(0, 108, 73, 0.15);
+  --sys-ambient-shadow: 0 10px 30px rgba(25, 28, 30, 0.04);
+}
+
+.dark {
+  /* ─── DARK MODE ("The Algorithmic Atelier") ─── */
+  --sys-primary-main: #d0bcff;
+  --sys-primary-light: #e9ddff;
+  --sys-primary-dark: #6d3bd7;
+  --sys-primary-contrast: #1d1b20;
+  --sys-primary-container: #a078ff;
+  --sys-primary-fixed-dim: #d0bcff;
+
+  --sys-secondary-main: #4edea3;
+  --sys-secondary-light: #6ffbbe;
+  --sys-secondary-dark: #00a572;
+  --sys-secondary-container: #00a572;
+
+  --sys-tertiary: #adc6ff;
+  --sys-tertiary-container: #4d8eff;
+
+  /* Surface Hierarchy */
+  --sys-bg: #10141a;
+  --sys-surface: #10141a;
+  --sys-surface-container: #1c2026;
+  --sys-surface-container-low: #181c22;
+  --sys-surface-container-high: #262a31;
+  --sys-surface-container-highest: #31353c;
+  --sys-surface-container-lowest: #0a0e14;
+  --sys-surface-bright: #353940;
+
+  /* On-Surface Text */
+  --sys-on-surface: #dfe2eb;
+  --sys-on-surface-variant: #cbc3d7;
+  --sys-outline: #958ea0;
+  --sys-outline-variant: #494454;
+
+  --sys-on-secondary: #003824;
+  --sys-on-primary: #3c0091;
+
+  --sys-error: #ffb4ab;
+  --sys-error-container: #93000a;
+
+  --sys-border: oklch(1 0 0 / 8%);
+
+  /* Effects */
+  --sys-glass-bg: rgba(16, 20, 26, 0.6);
+  --sys-glass-border: rgba(73, 68, 84, 0.15);
+  --sys-glass-elevated: rgba(28, 32, 38, 0.65);
+
+  --sys-weaver-gradient: linear-gradient(90deg, #d0bcff, #4edea3);
+  --sys-topology-color: #31353c;
+
+  --sys-glow-primary: rgba(208, 188, 255, 0.2);
+  --sys-glow-primary-hover: rgba(208, 188, 255, 0.3);
+  --sys-glow-mint: rgba(78, 222, 163, 0.15);
+  --sys-ambient-shadow: 0 20px 50px rgba(13, 17, 23, 0.5);
+}
+
 @theme {
-  /* ─── Primary: Purple ("Human" narrative) ─── */
-  --color-primary-main: #d0bcff;
-  --color-primary-light: #e9ddff;
-  --color-primary-dark: #6d3bd7;
-  --color-primary-contrast: #1d1b20;
-  --color-primary-container: #a078ff;
-  --color-primary-fixed-dim: #d0bcff;
+  --color-primary-main: var(--sys-primary-main);
+  --color-primary-light: var(--sys-primary-light);
+  --color-primary-dark: var(--sys-primary-dark);
+  --color-primary-contrast: var(--sys-primary-contrast);
+  --color-primary-container: var(--sys-primary-container);
+  --color-primary-fixed-dim: var(--sys-primary-fixed-dim);
 
-  /* ─── Secondary: Mint ("Logic" accent) ─── */
-  --color-secondary-main: #4edea3;
-  --color-secondary-light: #6ffbbe;
-  --color-secondary-dark: #00a572;
-  --color-secondary-container: #00a572;
+  --color-secondary-main: var(--sys-secondary-main);
+  --color-secondary-light: var(--sys-secondary-light);
+  --color-secondary-dark: var(--sys-secondary-dark);
+  --color-secondary-container: var(--sys-secondary-container);
 
-  /* ─── Tertiary: Blue ─── */
-  --color-tertiary: #adc6ff;
-  --color-tertiary-container: #4d8eff;
+  --color-tertiary: var(--sys-tertiary);
+  --color-tertiary-container: var(--sys-tertiary-container);
 
-  /* ─── Surface Hierarchy (Obsidian Tiers) ─── */
-  --color-background-default: #10141a;
-  --color-background-paper: #181c22;
+  /* Mapping to previous variables to prevent breaking changes */
+  --color-background-default: var(--sys-bg);
+  --color-background-paper: var(--sys-surface-container-low);
 
-  --color-text-primary: #dfe2eb;
-  --color-text-secondary: #cbc3d7;
-  --color-text-disabled: #78767e;
+  --color-text-primary: var(--sys-on-surface);
+  --color-text-secondary: var(--sys-on-surface-variant);
+  --color-text-disabled: var(--sys-outline);
 
-  /* ─── Obsidian Surface System ─── */
-  --color-ct-bg: #10141a;
-  --color-ct-surface: #10141a;
-  --color-ct-surface-container: #1c2026;
-  --color-ct-surface-container-low: #181c22;
-  --color-ct-surface-container-high: #262a31;
-  --color-ct-surface-container-highest: #31353c;
-  --color-ct-surface-container-lowest: #0a0e14;
-  --color-ct-surface-bright: #353940;
-  --color-ct-on-surface: #dfe2eb;
-  --color-ct-on-surface-variant: #cbc3d7;
-  --color-ct-outline: #958ea0;
-  --color-ct-outline-variant: #494454;
-  --color-ct-primary-container: #a078ff;
-  --color-ct-secondary: #4edea3;
-  --color-ct-on-secondary: #003824;
-  --color-ct-on-primary: #3c0091;
+  --color-ct-bg: var(--sys-bg);
+  --color-ct-surface: var(--sys-surface);
+  --color-ct-surface-container: var(--sys-surface-container);
+  --color-ct-surface-container-low: var(--sys-surface-container-low);
+  --color-ct-surface-container-high: var(--sys-surface-container-high);
+  --color-ct-surface-container-highest: var(--sys-surface-container-highest);
+  --color-ct-surface-container-lowest: var(--sys-surface-container-lowest);
+  --color-ct-surface-bright: var(--sys-surface-bright);
 
-  /* ─── Error ─── */
-  --color-error: #ffb4ab;
-  --color-error-container: #93000a;
+  --color-ct-on-surface: var(--sys-on-surface);
+  --color-ct-on-surface-variant: var(--sys-on-surface-variant);
+  --color-ct-outline: var(--sys-outline);
+  --color-ct-outline-variant: var(--sys-outline-variant);
 
-  /* ─── Typography: The Weaver & The Architect ─── */
+  --color-ct-primary-container: var(--sys-primary-container);
+  --color-ct-secondary: var(--sys-secondary-main);
+  --color-ct-on-secondary: var(--sys-on-secondary);
+  --color-ct-on-primary: var(--sys-on-primary);
+
+  --color-error: var(--sys-error);
+  --color-error-container: var(--sys-error-container);
+
+  --color-border: var(--sys-border);
+  --color-background: var(--sys-bg);
+  --color-foreground: var(--sys-on-surface);
+  --color-ring: oklch(0.556 0 0);
+
+  /* Typography */
   --font-serif-display: 'Noto Serif Variable', Georgia, serif;
   --font-mono-code: 'Space Grotesk Variable', monospace;
   --font-label-grotesk: 'Space Grotesk Variable', sans-serif;
   --font-headline: 'Noto Serif Variable', Georgia, serif;
   --font-sans: 'Space Grotesk Variable', sans-serif;
-
-  --color-border: oklch(1 0 0 / 8%);
-  --color-ring: oklch(0.556 0 0);
-  --color-background: #10141a;
-  --color-foreground: #dfe2eb;
 }
 
 @layer base {
@@ -87,38 +195,32 @@
 }
 
 /* ─────────────────────────────────────────────
-   Glass Panel — Frosted obsidian pane effect
-   The primary card/container treatment
+   Glass Panel System
    ───────────────────────────────────────────── */
-.glass-panel {
-  background: rgba(16, 20, 26, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(73, 68, 84, 0.15);
-}
-
-/* Legacy alias */
+.glass-panel,
 .glass {
-  background: rgba(16, 20, 26, 0.6);
+  background: var(--sys-glass-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(73, 68, 84, 0.15);
+  border: 1px solid var(--sys-glass-border);
 }
 
 .glass-elevated {
-  background: rgba(28, 32, 38, 0.65);
+  background: var(--sys-glass-elevated);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(73, 68, 84, 0.12);
+  border: 1px solid var(--sys-glass-border);
 }
 
-/* ─── Topology Grid Background ─── */
+/* ─── Layout & Tonal Utilities ─── */
 .topology-grid {
-  background-image: radial-gradient(#31353c 0.5px, transparent 0.5px);
+  background-image: radial-gradient(
+    var(--sys-topology-color) 0.5px,
+    transparent 0.5px
+  );
   background-size: 30px 30px;
 }
 
-/* ─── No-Line Rule: tonal shift hover ─── */
 .tonal-hover {
   transition: background-color 300ms ease;
 }
@@ -126,53 +228,35 @@
   background-color: var(--color-ct-surface-container-high);
 }
 
-/* ─── Ghost Border (for inputs & accessibility) ─── */
 .ghost-border {
-  border: 1px solid rgba(73, 68, 84, 0.15);
+  border: 1px solid var(--sys-outline-variant);
 }
 .ghost-border:focus,
 .ghost-border:focus-within {
   border-color: rgba(78, 222, 163, 0.4);
 }
 
-/* ─── Primary Glow (Purple) ─── */
+/* ─── Glow & Shadow Utilities ─── */
 .primary-glow {
-  box-shadow: 0 0 24px rgba(208, 188, 255, 0.2);
+  box-shadow: 0 0 24px var(--sys-glow-primary);
 }
 .primary-glow:hover {
-  box-shadow: 0 0 36px rgba(208, 188, 255, 0.3);
+  box-shadow: 0 0 36px var(--sys-glow-primary-hover);
 }
 
-/* ─── Mint Glow ─── */
 .mint-glow {
-  box-shadow: 0 0 20px rgba(78, 222, 163, 0.15);
+  box-shadow: 0 0 20px var(--sys-glow-mint);
 }
 
-/* ─── Ambient Shadow (for modals, floating elements) ─── */
 .ambient-shadow {
-  box-shadow: 0 20px 50px rgba(13, 17, 23, 0.5);
+  box-shadow: var(--sys-ambient-shadow);
 }
 
-/* ─── The "Weaver" Progress Bar gradient ─── */
 .weaver-gradient {
-  background: linear-gradient(
-    90deg,
-    var(--color-primary-main),
-    var(--color-secondary-main)
-  );
+  background: var(--sys-weaver-gradient);
 }
 
-/* ─── Dot Grid Background (legacy) ─── */
-.vanta-bg {
-  background-image: radial-gradient(
-    circle at 2px 2px,
-    rgba(208, 188, 255, 0.04) 1px,
-    transparent 0
-  );
-  background-size: 40px 40px;
-}
-
-/* ─── Font Family Utilities ─── */
+/* ─── Typography & Specific Components ─── */
 .font-serif-display {
   font-family: var(--font-serif-display);
 }
@@ -183,7 +267,6 @@
   font-family: var(--font-label-grotesk);
 }
 
-/* ─── HUD Label Treatment ─── */
 .hud-label {
   font-family: var(--font-label-grotesk);
   text-transform: uppercase;
@@ -191,7 +274,6 @@
   color: var(--color-ct-secondary);
 }
 
-/* ─── Logic HUD Breadcrumbs ─── */
 .hud-breadcrumb {
   font-family: var(--font-label-grotesk);
   font-size: 0.75rem;
@@ -204,13 +286,11 @@
   margin: 0 0.5rem;
 }
 
-/* ─── Selection Color ─── */
 ::selection {
-  background-color: rgba(78, 222, 163, 0.3);
-  color: #4edea3;
+  background-color: var(--sys-glow-mint);
+  color: var(--color-ct-secondary);
 }
 
-/* ─── Tracing Beam Pulse Animation ─── */
 @keyframes pulse-beam {
   0%,
   100% {
@@ -223,7 +303,6 @@
   }
 }
 
-/* ─── Floating Node Animation ─── */
 @keyframes float {
   0%,
   100% {
