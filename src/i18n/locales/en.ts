@@ -76,6 +76,7 @@ export const en = {
     coreFrontend: 'Core Front-end Systems',
     dataArchitecture: 'Data & Architecture',
     toolingOps: 'Tooling & Ops',
+    execution: 'Skills.Execution',
   },
   projects: {
     recentWork: 'My Recent Work',

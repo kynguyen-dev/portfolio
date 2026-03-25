@@ -5,6 +5,7 @@ import { PFAppBar } from '@components/core/header';
 import { ScrollProgressBar } from '@components/core/scroll-progress/ScrollProgressBar';
 import { BackToTop } from '@components/core/back-to-top/BackToTop';
 import { useInView } from '@utils/animations/springVariants';
+import { Meteors } from '@components/customs/aceternity';
 
 /* Below-the-fold sections — lazy loaded for faster initial paint */
 const Footer = lazy(() =>
@@ -91,7 +92,11 @@ const SectionSkeleton = () => {
 
 const HomePage = () => {
   return (
-    <div className='bg-ct-bg min-h-screen'>
+    <div className='bg-ct-surface-container-lowest min-h-screen relative'>
+      {/* Global Meteor Effect — ambient background animation */}
+      <div className='fixed inset-0 z-0 pointer-events-none overflow-hidden'>
+        <Meteors number={15} />
+      </div>
       <ScrollProgressBar />
       {/* Skip-to-content for keyboard / screen-reader users */}
       <a

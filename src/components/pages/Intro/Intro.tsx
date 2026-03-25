@@ -9,6 +9,15 @@ import { animated, useSpring, useTrail } from '@react-spring/web';
 import { useTranslation } from 'react-i18next';
 import { APP_PAGES } from '@constants';
 import { useInView } from '@utils/animations/springVariants';
+import { Terminal, ImagesBadge } from '@components/customs/aceternity';
+
+/* Badge images for CTA hover effect */
+const ctaBadgeImages = [
+  '/icons/developer.png',
+  '/icons/dashboard-icon.png',
+  '/icons/medicare-icon.png',
+  '/icons/air-conditioner.png',
+];
 
 /* ─── Work History Data ─── */
 interface TimelineEntry {
@@ -58,13 +67,18 @@ const workHistory: TimelineEntry[] = [
       'Built and maintained a logistics and driver safety management system, combining fleet tracking, compliance workflows, and a mobile companion app for drivers.',
     technologies: ['Java 8', 'Spring Boot', 'Angular', 'Android'],
   },
+  {
+    company: 'Freelance',
+    role: 'Web Developer',
+    period: 'Jun 2021 — Nov 2021',
+    description:
+      'Delivered custom web solutions for small businesses, including responsive landing pages, e-commerce storefronts, and CMS integrations with a focus on performance and SEO.',
+    technologies: ['HTML/CSS', 'JavaScript', 'WordPress', 'Firebase'],
+  },
 ];
 
 export const Intro = () => {
   const { t } = useTranslation();
-  const techBadges = t('intro.techBadges', {
-    returnObjects: true,
-  }) as string[];
 
   /* ─── Scroll & Parallax Setup ─── */
   const containerRef = useRef<HTMLDivElement>(null);
@@ -97,7 +111,9 @@ export const Intro = () => {
   );
 
   // 4. Tactical Path Horizontal Scroll (0.2 to 1.0)
-  const x = useTransform(smoothProgress, [0.2, 1], ['0%', '-75%']);
+  const totalPages = Math.ceil(workHistory.length / 2);
+  const scrollEndPercent = totalPages > 1 ? `-${((totalPages - 1) / totalPages) * 100}%` : '0%';
+  const x = useTransform(smoothProgress, [0.2, 1], ['0%', scrollEndPercent]);
 
   /* ─── Intro Mount Animations (React-Spring) ─── */
   const statusSpring = useSpring({
@@ -112,11 +128,6 @@ export const Intro = () => {
     delay: 400,
   });
 
-  const subtitleSpring = useSpring({
-    from: { opacity: 0, y: 20 },
-    to: { opacity: 1, y: 0 },
-    delay: 600,
-  });
 
   const ctaSpring = useSpring({
     from: { opacity: 0, scale: 0.9 },
@@ -125,12 +136,6 @@ export const Intro = () => {
     config: { tension: 180, friction: 20 },
   });
 
-  const trail = useTrail(Array.isArray(techBadges) ? techBadges.length : 0, {
-    from: { opacity: 0, y: 40 },
-    to: { opacity: 1, y: 0 },
-    delay: 800,
-    config: { tension: 170, friction: 26 },
-  });
 
   /* ─── Accent Cards Mount Animations ─── */
   const { ref: gridRef, inView: gridInView } = useInView({ threshold: 0.15 });
@@ -147,7 +152,7 @@ export const Intro = () => {
       {/* 500vh container houses both Hero and Tactical Path */}
       <div
         ref={containerRef}
-        className='h-[500vh] relative bg-ct-surface-container-lowest antialiased'
+        className='h-[500vh] relative antialiased'
       >
         {/* Sticky viewport container */}
         <div className='sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-center [perspective:1000px]'>
@@ -163,13 +168,13 @@ export const Intro = () => {
               y: heroTranslateY,
               display: heroDisplay,
             }}
-            className='absolute inset-0 z-30 justify-center items-center px-4 md:px-8'
+            className='absolute inset-0 z-30 flex justify-center items-center px-4 md:px-8'
           >
-            <div className='relative w-full max-w-7xl px-8 flex flex-col items-center top-1/2 -translate-y-1/2'>
+            <div className='w-full max-w-4xl flex flex-col items-center mx-auto relative'>
               {/* Floating Data Node */}
               <animated.div
                 style={statusSpring}
-                className='absolute -top-12 right-12 glass-panel p-4 rounded-xl hidden md:flex flex-col gap-1'
+                className='absolute -top-12 right-0 lg:right-12 glass-panel p-4 rounded-xl hidden md:flex flex-col gap-1 z-10'
               >
                 <div className='flex items-center gap-2 text-ct-secondary text-[10px] font-bold tracking-tighter'>
                   <span className='w-2 h-2 rounded-full bg-ct-secondary animate-pulse' />
@@ -180,73 +185,95 @@ export const Intro = () => {
                 </div>
               </animated.div>
 
-              {/* Main HUD Content */}
-              <div className='glass-panel w-full p-12 md:p-20 rounded-[2rem] shadow-2xl relative overflow-hidden backdrop-blur-md bg-ct-surface-container-lowest/80'>
-                <div className='absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-ct-secondary to-transparent' />
+              {/* Hero Headline */}
+              <animated.div style={statusSpring} className='text-center mb-2'>
+                <span className='inline-flex items-center gap-2 px-4 py-1.5 bg-ct-secondary/5 border border-ct-secondary/15 rounded-full text-ct-secondary text-[11px] font-label-grotesk font-bold tracking-[0.2em] uppercase'>
+                  <span className='w-1.5 h-1.5 rounded-full bg-ct-secondary animate-pulse' />
+                  Establishing Connection...
+                </span>
+              </animated.div>
 
-                {/* Title Section */}
-                <div className='space-y-6 text-center'>
-                  <animated.div
-                    style={statusSpring}
-                    className='inline-flex items-center gap-2 px-3 py-1 bg-ct-secondary/10 border border-ct-secondary/20 rounded-full text-ct-secondary text-[10px] font-bold tracking-widest uppercase mb-4'
-                  >
-                    Establishing Connection...
-                  </animated.div>
+              <animated.div style={headingSpring} className='text-center mb-10'>
+                <h1 className='font-serif-display text-5xl md:text-7xl lg:text-8xl text-ct-secondary tracking-tighter leading-none mb-4'>
+                  {'> '}{t('intro.heroTitle')}
+                  <br className='hidden md:block' />
+                  <span className='text-ct-on-surface opacity-90 italic'>
+                    {t('intro.heroTitleAccent')}
+                  </span>
+                </h1>
+                <p className='max-w-2xl mx-auto text-base md:text-lg text-ct-on-surface-variant/60 font-label-grotesk tracking-wide'>
+                  {t('intro.heroSubtitle')}
+                </p>
+              </animated.div>
 
-                  <animated.h1
-                    style={headingSpring}
-                    className='font-serif-display text-5xl md:text-7xl lg:text-8xl text-ct-secondary tracking-tighter leading-none mb-8'
-                  >
-                    &gt; {t('intro.heroTitle')}{' '}
-                    <br className='hidden md:block' />
-                    <span className='text-ct-on-surface opacity-90 italic'>
-                      {t('intro.heroTitleAccent')}
-                    </span>
-                  </animated.h1>
+              {/* Terminal HUD */}
+              <animated.div style={ctaSpring} className='w-full'>
+                <Terminal
+                  username='kynguyen.dev'
+                  enableSound={false}
+                  typingSpeed={40}
+                  delayBetweenCommands={600}
+                  initialDelay={1200}
+                  commands={[
+                    'whoami',
+                    'cat skills.txt',
+                    'curl -s https://status.kynguyen.dev/ping',
+                  ]}
+                  outputs={{
+                    0: [
+                      '> Ky Nguyen — Full-Stack Developer',
+                      '> Synthesizing Architecture into PURE_LOGIC',
+                      '',
+                      'Strategic full-stack engineer specializing in the',
+                      'intersection of high-performance technical systems',
+                      'and elite aesthetic execution.',
+                    ],
+                    1: [
+                      '╔══════════════════════════════════════╗',
+                      '║  CORE_STACK                          ║',
+                      '╠══════════════════════════════════════╣',
+                      '║  React · TypeScript · Next.js        ║',
+                      '║  Java · Spring Boot · TanStack       ║',
+                      '║  Tailwind CSS · Storybook · Vite     ║',
+                      '╚══════════════════════════════════════╝',
+                    ],
+                    2: [
+                      '{ "status": "ONLINE", "latency": "12ms" }',
+                      '✓ All systems operational.',
+                    ],
+                  }}
+                  className='max-w-4xl'
+                />
+              </animated.div>
 
-                  <animated.p
-                    style={subtitleSpring}
-                    className='max-w-2xl mx-auto text-lg md:text-xl text-ct-on-surface-variant font-light leading-relaxed'
-                  >
-                    {t('intro.heroSubtitle')}
-                  </animated.p>
-                </div>
-
-                {/* Tech Tags Matrix */}
-                <div className='flex flex-wrap justify-center gap-3 mt-12'>
-                  {Array.isArray(techBadges) &&
-                    trail.map((style, i) => (
-                      <animated.span
-                        key={techBadges[i]}
-                        style={style}
-                        className='px-5 py-2 glass-panel rounded-full text-xs font-medium tracking-wider cursor-default transition-colors hover:bg-primary-main/10 text-primary-main'
-                      >
-                        {techBadges[i]}
-                      </animated.span>
-                    ))}
-                </div>
-
-                {/* CTA Buttons */}
-                <animated.div
-                  style={ctaSpring}
-                  className='mt-16 flex flex-col md:flex-row items-center justify-center gap-6'
+              {/* CTA Buttons */}
+              <animated.div
+                style={ctaSpring}
+                className='mt-10 flex flex-col md:flex-row items-center justify-center gap-6'
+              >
+                <ImagesBadge
+                  images={ctaBadgeImages}
+                  href='#contact'
+                  hoverSpread={28}
+                  hoverRotation={14}
+                  hoverTranslateY={-35}
+                  imageSize={34}
+                  className='group relative px-8 py-4 bg-primary-main text-ct-on-primary font-bold rounded-lg overflow-hidden transition-all active:scale-95 shadow-[0_0_20px_rgba(208,188,255,0.3)] inline-flex items-center gap-2'
                 >
-                  <a
-                    href='#contact'
-                    className='group relative px-8 py-4 bg-primary-main text-ct-on-primary font-bold rounded-lg overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(208,188,255,0.3)]'
-                  >
-                    <span className='relative z-10 flex items-center gap-2'>
-                      {t('nav.initContact')}
-                    </span>
-                  </a>
-                  <a
-                    href='#projects'
-                    className='px-8 py-4 border border-ct-secondary/30 text-ct-secondary font-bold rounded-lg hover:bg-ct-secondary/5 transition-all'
-                  >
-                    VIEW_MANIFESTO
-                  </a>
-                </animated.div>
-              </div>
+                  {t('nav.initContact')}
+                </ImagesBadge>
+                <ImagesBadge
+                  images={ctaBadgeImages.slice(0, 3)}
+                  href='#projects'
+                  hoverSpread={22}
+                  hoverRotation={10}
+                  hoverTranslateY={-30}
+                  imageSize={30}
+                  className='px-8 py-4 border border-ct-secondary/30 text-ct-secondary font-bold rounded-lg hover:bg-ct-secondary/5 transition-all inline-flex items-center gap-2'
+                >
+                  VIEW_MANIFESTO
+                </ImagesBadge>
+              </animated.div>
             </div>
           </motion.div>
 
@@ -277,84 +304,101 @@ export const Intro = () => {
 
             {/* Horizontal Scrolling Grid */}
             <motion.div
-              style={{ x }}
-              className='relative flex items-center w-[400vw] h-full px-8 lg:px-16 mt-16 pointer-events-auto'
+              style={{ x, width: `${totalPages * 100}vw` }}
+              className='relative flex items-center h-full mt-16 pointer-events-auto'
             >
-              {/* Aceternity Tracing Beam SVG spanning full width */}
-              <svg
-                className='absolute top-1/2 left-0 w-full h-[400px] -translate-y-1/2 pointer-events-none z-0'
-                preserveAspectRatio='none'
-                viewBox='0 0 1000 400'
-              >
-                <path
-                  className='opacity-30'
-                  d='M0,200 C150,50 350,350 500,200 C650,50 850,350 1000,200'
-                  fill='none'
-                  stroke='#4edea3'
-                  strokeWidth='2'
-                  strokeDasharray='10 5'
-                  style={{ animation: 'pulse-beam 3s infinite linear' }}
-                />
-                <path
-                  className='opacity-60'
-                  d='M0,200 C150,50 350,350 500,200 C650,50 850,350 1000,200'
-                  fill='none'
-                  stroke='#4edea3'
-                  strokeWidth='0.5'
-                />
-              </svg>
+              {/* S-Curve Tracing Beam — one cycle per viewport */}
+              {(() => {
+                const segW = 1000 / totalPages;
+                let d = '';
+                for (let p = 0; p < totalPages; p++) {
+                  const x0 = p * segW;
+                  const x1 = (p + 1) * segW;
+                  const goingDown = p % 2 === 0;
+                  const y0 = goingDown ? 50 : 350;
+                  const y1 = goingDown ? 350 : 50;
+                  if (p === 0) d += `M${x0},${y0}`;
+                  d += ` C${x0 + segW * 0.35},${y0} ${x0 + segW * 0.65},${y1} ${x1},${y1}`;
+                }
+                return (
+                  <svg
+                    className='absolute top-1/2 left-0 w-full h-[500px] -translate-y-1/2 pointer-events-none z-0'
+                    preserveAspectRatio='none'
+                    viewBox='0 0 1000 400'
+                  >
+                    <path className='opacity-40' d={d} fill='none' stroke='#4edea3' strokeWidth='2' strokeDasharray='8 4' style={{ animation: 'pulse-beam 3s infinite linear' }} />
+                    <path className='opacity-70' d={d} fill='none' stroke='#4edea3' strokeWidth='0.8' />
+                    <path className='opacity-10' d={d} fill='none' stroke='#4edea3' strokeWidth='8' filter='blur(4px)' />
+                  </svg>
+                );
+              })()}
 
-              {/* History Cards */}
-              <div className='flex items-center w-full h-full justify-around'>
-                {workHistory.map((entry, index) => {
-                  const isEven = index % 2 === 0;
-                  return (
-                    <div
-                      key={`${entry.company}-${entry.period}`}
-                      className={`w-[85vw] md:w-[450px] shrink-0 relative z-10 ${
-                        isEven ? 'mb-32' : 'mt-32'
-                      }`}
-                    >
-                      <div
-                        className='glass-panel p-8 rounded-2xl border-2 border-primary-main/40 shadow-[0_0_30px_rgba(208,188,255,0.15)] relative overflow-hidden hover:border-primary-main/80 transition-all duration-500 group'
-                        style={{
-                          animation: `float 6s ease-in-out infinite${
-                            isEven ? '' : ' -3s'
-                          }`,
-                        }}
-                      >
+              {/* History Cards — dynamic pages, 2 cards each */}
+              {Array.from({ length: totalPages }, (_, pageIdx) => {
+                const startIdx = pageIdx * 2;
+                const pageEntries = workHistory.slice(startIdx, startIdx + 2);
+                const goingDown = pageIdx % 2 === 0;
+                return (
+                  <div
+                    key={pageIdx}
+                    className='w-screen shrink-0 flex items-center justify-evenly h-full px-8 lg:px-16'
+                  >
+                    {pageEntries.map((entry, i) => {
+                      const globalIdx = startIdx + i;
+                      // Card position within the page curve (0 = start, 1 = end)
+                      const t = pageEntries.length > 1 ? i / (pageEntries.length - 1) : 0.5;
+                      // Follow the S-curve: goingDown → first card high, second card low
+                      const yOffset = goingDown
+                        ? -100 + t * 200   // −100 → +100
+                        : 100 - t * 200;    // +100 → −100
+                      return (
                         <div
-                          className={`absolute ${
-                            isEven ? '-top-10 -right-10' : '-bottom-10 -left-10'
-                          } w-32 h-32 bg-primary-main/10 rounded-full blur-3xl group-hover:bg-primary-main/20 transition-all`}
-                        />
-                        <div className='text-ct-secondary font-label-grotesk text-sm mb-4 tracking-widest'>
-                          [ {entry.period.toUpperCase()} ]
+                          key={`${entry.company}-${entry.period}`}
+                          className='w-[90vw] md:w-[840px] shrink-0 relative z-10'
+                          style={{ transform: `translateY(${yOffset}px)` }}
+                        >
+                          <div
+                            className='glass-panel p-14 rounded-3xl border-2 border-primary-main/40 shadow-[0_0_30px_rgba(208,188,255,0.15)] relative overflow-hidden hover:border-primary-main/80 transition-all duration-500 group'
+                            style={{
+                              animation: `float 6s ease-in-out infinite${
+                                globalIdx % 2 !== 0 ? ' -3s' : ''
+                              }`,
+                            }}
+                          >
+                            <div
+                              className={`absolute ${
+                                globalIdx % 2 === 0 ? '-top-10 -right-10' : '-bottom-10 -left-10'
+                              } w-32 h-32 bg-primary-main/10 rounded-full blur-3xl group-hover:bg-primary-main/20 transition-all`}
+                            />
+                            <div className='text-ct-secondary font-label-grotesk text-base mb-5 tracking-widest'>
+                              [ {entry.period.toUpperCase()} ]
+                            </div>
+                            <h4 className='text-4xl font-bold text-ct-on-surface mb-4 tracking-tight'>
+                              {entry.role}
+                            </h4>
+                            <div className='text-sm text-ct-outline uppercase tracking-widest mb-5'>
+                              {entry.company}
+                            </div>
+                            <p className='text-ct-on-surface-variant text-lg leading-relaxed mb-10'>
+                              {entry.description}
+                            </p>
+                            <div className='flex flex-wrap gap-2'>
+                              {entry.technologies.map(tech => (
+                                <span
+                                  key={tech}
+                                  className='px-3 py-1.5 bg-ct-surface-container text-primary-main text-xs font-bold rounded border border-primary-main/20'
+                                >
+                                  {tech}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
                         </div>
-                        <h4 className='text-2xl font-bold text-ct-on-surface mb-3 tracking-tight'>
-                          {entry.role}
-                        </h4>
-                        <div className='text-xs text-ct-outline uppercase tracking-widest mb-4'>
-                          {entry.company}
-                        </div>
-                        <p className='text-ct-on-surface-variant text-sm leading-relaxed mb-6'>
-                          {entry.description}
-                        </p>
-                        <div className='flex flex-wrap gap-2'>
-                          {entry.technologies.map(tech => (
-                            <span
-                              key={tech}
-                              className='px-2 py-1 bg-ct-surface-container text-primary-main text-[10px] font-bold rounded border border-primary-main/20'
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
             </motion.div>
           </motion.div>
         </div>
@@ -363,7 +407,7 @@ export const Intro = () => {
       {/* ─── Accent Cards Grid ─── */}
       <div
         ref={gridRef}
-        className='grid grid-cols-1 md:grid-cols-2 gap-6 px-8 lg:px-16 pb-24 pt-24 bg-ct-surface-container-lowest relative z-10'
+        className='grid grid-cols-1 md:grid-cols-2 gap-6 px-8 lg:px-16 pb-24 pt-24 relative z-10'
       >
         {/* Accent Card — Philosophy */}
         <animated.div
