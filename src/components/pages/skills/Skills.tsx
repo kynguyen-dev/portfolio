@@ -52,14 +52,7 @@ const arsenalPanels: ArsenalPanel[] = [
     glareColor: 'rgba(78, 222, 163, 0.10)',
     chipStyle:
       'bg-ct-secondary/8 text-ct-secondary border-ct-secondary/15 hover:bg-ct-secondary/15',
-    skills: [
-      'Docker',
-      'GitHub Actions',
-      'Vite',
-      'AWS EC2',
-      'Jest',
-      'Cypress',
-    ],
+    skills: ['Docker', 'GitHub Actions', 'Vite', 'AWS EC2', 'Jest', 'Cypress'],
   },
   {
     titleKey: 'skills.execution',
@@ -101,7 +94,7 @@ const ArsenalCardContent = ({
       <div
         className={cn(
           'h-[2px] w-full rounded-full bg-gradient-to-r mb-8 opacity-50',
-          panel.accentGradient,
+          panel.accentGradient
         )}
       />
 
@@ -110,7 +103,7 @@ const ArsenalCardContent = ({
         <div
           className={cn(
             'p-3.5 rounded-xl bg-ct-surface-container transition-all duration-300',
-            panel.accentClass,
+            panel.accentClass
           )}
         >
           <span className='text-2xl block'>{panel.icon}</span>
@@ -128,12 +121,12 @@ const ArsenalCardContent = ({
 
       {/* Skill chips */}
       <div className='flex flex-wrap gap-2.5 flex-1'>
-        {panel.skills.map((skill) => (
+        {panel.skills.map(skill => (
           <span
             key={skill}
             className={cn(
               'px-4 py-2 text-sm font-label-grotesk font-medium rounded-lg border transition-all duration-200 cursor-default',
-              panel.chipStyle,
+              panel.chipStyle
             )}
           >
             {skill}
@@ -145,7 +138,7 @@ const ArsenalCardContent = ({
       <div
         className={cn(
           'mt-8 h-[1px] w-10 rounded-full opacity-20',
-          panel.accentClass.replace('text-', 'bg-'),
+          panel.accentClass.replace('text-', 'bg-')
         )}
       />
     </div>
@@ -190,7 +183,7 @@ export const Skills = () => {
         <animated.div
           style={{
             opacity: headerSpring.opacity,
-            transform: headerSpring.y.to((y) => `translateY(${y}px)`),
+            transform: headerSpring.y.to(y => `translateY(${y}px)`),
           }}
           className='mb-20'
         >
@@ -212,10 +205,7 @@ export const Skills = () => {
         {/* Arsenal Bento Grid — zigzag with Glare Cards */}
         <div ref={ref} className='space-y-5'>
           {bentoRows.map((row, rowIdx) => (
-            <div
-              key={rowIdx}
-              className='grid grid-cols-1 lg:grid-cols-3 gap-5'
-            >
+            <div key={rowIdx} className='grid grid-cols-1 lg:grid-cols-3 gap-5'>
               {row.map(({ panelIdx, span }) => {
                 const panel = arsenalPanels[panelIdx];
                 const style = trail[panelIdx];
@@ -226,20 +216,13 @@ export const Skills = () => {
                     style={{
                       opacity: style.opacity,
                       transform: style.y.to(
-                        (y) =>
-                          `translateY(${y}px) scale(${style.scale.get()})`,
+                        y => `translateY(${y}px) scale(${style.scale.get()})`
                       ),
                     }}
                     className={isWide ? 'lg:col-span-2' : ''}
                   >
-                    <GlareCard
-                      glareColor={panel.glareColor}
-                      className='h-full'
-                    >
-                      <ArsenalCardContent
-                        panel={panel}
-                        panelIdx={panelIdx}
-                      />
+                    <GlareCard glareColor={panel.glareColor} className='h-full'>
+                      <ArsenalCardContent panel={panel} panelIdx={panelIdx} />
                     </GlareCard>
                   </animated.div>
                 );
@@ -252,7 +235,7 @@ export const Skills = () => {
         <animated.div
           style={{
             opacity: headerSpring.opacity,
-            transform: headerSpring.y.to((y) => `translateY(${y}px)`),
+            transform: headerSpring.y.to(y => `translateY(${y}px)`),
           }}
           className='mt-16 flex flex-wrap items-center justify-center gap-8 md:gap-16'
         >
@@ -260,7 +243,7 @@ export const Skills = () => {
             { value: '20+', label: 'TECHNOLOGIES' },
             { value: '4+', label: 'YEARS_EXP' },
             { value: '6', label: 'PRODUCTION_SYSTEMS' },
-          ].map((stat) => (
+          ].map(stat => (
             <div key={stat.label} className='text-center group'>
               <div className='font-serif-display text-3xl md:text-4xl text-ct-on-surface tracking-tight group-hover:text-primary-main transition-colors duration-300'>
                 {stat.value}

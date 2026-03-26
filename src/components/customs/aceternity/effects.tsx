@@ -72,29 +72,33 @@ export const WavyBackground = ({
         containerClassName
       )}
     >
-      {/* Animated wave layers */}
-      <div className='absolute inset-0'>
+      {/* Animated ink wash layers */}
+      <div className='absolute inset-0 pointer-events-none'>
         <div
-          className='absolute inset-0 opacity-20'
+          className='absolute inset-0 opacity-30 dark:opacity-20'
           style={{
-            backgroundImage: `repeating-linear-gradient(
-              100deg,
-              rgba(208,188,255,0.1) 0%,
-              rgba(208,188,255,0.05) 7%,
-              transparent 10%,
-              transparent 12%,
-              rgba(78,222,163,0.05) 16%
-            )`,
-            backgroundSize: '300% 300%',
-            animation: 'waveShift 8s ease-in-out infinite',
+            background: `radial-gradient(circle at 20% 30%, var(--sys-primary-main) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 70%, var(--sys-secondary-main) 0%, transparent 50%)`,
+            filter: 'blur(80px)',
+            animation: 'inkFloat 15s ease-in-out infinite alternate',
+          }}
+        />
+        <div
+          className='absolute inset-0 opacity-20 dark:opacity-10'
+          style={{
+            background: `radial-gradient(circle at 70% 20%, var(--sys-secondary-main) 0%, transparent 40%),
+                        radial-gradient(circle at 30% 80%, var(--sys-primary-main) 0%, transparent 40%)`,
+            filter: 'blur(60px)',
+            animation: 'inkFloat 12s ease-in-out infinite alternate-reverse',
           }}
         />
       </div>
       <div className={cn('relative z-10', className)}>{children}</div>
       <style>{`
-        @keyframes waveShift {
-          0%, 100% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
+        @keyframes inkFloat {
+          0% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(5%, 2%) scale(1.1); }
+          100% { transform: translate(-2%, 5%) scale(1.05); }
         }
       `}</style>
     </div>
@@ -159,7 +163,7 @@ export const ThreeDCard = ({ children, className }: ThreeDCardProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isHovering, setIsHovering] = useState(false);
 
-  const [spring, api] = useSpring(() => ({
+  const [{ rotateX, rotateY }, api] = useSpring(() => ({
     rotateX: 0,
     rotateY: 0,
     config: { tension: 350, friction: 40 },
@@ -172,9 +176,9 @@ export const ThreeDCard = ({ children, className }: ThreeDCardProps) => {
     const y = e.clientY - rect.top;
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    const rotateX = ((y - centerY) / centerY) * -10;
-    const rotateY = ((x - centerX) / centerX) * 10;
-    api.start({ rotateX, rotateY });
+    const rX = ((y - centerY) / centerY) * -10;
+    const rY = ((x - centerX) / centerX) * 10;
+    api.start({ rotateX: rX, rotateY: rY });
   };
 
   const handleMouseLeave = () => {
@@ -193,8 +197,8 @@ export const ThreeDCard = ({ children, className }: ThreeDCardProps) => {
     >
       <animated.div
         style={{
-          transform: spring.rotateX.to(
-            rx => `rotateX(${rx}deg) rotateY(${spring.rotateY.get()}deg)`
+          transform: rotateX.to(
+            rx => `rotateX(${rx}deg) rotateY(${rotateY.get()}deg)`
           ),
         }}
         className={cn(

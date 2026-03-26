@@ -1,4 +1,4 @@
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useState, useEffect } from 'react';
 import {
   useReactTable,
   getCoreRowModel,
@@ -8,9 +8,11 @@ import {
   createColumnHelper,
   type SortingState,
   type ColumnDef,
+  type Row,
+  type Cell,
 } from '@tanstack/react-table';
-import { useVirtualizer } from '@tanstack/react-virtual';
-import { useThemeMode } from '@contexts/theme-mode';
+import { useVirtualizer, type VirtualItem } from '@tanstack/react-virtual';
+import { useSpring, animated, to } from '@react-spring/web';
 import type { ThreeKingdomsCharacter } from '@constants/three-kingdoms';
 import { getKingdomMeta } from '@constants/three-kingdoms';
 import { MultiFormatImage } from './MultiFormatImage';
@@ -26,8 +28,6 @@ const useIsMobile = () => {
   }, []);
   return isMobile;
 };
-
-import { useState, useEffect } from 'react';
 
 const AvatarCell = ({ character }: { character: ThreeKingdomsCharacter }) => {
   const km = getKingdomMeta(character.kingdom);
@@ -74,6 +74,104 @@ interface CharacterTableProps {
   onRowClick: (character: ThreeKingdomsCharacter) => void;
 }
 
+interface AnimatedRowProps {
+  row: Row<ThreeKingdomsCharacter>;
+  vRow: VirtualItem;
+  gridCols: string;
+  onRowClick: (character: ThreeKingdomsCharacter) => void;
+  index: number;
+}
+
+const AnimatedRow = ({
+  row,
+  vRow,
+  gridCols,
+  onRowClick,
+  index,
+}: AnimatedRowProps) => {
+  const km = getKingdomMeta(row.original.kingdom);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Staggered entry animation
+  const spring = useSpring({
+    from: { opacity: 0, x: -20 },
+    to: { opacity: 1, x: 0 },
+    delay: Math.min(index * 50, 500),
+    config: { tension: 200, friction: 20 },
+  });
+
+  // Spotlight effect
+  const [{ sx, sy, sOpacity }, spotlightApi] = useSpring(() => ({
+    sx: 0,
+    sy: 0,
+    sOpacity: 0,
+  }));
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    spotlightApi.start({
+      sx: e.clientX - rect.left,
+      sy: e.clientY - rect.top,
+      sOpacity: 1,
+    });
+  };
+
+  return (
+    <animated.div
+      ref={containerRef}
+      onClick={() => onRowClick(row.original)}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={() => spotlightApi.start({ sOpacity: 0 })}
+      role='button'
+      tabIndex={0}
+      onKeyDown={e => {
+        if (e.key === 'Enter') onRowClick(row.original);
+      }}
+      style={{
+        ...spring,
+        display: 'grid',
+        gridTemplateColumns: gridCols,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: `${vRow.size}px`,
+        transform: to(
+          [spring.x],
+          x => `translateY(${vRow.start}px) translateX(${x}px)`
+        ),
+        borderLeft: `3px solid ${km.color}`,
+      }}
+      className='ghost-border border-b border-ct-outline-variant/10 cursor-pointer transition-colors duration-150 hover:bg-ct-surface-container-high/30 focus-visible:outline-2 focus-visible:outline-primary-main focus-visible:-outline-offset-2 overflow-hidden group'
+    >
+      {/* Spotlight highlight */}
+      <animated.div
+        style={{
+          opacity: sOpacity,
+          background: to(
+            [sx, sy],
+            (x, y) =>
+              `radial-gradient(150px circle at ${x}px ${y}px, ${km.color}25, transparent 80%)`
+          ),
+        }}
+        className='pointer-events-none absolute inset-0 z-0'
+      />
+
+      {row
+        .getVisibleCells()
+        .map((cell: Cell<ThreeKingdomsCharacter, unknown>) => (
+          <div
+            key={cell.id}
+            className='px-3 flex items-center text-[0.85rem] text-ct-on-surface overflow-hidden relative z-10'
+          >
+            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+          </div>
+        ))}
+    </animated.div>
+  );
+};
+
 export const CharacterTable = ({
   data,
   globalFilter,
@@ -81,15 +179,12 @@ export const CharacterTable = ({
   onSortingChange,
   onRowClick,
 }: CharacterTableProps) => {
-  const { mode } = useThemeMode();
-  const isLight = mode === 'light';
   const isMobile = useIsMobile();
   const parentRef = useRef<HTMLDivElement>(null);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const columns: ColumnDef<ThreeKingdomsCharacter, any>[] = useMemo(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const base: ColumnDef<ThreeKingdomsCharacter, any>[] = [
+  // ... (rest of the component logic until return) ...
+  const columns: ColumnDef<ThreeKingdomsCharacter, unknown>[] = useMemo(() => {
+    const base: ColumnDef<ThreeKingdomsCharacter, unknown>[] = [
       columnHelper.accessor(row => row.name.en, {
         id: 'name',
         header: '⚔ Name',
@@ -205,10 +300,6 @@ export const CharacterTable = ({
     overscan: 10,
   });
 
-  const borderColor = isLight
-    ? 'rgba(184,137,31,0.15)'
-    : 'rgba(245,208,96,0.15)';
-
   const headerColumns = table.getHeaderGroups()[0]?.headers ?? [];
   const gridCols =
     headerColumns.length > 0
@@ -221,28 +312,18 @@ export const CharacterTable = ({
   return (
     <div
       ref={parentRef}
-      className='w-full rounded-lg overflow-x-auto overflow-y-auto'
+      className='w-full rounded-lg overflow-x-auto overflow-y-auto glass-panel bg-ct-surface-container-low/50 backdrop-blur-md'
       style={{
         maxHeight: 'calc(100vh - 440px)',
         minHeight: 200,
-        border: `1px solid ${borderColor}`,
-        backgroundColor: isLight
-          ? 'rgba(255,248,240,0.5)'
-          : 'rgba(11,13,46,0.35)',
-        backdropFilter: 'blur(8px)',
       }}
     >
       {/* Table header */}
       <div
-        className='sticky top-0 z-[2]'
+        className='sticky top-0 z-[2] bg-ct-surface-container-low/95 backdrop-blur-xl border-b border-ct-outline-variant/20'
         style={{
           display: 'grid',
           gridTemplateColumns: gridCols,
-          backgroundColor: isLight
-            ? 'rgba(251,246,238,0.95)'
-            : 'rgba(11,13,46,0.9)',
-          backdropFilter: 'blur(12px)',
-          borderBottom: `1px solid ${borderColor}`,
         }}
       >
         {table.getHeaderGroups().map(hg =>
@@ -250,9 +331,8 @@ export const CharacterTable = ({
             <div
               key={header.id}
               onClick={header.column.getToggleSortingHandler()}
-              className='px-3 py-3 text-[0.8rem] font-bold whitespace-nowrap select-none'
+              className='px-3 py-3 text-[0.8rem] font-bold whitespace-nowrap select-none text-ct-secondary'
               style={{
-                color: isLight ? '#5C4A32' : '#FFE4B5',
                 cursor: header.column.getCanSort() ? 'pointer' : 'default',
               }}
             >
@@ -271,44 +351,16 @@ export const CharacterTable = ({
           position: 'relative',
         }}
       >
-        {virtualizer.getVirtualItems().map(vRow => {
-          const row = rows[vRow.index];
-          const km = getKingdomMeta(row.original.kingdom);
-
-          return (
-            <div
-              key={row.id}
-              onClick={() => onRowClick(row.original)}
-              role='button'
-              tabIndex={0}
-              onKeyDown={e => {
-                if (e.key === 'Enter') onRowClick(row.original);
-              }}
-              className='cursor-pointer transition-colors duration-150 hover:bg-white/5 focus-visible:outline-2 focus-visible:outline-primary-main focus-visible:-outline-offset-2'
-              style={{
-                display: 'grid',
-                gridTemplateColumns: gridCols,
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: `${vRow.size}px`,
-                transform: `translateY(${vRow.start}px)`,
-                borderBottom: `1px solid ${borderColor}`,
-                borderLeft: `3px solid ${km.color}`,
-              }}
-            >
-              {row.getVisibleCells().map(cell => (
-                <div
-                  key={cell.id}
-                  className='px-3 flex items-center text-[0.85rem] text-ct-on-surface overflow-hidden'
-                >
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </div>
-              ))}
-            </div>
-          );
-        })}
+        {virtualizer.getVirtualItems().map(vRow => (
+          <AnimatedRow
+            key={vRow.key}
+            row={rows[vRow.index]}
+            vRow={vRow}
+            gridCols={gridCols}
+            onRowClick={onRowClick}
+            index={vRow.index}
+          />
+        ))}
       </div>
 
       {/* Empty state */}

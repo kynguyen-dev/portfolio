@@ -1,6 +1,7 @@
 import {
   useRef,
   useState,
+  useMemo,
   MouseEvent as ReactMouseEvent,
   ReactNode,
 } from 'react';
@@ -82,19 +83,24 @@ export const SpotlightCard = ({
   spotlightColor = 'rgba(78, 222, 163, 0.15)',
 }: SpotlightCardProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
+
+  const [{ x, y }, api] = useSpring(() => ({
+    x: 0,
+    y: 0,
+    config: { tension: 100, friction: 14 },
+  }));
 
   const handleMouseMove = (e: ReactMouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
-    setPosition({
+    api.start({
       x: e.clientX - rect.left,
       y: e.clientY - rect.top,
     });
   };
 
-  const spring = useSpring({
+  const springOpacity = useSpring({
     opacity: isHovering ? 1 : 0,
     config: { tension: 200, friction: 20 },
   });
@@ -112,8 +118,15 @@ export const SpotlightCard = ({
     >
       <animated.div
         style={{
-          ...spring,
-          background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, ${spotlightColor}, transparent 40%)`,
+          opacity: springOpacity.opacity,
+          background: useMemo(
+            () =>
+              x.to(
+                nx =>
+                  `radial-gradient(600px circle at ${nx}px ${y.get()}px, ${spotlightColor}, transparent 40%)`
+              ),
+            [x, y, spotlightColor]
+          ),
         }}
         className='pointer-events-none absolute inset-0 z-0'
       />

@@ -24,12 +24,12 @@ export const Meteors = ({ number = 20, className }: MeteorsProps) => {
         delay: Math.random() * 0.6 + 0.2,
         duration: Math.floor(Math.random() * 8 + 2),
       })),
-    [number],
+    [number]
   );
 
   return (
     <>
-      {meteors.map((m) => (
+      {meteors.map(m => (
         <span
           key={`meteor-${m.id}`}
           className={cn(
@@ -39,7 +39,7 @@ export const Meteors = ({ number = 20, className }: MeteorsProps) => {
             'before:w-[50px] before:h-[1px]',
             'before:bg-gradient-to-r before:from-primary-main/50 before:to-transparent',
             'animate-meteor',
-            className,
+            className
           )}
           style={{
             left: `calc(50% + ${m.left}px)`,

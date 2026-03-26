@@ -1,11 +1,11 @@
-import { useRef, ReactNode } from 'react';
+import { useRef, ReactNode, useMemo } from 'react';
 import {
-  motion,
-  useScroll,
-  useTransform,
   useSpring,
-  MotionValue,
-} from 'motion/react';
+  animated,
+  useScroll,
+  config,
+  SpringValue,
+} from '@react-spring/web';
 import { cn } from '@utils/core/cn';
 
 /**
@@ -13,7 +13,7 @@ import { cn } from '@utils/core/cn';
  * rotation, translation and opacity animations.
  *
  * Adapted for the Algorithmic Atelier design system
- * using motion (framer-motion).
+ * using @react-spring/web for high-performance physics-based animations.
  */
 
 export interface HeroParallaxProduct {
@@ -35,52 +35,39 @@ export const HeroParallax = ({
 }: HeroParallaxProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start start', 'end start'],
+    container: ref,
+    default: {
+      immediate: true,
+    },
   });
 
-  const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
+  const springConfig = { tension: 170, friction: 26 };
 
   // First row moves left
-  const translateX = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, 1000]),
-    springConfig
-  );
+  const translateX = scrollYProgress.to([0, 1], [0, 1000]);
   // Second row moves right
-  const translateXReverse = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, -1000]),
-    springConfig
-  );
+  const translateXReverse = scrollYProgress.to([0, 1], [0, -1000]);
   // Third row moves left (slower)
-  const translateXThird = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, 500]),
-    springConfig
-  );
+  const translateXThird = scrollYProgress.to([0, 1], [0, 500]);
 
-  const rotateX = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [15, 0]),
-    springConfig
-  );
-  const opacity = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [0.2, 1]),
-    springConfig
-  );
-  const rotateZ = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [20, 0]),
-    springConfig
-  );
-  const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [-700, 0]),
-    springConfig
-  );
+  // Combined spring for the grid container transformations
+  const containerSpring = useSpring({
+    rotateX: scrollYProgress.to([0, 0.2], [15, 0]),
+    rotateZ: scrollYProgress.to([0, 0.2], [20, 0]),
+    translateY: scrollYProgress.to([0, 0.2], [-700, 0]),
+    opacity: scrollYProgress.to([0, 0.2], [0.2, 1]),
+    config: springConfig,
+  });
 
   // Split into 3 rows
-  const firstRow = products.slice(0, Math.ceil(products.length / 3));
-  const secondRow = products.slice(
-    Math.ceil(products.length / 3),
-    Math.ceil((products.length / 3) * 2)
-  );
-  const thirdRow = products.slice(Math.ceil((products.length / 3) * 2));
+  const { firstRow, secondRow, thirdRow } = useMemo(() => {
+    const rowSize = Math.ceil(products.length / 3);
+    return {
+      firstRow: products.slice(0, rowSize),
+      secondRow: products.slice(rowSize, rowSize * 2),
+      thirdRow: products.slice(rowSize * 2),
+    };
+  }, [products]);
 
   return (
     <div
@@ -98,16 +85,16 @@ export const HeroParallax = ({
       )}
 
       {/* Parallax Card Grid */}
-      <motion.div
+      <animated.div
         style={{
-          rotateX,
-          rotateZ,
-          translateY,
-          opacity,
+          rotateX: containerSpring.rotateX,
+          rotateZ: containerSpring.rotateZ,
+          transform: containerSpring.translateY.to(y => `translateY(${y}px)`),
+          opacity: containerSpring.opacity,
         }}
       >
         {/* Row 1 — moves right */}
-        <motion.div className='flex flex-row-reverse space-x-reverse space-x-8 mb-8'>
+        <div className='flex flex-row-reverse space-x-reverse space-x-8 mb-8'>
           {firstRow.map(product => (
             <ProductCard
               key={product.title}
@@ -115,10 +102,10 @@ export const HeroParallax = ({
               translate={translateX}
             />
           ))}
-        </motion.div>
+        </div>
 
         {/* Row 2 — moves left */}
-        <motion.div className='flex flex-row space-x-8 mb-8'>
+        <div className='flex flex-row space-x-8 mb-8'>
           {secondRow.map(product => (
             <ProductCard
               key={product.title}
@@ -126,10 +113,10 @@ export const HeroParallax = ({
               translate={translateXReverse}
             />
           ))}
-        </motion.div>
+        </div>
 
         {/* Row 3 — moves right (slower) */}
-        <motion.div className='flex flex-row-reverse space-x-reverse space-x-8'>
+        <div className='flex flex-row-reverse space-x-reverse space-x-8'>
           {thirdRow.map(product => (
             <ProductCard
               key={product.title}
@@ -137,22 +124,31 @@ export const HeroParallax = ({
               translate={translateXThird}
             />
           ))}
-        </motion.div>
-      </motion.div>
+        </div>
+      </animated.div>
     </div>
   );
 };
 
 interface ProductCardProps {
   product: HeroParallaxProduct;
-  translate: MotionValue<number>;
+  translate: SpringValue<number>;
 }
 
 const ProductCard = ({ product, translate }: ProductCardProps) => {
+  const [hoverSpring, api] = useSpring(() => ({
+    y: 0,
+    config: config.gentle,
+  }));
+
   return (
-    <motion.div
-      style={{ x: translate }}
-      whileHover={{ y: -20 }}
+    <animated.div
+      style={{
+        x: translate,
+        transform: hoverSpring.y.to(y => `translateY(${y}px)`),
+      }}
+      onMouseEnter={() => api.start({ y: -20 })}
+      onMouseLeave={() => api.start({ y: 0 })}
       className='group/product h-72 w-[28rem] relative shrink-0'
     >
       <a
@@ -172,13 +168,12 @@ const ProductCard = ({ product, translate }: ProductCardProps) => {
       <h3 className='absolute bottom-4 left-4 opacity-0 group-hover/product:opacity-100 text-white font-label-grotesk text-sm tracking-wider uppercase transition-opacity duration-300'>
         {product.title}
       </h3>
-    </motion.div>
+    </animated.div>
   );
 };
 
 /**
  * GradientPlaceholder — a decorative gradient card for when no image is available.
- * Use as a thumbnail source via a data URI or inline style.
  */
 export const GRADIENT_PLACEHOLDERS = [
   'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -198,13 +193,9 @@ export const GRADIENT_PLACEHOLDERS = [
   'linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)',
 ];
 
-/**
- * GradientCard — a product card replacement when no screenshot image is available.
- * Uses a CSS gradient background instead of an img tag.
- */
 interface GradientCardProps {
   product: HeroParallaxProduct;
-  translate: MotionValue<number>;
+  translate: SpringValue<number>;
   gradient: string;
 }
 
@@ -213,10 +204,19 @@ export const GradientCard = ({
   translate,
   gradient,
 }: GradientCardProps) => {
+  const [hoverSpring, api] = useSpring(() => ({
+    y: 0,
+    config: config.gentle,
+  }));
+
   return (
-    <motion.div
-      style={{ x: translate }}
-      whileHover={{ y: -20 }}
+    <animated.div
+      style={{
+        x: translate,
+        transform: hoverSpring.y.to(y => `translateY(${y}px)`),
+      }}
+      onMouseEnter={() => api.start({ y: -20 })}
+      onMouseLeave={() => api.start({ y: 0 })}
       className='group/product h-72 w-[28rem] relative shrink-0'
     >
       <a
@@ -230,7 +230,6 @@ export const GradientCard = ({
           style={{ background: gradient }}
         />
         <div className='absolute inset-0 bg-black/20 rounded-xl' />
-        {/* Tech label overlay */}
         <div className='absolute top-4 left-4 flex items-center gap-2'>
           <div className='w-2 h-2 rounded-full bg-white/60' />
           <span className='text-white/80 text-xs font-label-grotesk uppercase tracking-widest'>
@@ -242,69 +241,45 @@ export const GradientCard = ({
       <h3 className='absolute bottom-4 left-4 opacity-0 group-hover/product:opacity-100 text-white font-label-grotesk text-sm tracking-wider uppercase transition-opacity duration-300'>
         {product.title}
       </h3>
-    </motion.div>
+    </animated.div>
   );
 };
-
-/**
- * HeroParallaxWithGradients — variant that uses gradient cards instead of images.
- * Perfect for portfolios without product screenshots.
- */
-interface HeroParallaxGradientsProps {
-  products: HeroParallaxProduct[];
-  children?: ReactNode;
-  className?: string;
-}
 
 export const HeroParallaxWithGradients = ({
   products,
   children,
   className,
-}: HeroParallaxGradientsProps) => {
+}: HeroParallaxProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start start', 'end start'],
+    container: ref,
+    default: {
+      immediate: true,
+    },
   });
 
-  const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
+  const springConfig = { tension: 170, friction: 26 };
 
-  const translateX = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, 1000]),
-    springConfig
-  );
-  const translateXReverse = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, -1000]),
-    springConfig
-  );
-  const translateXThird = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, 500]),
-    springConfig
-  );
+  const translateX = scrollYProgress.to([0, 1], [0, 1000]);
+  const translateXReverse = scrollYProgress.to([0, 1], [0, -1000]);
+  const translateXThird = scrollYProgress.to([0, 1], [0, 500]);
 
-  const rotateX = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [15, 0]),
-    springConfig
-  );
-  const opacity = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [0.2, 1]),
-    springConfig
-  );
-  const rotateZ = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [20, 0]),
-    springConfig
-  );
-  const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [-700, 0]),
-    springConfig
-  );
+  const containerSpring = useSpring({
+    rotateX: scrollYProgress.to([0, 0.2], [15, 0]),
+    rotateZ: scrollYProgress.to([0, 0.2], [20, 0]),
+    translateY: scrollYProgress.to([0, 0.2], [-700, 0]),
+    opacity: scrollYProgress.to([0, 0.2], [0.2, 1]),
+    config: springConfig,
+  });
 
-  const firstRow = products.slice(0, Math.ceil(products.length / 3));
-  const secondRow = products.slice(
-    Math.ceil(products.length / 3),
-    Math.ceil((products.length / 3) * 2)
-  );
-  const thirdRow = products.slice(Math.ceil((products.length / 3) * 2));
+  const { firstRow, secondRow, thirdRow } = useMemo(() => {
+    const rowSize = Math.ceil(products.length / 3);
+    return {
+      firstRow: products.slice(0, rowSize),
+      secondRow: products.slice(rowSize, rowSize * 2),
+      thirdRow: products.slice(rowSize * 2),
+    };
+  }, [products]);
 
   return (
     <div
@@ -320,15 +295,15 @@ export const HeroParallaxWithGradients = ({
         </div>
       )}
 
-      <motion.div
+      <animated.div
         style={{
-          rotateX,
-          rotateZ,
-          translateY,
-          opacity,
+          rotateX: containerSpring.rotateX,
+          rotateZ: containerSpring.rotateZ,
+          transform: containerSpring.translateY.to(y => `translateY(${y}px)`),
+          opacity: containerSpring.opacity,
         }}
       >
-        <motion.div className='flex flex-row-reverse space-x-reverse space-x-8 mb-8'>
+        <div className='flex flex-row-reverse space-x-reverse space-x-8 mb-8'>
           {firstRow.map((product, i) => (
             <GradientCard
               key={product.title}
@@ -337,9 +312,9 @@ export const HeroParallaxWithGradients = ({
               gradient={GRADIENT_PLACEHOLDERS[i % GRADIENT_PLACEHOLDERS.length]}
             />
           ))}
-        </motion.div>
+        </div>
 
-        <motion.div className='flex flex-row space-x-8 mb-8'>
+        <div className='flex flex-row space-x-8 mb-8'>
           {secondRow.map((product, i) => (
             <GradientCard
               key={product.title}
@@ -352,9 +327,9 @@ export const HeroParallaxWithGradients = ({
               }
             />
           ))}
-        </motion.div>
+        </div>
 
-        <motion.div className='flex flex-row-reverse space-x-reverse space-x-8'>
+        <div className='flex flex-row-reverse space-x-reverse space-x-8'>
           {thirdRow.map((product, i) => (
             <GradientCard
               key={product.title}
@@ -368,8 +343,8 @@ export const HeroParallaxWithGradients = ({
               }
             />
           ))}
-        </motion.div>
-      </motion.div>
+        </div>
+      </animated.div>
     </div>
   );
 };

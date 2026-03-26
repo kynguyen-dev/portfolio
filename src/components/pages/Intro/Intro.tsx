@@ -112,7 +112,8 @@ export const Intro = () => {
 
   // 4. Tactical Path Horizontal Scroll (0.2 to 1.0)
   const totalPages = Math.ceil(workHistory.length / 2);
-  const scrollEndPercent = totalPages > 1 ? `-${((totalPages - 1) / totalPages) * 100}%` : '0%';
+  const scrollEndPercent =
+    totalPages > 1 ? `-${((totalPages - 1) / totalPages) * 100}%` : '0%';
   const x = useTransform(smoothProgress, [0.2, 1], ['0%', scrollEndPercent]);
 
   /* ─── Intro Mount Animations (React-Spring) ─── */
@@ -128,14 +129,12 @@ export const Intro = () => {
     delay: 400,
   });
 
-
   const ctaSpring = useSpring({
     from: { opacity: 0, scale: 0.9 },
     to: { opacity: 1, scale: 1 },
     delay: 1000,
     config: { tension: 180, friction: 20 },
   });
-
 
   /* ─── Accent Cards Mount Animations ─── */
   const { ref: gridRef, inView: gridInView } = useInView({ threshold: 0.15 });
@@ -150,10 +149,7 @@ export const Intro = () => {
   return (
     <section id={APP_PAGES.HOME.toLowerCase()}>
       {/* 500vh container houses both Hero and Tactical Path */}
-      <div
-        ref={containerRef}
-        className='h-[500vh] relative antialiased'
-      >
+      <div ref={containerRef} className='h-[500vh] relative antialiased'>
         {/* Sticky viewport container */}
         <div className='sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-center [perspective:1000px]'>
           {/* Topology Grid Background */}
@@ -195,7 +191,8 @@ export const Intro = () => {
 
               <animated.div style={headingSpring} className='text-center mb-10'>
                 <h1 className='font-serif-display text-5xl md:text-7xl lg:text-8xl text-ct-secondary tracking-tighter leading-none mb-4'>
-                  {'> '}{t('intro.heroTitle')}
+                  {'> '}
+                  {t('intro.heroTitle')}
                   <br className='hidden md:block' />
                   <span className='text-ct-on-surface opacity-90 italic'>
                     {t('intro.heroTitleAccent')}
@@ -326,9 +323,30 @@ export const Intro = () => {
                     preserveAspectRatio='none'
                     viewBox='0 0 1000 400'
                   >
-                    <path className='opacity-40' d={d} fill='none' stroke='#4edea3' strokeWidth='2' strokeDasharray='8 4' style={{ animation: 'pulse-beam 3s infinite linear' }} />
-                    <path className='opacity-70' d={d} fill='none' stroke='#4edea3' strokeWidth='0.8' />
-                    <path className='opacity-10' d={d} fill='none' stroke='#4edea3' strokeWidth='8' filter='blur(4px)' />
+                    <path
+                      className='opacity-40'
+                      d={d}
+                      fill='none'
+                      stroke='#4edea3'
+                      strokeWidth='2'
+                      strokeDasharray='8 4'
+                      style={{ animation: 'pulse-beam 3s infinite linear' }}
+                    />
+                    <path
+                      className='opacity-70'
+                      d={d}
+                      fill='none'
+                      stroke='#4edea3'
+                      strokeWidth='0.8'
+                    />
+                    <path
+                      className='opacity-10'
+                      d={d}
+                      fill='none'
+                      stroke='#4edea3'
+                      strokeWidth='8'
+                      filter='blur(4px)'
+                    />
                   </svg>
                 );
               })()}
@@ -346,19 +364,22 @@ export const Intro = () => {
                     {pageEntries.map((entry, i) => {
                       const globalIdx = startIdx + i;
                       // Card position within the page curve (0 = start, 1 = end)
-                      const t = pageEntries.length > 1 ? i / (pageEntries.length - 1) : 0.5;
+                      const t =
+                        pageEntries.length > 1
+                          ? i / (pageEntries.length - 1)
+                          : 0.5;
                       // Follow the S-curve: goingDown → first card high, second card low
                       const yOffset = goingDown
-                        ? -100 + t * 200   // −100 → +100
-                        : 100 - t * 200;    // +100 → −100
+                        ? -100 + t * 200 // −100 → +100
+                        : 100 - t * 200; // +100 → −100
                       return (
                         <div
                           key={`${entry.company}-${entry.period}`}
-                          className='w-[90vw] md:w-[840px] shrink-0 relative z-10'
+                          className='w-[85vw] md:w-[60vw] lg:w-[600px] xl:w-[720px] 2xl:w-[840px] shrink-0 relative z-10'
                           style={{ transform: `translateY(${yOffset}px)` }}
                         >
                           <div
-                            className='glass-panel p-14 rounded-3xl border-2 border-primary-main/40 shadow-[0_0_30px_rgba(208,188,255,0.15)] relative overflow-hidden hover:border-primary-main/80 transition-all duration-500 group'
+                            className='glass-panel p-6 md:p-10 lg:p-14 rounded-2xl md:rounded-3xl border-2 border-primary-main/40 shadow-[0_0_30px_rgba(208,188,255,0.15)] relative overflow-hidden hover:border-primary-main/80 transition-all duration-500 group'
                             style={{
                               animation: `float 6s ease-in-out infinite${
                                 globalIdx % 2 !== 0 ? ' -3s' : ''
@@ -367,26 +388,28 @@ export const Intro = () => {
                           >
                             <div
                               className={`absolute ${
-                                globalIdx % 2 === 0 ? '-top-10 -right-10' : '-bottom-10 -left-10'
-                              } w-32 h-32 bg-primary-main/10 rounded-full blur-3xl group-hover:bg-primary-main/20 transition-all`}
+                                globalIdx % 2 === 0
+                                  ? '-top-10 -right-10'
+                                  : '-bottom-10 -left-10'
+                              } w-24 h-24 md:w-32 md:h-32 bg-primary-main/10 rounded-full blur-3xl group-hover:bg-primary-main/20 transition-all`}
                             />
-                            <div className='text-ct-secondary font-label-grotesk text-base mb-5 tracking-widest'>
+                            <div className='text-ct-secondary font-label-grotesk text-xs md:text-sm lg:text-base mb-3 md:mb-5 tracking-widest'>
                               [ {entry.period.toUpperCase()} ]
                             </div>
-                            <h4 className='text-4xl font-bold text-ct-on-surface mb-4 tracking-tight'>
+                            <h4 className='text-2xl md:text-3xl lg:text-4xl font-bold text-ct-on-surface mb-2 md:mb-4 tracking-tight'>
                               {entry.role}
                             </h4>
-                            <div className='text-sm text-ct-outline uppercase tracking-widest mb-5'>
+                            <div className='text-[10px] md:text-xs text-ct-outline uppercase tracking-widest mb-3 md:mb-5'>
                               {entry.company}
                             </div>
-                            <p className='text-ct-on-surface-variant text-lg leading-relaxed mb-10'>
+                            <p className='text-ct-on-surface-variant text-sm md:text-base lg:text-lg leading-relaxed mb-6 md:mb-10'>
                               {entry.description}
                             </p>
                             <div className='flex flex-wrap gap-2'>
                               {entry.technologies.map(tech => (
                                 <span
                                   key={tech}
-                                  className='px-3 py-1.5 bg-ct-surface-container text-primary-main text-xs font-bold rounded border border-primary-main/20'
+                                  className='px-2 py-1 md:px-3 md:py-1.5 bg-ct-surface-container text-primary-main text-[10px] md:text-xs font-bold rounded border border-primary-main/20'
                                 >
                                   {tech}
                                 </span>
