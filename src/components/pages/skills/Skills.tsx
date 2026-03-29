@@ -200,7 +200,7 @@ export const Skills = () => {
       {/* Subtle topology grid overlay */}
       <div className='absolute inset-0 topology-grid opacity-[0.04] pointer-events-none' />
 
-      <div className='px-8 lg:px-16 max-w-screen-2xl mx-auto'>
+      <div className='px-8 lg:px-16'>
         {/* Section Header */}
         <animated.div
           style={{
