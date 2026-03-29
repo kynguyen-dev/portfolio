@@ -33,11 +33,29 @@ interface ProjectCardProps {
 
 const projectDefs: ProjectCardProps[] = [
   {
+    titleKey: 'projects.fintech.title',
+    descriptionKey: 'projects.fintech.description',
+    roleKey: 'projects.fullStackDeveloper',
+    contributionsKey: 'projects.fintech.contributions',
+    spritePosition: SPRITE_POSITIONS[0],
+    url: '',
+    isPrivate: true,
+  },
+  {
+    titleKey: 'projects.crypto.title',
+    descriptionKey: 'projects.crypto.description',
+    roleKey: 'projects.fullStackDeveloper',
+    contributionsKey: 'projects.crypto.contributions',
+    spritePosition: SPRITE_POSITIONS[1],
+    url: '',
+    isPrivate: true,
+  },
+  {
     titleKey: 'projects.logistic.title',
     descriptionKey: 'projects.logistic.description',
     roleKey: 'projects.fullStackDeveloper',
     contributionsKey: 'projects.logistic.contributions',
-    spritePosition: SPRITE_POSITIONS[0],
+    spritePosition: SPRITE_POSITIONS[2],
     url: DRIVALINK_URL,
   },
   {
@@ -45,7 +63,7 @@ const projectDefs: ProjectCardProps[] = [
     descriptionKey: 'projects.medical.description',
     roleKey: 'projects.frontEndDeveloper',
     contributionsKey: 'projects.medical.contributions',
-    spritePosition: SPRITE_POSITIONS[1],
+    spritePosition: SPRITE_POSITIONS[3],
     url: EPILEPSY_PROJECT_URL,
   },
   {
@@ -53,7 +71,7 @@ const projectDefs: ProjectCardProps[] = [
     descriptionKey: 'projects.education.description',
     roleKey: 'projects.fullStackDeveloper',
     contributionsKey: 'projects.education.contributions',
-    spritePosition: SPRITE_POSITIONS[2],
+    spritePosition: SPRITE_POSITIONS[0], // Reuse
     url: LEARNER_DASHBOARD_URL,
   },
   {
@@ -61,7 +79,7 @@ const projectDefs: ProjectCardProps[] = [
     descriptionKey: 'projects.hireService.description',
     roleKey: 'projects.fullStackDeveloper',
     contributionsKey: 'projects.hireService.contributions',
-    spritePosition: SPRITE_POSITIONS[3],
+    spritePosition: SPRITE_POSITIONS[1], // Reuse
     url: '',
     isPrivate: true,
   },

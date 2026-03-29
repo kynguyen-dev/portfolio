@@ -4,6 +4,7 @@ import { useInView } from '@utils/animations/springVariants';
 import { cn } from '@utils/core/cn';
 import { CodeBlock, Database, GearSix, Rocket } from '@phosphor-icons/react';
 import { GlareCard } from '@components/customs/aceternity';
+import { getYearsOfExperience } from '@utils/core/career';
 
 /* ─── Data ─── */
 interface ArsenalPanel {
@@ -26,12 +27,12 @@ const arsenalPanels: ArsenalPanel[] = [
     chipStyle:
       'bg-ct-secondary/8 text-ct-secondary border-ct-secondary/15 hover:bg-ct-secondary/15',
     skills: [
-      'React 18',
+      'React (3+ years)',
+      'Next.js (SSR)',
       'TypeScript',
-      'Next.js',
-      'Vue 3',
-      'SASS/SCSS',
-      'Redux Toolkit',
+      'AngularJS',
+      'Tailwind CSS',
+      'MUI / Ant Design',
     ],
   },
   {
@@ -42,7 +43,14 @@ const arsenalPanels: ArsenalPanel[] = [
     glareColor: 'rgba(208, 188, 255, 0.10)',
     chipStyle:
       'bg-primary-main/8 text-primary-main border-primary-main/15 hover:bg-primary-main/15',
-    skills: ['PostgreSQL', 'GraphQL', 'Redis', 'Firebase', 'Prisma', 'Node.js'],
+    skills: [
+      'Java (Spring)',
+      'PHP (Laravel)',
+      'RESTful API',
+      'PostgreSQL',
+      'MongoDB',
+      'Docker / MinIO',
+    ],
   },
   {
     titleKey: 'skills.toolingOps',
@@ -53,12 +61,12 @@ const arsenalPanels: ArsenalPanel[] = [
     chipStyle:
       'bg-ct-secondary/8 text-ct-secondary border-ct-secondary/15 hover:bg-ct-secondary/15',
     skills: [
-      'Docker',
-      'GitHub Actions',
-      'Vite',
-      'AWS EC2',
-      'Jest',
-      'Cypress',
+      'AWS / Vercel',
+      'GitLab / GitHub',
+      'ESLint / Prettier',
+      'Vite / Gradle',
+      'Postman / Insomnia',
+      'Figma / Notion',
     ],
   },
   {
@@ -69,7 +77,14 @@ const arsenalPanels: ArsenalPanel[] = [
     glareColor: 'rgba(208, 188, 255, 0.10)',
     chipStyle:
       'bg-primary-main/8 text-primary-main border-primary-main/15 hover:bg-primary-main/15',
-    skills: ['CI/CD', 'Vercel', 'Storybook', 'TanStack'],
+    skills: [
+      'Agile / Scrum',
+      'CI/CD Pipelines',
+      'Jest / RTL',
+      'Storybook',
+      'Clean Code',
+      'Code Review',
+    ],
   },
 ];
 
@@ -101,7 +116,7 @@ const ArsenalCardContent = ({
       <div
         className={cn(
           'h-[2px] w-full rounded-full bg-gradient-to-r mb-8 opacity-50',
-          panel.accentGradient,
+          panel.accentGradient
         )}
       />
 
@@ -110,7 +125,7 @@ const ArsenalCardContent = ({
         <div
           className={cn(
             'p-3.5 rounded-xl bg-ct-surface-container transition-all duration-300',
-            panel.accentClass,
+            panel.accentClass
           )}
         >
           <span className='text-2xl block'>{panel.icon}</span>
@@ -128,12 +143,12 @@ const ArsenalCardContent = ({
 
       {/* Skill chips */}
       <div className='flex flex-wrap gap-2.5 flex-1'>
-        {panel.skills.map((skill) => (
+        {panel.skills.map(skill => (
           <span
             key={skill}
             className={cn(
               'px-4 py-2 text-sm font-label-grotesk font-medium rounded-lg border transition-all duration-200 cursor-default',
-              panel.chipStyle,
+              panel.chipStyle
             )}
           >
             {skill}
@@ -145,7 +160,7 @@ const ArsenalCardContent = ({
       <div
         className={cn(
           'mt-8 h-[1px] w-10 rounded-full opacity-20',
-          panel.accentClass.replace('text-', 'bg-'),
+          panel.accentClass.replace('text-', 'bg-')
         )}
       />
     </div>
@@ -190,13 +205,14 @@ export const Skills = () => {
         <animated.div
           style={{
             opacity: headerSpring.opacity,
-            transform: headerSpring.y.to((y) => `translateY(${y}px)`),
+            transform: headerSpring.y.to(y => `translateY(${y}px)`),
           }}
           className='mb-20'
         >
           <div className='flex items-center gap-4 mb-4'>
             <h2 className='text-primary-main font-label-grotesk text-xs font-black tracking-[0.3em] uppercase'>
-              02 {'// '}DATA_BANK
+              02 {'// '}
+              {t('skills.sectionLabel')}
             </h2>
             <div className='h-px flex-1 max-w-[120px] bg-gradient-to-r from-primary-main/40 to-transparent' />
           </div>
@@ -204,18 +220,14 @@ export const Skills = () => {
             {t('skills.sectionTitle')}
           </h3>
           <p className='mt-4 text-ct-on-surface-variant/60 font-label-grotesk text-sm tracking-wide max-w-xl'>
-            Technologies, frameworks, and tools that power my engineering
-            workflow — battle-tested in production.
+            {t('skills.description')}
           </p>
         </animated.div>
 
         {/* Arsenal Bento Grid — zigzag with Glare Cards */}
         <div ref={ref} className='space-y-5'>
           {bentoRows.map((row, rowIdx) => (
-            <div
-              key={rowIdx}
-              className='grid grid-cols-1 lg:grid-cols-3 gap-5'
-            >
+            <div key={rowIdx} className='grid grid-cols-1 lg:grid-cols-3 gap-5'>
               {row.map(({ panelIdx, span }) => {
                 const panel = arsenalPanels[panelIdx];
                 const style = trail[panelIdx];
@@ -226,20 +238,13 @@ export const Skills = () => {
                     style={{
                       opacity: style.opacity,
                       transform: style.y.to(
-                        (y) =>
-                          `translateY(${y}px) scale(${style.scale.get()})`,
+                        y => `translateY(${y}px) scale(${style.scale.get()})`
                       ),
                     }}
                     className={isWide ? 'lg:col-span-2' : ''}
                   >
-                    <GlareCard
-                      glareColor={panel.glareColor}
-                      className='h-full'
-                    >
-                      <ArsenalCardContent
-                        panel={panel}
-                        panelIdx={panelIdx}
-                      />
+                    <GlareCard glareColor={panel.glareColor} className='h-full'>
+                      <ArsenalCardContent panel={panel} panelIdx={panelIdx} />
                     </GlareCard>
                   </animated.div>
                 );
@@ -252,15 +257,18 @@ export const Skills = () => {
         <animated.div
           style={{
             opacity: headerSpring.opacity,
-            transform: headerSpring.y.to((y) => `translateY(${y}px)`),
+            transform: headerSpring.y.to(y => `translateY(${y}px)`),
           }}
           className='mt-16 flex flex-wrap items-center justify-center gap-8 md:gap-16'
         >
           {[
-            { value: '20+', label: 'TECHNOLOGIES' },
-            { value: '4+', label: 'YEARS_EXP' },
-            { value: '6', label: 'PRODUCTION_SYSTEMS' },
-          ].map((stat) => (
+            { value: '20+', label: t('skills.stats.technologies') },
+            {
+              value: `${getYearsOfExperience()}+`,
+              label: t('skills.stats.yearsExp'),
+            },
+            { value: '6', label: t('skills.stats.productionSystems') },
+          ].map(stat => (
             <div key={stat.label} className='text-center group'>
               <div className='font-serif-display text-3xl md:text-4xl text-ct-on-surface tracking-tight group-hover:text-primary-main transition-colors duration-300'>
                 {stat.value}

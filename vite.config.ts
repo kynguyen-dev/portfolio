@@ -2,13 +2,20 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import {defineConfig} from 'vite';
 import {resolve} from 'path';
+import pkg from './package.json';
 
 export default defineConfig(_configEnv => {
     return {
         base: process.env.BASE_PATH || '/',
         plugins: [react(), tailwindcss()],
+        define: {
+            'import.meta.env.APP_VERSION': JSON.stringify(pkg.version),
+        },
         server: {
-            port: 3000,
+            port: 8000,
+        },
+        preview: {
+            port: 8000,
         },
         resolve: {
             alias: {

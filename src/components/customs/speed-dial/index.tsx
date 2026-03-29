@@ -30,7 +30,7 @@ export const SpeedDialCustom = () => {
       name: t('intro.downloadCV'),
       onClick: () =>
         window.open(
-          '/resume/Ky_Nguyen_CV.pdf',
+          '/resume/FULL_STACK_DEVELOPER_NGUYEN_TRUONG_KY_CV.pdf',
           '_blank',
           'noopener,noreferrer'
         ),
@@ -98,16 +98,17 @@ export const SpeedDialCustom = () => {
         style={{
           ...fadeSpring,
           position: 'fixed',
-          bottom: 32,
-          right: 32,
+          bottom: 24,
+          right: 24,
           zIndex: 1000,
         }}
+        className='flex flex-col items-end'
       >
         {/* Action buttons */}
-        <div className='flex flex-col-reverse items-center gap-3 mb-3'>
+        <div className='flex flex-col-reverse items-end gap-3 mb-3'>
           {trail.map((style, i) => (
             <animated.div key={actions[i].name} style={style}>
-              <div className='flex items-center gap-3'>
+              <div className='flex items-center gap-3 pr-1'>
                 {/* Tooltip label */}
                 <span className='bg-ct-surface-container-highest text-ct-on-surface text-xs font-semibold px-3 py-1.5 rounded-lg shadow-md whitespace-nowrap'>
                   {actions[i].name}
@@ -132,7 +133,7 @@ export const SpeedDialCustom = () => {
           style={buttonSpring}
           onClick={handleToggle}
           aria-label={t('common.quickActions')}
-          className='w-14 h-14 rounded-full weaver-gradient text-white flex items-center justify-center shadow-[0_4px_20px_rgba(208,188,255,0.4)] hover:shadow-[0_6px_28px_rgba(208,188,255,0.5)] transition-shadow cursor-pointer ml-auto'
+          className='w-14 h-14 rounded-full weaver-gradient text-white flex items-center justify-center shadow-[0_4px_20px_rgba(208,188,255,0.4)] hover:shadow-[0_6px_28px_rgba(208,188,255,0.5)] transition-shadow cursor-pointer'
         >
           {open ? <X size={24} /> : <Plus size={24} />}
         </animated.button>

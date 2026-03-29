@@ -15,7 +15,7 @@ COPY . .
 RUN yarn build
 
 # Expose Vite preview server port
-EXPOSE 4173
+EXPOSE 8000
 
 # Serve the production build
 CMD [ "yarn", "preview", "--host" ]

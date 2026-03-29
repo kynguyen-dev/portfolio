@@ -6,6 +6,7 @@ import { useInView } from '@utils/animations/springVariants';
 export const Footer = () => {
   const { t } = useTranslation();
   const { ref, inView } = useInView();
+  const version = import.meta.env.APP_VERSION || '1.0.0';
 
   const spring = useSpring({
     from: { opacity: 0, y: 30 },
@@ -26,11 +27,11 @@ export const Footer = () => {
         {/* Brand */}
         <div className='flex items-center gap-4'>
           <div className='font-label-grotesk font-black tracking-widest text-lg text-ct-secondary uppercase'>
-            KY_NGUYEN
+            {t('nav.brandOther')}
           </div>
           <div className='w-1 h-1 rounded-full bg-ct-outline-variant' />
           <div className='text-[10px] text-ct-outline tracking-[0.2em] uppercase'>
-            Built on the Algorithmic Atelier
+            {t('footer.builtOn')}
           </div>
         </div>
 
@@ -62,10 +63,9 @@ export const Footer = () => {
         <Contact />
       </div>
 
-      {/* Version */}
       <div className='mt-8 text-center'>
         <div className='text-[10px] font-label-grotesk text-ct-on-surface-variant/40 tracking-[0.5em] uppercase'>
-          {t('footer.builtFor')}
+          {t('footer.builtFor', { version })}
         </div>
       </div>
     </footer>

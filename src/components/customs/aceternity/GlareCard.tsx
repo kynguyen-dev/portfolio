@@ -69,7 +69,7 @@ export const GlareCard = ({
       });
       setPos({ x, y });
     },
-    [tiltApi, maxTilt],
+    [tiltApi, maxTilt]
   );
 
   const handleMouseEnter = useCallback(() => {
@@ -98,8 +98,8 @@ export const GlareCard = ({
       <animated.div
         style={{
           transform: tiltSpring.rotateX.to(
-            (rx) =>
-              `rotateX(${rx}deg) rotateY(${tiltSpring.rotateY.get()}deg) scale(${tiltSpring.scale.get()})`,
+            rx =>
+              `rotateX(${rx}deg) rotateY(${tiltSpring.rotateY.get()}deg) scale(${tiltSpring.scale.get()})`
           ),
           transformStyle: 'preserve-3d',
         }}
@@ -119,7 +119,7 @@ export const GlareCard = ({
         {/* ── Radial spotlight at cursor ── */}
         <animated.div
           style={{
-            opacity: glareSpring.opacity.to((o) => o * 0.7),
+            opacity: glareSpring.opacity.to(o => o * 0.7),
             backgroundImage: `radial-gradient(500px circle at ${glarePosX}% ${glarePosY}%, ${glareColor}, transparent 45%)`,
           }}
           className='pointer-events-none absolute inset-0 z-10'
@@ -128,7 +128,7 @@ export const GlareCard = ({
         {/* ── Edge highlight — subtle bright border on cursor side ── */}
         <animated.div
           style={{
-            opacity: glareSpring.opacity.to((o) => o * 0.4),
+            opacity: glareSpring.opacity.to(o => o * 0.4),
             backgroundImage: `radial-gradient(ellipse at ${glarePosX}% ${glarePosY}%, rgba(255,255,255,0.15), transparent 60%)`,
           }}
           className='pointer-events-none absolute inset-0 z-30 mix-blend-overlay'

@@ -53,27 +53,31 @@ export const ImagesBadge = ({
   });
 
   // Image fan-out springs
-  const [imageSprings] = useSprings(totalImages, (i) => {
-    // Calculate spread: center offset for each image
-    const center = (totalImages - 1) / 2;
-    const offset = i - center;
-    const spreadX = offset * hoverSpread;
-    const rotation = offset * hoverRotation;
+  const [imageSprings] = useSprings(
+    totalImages,
+    i => {
+      // Calculate spread: center offset for each image
+      const center = (totalImages - 1) / 2;
+      const offset = i - center;
+      const spreadX = offset * hoverSpread;
+      const rotation = offset * hoverRotation;
 
-    return {
-      x: isHovering ? spreadX : 0,
-      y: isHovering ? hoverTranslateY : 0,
-      rotate: isHovering ? rotation : 0,
-      opacity: isHovering ? 1 : 0,
-      scale: isHovering ? 1 : 0.6,
-      config: {
-        tension: 280,
-        friction: 20,
-        // Stagger delay via mass
-        mass: 1 + i * 0.15,
-      },
-    };
-  }, [isHovering, hoverSpread, hoverRotation, hoverTranslateY]);
+      return {
+        x: isHovering ? spreadX : 0,
+        y: isHovering ? hoverTranslateY : 0,
+        rotate: isHovering ? rotation : 0,
+        opacity: isHovering ? 1 : 0,
+        scale: isHovering ? 1 : 0.6,
+        config: {
+          tension: 280,
+          friction: 20,
+          // Stagger delay via mass
+          mass: 1 + i * 0.15,
+        },
+      };
+    },
+    [isHovering, hoverSpread, hoverRotation, hoverTranslateY]
+  );
 
   const handleMouseEnter = useCallback(() => setIsHovering(true), []);
   const handleMouseLeave = useCallback(() => setIsHovering(false), []);
@@ -94,7 +98,7 @@ export const ImagesBadge = ({
             style={{
               x: style.x,
               y: style.y,
-              rotate: style.rotate.to((r) => `${r}deg`),
+              rotate: style.rotate.to(r => `${r}deg`),
               opacity: style.opacity,
               scale: style.scale,
             }}
@@ -116,7 +120,10 @@ export const ImagesBadge = ({
       </div>
 
       {/* Main button/badge */}
-      <animated.div style={{ scale: badgeSpring.scale }} className='relative z-10'>
+      <animated.div
+        style={{ scale: badgeSpring.scale }}
+        className='relative z-10'
+      >
         <Tag
           {...linkProps}
           onClick={onClick}

@@ -1,4 +1,4 @@
-import { ArrowLeft } from 'lucide-react';
+import { CaretLeft } from '@phosphor-icons/react';
 import { useNavigate } from '@tanstack/react-router';
 import { PFTypography, PFGradientTypography } from '@components/core';
 import { SunriseBackground } from '@components/customs/backgrounds/SunriseBackground';
@@ -32,7 +32,7 @@ const ToolPageLayout = ({
     return () => clearInterval(interval);
   }, []);
   const pulseSpring = useSpring({
-    scale: toggle ? 1.1 : 1,
+    scale: toggle ? 1.05 : 1,
     config: { duration: 1000 },
   });
 
@@ -44,9 +44,9 @@ const ToolPageLayout = ({
           <button
             onClick={() => navigate({ to: '/' })}
             aria-label='Back to portfolio'
-            className='flex items-center justify-center w-10 h-10 rounded-full text-ct-on-surface bg-ct-surface-container/80 backdrop-blur-xl border border-ct-outline-variant/20 hover:bg-ct-surface-container-high/90 transition-colors cursor-pointer'
+            className='flex items-center justify-center w-10 h-10 rounded-full text-ct-on-surface glass-panel hover:bg-ct-surface-container-high/90 transition-all duration-300 cursor-pointer active:scale-95'
           >
-            <ArrowLeft size={20} />
+            <CaretLeft size={20} weight='bold' />
           </button>
         </div>
 
@@ -56,6 +56,7 @@ const ToolPageLayout = ({
           <div className='flex flex-col items-center gap-6 text-center w-full max-w-full px-0 sm:px-4 md:px-8 box-border'>
             <animated.div
               style={{ ...pulseSpring, fontSize: '4rem', lineHeight: 1 }}
+              className='drop-shadow-2xl'
             >
               {emoji}
             </animated.div>
@@ -63,19 +64,19 @@ const ToolPageLayout = ({
             <PFGradientTypography
               variant='h3'
               fontWeight={800}
-              className='text-[clamp(1.75rem,4vw,3rem)] break-words'
+              className='text-[clamp(1.75rem,4vw,3.5rem)] font-serif-display uppercase tracking-widest'
             >
               {title}
             </PFGradientTypography>
 
             <PFTypography
               variant='h6'
-              className='text-ct-on-surface-variant font-normal leading-[1.4] text-[clamp(0.85rem,2vw,1.25rem)] max-w-full break-words px-2 sm:px-0'
+              className='text-ct-on-surface-variant font-normal leading-[1.6] text-[clamp(0.85rem,2vw,1.1rem)] max-w-2xl break-words px-2 sm:px-0 font-sans opacity-80'
             >
               {description}
             </PFTypography>
 
-            <div className='w-full max-w-full box-border'>{children}</div>
+            <div className='w-full max-w-full box-border mt-8'>{children}</div>
           </div>
         </animated.div>
       </main>

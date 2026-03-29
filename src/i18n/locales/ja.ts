@@ -11,39 +11,241 @@ export const ja = {
     projects: 'プロジェクト',
     tools: 'ツール',
     contact: 'お問い合わせ',
+    tacticalPath: 'タクティカルパス',
+    theArsenal: 'アーセナル',
+    initContact: 'コンタクト開始',
+    brandHome: 'KY_NGUYEN',
+    brandOther: 'KY_NGUYEN',
   },
   intro: {
     title: 'Ky Nguyen — フルスタック開発者',
     description:
-      'React & TypeScriptで本番レベルのWebアプリを構築 — 物流プラットフォームから医療システムまで。複雑な問題をクリーンでスケーラブルなソリューションに変換。',
-    viewMyWork: '作品を見る',
-    downloadCV: 'CV をダウンロード',
+      'フィンテック、クリプト、物流、ヘルスケア、教育、レンタルサービスにわたる高性能エコシステムを構築する、3年以上の経験を持つダイナミックなフルスタックエンジニア。複雑なバックエンドロジックと、流動的でレスポンシブなインターフェースの架け橋となることを専門としています。',
+    viewMyWork: '実績を見る',
+    downloadCV: 'CVをダウンロード',
     yearsExperience: '{{years}}+ 年の経験',
-    productionApps: '4つの本番アプリ',
-    techStack: 'React · TypeScript · Next.js',
+    productionApps: '6つの本番アプリ',
+    techStack: 'React · TypeScript · Next.js · Java · PHP',
+    systemStatus: '[ ステータス: アトリエ稼働中 ]',
+    heroTitle: 'SYNTHESIZING_SCALABLE_ARCHITECTURE',
+    heroTitleAccent: 'into_QUANTUM_PRECISION',
+    heroSubtitle:
+      'フィンテック、クリプト、物流、ヘルスケア、教育、レンタルサービスにわたる高性能エコシステムを構築する、3年以上の経験を持つダイナミックなフルスタックエンジニア。複雑なバックエンドロジックと、流動的でレスポンシブなインターフェースの架け橋となることを専門としています。',
+    techBadges: ['ReactJS', 'NextJS', 'Java', 'Laravel', 'Docker'],
+    establishingConnection: 'クリエイティブ・ロジックを同期中...',
+    viewManifesto: 'システムを探索',
+    precisionOverPolish: '洗練よりも精密さを。',
+    successfulMissions: '成功したプロジェクト',
+    terminal: {
+      header: 'kynguyen.dev -- bash',
+      command1: 'cat --identity',
+      command2: 'cat --domain',
+      command3: 'architect --sync',
+      command4: 'curl -s https://api.kynguyen.dev/ping',
+      output1: [
+        '[ IDENTITY_SCAN_COMPLETE ]',
+        '------------------------------------------',
+        'IDENTIFIER : Ky Nguyen Truong',
+        'STATUS     : [ ONLINE ]',
+        'FOCUS      : Full-Stack Developer',
+        'EXPERIENCE : 4+ Years',
+        '------------------------------------------',
+      ],
+      output2: [
+        'Domains: [Fintech, Crypto, Logistics, Healthcare, EdTech, Rental_Services]',
+      ],
+      output3: ['Synthesizing Architecture... [██████████████] 100% COMPLETE'],
+      output4: [
+        '{ "status": "STABLE", "latency": "12ms", "environment": "{{env}}" }',
+      ],
+    },
+    workHistory: [
+      {
+        company: 'Nimbus Technology',
+        role: 'フルスタック開発者',
+        period: '2025年12月 - 現在',
+        domain: 'フィンテック',
+        teamSize: '15名',
+        description:
+          'ReactとLaravelを使用したモダンなSPAを設計・開発。JWTによるセキュアな認証を構築。',
+        technologies: [
+          'Java',
+          'PHP Laravel',
+          'Postgresql',
+          'ReactJS',
+          'MUI',
+          'Docker',
+          'MinIO',
+        ],
+        tools: ['Figma', 'Notion', 'IntelliJ IDE', 'VS Code'],
+        achievements: [
+          'ReactとLaravelを使用したモダンなSingle Page Application (SPA) の設計・開発。',
+          'MinIO S3ストレージと統合された、ファイル結合や自動データ抽出を含む高度なPDF管理機能を開発。',
+          '大規模データ処理およびCSV/データベース移行用のJava/Spring Bootによる強力なGUIツールを構築。',
+          'Figmaのデザイン仕様に基づいた、完全レスポンシブなUIの設計と開発。',
+          'Docker Composeを使用したマルチサービス・コンテナ環境（PostgreSQL, MinIO等）のオーケストレーション。',
+          'Notionを使用したタスク管理とドキュメント管理。',
+        ],
+      },
+      {
+        company: 'The Chad Digital',
+        role: 'フルスタック開発者',
+        period: '2025年3月 - 2025年7月',
+        domain: '仮想通貨・FX',
+        teamSize: '4名',
+        description:
+          '仮想通貨およびFXプラットフォームを開発・最適化し、SEOとシステムパフォーマンスを向上。',
+        technologies: [
+          'NextJS',
+          'Java 8',
+          'TypeScript',
+          'Redux',
+          'Ant Design',
+          'Directus',
+          'AWS',
+        ],
+        tools: ['Gitlab', 'Trello', 'VS Code'],
+        achievements: [
+          'ビジネスチームと協力して要件を収集・把握。',
+          'vnrebates.io、vnrebates.store、beecryptos.com の新機能実装およびバグ修正。',
+          'Trelloでのタスクとタイムラインの効率的な管理。',
+          'Figma仕様に基づいた、モバイルおよびデスクトップ向けの完全レスポンシブUIの設計。',
+          '業界のベストプラクティスに従ったRESTful APIの開発。',
+          'SEO（検索エンジン最適化）に適応した機能の改善。',
+        ],
+      },
+      {
+        company: 'CYMOSOFT',
+        role: 'フルスタック開発者',
+        period: '2024年9月 - 2025年1月',
+        domain: 'レンタルサービス',
+        teamSize: '4名',
+        description:
+          '日本市場向けのエアコン・サブスクリプション・プラットフォームを開発。',
+        technologies: [
+          'NextJS',
+          'TypeScript',
+          'Tailwind CSS',
+          'MySQL',
+          'Drizzle ORM',
+          'Docker',
+        ],
+        tools: ['GitHub', 'Figma', 'VS Code'],
+        achievements: [
+          'Next.jsとReactJSを使用したエアコン・サブスクリプション・サービスのフルスタック開発。',
+          'バックエンド操作を効率的に処理するためのNext.js APIルートの実装。',
+          'Figmaデザインに基づいたレスポンシブUIの構築。',
+          'チームと連携して顧客要件を収集し、最適なソリューションを提供。',
+          'ベストプラクティスに従ったRESTful APIの開発。',
+          'UI/UXおよび機能要件を満たすための手動テストの実施。',
+        ],
+      },
+      {
+        company: 'PTN GLOBAL',
+        role: 'フルスタック開発者',
+        period: '2024年3月 - 2024年12月',
+        domain: '教育（オーストラリア）',
+        teamSize: '5-7名',
+        description:
+          'Learner Dashboardを開発し、24時間アクセス可能な動的な学習者ポートレートを提供。',
+        technologies: [
+          'ReactJS',
+          'TypeScript',
+          'MUI',
+          'Java',
+          'Micronaut',
+          'PostgreSQL',
+          'TanStack Query',
+        ],
+        tools: ['GitLab', 'Jira', 'Figma', 'IntelliJ IDEA'],
+        achievements: [
+          'オーストラリアの学習コミュニティ向けLearner Dashboardの開発。',
+          'BAと連携した要件定義およびUI/UXの提案。',
+          'SonarQube基準に従った、クリーンで拡張性の高いコードの維持。',
+          'React Testing Libraryを使用した高いコード品質の確保。',
+          'StorybookによるインタラクティブなUIドキュメントの作成。',
+          'API、サービス、ユニットテストを含むバックエンド業務への貢献。',
+          'Jiraを使用したアジャイル環境（Scrum）での開発。',
+        ],
+      },
+      {
+        company: 'PTN GLOBAL',
+        role: 'フロントエンド開発者',
+        period: '2023年2月 - 2024年3月',
+        domain: '医療（オーストラリア）',
+        teamSize: '12-15名',
+        description:
+          'てんかん研究用ヘルスケアプラットフォームの開発。患者追跡とレポート管理に注力。',
+        technologies: [
+          'ReactJS',
+          'TypeScript',
+          'MUI',
+          'Storybook',
+          'Auth0',
+          'Jest',
+          'TanStack Query',
+        ],
+        tools: ['GitLab', 'Jira', 'Figma', 'VS Code'],
+        achievements: [
+          'てんかん研究センター向けのウェブアプリケーション開発。',
+          'Material-UIを拡張した再利用可能なコンポーネントライブラリの構築。',
+          'Auth0による認証フローの実装。',
+          'クロスブラウザ対応のレスポンシブレイアウトの実現。',
+          'Jestによるユニットテストを通じたコード品質の維持。',
+          'バックエンドチームと連携したRESTful APIの設計。',
+          'Jiraを使用したアジャイル環境での開発。',
+        ],
+      },
+      {
+        company: 'PTN GLOBAL',
+        role: 'フルスタック開発者',
+        period: '2021年12月 - 2023年2月',
+        domain: '物流（オーストラリア）',
+        teamSize: '5-10名',
+        description:
+          'NHVR認定を取得した、ドライバーの安全とトラックのメンテナンスに関する革新的なシステムを構築。',
+        technologies: [
+          'Java 8',
+          'Spring Boot',
+          'AngularJS',
+          'Android (Java)',
+          'MongoDB',
+          'Microservices',
+        ],
+        tools: ['GitLab', 'Jira', 'Android Studio', 'VS Code'],
+        achievements: [
+          'Angularを使用した管理者用ウェブアプリケーションの設計・開発。',
+          'ドライバーの安全、トラックの安全、メンテナンスを統合したシステムの構築。',
+          'Spring BootとJava 8を使用した拡張性の高いマイクロサービスの開発。',
+          'Google Mapsを統合したルート管理用Androidアプリの開発。',
+          'NHVRからの安全認定およびコンプライアンス認証の取得。',
+          'コードレビューを通じたジュニア開発者のメンタリング。',
+        ],
+      },
+    ],
   },
   aboutMe: {
     heading: '自己紹介',
-    p1: 'ベトナム ở のフルスタック開発者で、オーストラリアのテック業界で{{years}}年以上のWebアプリ開発経験があります。React と TypeScript を主軸に、物流・医療・教育・サービス分野で本番システムを提供してきました。',
-    p2: 'FPT大学で情報技術の学位を取得し、ソフトウェアエンジニアリングの基礎を築きました。以来、アジャイルチームでフロントエンド設計、REST API統合、Next.js・MongoDB・PostgreSQL・Auth0を使ったエンドツーエンド開発に従事しています。',
-    p3: 'ベトナム語・英語・日本語の3言語を使い、多様なチームでのコラボレーションに活かしています。コード以外では、写真撮影や新しいカフェの開拓を楽しんでいます。',
-    p4: '新しい機会やお話に常にオープンです — お気軽にご連絡ください。',
+    p1: 'ベトナムを拠点とするダイナミックなソフトウェア開発者で、フロントエンドおよびフルスタック開発を専門とし、{{years}}年以上の経験があります。フィンテック、物流、医療、教育分野でReact、TypeScript、Javaを中心に本番レベルのWebアプリを構築しています。',
+    p2: 'FPT大学でソフトウェアエンジニアリングの学位を取得し、アーキテクチャの原則における強固な基礎を築きました。以来、アジャイル環境でフロントエンドの設計、複雑なPDF管理システムの構築、RESTful APIの統合、データベース移行の最適化に従事しています。',
+    p3: 'ベトナム語、英語、日本語の3言語を話し、多文化チームでの効果的なコラボレーションが可能です。ドキュメント、メンタリング、最新技術 của 継続的な学習を通じて、コードの品質向上に専念しています。',
+    p4: '戦略的パートナーシップやアーキテクチャコンサルティングに常にオープンです。お気軽にご連絡ください。',
     github: 'GitHub →',
     linkedin: 'LinkedIn →',
   },
   profile: {
     opening: 'こんにちは、Ky Nguyenです。お会いできて嬉しいです。',
     content:
-      'ソフトウェア開発者として{{years}}年以上の経験を持ち、クロスブラウザ対応のレスポンシブWebアプリ開発の専門知識を築いてきました。TypeScriptとReactJSを専門とし、アジャイル環境で最適化・ドキュメント・メンタリング・コードレビューを通じてコード品質を継続的に改善しています。',
+      'ソフトウェア開発者として{{years}}年以上の経験を持ち、アジャイル環境でのクロスブラウザ対応レスポンシブWebアプリ構築を専門としています。TypeScriptとReactJSに精通し、JavaやNext.jsを使用したバックエンド開発にも適応可能です。ドキュメント、メンタリング、コードレビューを通じて、コードの品質、最適化、ベストプラクティスに専念しています。チームのコラボレーションを促進しながら、クリーンで再利用可能、かつスケーラブルなコードを書くことに集中しています。',
     backEndDeveloper: 'バックエンド開発者',
     frontEndDeveloper: 'フロントエンド開発者',
     tools: 'ツール',
     backEndQuote:
-      'ビジネスロジックを堅牢なバックエンドソリューションに変えます。',
+      '複雑なビジネスロジックを、堅牢でスケーラブルなバックエンドソリューションに変換します。',
     frontEndQuote:
-      'ゼロからコードを書き、アイデアをブラウザで実現するのが好きです。',
+      '高性能なUIの設計を楽しみ、洗練された美的実行をブラウザにもたらします。',
     toolEndQuote:
-      '道具をただ使うだけでなく、マスターして素晴らしいものを作ります。',
+      'モダンな開発ツールをマスターし、ワークフローを合理化して生産性を向上させます。',
     languages: '使用言語:',
     methods: '作業手法:',
     toolsIUse: '使用ツール:',
@@ -52,10 +254,10 @@ export const ja = {
   },
   education: {
     heading: '学歴',
-    degree: '情報技術学士',
-    period: '2018 — 2022',
+    degree: 'ソフトウェアエンジニアリング学士',
+    period: '2017 — 2021',
     major: '専攻: ソフトウェアエンジニアリング',
-    coursework: 'カリキュラム: モバイル・Web・データベース開発',
+    coursework: 'FPT大学',
     languages: '言語: 日本語・英語',
   },
   skills: {
@@ -63,6 +265,19 @@ export const ja = {
     core: 'コア技術',
     additional: '追加スキル',
     toolsAndMethods: 'ツール＆手法',
+    sectionTitle: 'アーセナル.DB',
+    sectionLabel: 'データバンク',
+    coreFrontend: 'コアフロントエンドシステム',
+    dataArchitecture: 'データ＆アーキテクチャ',
+    toolingOps: 'ツール＆運用',
+    execution: 'スキル.実行',
+    description:
+      '私のエンジニアリングワークフローを支える、本番環境で実証済みの技術、フレームワーク、ツール群。',
+    stats: {
+      technologies: '使用技術',
+      yearsExp: '経験年数',
+      productionSystems: '本番システム数',
+    },
   },
   projects: {
     recentWork: '最近の作品',
@@ -75,6 +290,34 @@ export const ja = {
     visitWebSite: 'ウェブサイトへ >',
     viewDetails: '{{title}}の詳細を見る',
     privateProject: '非公開 / 社内プロジェクト',
+    sectionTitle: 'プロジェクト・アーセナル',
+    repositoryDump: '[ リポジトリダンプ_012 ]',
+    filterAll: 'フィルター: すべての操作',
+    accessCore: 'コアアクセス',
+    fintech: {
+      title: 'Nimbus — フィンテック＆ドキュメント管理',
+      description:
+        'ReactとLaravelを使用したモダンなフィンテックSPAを設計・開発。ファイル結合、自動データ抽出、オンラインプレビューを備えた高度なPDF管理機能をMinIO S3ストレージと統合して構築。',
+      contributions: [
+        'JWT認証を備えたReactとLaravelによるモダンなSPAを設計',
+        'MinIO (S3ストレージ) と統合されたPDF管理機能を開発',
+        '大規模なデータ移行用の強力なJavaおよびSpring Boot GUIツールを構築',
+        'Docker Composeを使用したマルチサービスコンテナ環境のオーケストレーション',
+        'Figma仕様に基づくレスポンシブなUIの設計と開発',
+      ],
+    },
+    crypto: {
+      title: 'Chad Digital — 仮想通貨＆FXプラットフォーム',
+      description:
+        'vnrebates.ioやbeecryptos.comを含む仮想通貨およびFXプラットフォームを開発・最適化。レスポンシブなUIと堅牢なRESTful APIを構築し、SEOとシステム全体のパフォーマンスを向上。',
+      contributions: [
+        '高トラフィックな複数のWebサイトの新機能実装とバグ修正',
+        'Figma仕様に従ったレスポンシブUIの設計と開発',
+        '業界のベストプラクティスに従ったRESTful APIの開発',
+        'ビジネスチームと協力して技術要件の収集と文書化を実施',
+        '市場の可視性を高めるための検索エンジン最適化 (SEO) 機能の改善',
+      ],
+    },
     logistic: {
       title: 'DrivaLink — 物流＆ドライバー安全',
       description:
@@ -89,7 +332,7 @@ export const ja = {
     medical: {
       title: '医療プラットフォーム — てんかん研究',
       description:
-        'てんかん研究センターの医療プラットフォームを開発。臨床データ管理、患者状態追跡、健康レポートワークフローの効率化を実現。',
+        'てんかん研究センターの医療プラットフォームを開発. 臨床データ管理、患者状態追跡、健康レポートワークフローの効率化を実現。',
       contributions: [
         'Material UIで再利用可能なコンポーネントライブラリを設計',
         'Auth0でセキュアな認証・認可を統合',
@@ -100,7 +343,7 @@ export const ja = {
     education: {
       title: '学習者ダッシュボード — 教育プラットフォーム',
       description:
-        'オーストラリアの教育機関向け動的学習者ダッシュボードを構築。バッジ・コホート比較・出席追跡へ24/7アクセスを提供。',
+        'オーストラリアの教育機関向け動的学習者ダッシュボードを構築. バッジ・コホート比較・出席追跡へ24/7アクセスを提供。',
       contributions: [
         'ReactJSでインタラクティブUIコンポーネントを開発しStorybookで文書化',
         'TanStack Queryで効率的なサーバーステート管理を実装',
@@ -111,21 +354,25 @@ export const ja = {
     hireService: {
       title: 'AirConSub — エアコンレンタルサービス',
       description:
-        '日本市場向けのフルスタックエアコンレンタルサービスプラットフォームを開発。サブスクリプション management、予約フロー、サービススケジューリングを処理。',
+        '日本市場向けのフルスタックエアコンレンタルサービスプラットフォームを開発。サブスクリプション管理、予約フロー、サービススケジューリングを処理。',
       contributions: [
-        'Next.js App Router & TypeScript for server-rendered pages & API routes',
-        'Drizzle ORM for relational DB schema & migration management',
-        'Tailwind CSS for responsive mobile-first UI',
-        'Delivered features following Agile sprints in cross-cultural teams',
+        'Next.js App Router & TypeScriptによるサーバーサイドレンダリングページとAPIルート',
+        'Drizzle ORMによるリレーショナルDBスキーマとマイグレーション管理',
+        'Tailwind CSSによるレスポンシブなモバイルファーストUI',
+        '異文化チームでのアジャイルスプリントに従ったエンドツーエンド機能の提供',
       ],
     },
   },
   workExperience: {
     heading: '職務経歴',
+    sectionTitle: 'タクティカルパス',
+    sectionTitleSuffix: '.LOG',
+    archiveLabel: 'アーカイブ継承_01-04',
   },
   testimonials: {
     heading: '推薦の声',
     subtitle: '一緒に働いた同僚やマネージャーからのフィードバック',
+    sectionTitle: 'フィールドレポート',
     items: [
       {
         quote:
@@ -136,14 +383,14 @@ export const ja = {
       },
       {
         quote:
-          'Kyとの仕事は素晴らしい経験でした — 複雑な要件をクリーンでアクセシブルなUIに変換。細部への注意と積極的なコミュニケーションでチーム間協力がスムーズでした。',
+          'Kyとの仕事は素晴らしい経験でした — 複雑な要件をクリーンでアクセシブルなUIに変換. 細部への注意と積極的なコミュニケーションでチーム間協力がスムーズでした。',
         name: 'シニア開発者',
         title: 'PTN Global — Learner Dashboard',
         relationship: '同僚',
       },
       {
         quote:
-          'Kyは技術力とUXへの情熱の両方を持ち合わせていました。モダンなベストプラクティスを導入し、テストカバレッジを大幅に改善しました。',
+          'Kyは技術力 và UXへの情熱の両方を持ち合わせていました。モダンなベストプラクティスを導入し、テストカバレッジを大幅に改善しました。',
         name: 'プロジェクトマネージャー',
         title: 'PTN Global — Epilepsy Research',
         relationship: 'プロジェクトステークホルダー',
@@ -168,9 +415,17 @@ export const ja = {
     sendMeEmail: 'メールを送る',
     callMe: '電話する',
     phoneCopied: '電話番号をコピーしました！',
+    ctaTitle: 'アーキテクトの',
+    ctaTitleAccent: '準備はいいですか？',
+    ctaDescription:
+      '現在、特定のハイエンドな戦略的パートナーシップやアーキテクチャコンサルティングの依頼を受け付けています。',
+    ctaButton: 'コンタクト開始',
   },
   footer: {
     quote: '日々、生き、学び、改善し続ける。',
+    copyright: '© KY NGUYEN // デジタル・アルケミスト。ステータス: 利用可能',
+    builtFor: 'ポートフォリオ バージョン v{{version}}',
+    builtOn: 'Algorithmic Atelierに基づいて構築',
   },
   blog: {
     heading: 'ブログ＆インサイト',
@@ -203,20 +458,32 @@ export const ja = {
         title: '無限フォトギャラリー',
         description:
           '仮想化ギャラリーが何千枚もの写真を60FPSで無限スクロール表示。',
+        techLabel: '仮想化 / 60FPS',
       },
       threeKingdoms: {
         title: '三国志ファインダー',
         description: '伝説の武將を探索、ステータス比較、AIによる対戦結果予測。',
+        techLabel: 'AI / データ',
       },
       aiSqlHelper: {
         title: 'AI SQL & 計画アシスタント',
         description:
           '自然言語をSQLクエリに変換したり、AIでアプリの構成案を作成したりします。',
+        techLabel: 'GEMINI_API',
+        apiKeyMissing:
+          '⚠️ VITE_GEMINI_API_KEY がありません。.env ファイルに追加して AI 機能を有効にしてください。',
+        connected:
+          'Gemini 2.0 Flash に接続されました。データベース設計についてどのようにお手伝いしましょうか？',
+        connectionFailed:
+          '❌ 接続に失敗しました: {{error}}。API キーを確認してください。',
+        networkError:
+          '❌ ネットワークエラー: Gemini サーバーに到達できませんでした。',
       },
       marketInsights: {
-        title: 'マーケット＆グローバルインサイト',
+        title: 'マーケット＆ global インサイト',
         description:
           '金、ガソリン価格、天気、国際ニュースを1つのダッシュボードで追跡。',
+        techLabel: 'リアルタイム / ダッシュボード',
         goldPrice: '金価格 (SJC/9999)',
         petrolPrice: 'ガソリン価格',
         weather: '天気',

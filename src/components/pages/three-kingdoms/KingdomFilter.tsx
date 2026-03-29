@@ -13,10 +13,10 @@ export const KingdomFilter = ({ selected, onChange }: KingdomFilterProps) => {
       <button
         onClick={() => onChange('all')}
         className={cn(
-          'px-3 py-1 rounded-full text-sm border transition-colors cursor-pointer',
+          'px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest transition-all duration-300 cursor-pointer border',
           selected === 'all'
-            ? 'font-bold bg-primary-main/15 text-primary-light border-primary-light'
-            : 'font-medium text-ct-on-surface-variant border-ct-outline-variant/30 hover:border-ct-outline-variant/60'
+            ? 'bg-ct-secondary text-ct-on-secondary border-ct-secondary shadow-lg shadow-ct-secondary/20'
+            : 'glass-panel text-ct-on-surface-variant border-ct-outline-variant/30 hover:border-ct-secondary/50 hover:text-ct-secondary'
         )}
       >
         🏯 All
@@ -26,22 +26,26 @@ export const KingdomFilter = ({ selected, onChange }: KingdomFilterProps) => {
           key={k.id}
           onClick={() => onChange(k.id)}
           className={cn(
-            'px-3 py-1 rounded-full text-sm border transition-colors cursor-pointer',
+            'px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest transition-all duration-300 cursor-pointer border flex items-center gap-2',
             selected === k.id
-              ? 'font-bold'
-              : 'font-medium text-ct-on-surface-variant hover:border-opacity-60'
+              ? 'shadow-lg'
+              : 'glass-panel text-ct-on-surface-variant hover:border-opacity-60'
           )}
           style={
             selected === k.id
               ? {
-                  backgroundColor: `${k.color}20`,
-                  color: k.color,
+                  backgroundColor: k.color,
+                  color: '#fff',
                   borderColor: k.color,
+                  boxShadow: `0 4px 12px ${k.color}40`,
                 }
-              : { borderColor: `${k.color}50` }
+              : {
+                  borderColor: `${k.color}40`,
+                }
           }
         >
-          {k.emoji} {k.name.en}
+          <span>{k.emoji}</span>
+          <span>{k.name.en}</span>
         </button>
       ))}
     </div>
