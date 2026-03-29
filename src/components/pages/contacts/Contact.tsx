@@ -1,19 +1,14 @@
 import { useState } from 'react';
 import { animated, useSpring } from '@react-spring/web';
-import {
-  Github,
-  Linkedin,
-  Mail,
-  Smartphone,
-  type LucideIcon,
-} from 'lucide-react';
+import { Github, Linkedin, Mail, Smartphone } from 'lucide-react';
+import { ChatCircle } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { APP_INFORMATION, EMAIL, GITHUB, LINKEDIN, PHONE } from '@constants';
 
 import { useThemeMode } from '@contexts/theme-mode';
 
 interface ContactProps {
-  icon: LucideIcon;
+  icon: any;
   id: string;
   href: string;
   messageKey: string;
@@ -37,6 +32,12 @@ const contacts: ContactProps[] = [
     id: EMAIL,
     href: APP_INFORMATION.EMAIL_TO,
     messageKey: 'contact.sendMeEmail',
+  },
+  {
+    icon: ChatCircle,
+    id: 'zalo',
+    href: 'https://zalo.me/84868772887',
+    messageKey: 'Zalo',
   },
   {
     icon: Smartphone,
@@ -74,7 +75,6 @@ const ContactIcon = ({
       onMouseLeave={() => setHovered(false)}
       role='link'
       aria-label={t(messageKey)}
-      title={t(messageKey)}
       tabIndex={0}
       onKeyDown={(e: React.KeyboardEvent) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -83,9 +83,16 @@ const ContactIcon = ({
         }
       }}
       onClick={() => onClickAction(href, id)}
-      className='flex items-center justify-center cursor-pointer text-ct-on-surface hover:text-primary-dark transition-colors duration-300'
+      className='relative group flex items-center justify-center cursor-pointer text-ct-on-surface hover:text-primary-dark transition-colors duration-300'
     >
       <Icon size={28} />
+
+      {/* Tooltip */}
+      <div className='absolute -top-12 left-1/2 -translate-x-1/2 px-3 py-1.5 bg-ct-surface-container-high text-ct-on-surface text-xs font-label-grotesk font-bold rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap border border-ct-outline-variant/10 shadow-xl pointer-events-none z-50'>
+        {id === PHONE ? href.replace('tel:', '') : t(messageKey)}
+        {/* Tooltip Arrow */}
+        <div className='absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 bg-ct-surface-container-high border-b border-r border-ct-outline-variant/10' />
+      </div>
     </animated.div>
   );
 };
@@ -97,18 +104,20 @@ export const Contact = () => {
   const [toast, setToast] = useState<string | null>(null);
 
   const handleClick = (href: string, key: string) => {
-    if (key === GITHUB || key === LINKEDIN) {
+    if (key === GITHUB || key === LINKEDIN || key === 'zalo') {
       window.open(href, '_blank', 'noopener,noreferrer');
+    } else if (key === EMAIL) {
+      window.open(
+        `https://mail.google.com/mail/?view=cm&fs=1&to=${href.replace('mailto:', '')}`,
+        '_blank',
+        'noopener,noreferrer'
+      );
     } else if (key === PHONE) {
-      if (/Mobi|Android/i.test(navigator.userAgent)) {
-        window.location.href = href;
-      } else {
-        const phoneNumber = href.replace('tel:', '');
-        navigator.clipboard.writeText(phoneNumber).then(() => {
-          setToast(t('contact.phoneCopied'));
-          setTimeout(() => setToast(null), 3000);
-        });
-      }
+      const phoneNumber = href.replace('tel:', '');
+      navigator.clipboard.writeText(phoneNumber).then(() => {
+        setToast(t('contact.phoneCopied'));
+        setTimeout(() => setToast(null), 3000);
+      });
     } else {
       window.location.href = href;
     }

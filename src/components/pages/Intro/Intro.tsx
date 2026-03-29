@@ -9,7 +9,12 @@ import { animated, useSpring, useTrail } from '@react-spring/web';
 import { useTranslation } from 'react-i18next';
 import { APP_PAGES } from '@constants';
 import { useInView } from '@utils/animations/springVariants';
-import { Terminal, ImagesBadge, ExpandableWorkCard } from '@components/customs/aceternity';
+import {
+  Terminal,
+  ImagesBadge,
+  ExpandableWorkCard,
+} from '@components/customs/aceternity';
+import { ContactDropdown } from '@components/customs/ContactDropdown';
 
 /* Badge images for CTA hover effect */
 const ctaBadgeImages = [
@@ -167,7 +172,10 @@ export const Intro = () => {
               </animated.div>
 
               {/* Terminal HUD */}
-              <animated.div style={ctaSpring} className='w-full hidden md:block'>
+              <animated.div
+                style={ctaSpring}
+                className='w-full hidden md:block'
+              >
                 <Terminal
                   username='kynguyen.dev'
                   title={t('intro.terminal.header')}
@@ -205,27 +213,34 @@ export const Intro = () => {
                 style={ctaSpring}
                 className='mt-10 flex flex-col md:flex-row items-center justify-center gap-6'
               >
-                <ImagesBadge
-                  images={ctaBadgeImages}
-                  href='#contact'
-                  hoverSpread={28}
-                  hoverRotation={14}
-                  hoverTranslateY={-35}
-                  imageSize={34}
-                  className='group relative px-8 py-4 bg-primary-main text-ct-on-primary font-bold rounded-lg overflow-hidden transition-all active:scale-95 shadow-[0_0_20px_rgba(208,188,255,0.3)] inline-flex items-center gap-2'
-                >
-                  {t('nav.initContact')}
-                </ImagesBadge>
+                <ContactDropdown>
+                  <ImagesBadge
+                    images={ctaBadgeImages}
+                    hoverSpread={28}
+                    hoverRotation={14}
+                    hoverTranslateY={-35}
+                    imageSize={34}
+                    className='group relative px-8 py-4 bg-primary-main text-ct-on-primary font-bold rounded-lg overflow-hidden transition-all active:scale-95 shadow-[0_0_20px_rgba(208,188,255,0.3)] inline-flex items-center gap-2'
+                  >
+                    {t('nav.initContact')}
+                  </ImagesBadge>
+                </ContactDropdown>
                 <ImagesBadge
                   images={ctaBadgeImages.slice(0, 3)}
-                  href='#projects'
+                  onClick={() =>
+                    window.open(
+                      '/resume/FULL_STACK_DEVELOPER_NGUYEN_TRUONG_KY_CV.pdf',
+                      '_blank',
+                      'noopener,noreferrer'
+                    )
+                  }
                   hoverSpread={22}
                   hoverRotation={10}
                   hoverTranslateY={-30}
                   imageSize={30}
                   className='px-8 py-4 border border-ct-secondary/30 text-ct-secondary font-bold rounded-lg hover:bg-ct-secondary/5 transition-all inline-flex items-center gap-2'
                 >
-                  {t('intro.viewManifesto')}
+                  {t('intro.downloadCV')}
                 </ImagesBadge>
               </animated.div>
             </div>
@@ -317,7 +332,8 @@ export const Intro = () => {
                   return (
                     <div
                       key={pageIdx}
-                      className='w-screen shrink-0 flex items-center justify-evenly h-full px-8 lg:px-16'
+                      className='shrink-0 flex items-center justify-evenly h-full px-8 lg:px-16'
+                      style={{ width: `${100 / totalPages}%` }}
                     >
                       {pageEntries.map((entry, i) => {
                         const globalIdx = startIdx + i;

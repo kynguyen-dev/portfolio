@@ -73,12 +73,21 @@ export const Tools = () => {
 
   return (
     <section id='tools' className='py-24 px-8 lg:px-16'>
-      {/* ─── Masterwork Grid Header ─── */}
-      <div className='flex items-center gap-6 mb-16'>
-        <h2 className='font-serif-display text-5xl flex-shrink-0'>
-          {t('tools.heading')}
-        </h2>
-        <div className='h-1 flex-grow bg-gradient-to-r from-ct-secondary to-transparent' />
+      {/* ─── Section Header ─── */}
+      <div className='flex items-end gap-6 mb-16'>
+        <div className='flex-shrink-0'>
+          <h2 className='text-ct-secondary font-label-grotesk text-xs font-black tracking-[0.3em] uppercase mb-2'>
+            03 {'// '}
+            {t('tools.sectionLabel')}
+          </h2>
+          <h3 className='font-serif-display text-4xl md:text-5xl text-ct-on-surface'>
+            {t('tools.heading')}
+          </h3>
+        </div>
+        <div
+          className='hidden md:block h-[2px] flex-grow'
+          style={{ background: 'linear-gradient(to right, #4edea3, transparent)' }}
+        />
       </div>
 
       {/* ─── 12-Column Grid ─── */}

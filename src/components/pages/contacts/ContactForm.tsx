@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { ArrowRight } from '@phosphor-icons/react';
 import { useInView } from '@utils/animations/springVariants';
 import { ImagesBadge } from '@components/customs/aceternity';
+import { ContactDropdown } from '@components/customs/ContactDropdown';
 
 /* Badge images for the email CTA hover effect */
 const contactBadgeImages = [
@@ -31,10 +32,10 @@ export const ContactForm = () => {
       <animated.div
         ref={ref}
         style={containerSpring}
-        className='glass p-12 md:p-20 rounded-[3rem] text-center relative overflow-hidden border-2 border-ct-secondary/10'
+        className='glass p-12 md:p-20 rounded-[3rem] text-center relative border-2 border-ct-secondary/10'
       >
         {/* Background gradient overlay */}
-        <div className='absolute inset-0 bg-gradient-to-b from-transparent to-ct-surface-container-low/50' />
+        <div className='absolute inset-0 bg-gradient-to-b from-transparent to-ct-surface-container-low/50 rounded-[3rem] overflow-hidden' />
 
         {/* Content */}
         <div className='relative z-10'>
@@ -47,22 +48,23 @@ export const ContactForm = () => {
           <p className='text-ct-on-surface-variant max-w-xl mx-auto mb-12 text-lg'>
             {t('contact.ctaDescription')}
           </p>
-          <ImagesBadge
-            images={contactBadgeImages}
-            href='mailto:kynguyen.dev@gmail.com'
-            hoverSpread={30}
-            hoverRotation={15}
-            hoverTranslateY={-40}
-            imageSize={38}
-            className='inline-flex items-center gap-4 bg-ct-secondary text-ct-on-secondary px-10 py-5 rounded-full font-bold text-xl transition-all duration-300 shadow-[0_10px_40px_rgba(78,222,163,0.2)] group cursor-pointer no-underline'
-          >
-            {t('contact.ctaButton')}
-            <ArrowRight
-              className='group-hover:translate-x-2 transition-transform'
-              size={24}
-              weight='bold'
-            />
-          </ImagesBadge>
+          <ContactDropdown>
+            <ImagesBadge
+              images={contactBadgeImages}
+              hoverSpread={30}
+              hoverRotation={15}
+              hoverTranslateY={-40}
+              imageSize={38}
+              className='inline-flex items-center gap-4 bg-ct-secondary text-ct-on-secondary px-10 py-5 rounded-full font-bold text-xl transition-all duration-300 shadow-[0_10px_40px_rgba(78,222,163,0.2)] group cursor-pointer no-underline'
+            >
+              {t('contact.ctaButton')}
+              <ArrowRight
+                className='group-hover:translate-x-2 transition-transform'
+                size={24}
+                weight='bold'
+              />
+            </ImagesBadge>
+          </ContactDropdown>
         </div>
       </animated.div>
     </section>

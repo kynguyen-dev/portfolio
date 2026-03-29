@@ -22,7 +22,7 @@ export const en = {
     description:
       'Dynamic Full-Stack Engineer with 3+ years of experience orchestrating high-performance ecosystems across Fintech, Cryptos, Logistics, Healthcare, Education, and Rental Services. Specializing in bridging complex back-end logic with fluid, responsive interfaces.',
     viewMyWork: 'Explore My Work',
-    downloadCV: 'Get My CV',
+    downloadCV: 'EXTRACT_CV',
     yearsExperience: '{{years}}+ Years Exp',
     productionApps: '6 Production Apps',
     techStack: 'React · TypeScript · Next.js · Java · PHP',
@@ -416,8 +416,8 @@ export const en = {
     sendMeEmail: 'Send me an email',
     callMe: 'Call me',
     phoneCopied: 'Phone number copied to clipboard!',
-    ctaTitle: 'Ready to',
-    ctaTitleAccent: 'Architect?',
+    ctaTitle: 'Ready for a',
+    ctaTitleAccent: 'Project?',
     ctaDescription:
       'Currently accepting select high-end strategic partnerships and architectural consulting engagements.',
     ctaButton: 'INIT_CONTACT',
@@ -452,6 +452,7 @@ export const en = {
   },
   tools: {
     heading: 'Tools & Experiments',
+    sectionLabel: 'LAB_EXPERIMENTS',
     subtitle:
       'Mini apps I built to explore ideas, sharpen skills, and have fun with technology.',
     explore: 'Explore',

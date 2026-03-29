@@ -22,7 +22,7 @@ export const vi = {
     description:
       'Kỹ sư Full-Stack năng động với hơn 3 năm kinh nghiệm trong việc xây dựng các hệ sinh thái hiệu suất cao trong các lĩnh vực Fintech, Cryptos, Logistics, Y tế, Giáo dục và Dịch vụ cho thuê. Chuyên gia về việc kết hợp logic backend phức tạp với giao diện mượt mà, phản hồi nhanh.',
     viewMyWork: 'Khám phá dự án',
-    downloadCV: 'Tải CV của tôi',
+    downloadCV: 'TẢI_CV',
     yearsExperience: '{{years}}+ Năm kinh nghiệm',
     productionApps: '6 Sản phẩm thực tế',
     techStack: 'React · TypeScript · Next.js · Java · PHP',
@@ -391,8 +391,9 @@ export const vi = {
     sendMeEmail: 'Gửi email cho tôi',
     callMe: 'Gọi cho tôi',
     phoneCopied: 'Đã sao chép số điện thoại!',
-    ctaTitle: 'Sẵn sàng để',
-    ctaTitleAccent: 'THIẾT_KẾ_KIẾN_TRÚC?',
+    badge: 'KẾT_NỐI_THÀNH_CÔNG',
+    ctaTitle: 'Sẵn sàng cho một',
+    ctaTitleAccent: 'DỰ_ÁN_MỚI?',
     ctaDescription:
       'Hiện đang tiếp nhận các đối tác chiến lược cao cấp và các hợp đồng tư vấn kiến trúc được chọn lọc.',
     ctaButton: 'KHỞI_TẠO_LIÊN_HỆ',
@@ -427,6 +428,7 @@ export const vi = {
   },
   tools: {
     heading: 'Công cụ & Thí nghiệm',
+    sectionLabel: 'THÍ_NGHIỆM',
     subtitle:
       'Những mini app tôi xây dựng để khám phá ý tưởng, trau dồi kỹ năng và vui với công nghệ.',
     explore: 'Khám phá',

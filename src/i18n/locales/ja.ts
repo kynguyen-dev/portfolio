@@ -22,7 +22,7 @@ export const ja = {
     description:
       'フィンテック、クリプト、物流、ヘルスケア、教育、レンタルサービスにわたる高性能エコシステムを構築する、3年以上の経験を持つダイナミックなフルスタックエンジニア。複雑なバックエンドロジックと、流動的でレスポンシブなインターフェースの架け橋となることを専門としています。',
     viewMyWork: '実績を見る',
-    downloadCV: 'CVをダウンロード',
+    downloadCV: 'CV_ダウンロード',
     yearsExperience: '{{years}}+ 年の経験',
     productionApps: '6つの本番アプリ',
     techStack: 'React · TypeScript · Next.js · Java · PHP',
@@ -415,8 +415,8 @@ export const ja = {
     sendMeEmail: 'メールを送る',
     callMe: '電話する',
     phoneCopied: '電話番号をコピーしました！',
-    ctaTitle: 'アーキテクトの',
-    ctaTitleAccent: '準備はいいですか？',
+    ctaTitle: '新しい',
+    ctaTitleAccent: 'プロジェクトへ？',
     ctaDescription:
       '現在、特定のハイエンドな戦略的パートナーシップやアーキテクチャコンサルティングの依頼を受け付けています。',
     ctaButton: 'コンタクト開始',
@@ -450,6 +450,7 @@ export const ja = {
   },
   tools: {
     heading: 'ツール＆実験',
+    sectionLabel: '実験_LAB',
     subtitle:
       'アイデアを探求し、スキルを磨き、テクノロジーを楽しむために作ったミニアプリ。',
     explore: '探索する',

@@ -29,10 +29,6 @@ export const Footer = () => {
           <div className='font-label-grotesk font-black tracking-widest text-lg text-ct-secondary uppercase'>
             {t('nav.brandOther')}
           </div>
-          <div className='w-1 h-1 rounded-full bg-ct-outline-variant' />
-          <div className='text-[10px] text-ct-outline tracking-[0.2em] uppercase'>
-            {t('footer.builtOn')}
-          </div>
         </div>
 
         {/* Navigation */}
