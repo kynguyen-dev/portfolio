@@ -13,3 +13,4 @@ export type { HeroParallaxProduct } from './hero-parallax';
 export { Terminal } from './Terminal';
 export type { TerminalProps } from './Terminal';
 export { ExpandableWorkCard } from './ExpandableWorkCard';
+export { TracingBeam } from './TracingBeam';

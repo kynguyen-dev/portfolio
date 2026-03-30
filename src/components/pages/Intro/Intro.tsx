@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   motion,
   useScroll,
@@ -13,6 +13,7 @@ import {
   Terminal,
   ImagesBadge,
   ExpandableWorkCard,
+  TracingBeam,
 } from '@components/customs/aceternity';
 import { ContactDropdown } from '@components/customs/ContactDropdown';
 
@@ -43,6 +44,16 @@ export const Intro = () => {
   const workHistory = t('intro.workHistory', {
     returnObjects: true,
   }) as TimelineEntry[];
+
+  /* ─── Detect 2xl+ for scroll-driven animations ─── */
+  const [isAbove2xl, setIsAbove2xl] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1536px)');
+    setIsAbove2xl(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsAbove2xl(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
 
   /* ─── Scroll & Parallax Setup ─── */
   const containerRef = useRef<HTMLDivElement>(null);
@@ -117,9 +128,9 @@ export const Intro = () => {
       style={{ overflowX: 'clip' }}
     >
       {/* 500vh container houses both Hero and Tactical Path */}
-      <div ref={containerRef} className='h-[200vh] md:h-[500vh] relative antialiased'>
-        {/* Sticky viewport container */}
-        <div className='sticky top-0 h-screen w-full flex flex-col justify-center [perspective:1000px] overflow-hidden'>
+      <div ref={containerRef} className='2xl:h-[500vh] relative antialiased'>
+        {/* Sticky viewport container — only sticky on 2xl+ for horizontal scroll */}
+        <div className='h-screen 2xl:sticky 2xl:top-0 w-full flex flex-col justify-center [perspective:1000px] overflow-hidden'>
           {/* Topology Grid Background */}
           <div className='absolute inset-0 topology-grid opacity-20 pointer-events-none' />
 
@@ -127,11 +138,15 @@ export const Intro = () => {
               HERO FOREGROUND LAYER
               ========================================= */}
           <motion.div
-            style={{
-              opacity: heroOpacity,
-              y: heroTranslateY,
-              display: heroDisplay,
-            }}
+            style={
+              isAbove2xl
+                ? {
+                    opacity: heroOpacity,
+                    y: heroTranslateY,
+                    display: heroDisplay,
+                  }
+                : undefined
+            }
             className='absolute inset-0 z-30 flex justify-center items-center px-4 md:px-8'
           >
             <div className='w-full max-w-4xl flex flex-col items-center mx-auto relative px-2'>
@@ -256,7 +271,7 @@ export const Intro = () => {
               translateY,
               opacity: pathOpacity,
             }}
-            className='absolute inset-0 z-10 w-full h-full hidden md:flex items-center [transform-style:preserve-3d]'
+            className='absolute inset-0 z-10 w-full h-full hidden 2xl:flex items-center [transform-style:preserve-3d]'
           >
             {/* Tactical Path Heading */}
             <motion.div
@@ -352,6 +367,28 @@ export const Intro = () => {
             </div>
           </motion.div>
         </div>
+      </div>
+
+      {/* ─── Mobile Tactical Path (Tracing Beam) ─── */}
+      <div id='path' className='2xl:hidden px-6 pt-16 pb-8 relative z-10'>
+        <h2 className='text-ct-secondary font-label-grotesk text-xs font-black tracking-[0.3em] uppercase mb-2'>
+          01 {'// '}
+          {t('workExperience.sectionTitle')}
+        </h2>
+        <h3 className='font-serif-display text-3xl text-ct-on-surface mb-10'>
+          {t('workExperience.heading')}
+        </h3>
+        <TracingBeam>
+          <div className='flex flex-col gap-8 pl-8'>
+            {workHistory.map((entry, idx) => (
+              <ExpandableWorkCard
+                key={`${entry.company}-${entry.period}`}
+                entry={entry}
+                index={idx}
+              />
+            ))}
+          </div>
+        </TracingBeam>
       </div>
 
       {/* ─── Accent Cards Grid ─── */}
