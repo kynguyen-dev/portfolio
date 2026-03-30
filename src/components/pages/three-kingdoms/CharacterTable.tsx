@@ -16,6 +16,7 @@ import { useSpring, animated, to } from '@react-spring/web';
 import type { ThreeKingdomsCharacter } from '@constants/three-kingdoms';
 import { getKingdomMeta } from '@constants/three-kingdoms';
 import { MultiFormatImage } from './MultiFormatImage';
+import { cn } from '@utils/core/cn';
 
 const useIsMobile = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -32,21 +33,21 @@ const useIsMobile = () => {
 const AvatarCell = ({ character }: { character: ThreeKingdomsCharacter }) => {
   const km = getKingdomMeta(character.kingdom);
   return (
-    <div className='flex items-center gap-2'>
+    <div className='flex items-center gap-3'>
       <div
-        className='w-9 h-9 rounded-full flex-shrink-0 overflow-hidden flex items-center justify-center'
+        className='w-10 h-10 rounded-full flex-shrink-0 overflow-hidden flex items-center justify-center p-0.5'
         style={{
-          border: `2px solid ${km.color}`,
           backgroundColor: `${km.color}20`,
+          border: `1.5px solid ${km.color}50`,
         }}
       >
         <MultiFormatImage
           basePath={`/images/three-kingdoms/avatar/${character.id}`}
           alt={character.name.en}
-          className='w-full h-full object-cover'
+          className='w-full h-full rounded-full object-cover'
           fallback={
             <span
-              className='font-bold text-[0.85rem]'
+              className='font-black text-[0.8rem] uppercase'
               style={{ color: km.color }}
             >
               {character.name.cn.charAt(0)}
@@ -54,9 +55,11 @@ const AvatarCell = ({ character }: { character: ThreeKingdomsCharacter }) => {
           }
         />
       </div>
-      <div>
-        <div className='font-bold leading-tight'>{character.name.cn}</div>
-        <div className='text-xs opacity-70'>
+      <div className='flex flex-col'>
+        <div className='font-black text-ct-on-surface leading-tight'>
+          {character.name.cn}
+        </div>
+        <div className='text-[0.7rem] font-bold text-ct-on-surface-variant/70 uppercase tracking-tighter'>
           {character.name.vi} · {character.name.en}
         </div>
       </div>
@@ -187,28 +190,28 @@ export const CharacterTable = ({
     const base: ColumnDef<ThreeKingdomsCharacter, unknown>[] = [
       columnHelper.accessor(row => row.name.en, {
         id: 'name',
-        header: '⚔ Name',
+        header: '⚔ Warrior',
         cell: info => <AvatarCell character={info.row.original} />,
         enableSorting: true,
-        size: 200,
-        minSize: 140,
+        size: 240,
+        minSize: 180,
       }),
       columnHelper.accessor(row => row.kingdom, {
         id: 'kingdom',
-        header: 'Kingdom',
+        header: 'Allegiance',
         cell: info => {
           const km = getKingdomMeta(info.getValue());
           return (
             <span
-              className='font-semibold text-[0.85rem]'
-              style={{ color: km.color }}
+              className='font-black text-[0.7rem] uppercase tracking-widest px-2 py-0.5 rounded-md'
+              style={{ color: km.color, backgroundColor: `${km.color}15` }}
             >
               {km.emoji} {km.name.en}
             </span>
           );
         },
-        size: 140,
-        minSize: 100,
+        size: 160,
+        minSize: 120,
       }),
       columnHelper.accessor(row => row.stats.might, {
         id: 'might',
@@ -225,9 +228,11 @@ export const CharacterTable = ({
         0,
         columnHelper.accessor(row => row.hometown, {
           id: 'hometown',
-          header: '📍 Hometown',
+          header: '📍 Domain',
           cell: info => (
-            <span className='text-[0.82rem] opacity-85'>{info.getValue()}</span>
+            <span className='text-[0.75rem] font-medium text-ct-on-surface-variant'>
+              {info.getValue()}
+            </span>
           ),
           size: 160,
           minSize: 120,
@@ -296,7 +301,7 @@ export const CharacterTable = ({
   const virtualizer = useVirtualizer({
     count: rows.length,
     getScrollElement: () => parentRef.current,
-    estimateSize: () => 60,
+    estimateSize: () => 72,
     overscan: 10,
   });
 
@@ -312,18 +317,22 @@ export const CharacterTable = ({
   return (
     <div
       ref={parentRef}
-      className='w-full rounded-lg overflow-x-auto overflow-y-auto glass-panel bg-ct-surface-container-low/50 backdrop-blur-md'
+      className='w-full overflow-x-auto overflow-y-auto'
       style={{
-        maxHeight: 'calc(100vh - 440px)',
+        maxHeight: '100%',
         minHeight: 200,
       }}
     >
       {/* Table header */}
       <div
-        className='sticky top-0 z-[2] bg-ct-surface-container-low/95 backdrop-blur-xl border-b border-ct-outline-variant/20'
+        className='sticky top-0 z-[2] border-b border-ct-outline-variant/10 shadow-sm'
         style={{
           display: 'grid',
           gridTemplateColumns: gridCols,
+          backgroundColor: isLight
+            ? 'rgba(255,255,255,0.8)'
+            : 'rgba(16,20,26,0.9)',
+          backdropFilter: 'blur(16px)',
         }}
       >
         {table.getHeaderGroups().map(hg =>
@@ -331,14 +340,16 @@ export const CharacterTable = ({
             <div
               key={header.id}
               onClick={header.column.getToggleSortingHandler()}
-              className='px-3 py-3 text-[0.8rem] font-bold whitespace-nowrap select-none text-ct-secondary'
+              className='px-4 py-4 hud-label text-[0.65rem] font-black whitespace-nowrap select-none flex items-center gap-1 transition-colors hover:text-ct-secondary active:scale-95'
               style={{
                 cursor: header.column.getCanSort() ? 'pointer' : 'default',
               }}
             >
               {flexRender(header.column.columnDef.header, header.getContext())}
-              {header.column.getIsSorted() === 'asc' && ' ▲'}
-              {header.column.getIsSorted() === 'desc' && ' ▼'}
+              <span className='text-[10px] opacity-40'>
+                {header.column.getIsSorted() === 'asc' && ' ▴'}
+                {header.column.getIsSorted() === 'desc' && ' ▾'}
+              </span>
             </div>
           ))
         )}
@@ -351,22 +362,30 @@ export const CharacterTable = ({
           position: 'relative',
         }}
       >
-        {virtualizer.getVirtualItems().map(vRow => (
-          <AnimatedRow
-            key={vRow.key}
-            row={rows[vRow.index]}
-            vRow={vRow}
-            gridCols={gridCols}
-            onRowClick={onRowClick}
-            index={vRow.index}
-          />
-        ))}
+        {virtualizer.getVirtualItems().map((vRow, index) => {
+          const row = rows[vRow.index];
+          if (!row) return null;
+
+          return (
+            <AnimatedRow
+              key={row.id}
+              row={row}
+              vRow={vRow}
+              gridCols={gridCols}
+              onRowClick={onRowClick}
+              index={index}
+            />
+          );
+        })}
       </div>
 
       {/* Empty state */}
       {rows.length === 0 && (
-        <div className='text-center py-12 text-ct-on-surface-variant text-[0.9rem]'>
-          No warriors found 🏯
+        <div className='flex flex-col items-center justify-center py-20 gap-4 opacity-40'>
+          <div className='text-4xl'>🏯</div>
+          <div className='hud-label text-xs'>
+            No warriors found in these archives
+          </div>
         </div>
       )}
     </div>
@@ -375,18 +394,15 @@ export const CharacterTable = ({
 
 /* ─── Small stat cell with color scale ─── */
 const StatCell = ({ value }: { value: number }) => {
-  const color =
-    value >= 90
-      ? '#C41E3A'
-      : value >= 70
-        ? '#D4A843'
-        : value >= 50
-          ? '#2E5090'
-          : '#6B7280';
+  const isHigh = value >= 90;
   return (
     <span
-      className='tabular-nums'
-      style={{ fontWeight: value >= 90 ? 700 : 500, color }}
+      className={cn(
+        'tabular-nums font-black text-xs px-2 py-1 rounded-sm',
+        isHigh
+          ? 'text-ct-secondary bg-ct-secondary/10'
+          : 'text-ct-on-surface-variant'
+      )}
     >
       {value}
     </span>

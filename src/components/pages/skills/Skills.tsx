@@ -1,19 +1,60 @@
-import { animated, useSpring, useTrail } from '@react-spring/web';
+import { type ReactNode } from 'react';
+import {
+  animated,
+  useSpring,
+  useTrail,
+  useSpringRef,
+  useChain,
+} from '@react-spring/web';
 import { useTranslation } from 'react-i18next';
 import { useInView } from '@utils/animations/springVariants';
 import { cn } from '@utils/core/cn';
-import { CodeBlock, Database, GearSix, Rocket } from '@phosphor-icons/react';
+import {
+  CodeBlock,
+  Database,
+  GearSix,
+  Rocket,
+  GitBranch,
+  Check,
+  ArrowsClockwise,
+  BookOpen,
+  Kanban,
+  Atom,
+  Globe,
+  FileTs,
+  AngularLogo,
+  Wind,
+  Palette,
+  Leaf,
+  FileCss,
+  CloudArrowUp,
+  Tree,
+  TestTube,
+  Package,
+  Bug,
+  TerminalWindow,
+  GitlabLogo,
+  Timer,
+  FigmaLogo,
+  Browsers,
+} from '@phosphor-icons/react';
 import { GlareCard } from '@components/customs/aceternity';
+import { getYearsOfExperience } from '@utils/core/career';
 
 /* ─── Data ─── */
+interface SkillTag {
+  label: string;
+  icon: ReactNode;
+}
+
 interface ArsenalPanel {
   titleKey: string;
-  icon: React.ReactNode;
+  icon: ReactNode;
   accentClass: string;
   accentGradient: string;
   glareColor: string;
   chipStyle: string;
-  skills: string[];
+  skills: SkillTag[];
 }
 
 const arsenalPanels: ArsenalPanel[] = [
@@ -26,12 +67,12 @@ const arsenalPanels: ArsenalPanel[] = [
     chipStyle:
       'bg-ct-secondary/8 text-ct-secondary border-ct-secondary/15 hover:bg-ct-secondary/15',
     skills: [
-      'React 18',
-      'TypeScript',
-      'Next.js',
-      'Vue 3',
-      'SASS/SCSS',
-      'Redux Toolkit',
+      { label: 'React (3+ years)', icon: <Atom size={12} weight='bold' /> },
+      { label: 'Next.js (SSR)', icon: <Globe size={12} weight='bold' /> },
+      { label: 'TypeScript', icon: <FileTs size={12} weight='bold' /> },
+      { label: 'AngularJS', icon: <AngularLogo size={12} weight='bold' /> },
+      { label: 'Tailwind CSS', icon: <Wind size={12} weight='bold' /> },
+      { label: 'MUI / Ant Design', icon: <Palette size={12} weight='bold' /> },
     ],
   },
   {
@@ -42,7 +83,17 @@ const arsenalPanels: ArsenalPanel[] = [
     glareColor: 'rgba(208, 188, 255, 0.10)',
     chipStyle:
       'bg-primary-main/8 text-primary-main border-primary-main/15 hover:bg-primary-main/15',
-    skills: ['PostgreSQL', 'GraphQL', 'Redis', 'Firebase', 'Prisma', 'Node.js'],
+    skills: [
+      { label: 'Java (Spring)', icon: <Leaf size={12} weight='bold' /> },
+      { label: 'PHP (Laravel)', icon: <FileCss size={12} weight='bold' /> },
+      {
+        label: 'RESTful API',
+        icon: <ArrowsClockwise size={12} weight='bold' />,
+      },
+      { label: 'PostgreSQL', icon: <Database size={12} weight='bold' /> },
+      { label: 'MongoDB', icon: <Tree size={12} weight='bold' /> },
+      { label: 'Docker / MinIO', icon: <Package size={12} weight='bold' /> },
+    ],
   },
   {
     titleKey: 'skills.toolingOps',
@@ -52,7 +103,20 @@ const arsenalPanels: ArsenalPanel[] = [
     glareColor: 'rgba(78, 222, 163, 0.10)',
     chipStyle:
       'bg-ct-secondary/8 text-ct-secondary border-ct-secondary/15 hover:bg-ct-secondary/15',
-    skills: ['Docker', 'GitHub Actions', 'Vite', 'AWS EC2', 'Jest', 'Cypress'],
+    skills: [
+      { label: 'AWS / Vercel', icon: <CloudArrowUp size={12} weight='bold' /> },
+      {
+        label: 'GitLab / GitHub',
+        icon: <GitlabLogo size={12} weight='bold' />,
+      },
+      { label: 'ESLint / Prettier', icon: <Bug size={12} weight='bold' /> },
+      { label: 'Vite / Gradle', icon: <Timer size={12} weight='bold' /> },
+      {
+        label: 'Postman / Insomnia',
+        icon: <TerminalWindow size={12} weight='bold' />,
+      },
+      { label: 'Figma / Notion', icon: <FigmaLogo size={12} weight='bold' /> },
+    ],
   },
   {
     titleKey: 'skills.execution',
@@ -62,7 +126,14 @@ const arsenalPanels: ArsenalPanel[] = [
     glareColor: 'rgba(208, 188, 255, 0.10)',
     chipStyle:
       'bg-primary-main/8 text-primary-main border-primary-main/15 hover:bg-primary-main/15',
-    skills: ['CI/CD', 'Vercel', 'Storybook', 'TanStack'],
+    skills: [
+      { label: 'Agile / Scrum', icon: <Kanban size={12} weight='bold' /> },
+      { label: 'CI/CD Pipelines', icon: <GitBranch size={12} weight='bold' /> },
+      { label: 'Jest / RTL', icon: <TestTube size={12} weight='bold' /> },
+      { label: 'Storybook', icon: <Browsers size={12} weight='bold' /> },
+      { label: 'Clean Code', icon: <Check size={12} weight='bold' /> },
+      { label: 'Code Review', icon: <BookOpen size={12} weight='bold' /> },
+    ],
   },
 ];
 
@@ -123,13 +194,14 @@ const ArsenalCardContent = ({
       <div className='flex flex-wrap gap-2.5 flex-1'>
         {panel.skills.map(skill => (
           <span
-            key={skill}
+            key={skill.label}
             className={cn(
-              'px-4 py-2 text-sm font-label-grotesk font-medium rounded-lg border transition-all duration-200 cursor-default',
+              'px-3 py-1.5 text-xs font-label-grotesk font-medium rounded-lg border transition-all duration-200 cursor-default flex items-center gap-1.5',
               panel.chipStyle
             )}
           >
-            {skill}
+            <span className='opacity-70 flex-shrink-0'>{skill.icon}</span>
+            {skill.label}
           </span>
         ))}
       </div>
@@ -145,12 +217,36 @@ const ArsenalCardContent = ({
   );
 };
 
+/* ─── Animated Counter ─── */
+const AnimatedNumber = ({
+  target,
+  inView,
+  suffix = '',
+}: {
+  target: number;
+  inView: boolean;
+  suffix?: string;
+}) => {
+  const { val } = useSpring({
+    from: { val: 0 },
+    to: { val: inView ? target : 0 },
+    config: { tension: 60, friction: 18, clamp: true },
+    delay: inView ? 300 : 0,
+  });
+  return (
+    <animated.span>{val.to(v => `${Math.floor(v)}${suffix}`)}</animated.span>
+  );
+};
+
 /* ─── Main Component ─── */
 export const Skills = () => {
   const { t } = useTranslation();
   const { ref, inView } = useInView({ threshold: 0.1 });
+  const { ref: statsRef, inView: statsInView } = useInView({ threshold: 0.3 });
 
+  const trailApi = useSpringRef();
   const trail = useTrail(arsenalPanels.length, {
+    ref: trailApi,
     from: { opacity: 0, y: 50, scale: 0.92 },
     to: inView
       ? { opacity: 1, y: 0, scale: 1 }
@@ -159,11 +255,40 @@ export const Skills = () => {
   });
 
   /* Section header animation */
+  const headerApi = useSpringRef();
   const headerSpring = useSpring({
+    ref: headerApi,
     from: { opacity: 0, y: 30 },
     to: inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 },
     config: { tension: 180, friction: 24 },
   });
+
+  useChain(inView ? [headerApi, trailApi] : [trailApi, headerApi], [0, 0.15]);
+
+  /* Stats strip stagger trail */
+  const statsTrail = useTrail(3, {
+    from: { opacity: 0, y: 24, scale: 0.9 },
+    to: statsInView
+      ? { opacity: 1, y: 0, scale: 1 }
+      : { opacity: 0, y: 24, scale: 0.9 },
+    config: { tension: 200, friction: 22 },
+    delay: 100,
+  });
+
+  /* Glow pulse timing */
+  const glowSpring = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: statsInView ? 1 : 0 },
+    config: { tension: 60, friction: 20 },
+    delay: 400,
+  });
+
+  const yearsExp = getYearsOfExperience();
+  const statsData = [
+    { target: 20, suffix: '+', label: t('skills.stats.technologies') },
+    { target: yearsExp, suffix: '+', label: t('skills.stats.yearsExp') },
+    { target: 6, suffix: '', label: t('skills.stats.productionSystems') },
+  ];
 
   return (
     <section
@@ -178,7 +303,7 @@ export const Skills = () => {
       {/* Subtle topology grid overlay */}
       <div className='absolute inset-0 topology-grid opacity-[0.04] pointer-events-none' />
 
-      <div className='px-8 lg:px-16 max-w-screen-2xl mx-auto'>
+      <div className='px-8 lg:px-16'>
         {/* Section Header */}
         <animated.div
           style={{
@@ -187,19 +312,23 @@ export const Skills = () => {
           }}
           className='mb-20'
         >
-          <div className='flex items-center gap-4 mb-4'>
-            <h2 className='text-primary-main font-label-grotesk text-xs font-black tracking-[0.3em] uppercase'>
-              02 {'// '}DATA_BANK
-            </h2>
-            <div className='h-px flex-1 max-w-[120px] bg-gradient-to-r from-primary-main/40 to-transparent' />
+          <div className='flex items-end gap-6 mb-4'>
+            <div className='flex-shrink-0'>
+              <h2 className='text-ct-secondary font-label-grotesk text-xs font-black tracking-[0.3em] uppercase mb-2'>
+                02 {'// '}
+                {t('skills.sectionLabel')}
+              </h2>
+              <h3 className='font-serif-display text-4xl md:text-5xl text-ct-on-surface'>
+                {t('skills.sectionTitle')}
+              </h3>
+            </div>
+            <div
+              className='hidden md:block h-[2px] flex-grow'
+              style={{
+                background: 'linear-gradient(to right, #4edea3, transparent)',
+              }}
+            />
           </div>
-          <h3 className='font-serif-display text-4xl md:text-5xl lg:text-6xl text-ct-on-surface tracking-tight'>
-            {t('skills.sectionTitle')}
-          </h3>
-          <p className='mt-4 text-ct-on-surface-variant/60 font-label-grotesk text-sm tracking-wide max-w-xl'>
-            Technologies, frameworks, and tools that power my engineering
-            workflow — battle-tested in production.
-          </p>
         </animated.div>
 
         {/* Arsenal Bento Grid — zigzag with Glare Cards */}
@@ -232,28 +361,65 @@ export const Skills = () => {
         </div>
 
         {/* Bottom Stats Strip */}
-        <animated.div
-          style={{
-            opacity: headerSpring.opacity,
-            transform: headerSpring.y.to(y => `translateY(${y}px)`),
-          }}
-          className='mt-16 flex flex-wrap items-center justify-center gap-8 md:gap-16'
-        >
-          {[
-            { value: '20+', label: 'TECHNOLOGIES' },
-            { value: '4+', label: 'YEARS_EXP' },
-            { value: '6', label: 'PRODUCTION_SYSTEMS' },
-          ].map(stat => (
-            <div key={stat.label} className='text-center group'>
-              <div className='font-serif-display text-3xl md:text-4xl text-ct-on-surface tracking-tight group-hover:text-primary-main transition-colors duration-300'>
-                {stat.value}
-              </div>
-              <div className='text-[10px] text-ct-outline font-label-grotesk tracking-[0.2em] uppercase mt-1'>
-                {stat.label}
-              </div>
-            </div>
-          ))}
-        </animated.div>
+        <div ref={statsRef} className='mt-20 relative'>
+          {/* Ambient glow behind stats */}
+          <animated.div
+            style={{ opacity: glowSpring.opacity }}
+            className='absolute inset-0 -z-10 flex items-center justify-center pointer-events-none'
+          >
+            <div className='w-[400px] h-[100px] bg-primary-main/6 rounded-full blur-[60px]' />
+          </animated.div>
+
+          <div className='flex flex-wrap items-center justify-center gap-0'>
+            {statsData.map((stat, i) => (
+              <animated.div
+                key={stat.label}
+                style={{
+                  opacity: statsTrail[i].opacity,
+                  transform: statsTrail[i].y.to(
+                    y =>
+                      `translateY(${y}px) scale(${statsTrail[i].scale.get()})`
+                  ),
+                }}
+                className='flex items-stretch'
+              >
+                <div className='text-center group px-10 md:px-16 py-2 relative cursor-default'>
+                  {/* Hover highlight */}
+                  <div className='absolute inset-0 rounded-lg bg-primary-main/0 group-hover:bg-primary-main/5 transition-colors duration-500' />
+
+                  {/* Counter value */}
+                  <div className='font-serif-display text-4xl md:text-5xl text-ct-on-surface tracking-tight group-hover:text-primary-main transition-colors duration-300 relative z-10 tabular-nums'>
+                    {statsInView ? (
+                      <AnimatedNumber
+                        target={stat.target}
+                        inView={statsInView}
+                        suffix={stat.suffix}
+                      />
+                    ) : (
+                      `0${stat.suffix}`
+                    )}
+                  </div>
+
+                  {/* Label */}
+                  <div className='text-[10px] text-ct-outline font-label-grotesk tracking-[0.2em] uppercase mt-2 relative z-10 group-hover:text-ct-on-surface-variant transition-colors duration-300'>
+                    {stat.label}
+                  </div>
+
+                  {/* Bottom accent on hover */}
+                  <div className='absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-ct-secondary group-hover:w-8 transition-all duration-300 rounded-full' />
+                </div>
+
+                {/* Vertical separator between items */}
+                {i < statsData.length - 1 && (
+                  <animated.div
+                    style={{ opacity: glowSpring.opacity }}
+                    className='self-center w-px h-10 bg-gradient-to-b from-transparent via-ct-surface-container-highest to-transparent'
+                  />
+                )}
+              </animated.div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

@@ -15,8 +15,8 @@ interface ToolItem {
   colSpan: number;
   /** Card height */
   height: string;
-  /** Optional tech label */
-  techLabel?: string;
+  /** Optional tech label key */
+  techLabelKey?: string;
 }
 
 const TOOLS: ToolItem[] = [
@@ -27,7 +27,7 @@ const TOOLS: ToolItem[] = [
     route: ROUTES.TOOLS.GALLERY,
     colSpan: 8,
     height: 'h-[500px]',
-    techLabel: 'VIRTUALIZED / 60FPS',
+    techLabelKey: 'tools.items.gallery.techLabel',
   },
   {
     image: '/images/three-kingdoms/logo.jpg',
@@ -36,7 +36,7 @@ const TOOLS: ToolItem[] = [
     route: ROUTES.TOOLS.THREE_KINGDOMS,
     colSpan: 4,
     height: 'h-[500px]',
-    techLabel: 'AI / DATA',
+    techLabelKey: 'tools.items.threeKingdoms.techLabel',
   },
   {
     emoji: '🤖',
@@ -45,7 +45,7 @@ const TOOLS: ToolItem[] = [
     route: ROUTES.TOOLS.AI_SQL_HELPER,
     colSpan: 4,
     height: 'h-80',
-    techLabel: 'GEMINI_API',
+    techLabelKey: 'tools.items.aiSqlHelper.techLabel',
   },
   {
     emoji: '📊',
@@ -54,7 +54,7 @@ const TOOLS: ToolItem[] = [
     route: ROUTES.TOOLS.MARKET_INSIGHTS,
     colSpan: 4,
     height: 'h-80',
-    techLabel: 'REAL_TIME / DASHBOARD',
+    techLabelKey: 'tools.items.marketInsights.techLabel',
   },
 ];
 
@@ -73,12 +73,23 @@ export const Tools = () => {
 
   return (
     <section id='tools' className='py-24 px-8 lg:px-16'>
-      {/* ─── Masterwork Grid Header ─── */}
-      <div className='flex items-center gap-6 mb-16'>
-        <h2 className='font-serif-display text-5xl flex-shrink-0'>
-          {t('tools.heading')}
-        </h2>
-        <div className='h-1 flex-grow bg-gradient-to-r from-ct-secondary to-transparent' />
+      {/* ─── Section Header ─── */}
+      <div className='flex items-end gap-6 mb-16'>
+        <div className='flex-shrink-0'>
+          <h2 className='text-ct-secondary font-label-grotesk text-xs font-black tracking-[0.3em] uppercase mb-2'>
+            03 {'// '}
+            {t('tools.sectionLabel')}
+          </h2>
+          <h3 className='font-serif-display text-4xl md:text-5xl text-ct-on-surface'>
+            {t('tools.heading')}
+          </h3>
+        </div>
+        <div
+          className='hidden md:block h-[2px] flex-grow'
+          style={{
+            background: 'linear-gradient(to right, #4edea3, transparent)',
+          }}
+        />
       </div>
 
       {/* ─── 12-Column Grid ─── */}
@@ -119,9 +130,9 @@ export const Tools = () => {
               )}
 
               {/* Tech Label */}
-              {tool.techLabel && (
+              {tool.techLabelKey && (
                 <div className='text-ct-secondary font-label-grotesk text-sm tracking-widest mb-2'>
-                  [ {tool.techLabel} ]
+                  [ {t(tool.techLabelKey)} ]
                 </div>
               )}
 
@@ -145,7 +156,7 @@ export const Tools = () => {
                 </span>
                 <span className='text-ct-outline-variant flex items-center gap-2 text-xs'>
                   {'// '}
-                  {tool.techLabel}
+                  {tool.techLabelKey ? t(tool.techLabelKey) : ''}
                 </span>
               </div>
             </div>

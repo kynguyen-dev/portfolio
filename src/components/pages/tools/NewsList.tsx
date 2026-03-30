@@ -1,9 +1,12 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { ArrowLeft } from 'lucide-react';
+import {
+  CaretLeft,
+  NewspaperClipping,
+  CircleNotch,
+} from '@phosphor-icons/react';
 import ToolPageLayout from './ToolPageLayout';
 import { PFTypography } from '@components/core';
 import { useTranslation } from 'react-i18next';
-import { useThemeMode } from '@contexts/theme-mode';
 
 interface NewsItem {
   title: string;
@@ -28,29 +31,20 @@ interface MarketNewsResponse {
 }
 
 const NewsCardSkeleton = () => {
-  const { mode } = useThemeMode();
-  const isLight = mode === 'light';
-
   return (
-    <div
-      className='h-full flex flex-col rounded-2xl overflow-hidden backdrop-blur-xl animate-pulse'
-      style={{
-        background: isLight ? 'rgba(255,255,255,0.4)' : 'rgba(11,13,46,0.4)',
-        border: `1px solid ${isLight ? 'rgba(184,137,31,0.2)' : 'rgba(245,208,96,0.2)'}`,
-      }}
-    >
-      <div className='h-[180px] bg-white/5' />
-      <div className='flex-1 flex flex-col gap-3 p-4'>
-        <div className='h-7 bg-white/5 rounded w-[90%]' />
-        <div className='h-7 bg-white/5 rounded w-[80%]' />
-        <div className='h-5 bg-white/5 rounded w-full' />
-        <div className='h-5 bg-white/5 rounded w-full' />
-        <div className='mt-auto pt-4'>
+    <div className='h-full flex flex-col rounded-2xl overflow-hidden glass-panel animate-pulse border-ct-outline-variant/10'>
+      <div className='h-[180px] bg-ct-surface-container-high/30' />
+      <div className='flex-1 flex flex-col gap-3 p-6'>
+        <div className='h-6 bg-ct-surface-container-high/30 rounded w-[90%]' />
+        <div className='h-6 bg-ct-surface-container-high/30 rounded w-[80%]' />
+        <div className='h-4 bg-ct-surface-container-high/20 rounded w-full' />
+        <div className='h-4 bg-ct-surface-container-high/20 rounded w-full' />
+        <div className='mt-auto pt-6'>
           <div className='flex justify-between items-center mb-4'>
-            <div className='h-6 w-15 bg-white/5 rounded' />
-            <div className='h-4 w-10 bg-white/5 rounded' />
+            <div className='h-5 w-20 bg-ct-surface-container-high/30 rounded-full' />
+            <div className='h-3 w-16 bg-ct-surface-container-high/20 rounded' />
           </div>
-          <div className='h-9 bg-white/5 rounded-lg w-full' />
+          <div className='h-10 bg-ct-surface-container-high/30 rounded-lg w-full' />
         </div>
       </div>
     </div>
@@ -58,9 +52,7 @@ const NewsCardSkeleton = () => {
 };
 
 const NewsList = () => {
-  const { mode } = useThemeMode();
   const { t } = useTranslation();
-  const isLight = mode === 'light';
 
   const [news, setNews] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(false);
@@ -158,92 +150,83 @@ const NewsList = () => {
     [loading, hasMore, fetchNews]
   );
 
-  const accentColor = isLight ? '#B8891F' : '#F5D060';
-  const borderClr = isLight ? 'rgba(184,137,31,0.2)' : 'rgba(245,208,96,0.2)';
-
   return (
     <ToolPageLayout
       title={t('tools.items.marketInsights.latestFinancialNews')}
       emoji='📰'
       description={t('tools.items.marketInsights.description')}
     >
-      <div className='w-full max-w-[1200px] mt-8 mx-auto'>
-        <a
-          href='/tools/market-insights'
-          className='inline-flex items-center gap-2 mb-8 font-bold text-sm transition-colors hover:opacity-80'
-          style={{ color: accentColor }}
-        >
-          <ArrowLeft size={16} />
-          {t('tools.items.marketInsights.backToDashboard')}
-        </a>
+      <div className='w-full max-w-[1200px] mt-8 mx-auto px-4 md:px-0'>
+        <div className='flex justify-start mb-8'>
+          <a
+            href='/tools/market-insights'
+            className='inline-flex items-center gap-2 font-black text-[10px] tracking-[0.2em] uppercase text-ct-secondary hover:text-ct-secondary-light transition-colors group'
+          >
+            <CaretLeft
+              size={14}
+              weight='bold'
+              className='group-hover:-translate-x-1 transition-transform'
+            />
+            {t('tools.items.marketInsights.backToDashboard')}
+          </a>
+        </div>
 
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8'>
           {loading && news.length === 0
             ? [1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => <NewsCardSkeleton key={i} />)
             : news.map((item, idx) => (
                 <div
                   key={`${item.url}-${idx}`}
-                  className='h-full flex flex-col rounded-2xl overflow-hidden backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:shadow-xl'
-                  style={{
-                    background: isLight
-                      ? 'rgba(255,255,255,0.4)'
-                      : 'rgba(11,13,46,0.4)',
-                    border: `1px solid ${borderClr}`,
-                  }}
+                  className='h-full flex flex-col rounded-2xl overflow-hidden glass-panel border-ct-outline-variant/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:border-ct-secondary/30 group'
                 >
                   {item.image && (
-                    <div className='h-[180px] overflow-hidden'>
+                    <div className='h-[200px] overflow-hidden relative'>
                       <img
                         src={item.image}
                         alt={item.title}
-                        className='w-full h-full object-cover'
+                        className='w-full h-full object-cover transition-transform duration-700 group-hover:scale-110'
                         onError={(e: React.SyntheticEvent<HTMLImageElement>) =>
-                          ((e.target as HTMLImageElement).style.display =
-                            'none')
+                          ((
+                            e.target as HTMLImageElement
+                          ).parentElement!.style.display = 'none')
                         }
                       />
+                      <div className='absolute inset-0 bg-gradient-to-t from-ct-bg/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500' />
                     </div>
                   )}
-                  <div className='flex-1 flex flex-col gap-3 p-4'>
+                  <div className='flex-1 flex flex-col gap-4 p-6'>
+                    <div className='flex items-center gap-2 text-ct-secondary opacity-60'>
+                      <NewspaperClipping size={16} weight='duotone' />
+                      <span className='text-[10px] font-black tracking-widest uppercase'>
+                        {item.source}
+                      </span>
+                    </div>
                     <PFTypography
                       variant='body1'
                       fontWeight={700}
-                      className='line-clamp-2 leading-[1.4]'
+                      className='line-clamp-2 leading-[1.4] font-serif-display group-hover:text-primary-main transition-colors'
                     >
                       {item.title}
                     </PFTypography>
                     <PFTypography
                       variant='body2'
-                      className='opacity-70 line-clamp-3'
+                      className='opacity-60 line-clamp-3 text-sm leading-relaxed'
                     >
                       {item.description}
                     </PFTypography>
-                    <div className='mt-auto'>
-                      <div className='flex justify-between items-center mb-4'>
-                        <span
-                          className='text-xs font-bold px-2 py-0.5 rounded-full'
-                          style={{
-                            background: `${accentColor}18`,
-                            color: accentColor,
-                          }}
-                        >
-                          {item.source}
-                        </span>
-                        <PFTypography variant='caption' className='opacity-60'>
+                    <div className='mt-auto pt-4'>
+                      <div className='flex justify-between items-center mb-6'>
+                        <span className='text-[10px] font-label-grotesk text-ct-on-surface-variant/40 uppercase tracking-tighter'>
                           {item.time}
-                        </PFTypography>
+                        </span>
                       </div>
                       <a
                         href={item.url}
                         target='_blank'
                         rel='noopener noreferrer'
-                        className='block w-full text-center py-2 rounded-lg font-bold text-sm transition-colors'
-                        style={{
-                          border: `1px solid ${isLight ? 'rgba(184,137,31,0.3)' : 'rgba(245,208,96,0.3)'}`,
-                          color: accentColor,
-                        }}
+                        className='block w-full text-center py-3 rounded-xl font-black text-xs uppercase tracking-[0.2em] transition-all duration-300 border border-ct-outline-variant/20 hover:bg-ct-secondary hover:text-ct-on-secondary hover:border-ct-secondary hover:shadow-[0_0_20px_rgba(78,222,163,0.3)] text-ct-on-surface'
                       >
-                        Đọc tiếp
+                        Execute Read //
                       </a>
                     </div>
                   </div>
@@ -253,21 +236,27 @@ const NewsList = () => {
 
         <div
           ref={lastElementRef}
-          className='h-[100px] flex justify-center items-center mt-8'
+          className='h-[150px] flex flex-col justify-center items-center mt-12 gap-4'
         >
           {hasMore && news.length > 0 && (
-            <div
-              className='w-8 h-8 border-2 border-t-transparent rounded-full animate-spin'
-              style={{
-                borderColor: accentColor,
-                borderTopColor: 'transparent',
-              }}
-            />
+            <>
+              <CircleNotch
+                className='w-8 h-8 text-ct-secondary animate-spin'
+                weight='bold'
+              />
+              <span className='text-[10px] font-black tracking-[0.3em] uppercase text-ct-on-surface-variant/40'>
+                Synchronizing More Data...
+              </span>
+            </>
           )}
           {!hasMore && news.length > 0 && (
-            <PFTypography variant='caption' className='opacity-50'>
-              Đã hiển thị tất cả tin tức có sẵn.
-            </PFTypography>
+            <div className='flex items-center gap-4 opacity-30'>
+              <div className='h-[1px] w-12 bg-ct-on-surface-variant' />
+              <span className='text-[10px] font-black tracking-[0.3em] uppercase'>
+                End of Transmission
+              </span>
+              <div className='h-[1px] w-12 bg-ct-on-surface-variant' />
+            </div>
           )}
         </div>
       </div>

@@ -741,15 +741,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@icons-pack/react-simple-icons@npm:12.0.0":
-  version: 12.0.0
-  resolution: "@icons-pack/react-simple-icons@npm:12.0.0"
-  peerDependencies:
-    react: ^16.13 || ^17 || ^18 || ^19
-  checksum: 10c0/6a9f7ff6bc231151631234fffdb93cfd96433ca747bdee94105a0111327c3dfd8e30a32639083c1fed274b793ebf002fcec5da8589cdde245b88378545090210
-  languageName: node
-  linkType: hard
-
 "@isaacs/cliui@npm:^8.0.2":
   version: 8.0.2
   resolution: "@isaacs/cliui@npm:8.0.2"
@@ -6109,7 +6100,6 @@ __metadata:
     "@fontsource-variable/noto-serif": "npm:^5.2.9"
     "@fontsource-variable/space-grotesk": "npm:^5.2.10"
     "@google/generative-ai": "npm:^0.24.1"
-    "@icons-pack/react-simple-icons": "npm:12.0.0"
     "@phosphor-icons/react": "npm:^2.1.10"
     "@react-spring/web": "npm:^10.0.3"
     "@storybook/addon-essentials": "npm:^8.6.18"

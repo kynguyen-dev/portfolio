@@ -12,49 +12,11 @@ interface TimelineEntry {
   technologies: string[];
 }
 
-const workHistory: TimelineEntry[] = [
-  {
-    company: 'Cymosoft',
-    role: 'Full-Stack Developer',
-    period: 'Sep 2024 — Jan 2025',
-    description:
-      'Developed a full-stack air conditioner rental service platform for the Japanese market, handling subscription management, booking flows, and service scheduling.',
-    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Drizzle ORM'],
-  },
-  {
-    company: 'PTN Global',
-    role: 'Full-Stack Developer',
-    period: 'Mar 2024 — Dec 2024',
-    description:
-      'Built a dynamic learner dashboard for Australian educational institutions, providing 24/7 access to badges, cohort comparisons, and attendance tracking.',
-    technologies: [
-      'ReactJS',
-      'Java',
-      'Micronaut',
-      'TanStack Query',
-      'Storybook',
-    ],
-  },
-  {
-    company: 'PTN Global',
-    role: 'Front-End Developer',
-    period: 'Feb 2023 — Mar 2024',
-    description:
-      'Developed a healthcare platform for an epilepsy research center, focused on managing clinical data, tracking patient conditions, and streamlining health report workflows.',
-    technologies: ['React', 'TypeScript', 'Auth0', 'Jest', 'Material UI'],
-  },
-  {
-    company: 'PTN Global',
-    role: 'Full-Stack Developer',
-    period: 'Dec 2021 — Feb 2023',
-    description:
-      'Built and maintained a logistics and driver safety management system, combining fleet tracking, compliance workflows, and a mobile companion app for drivers.',
-    technologies: ['Java 8', 'Spring Boot', 'Angular', 'Android'],
-  },
-];
-
 export const WorkTimeline = () => {
   const { t } = useTranslation();
+  const workHistory = t('intro.workHistory', {
+    returnObjects: true,
+  }) as TimelineEntry[];
   const { ref: gridRef, inView: gridInView } = useInView({ threshold: 0.15 });
 
   const stickyRef = useRef<HTMLDivElement>(null);
@@ -84,10 +46,11 @@ export const WorkTimeline = () => {
           <div className='flex items-end justify-between mb-8 px-8 lg:px-16 w-full absolute top-24 left-0 z-20 pointer-events-none'>
             <div>
               <h2 className='text-ct-secondary font-label-grotesk text-xs font-black tracking-[0.3em] uppercase mb-2'>
-                01 {'// '}THE_EVOLUTION
+                01 {'// '}
+                {t('workExperience.sectionTitle')}
               </h2>
               <h3 className='font-serif-display text-4xl md:text-5xl text-ct-on-surface'>
-                {t('workExperience.sectionTitle')}
+                {t('nav.tacticalPath').toUpperCase().replace(' ', '_')}
               </h3>
             </div>
             <div className='hidden md:block h-[1px] flex-grow mx-12 bg-gradient-to-r from-ct-outline-variant/30 to-transparent' />
@@ -154,7 +117,7 @@ export const WorkTimeline = () => {
                       <div className='text-xs text-ct-outline uppercase tracking-widest mb-4'>
                         {entry.company}
                       </div>
-                      <p className='text-ct-on-surface-variant text-sm leading-relaxed mb-6'>
+                      <p className='text-ct-on-surface-variant text-lg leading-relaxed mb-6'>
                         {entry.description}
                       </p>
                       <div className='flex flex-wrap gap-2'>
@@ -188,11 +151,7 @@ export const WorkTimeline = () => {
         >
           <div className='mb-4 md:mb-0 text-left'>
             <h4 className='font-black text-2xl tracking-tighter leading-tight'>
-              PRECISION
-              <br />
-              OVER
-              <br />
-              POLISH.
+              {t('intro.precisionOverPolish')}
             </h4>
           </div>
           <span className='text-4xl opacity-50 hidden md:block'>✦</span>
@@ -209,7 +168,7 @@ export const WorkTimeline = () => {
               {workHistory.length}+
             </div>
             <div className='text-xs text-ct-outline uppercase tracking-widest font-label-grotesk font-black'>
-              Successful Missions
+              {t('intro.successfulMissions')}
             </div>
           </div>
         </animated.div>

@@ -36,7 +36,7 @@ export function useInView(options?: IntersectionObserverInit) {
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [options]);
 
   return { ref, inView };
 }

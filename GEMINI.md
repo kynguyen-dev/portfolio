@@ -37,9 +37,9 @@ Maintain the established directory structure in `src/components/`:
   - Typography variants (`APP_TYPOGRAPHIES`).
   - Router paths (`ROUTER_PATHS`).
 - **Icons:**
-  - Use `@phosphor-icons/react` as the **primary icon library** for all UI icons.
-  - Use `@icons-pack/react-simple-icons` (fixed at **version 12.0.0**) for **brand/logo icons only** (e.g., GitHub, LinkedIn, Twitter).
-  - **Do NOT** use `lucide-react`, `@mui/icons-material`, or any other icon library.
+  - Use `@phosphor-icons/react` as the **sole icon library** for all UI icons.
+  - For brand icons not available in Phosphor (e.g., Zalo), use custom inline SVG components in `src/components/customs/icons/`.
+  - **Do NOT** use `lucide-react`, `@mui/icons-material`, `@icons-pack/react-simple-icons`, or any other icon library.
 
 ## 4. Design System — Algorithmic Atelier
 
@@ -60,4 +60,4 @@ Maintain the established directory structure in `src/components/`:
 
 ## 6. Deployment & Compatibility
 
-- **Vercel:** Maintain compatibility with Vercel's deployment environment. Do not upgrade `@icons-pack/react-simple-icons` beyond `12.x` unless the environment supports Node 24.
+- **Vercel:** Maintain compatibility with Vercel's deployment environment.

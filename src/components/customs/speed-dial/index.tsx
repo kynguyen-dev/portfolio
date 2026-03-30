@@ -1,6 +1,15 @@
 import { useState, useEffect, useCallback } from 'react';
 import { animated, useSpring, useTrail } from '@react-spring/web';
-import { FileText, Mail, Linkedin, Github, Plus, X } from 'lucide-react';
+import {
+  FilePdf,
+  Envelope,
+  LinkedinLogo,
+  GithubLogo,
+  Plus,
+  X,
+  Phone,
+  ChatCircle,
+} from '@phosphor-icons/react';
 import { APP_INFORMATION } from '@constants';
 import { useTranslation } from 'react-i18next';
 
@@ -20,30 +29,24 @@ export const SpeedDialCustom = () => {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
   const [open, setOpen] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
 
   const handleToggle = () => setOpen(prev => !prev);
   const handleClose = useCallback(() => setOpen(false), []);
 
   const actions = [
     {
-      icon: <FileText size={20} />,
-      name: t('intro.downloadCV'),
+      icon: <GithubLogo size={20} weight='duotone' />,
+      name: 'GitHub',
       onClick: () =>
         window.open(
-          '/resume/Ky_Nguyen_CV.pdf',
+          APP_INFORMATION.GITHUB_URL,
           '_blank',
           'noopener,noreferrer'
         ),
     },
     {
-      icon: <Mail size={20} />,
-      name: t('contact.sendMeEmail'),
-      onClick: () => {
-        window.location.href = APP_INFORMATION.EMAIL_TO;
-      },
-    },
-    {
-      icon: <Linkedin size={20} />,
+      icon: <LinkedinLogo size={20} weight='duotone' />,
       name: 'LinkedIn',
       onClick: () =>
         window.open(
@@ -53,11 +56,44 @@ export const SpeedDialCustom = () => {
         ),
     },
     {
-      icon: <Github size={20} />,
-      name: 'GitHub',
+      icon: <Envelope size={20} weight='duotone' />,
+      name: t('contact.sendMeEmail'),
+      onClick: () => {
+        window.open(
+          `https://mail.google.com/mail/?view=cm&fs=1&to=${APP_INFORMATION.EMAIL_TO.replace('mailto:', '')}`,
+          '_blank',
+          'noopener,noreferrer'
+        );
+      },
+    },
+    {
+      icon: <ChatCircle size={20} weight='duotone' />,
+      name: 'Zalo',
+      onClick: () => {
+        window.open(
+          'https://zalo.me/84868772887',
+          '_blank',
+          'noopener,noreferrer'
+        );
+      },
+    },
+    {
+      icon: <Phone size={20} weight='duotone' />,
+      name: t('contact.callMe'),
+      onClick: () => {
+        const phoneNumber = APP_INFORMATION.PHONE_NUMBER_TO.replace('tel:', '');
+        navigator.clipboard.writeText(phoneNumber).then(() => {
+          setToast(t('contact.phoneCopied'));
+          setTimeout(() => setToast(null), 3000);
+        });
+      },
+    },
+    {
+      icon: <FilePdf size={20} weight='duotone' />,
+      name: t('intro.downloadCV'),
       onClick: () =>
         window.open(
-          APP_INFORMATION.GITHUB_URL,
+          '/resume/FULL_STACK_DEVELOPER_NGUYEN_TRUONG_KY_CV.pdf',
           '_blank',
           'noopener,noreferrer'
         ),
@@ -71,15 +107,16 @@ export const SpeedDialCustom = () => {
   });
 
   const buttonSpring = useSpring({
-    rotate: open ? 45 : 0,
+    transform: open ? 'rotate(45deg)' : 'rotate(0deg)',
     config: { tension: 300, friction: 15 },
   });
 
   const trail = useTrail(actions.length, {
     opacity: open ? 1 : 0,
-    y: open ? 0 : 20,
-    scale: open ? 1 : 0.8,
-    config: { tension: 280, friction: 22 },
+    transform: open
+      ? 'translateY(0px) scale(1)'
+      : 'translateY(40px) scale(0.6)',
+    config: { tension: 320, friction: 20 },
   });
 
   if (isMobile) return null;
@@ -94,22 +131,26 @@ export const SpeedDialCustom = () => {
         />
       )}
 
-      <animated.div
-        style={{
-          ...fadeSpring,
-          position: 'fixed',
-          bottom: 32,
-          right: 32,
-          zIndex: 1000,
-        }}
-      >
-        {/* Action buttons */}
-        <div className='flex flex-col-reverse items-center gap-3 mb-3'>
+      {/* Action buttons — separate fixed container above the FAB */}
+      {open && (
+        <animated.div
+          style={{
+            ...fadeSpring,
+            position: 'fixed',
+            bottom: 96,
+            right: 24,
+            zIndex: 1000,
+          }}
+          className='flex flex-col items-end'
+        >
           {trail.map((style, i) => (
-            <animated.div key={actions[i].name} style={style}>
-              <div className='flex items-center gap-3'>
-                {/* Tooltip label */}
-                <span className='bg-ct-surface-container-highest text-ct-on-surface text-xs font-semibold px-3 py-1.5 rounded-lg shadow-md whitespace-nowrap'>
+            <animated.div
+              key={actions[i].name}
+              style={style}
+              className='h-16 flex items-center'
+            >
+              <div className='flex items-center gap-4 pr-1'>
+                <span className='bg-ct-surface-container-highest text-ct-on-surface text-xs font-semibold px-3 py-1.5 rounded-lg shadow-md whitespace-nowrap font-label-grotesk tracking-wide'>
                   {actions[i].name}
                 </span>
                 <button
@@ -118,25 +159,46 @@ export const SpeedDialCustom = () => {
                     handleClose();
                   }}
                   aria-label={actions[i].name}
-                  className='w-12 h-12 rounded-full bg-ct-surface-container-high text-ct-on-surface flex items-center justify-center shadow-lg hover:bg-ct-surface-bright transition-colors cursor-pointer'
+                  className='w-12 h-12 rounded-full bg-ct-surface-container-high text-ct-on-surface flex items-center justify-center shadow-lg hover:bg-ct-surface-bright hover:scale-110 transition-all duration-200 cursor-pointer'
                 >
                   {actions[i].icon}
                 </button>
               </div>
             </animated.div>
           ))}
-        </div>
+        </animated.div>
+      )}
 
-        {/* Main FAB */}
+      {/* Main FAB */}
+      <animated.div
+        style={{
+          ...fadeSpring,
+          position: 'fixed',
+          bottom: 24,
+          right: 24,
+          zIndex: 1000,
+        }}
+      >
         <animated.button
           style={buttonSpring}
           onClick={handleToggle}
           aria-label={t('common.quickActions')}
-          className='w-14 h-14 rounded-full weaver-gradient text-white flex items-center justify-center shadow-[0_4px_20px_rgba(208,188,255,0.4)] hover:shadow-[0_6px_28px_rgba(208,188,255,0.5)] transition-shadow cursor-pointer ml-auto'
+          className='w-14 h-14 rounded-full weaver-gradient text-white flex items-center justify-center shadow-[0_4px_20px_rgba(208,188,255,0.4)] hover:shadow-[0_6px_28px_rgba(208,188,255,0.5)] transition-shadow cursor-pointer'
         >
-          {open ? <X size={24} /> : <Plus size={24} />}
+          {open ? (
+            <X size={24} weight='bold' />
+          ) : (
+            <Plus size={24} weight='bold' />
+          )}
         </animated.button>
       </animated.div>
+
+      {/* Toast notification */}
+      {toast && (
+        <div className='fixed bottom-24 right-24 z-[9999] px-6 py-3 rounded-lg shadow-lg text-sm font-semibold transition-opacity bg-ct-surface-bright text-ct-on-surface border border-ct-outline-variant/10 font-label-grotesk'>
+          {toast}
+        </div>
+      )}
     </>
   );
 };

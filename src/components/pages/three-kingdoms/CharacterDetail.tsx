@@ -1,5 +1,6 @@
-import { X, ArrowRightLeft } from 'lucide-react';
-import { animated, useSpring, to } from '@react-spring/web';
+import { useRef } from 'react';
+import { X, ArrowsLeftRight } from '@phosphor-icons/react';
+import { animated, useSpring } from '@react-spring/web';
 import { PFTypography } from '@components/core';
 import { StatsRadarChart } from './StatsRadarChart';
 import { MultiFormatImage } from './MultiFormatImage';
@@ -10,7 +11,11 @@ import {
 } from '@constants/three-kingdoms';
 import type { ThreeKingdomsCharacter } from '@constants/three-kingdoms';
 import { useThemeMode } from '@contexts/theme-mode';
-import { useRef } from 'react';
+import { cn } from '@utils/core/cn';
+import {
+  SpotlightCard,
+  TextGenerateEffect,
+} from '@components/customs/aceternity';
 
 interface CharacterDetailProps {
   character: ThreeKingdomsCharacter;
@@ -27,18 +32,17 @@ export const CharacterDetail = ({
   const isLight = mode === 'light';
   const km = getKingdomMeta(character.kingdom);
 
-  // Ink Reveal Entry Animation
-  const inkReveal = useSpring({
-    from: { opacity: 0, scale: 0.9, filter: 'blur(20px)', y: 20 },
-    to: { opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 },
-    config: { tension: 120, friction: 20 },
+  const fadeSlide = useSpring({
+    from: { opacity: 0, x: 40 },
+    to: { opacity: 1, x: 0 },
+    config: { tension: 280, friction: 60 },
   });
 
   const avatarSpring = useSpring({
     from: { scale: 0.8, opacity: 0 },
     to: { scale: 1, opacity: 1 },
     delay: 150,
-    config: { duration: 350 },
+    config: { tension: 200, friction: 20 },
   });
 
   // Magnetic Button Effect
@@ -61,165 +65,164 @@ export const CharacterDetail = ({
 
   return (
     <animated.div
-      style={inkReveal}
-      className='flex-1 min-h-0 overflow-auto @container'
+      style={fadeSlide}
+      className='flex-1 min-h-0 overflow-auto py-4 px-2'
     >
-      <div className='rounded-3xl border border-ct-outline-variant/20 overflow-hidden relative shadow-2xl transition-all duration-300 bg-ct-surface-container-lowest/50'>
-        {/* ── Hero banner with background ── */}
-        <div
-          className='relative h-52 @md:h-64 overflow-hidden'
-          style={{
-            background: `linear-gradient(135deg, ${km.color}30 0%, ${
-              isLight ? 'var(--sys-surface-container-low)' : 'var(--sys-bg)'
-            } 60%, ${km.color}15 100%)`,
-          }}
-        >
-          <MultiFormatImage
-            basePath={`/images/three-kingdoms/background/${character.id}`}
-            className='absolute inset-0 w-full h-full object-cover object-center @md:object-[center_20%]'
-          />
+      <SpotlightCard
+        className='w-full border-none bg-transparent'
+        spotlightColor={`${km.color}20`}
+      >
+        <div className='glass-panel rounded-3xl overflow-hidden relative ambient-shadow'>
+          {/* ── Hero banner with background ── */}
+          <div className='relative h-60 md:h-72 overflow-hidden'>
+            <MultiFormatImage
+              basePath={`/images/three-kingdoms/background/${character.id}`}
+              className='absolute inset-0 w-full h-full object-cover object-center md:object-[center_20%]'
+            />
 
-          <div className='absolute inset-0 bg-gradient-to-b from-transparent via-ct-surface-container-lowest/60 to-ct-surface-container-lowest/95' />
+            <div
+              className={cn(
+                'absolute inset-0',
+                isLight
+                  ? 'bg-gradient-to-b from-transparent via-white/40 to-white/95'
+                  : 'bg-gradient-to-b from-transparent via-ct-bg/40 to-ct-bg/95'
+              )}
+            />
 
-          <div
-            className='absolute top-0 left-0 right-0 h-1'
-            style={{
-              background: `linear-gradient(90deg, ${km.color}, ${km.color}80, transparent)`,
-            }}
-          />
-
-          <button
-            onClick={onClose}
-            aria-label='Close detail'
-            className='absolute top-3 right-3 z-10 p-2 rounded-xl backdrop-blur-md transition-all hover:scale-110 active:scale-95 bg-ct-surface-container-lowest/50 text-ct-secondary hover:bg-ct-surface-container-lowest/80'
-          >
-            <X className='w-5 h-5' />
-          </button>
-
-          <div className='absolute bottom-4 left-4 @md:left-7 right-4 @md:right-7 z-10 flex items-end gap-4'>
-            <animated.div style={avatarSpring}>
-              <div
-                className='w-20 h-20 @md:w-24 @md:h-24 rounded-full border-2 overflow-hidden flex-shrink-0 flex items-center justify-center shadow-lg'
-                style={{
-                  borderColor: km.color,
-                  boxShadow: `0 4px 20px ${km.color}40`,
-                  backgroundColor: `${km.color}20`,
-                }}
-              >
-                <MultiFormatImage
-                  basePath={`/images/three-kingdoms/avatar/${character.id}`}
-                  alt={character.name.en}
-                  className='w-full h-full object-cover'
-                  fallback={
-                    <PFTypography
-                      variant='h3'
-                      className='font-extrabold'
-                      style={{ color: km.color }}
-                    >
-                      {character.name.cn.charAt(0)}
-                    </PFTypography>
-                  }
-                />
-              </div>
-            </animated.div>
-
-            <div className='pb-1'>
-              <PFTypography
-                variant='h4'
-                className='font-extrabold tracking-tight'
-                style={{
-                  color: km.color,
-                  textShadow: isLight
-                    ? '0 1px 8px rgba(255,255,255,0.8)'
-                    : '0 1px 8px rgba(0,0,0,0.6)',
-                }}
-              >
-                {character.name.cn}
-              </PFTypography>
-              <PFTypography
-                variant='subtitle1'
-                className='font-medium opacity-90 text-ct-on-surface'
-                style={{
-                  textShadow: isLight
-                    ? '0 1px 4px rgba(255,255,255,0.6)'
-                    : '0 1px 4px rgba(0,0,0,0.5)',
-                }}
-              >
-                {character.name.vi} · {character.name.en}
-              </PFTypography>
-            </div>
-          </div>
-        </div>
-
-        {/* ── Body content ── */}
-        <div className='backdrop-blur-2xl p-6 @md:p-10 pt-4 @md:pt-6 bg-ct-surface-container-lowest/80'>
-          <div className='flex flex-row flex-wrap gap-2 mb-8'>
-            <span
-              className='px-3 py-1 rounded-full text-xs font-bold'
+            <div
+              className='absolute top-0 left-0 right-0 h-1.5'
               style={{
-                backgroundColor: `${km.color}18`,
-                color: km.color,
-                border: `1px solid ${km.color}40`,
+                background: `linear-gradient(90deg, ${km.color}, ${km.color}80, transparent)`,
               }}
+            />
+
+            <animated.button
+              ref={buttonRef}
+              onClick={onClose}
+              onMouseMove={handleMagneticMove}
+              onMouseLeave={resetMagnetic}
+              style={{
+                x: mx,
+                y: my,
+              }}
+              aria-label='Close detail'
+              className='absolute top-4 right-4 z-10 p-2.5 rounded-2xl glass-panel hover:bg-ct-surface-container-highest transition-all duration-300 active:scale-90'
             >
-              {km.name.en} ({km.name.cn})
-            </span>
-            <span className='px-3 py-1 rounded-full text-xs font-medium border border-ct-outline-variant/10 bg-ct-surface-container-low/50'>
-              📍 {character.hometown}
-            </span>
-            <span className='px-3 py-1 rounded-full text-xs font-medium border border-ct-outline-variant/10 bg-ct-surface-container-low/50'>
-              ⚔️ {character.weapon}
-            </span>
+              <X size={20} weight='bold' className='text-ct-on-surface' />
+            </animated.button>
+
+            <div className='absolute bottom-6 left-6 md:left-10 right-6 md:right-10 z-10 flex items-end gap-6'>
+              <animated.div style={avatarSpring}>
+                <div
+                  className='w-24 h-24 md:w-32 md:h-32 rounded-full glass-panel overflow-hidden flex-shrink-0 flex items-center justify-center p-1 primary-glow'
+                  style={{ borderColor: `${km.color}80` }}
+                >
+                  <MultiFormatImage
+                    basePath={`/images/three-kingdoms/avatar/${character.id}`}
+                    alt={character.name.en}
+                    className='w-full h-full rounded-full object-cover'
+                    fallback={
+                      <PFTypography
+                        variant='h2'
+                        className='font-black'
+                        style={{ color: km.color }}
+                      >
+                        {character.name.cn.charAt(0)}
+                      </PFTypography>
+                    }
+                  />
+                </div>
+              </animated.div>
+
+              <div className='pb-2'>
+                <PFTypography
+                  variant='h3'
+                  className='font-serif-display font-black tracking-tight uppercase'
+                  style={{ color: km.color }}
+                >
+                  {character.name.cn}
+                </PFTypography>
+                <PFTypography
+                  variant='subtitle1'
+                  className='font-black text-ct-on-surface-variant uppercase tracking-widest text-xs mt-1'
+                >
+                  {character.name.vi}{' '}
+                  <span className='mx-2 opacity-30'>{'//'}</span>{' '}
+                  {character.name.en}
+                </PFTypography>
+              </div>
+            </div>
           </div>
 
-          <div className='grid grid-cols-1 @lg:grid-cols-2 gap-10 mb-10'>
-            <div className='max-w-xs mx-auto @lg:mx-0'>
-              <StatsRadarChart
-                stats={character.stats}
-                color={km.color}
-                label={character.name.en}
-              />
+          {/* ── Body content ── */}
+          <div className='p-6 md:p-10 pt-8'>
+            <div className='flex flex-row flex-wrap gap-3 mb-10'>
+              <span
+                className='px-4 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-[0.2em] glass-panel'
+                style={{ color: km.color, borderColor: `${km.color}30` }}
+              >
+                {km.name.en}
+              </span>
+              <span className='px-4 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-[0.2em] glass-panel text-ct-secondary border-ct-secondary/20'>
+                📍 {character.hometown}
+              </span>
+              <span className='px-4 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-[0.2em] glass-panel text-ct-secondary border-ct-secondary/20'>
+                ⚔️ {character.weapon}
+              </span>
             </div>
 
-            <div className='flex flex-col gap-4 justify-center'>
-              {STAT_KEYS.map(key => (
-                <StatBar
-                  key={key}
-                  label={STAT_LABELS[key].en}
-                  value={character.stats[key]}
-                  color={km.color}
-                />
-              ))}
+            <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 items-start'>
+              <div className='max-w-sm mx-auto w-full'>
+                <div className='p-6 rounded-3xl border border-ct-outline-variant/10'>
+                  <StatsRadarChart
+                    stats={character.stats}
+                    color={km.color}
+                    label={character.name.en}
+                  />
+                </div>
+              </div>
+
+              <div className='flex flex-col gap-5 w-full'>
+                <h2 className='text-ct-secondary text-[10px] font-black tracking-[0.3em] uppercase mb-2'>
+                  01 // STATISTICAL_ANALYSIS
+                </h2>
+                {STAT_KEYS.map(key => (
+                  <StatBar
+                    key={key}
+                    label={STAT_LABELS[key].en}
+                    value={character.stats[key]}
+                    color={km.color}
+                  />
+                ))}
+
+                <div className='mt-8'>
+                  <h2 className='text-ct-secondary text-[10px] font-black tracking-[0.3em] uppercase mb-4'>
+                    02 // ARCHIVE_BIOGRAPHY
+                  </h2>
+                  <TextGenerateEffect
+                    words={character.bio}
+                    className='text-ct-on-surface-variant leading-relaxed font-medium text-sm'
+                  />
+                </div>
+
+                <div className='mt-8 flex justify-end'>
+                  <button
+                    onClick={() => onCompare(character)}
+                    className='inline-flex items-center gap-3 px-6 py-3 rounded-xl font-black text-xs uppercase tracking-widest transition-all duration-300 hover:scale-105 active:scale-95 group glass-panel border-ct-secondary/30 text-ct-secondary hover:bg-ct-secondary hover:text-ct-on-secondary primary-glow'
+                  >
+                    <ArrowsLeftRight
+                      size={18}
+                      weight='bold'
+                      className='transition-transform group-hover:rotate-180'
+                    />
+                    Initiate Duel Simulation
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-
-          <div className='h-px w-full bg-ct-outline-variant/10 mb-6' />
-
-          <PFTypography
-            variant='body2'
-            className='text-ct-on-surface-variant leading-relaxed mb-10'
-          >
-            {character.bio}
-          </PFTypography>
-
-          <animated.button
-            ref={buttonRef}
-            onClick={() => onCompare(character)}
-            onMouseMove={handleMagneticMove}
-            onMouseLeave={resetMagnetic}
-            style={{
-              transform: to([mx, my], (x, y) => `translate(${x}px, ${y}px)`),
-              color: km.color,
-              borderColor: `${km.color}40`,
-              backgroundColor: `${km.color}05`,
-            }}
-            className='inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition-shadow hover:shadow-lg active:scale-95 group border'
-          >
-            <ArrowRightLeft className='w-4 h-4 transition-transform group-hover:rotate-180' />
-            Compare with another warrior…
-          </animated.button>
         </div>
-      </div>
+      </SpotlightCard>
     </animated.div>
   );
 };
@@ -237,32 +240,29 @@ const StatBar = ({
   const spring = useSpring({
     from: { width: '0%' },
     to: { width: `${value}%` },
-    config: { duration: 800 },
+    config: { tension: 120, friction: 14 },
   });
 
   return (
-    <div className='flex items-center gap-4'>
-      <PFTypography
-        variant='caption'
-        className='w-20 font-bold text-text-secondary text-right uppercase tracking-tighter'
-      >
-        {label}
-      </PFTypography>
-      <div className='flex-grow h-2 rounded-full bg-white/10 overflow-hidden'>
+    <div className='flex flex-col gap-1.5'>
+      <div className='flex justify-between items-center px-1'>
+        <span className='text-[10px] font-black text-ct-on-surface-variant uppercase tracking-widest'>
+          {label}
+        </span>
+        <span className='text-[10px] font-black tabular-nums' style={{ color }}>
+          {value}%
+        </span>
+      </div>
+      <div className='h-1.5 rounded-full bg-ct-surface-container-highest/10 overflow-hidden glass-panel border-none'>
         <animated.div
           style={{
             ...spring,
-            background: `linear-gradient(90deg, ${color}, ${color}AA)`,
+            background: `linear-gradient(90deg, ${color}AA, ${color})`,
+            boxShadow: `0 0 8px ${color}40`,
           }}
           className='h-full rounded-full'
         />
       </div>
-      <PFTypography
-        variant='caption'
-        className='w-8 font-extrabold tabular-nums'
-      >
-        {value}
-      </PFTypography>
     </div>
   );
 };

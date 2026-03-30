@@ -12,3 +12,4 @@ export { HeroParallax, HeroParallaxWithGradients } from './hero-parallax';
 export type { HeroParallaxProduct } from './hero-parallax';
 export { Terminal } from './Terminal';
 export type { TerminalProps } from './Terminal';
+export { ExpandableWorkCard } from './ExpandableWorkCard';

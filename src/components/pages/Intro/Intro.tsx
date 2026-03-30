@@ -9,7 +9,12 @@ import { animated, useSpring, useTrail } from '@react-spring/web';
 import { useTranslation } from 'react-i18next';
 import { APP_PAGES } from '@constants';
 import { useInView } from '@utils/animations/springVariants';
-import { Terminal, ImagesBadge } from '@components/customs/aceternity';
+import {
+  Terminal,
+  ImagesBadge,
+  ExpandableWorkCard,
+} from '@components/customs/aceternity';
+import { ContactDropdown } from '@components/customs/ContactDropdown';
 
 /* Badge images for CTA hover effect */
 const ctaBadgeImages = [
@@ -26,59 +31,18 @@ interface TimelineEntry {
   period: string;
   description: string;
   technologies: string[];
+  domain?: string;
+  teamSize?: string;
+  tools?: string[];
+  achievements?: string[];
 }
-
-const workHistory: TimelineEntry[] = [
-  {
-    company: 'Cymosoft',
-    role: 'Full-Stack Developer',
-    period: 'Sep 2024 — Jan 2025',
-    description:
-      'Developed a full-stack air conditioner rental service platform for the Japanese market, handling subscription management, booking flows, and service scheduling.',
-    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Drizzle ORM'],
-  },
-  {
-    company: 'PTN Global',
-    role: 'Full-Stack Developer',
-    period: 'Mar 2024 — Dec 2024',
-    description:
-      'Built a dynamic learner dashboard for Australian educational institutions, providing 24/7 access to badges, cohort comparisons, and attendance tracking.',
-    technologies: [
-      'ReactJS',
-      'Java',
-      'Micronaut',
-      'TanStack Query',
-      'Storybook',
-    ],
-  },
-  {
-    company: 'PTN Global',
-    role: 'Front-End Developer',
-    period: 'Feb 2023 — Mar 2024',
-    description:
-      'Developed a healthcare platform for an epilepsy research center, focused on managing clinical data, tracking patient conditions, and streamlining health report workflows.',
-    technologies: ['React', 'TypeScript', 'Auth0', 'Jest', 'Material UI'],
-  },
-  {
-    company: 'PTN Global',
-    role: 'Full-Stack Developer',
-    period: 'Dec 2021 — Feb 2023',
-    description:
-      'Built and maintained a logistics and driver safety management system, combining fleet tracking, compliance workflows, and a mobile companion app for drivers.',
-    technologies: ['Java 8', 'Spring Boot', 'Angular', 'Android'],
-  },
-  {
-    company: 'Freelance',
-    role: 'Web Developer',
-    period: 'Jun 2021 — Nov 2021',
-    description:
-      'Delivered custom web solutions for small businesses, including responsive landing pages, e-commerce storefronts, and CMS integrations with a focus on performance and SEO.',
-    technologies: ['HTML/CSS', 'JavaScript', 'WordPress', 'Firebase'],
-  },
-];
 
 export const Intro = () => {
   const { t } = useTranslation();
+  const env = import.meta.env.MODE === 'production' ? 'PROD' : 'DEV';
+  const workHistory = t('intro.workHistory', {
+    returnObjects: true,
+  }) as TimelineEntry[];
 
   /* ─── Scroll & Parallax Setup ─── */
   const containerRef = useRef<HTMLDivElement>(null);
@@ -147,11 +111,15 @@ export const Intro = () => {
   });
 
   return (
-    <section id={APP_PAGES.HOME.toLowerCase()}>
+    <section
+      id={APP_PAGES.HOME.toLowerCase()}
+      className='relative'
+      style={{ overflowX: 'clip' }}
+    >
       {/* 500vh container houses both Hero and Tactical Path */}
       <div ref={containerRef} className='h-[500vh] relative antialiased'>
         {/* Sticky viewport container */}
-        <div className='sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-center [perspective:1000px]'>
+        <div className='sticky top-0 h-screen w-full flex flex-col justify-center [perspective:1000px] overflow-hidden'>
           {/* Topology Grid Background */}
           <div className='absolute inset-0 topology-grid opacity-20 pointer-events-none' />
 
@@ -185,16 +153,16 @@ export const Intro = () => {
               <animated.div style={statusSpring} className='text-center mb-2'>
                 <span className='inline-flex items-center gap-2 px-4 py-1.5 bg-ct-secondary/5 border border-ct-secondary/15 rounded-full text-ct-secondary text-[11px] font-label-grotesk font-bold tracking-[0.2em] uppercase'>
                   <span className='w-1.5 h-1.5 rounded-full bg-ct-secondary animate-pulse' />
-                  Establishing Connection...
+                  {t('intro.establishingConnection')}
                 </span>
               </animated.div>
 
               <animated.div style={headingSpring} className='text-center mb-10'>
-                <h1 className='font-serif-display text-5xl md:text-7xl lg:text-8xl text-ct-secondary tracking-tighter leading-none mb-4'>
+                <h1 className='font-serif-display text-3xl md:text-5xl lg:text-6xl text-ct-secondary tracking-tighter leading-none mb-4'>
                   {'> '}
                   {t('intro.heroTitle')}
                   <br className='hidden md:block' />
-                  <span className='text-ct-on-surface opacity-90 italic'>
+                  <span className='text-ct-on-surface opacity-90 italic text-2xl md:text-4xl lg:text-5xl'>
                     {t('intro.heroTitleAccent')}
                   </span>
                 </h1>
@@ -204,40 +172,37 @@ export const Intro = () => {
               </animated.div>
 
               {/* Terminal HUD */}
-              <animated.div style={ctaSpring} className='w-full'>
+              <animated.div
+                style={ctaSpring}
+                className='w-full hidden md:block'
+              >
                 <Terminal
                   username='kynguyen.dev'
+                  title={t('intro.terminal.header')}
                   enableSound={false}
                   typingSpeed={40}
                   delayBetweenCommands={600}
                   initialDelay={1200}
                   commands={[
-                    'whoami',
-                    'cat skills.txt',
-                    'curl -s https://status.kynguyen.dev/ping',
+                    t('intro.terminal.command1'),
+                    t('intro.terminal.command2'),
+                    t('intro.terminal.command3'),
+                    t('intro.terminal.command4'),
                   ]}
                   outputs={{
-                    0: [
-                      '> Ky Nguyen — Full-Stack Developer',
-                      '> Synthesizing Architecture into PURE_LOGIC',
-                      '',
-                      'Strategic full-stack engineer specializing in the',
-                      'intersection of high-performance technical systems',
-                      'and elite aesthetic execution.',
-                    ],
-                    1: [
-                      '╔══════════════════════════════════════╗',
-                      '║  CORE_STACK                          ║',
-                      '╠══════════════════════════════════════╣',
-                      '║  React · TypeScript · Next.js        ║',
-                      '║  Java · Spring Boot · TanStack       ║',
-                      '║  Tailwind CSS · Storybook · Vite     ║',
-                      '╚══════════════════════════════════════╝',
-                    ],
-                    2: [
-                      '{ "status": "ONLINE", "latency": "12ms" }',
-                      '✓ All systems operational.',
-                    ],
+                    0: t('intro.terminal.output1', {
+                      returnObjects: true,
+                    }) as string[],
+                    1: t('intro.terminal.output2', {
+                      returnObjects: true,
+                    }) as string[],
+                    2: t('intro.terminal.output3', {
+                      returnObjects: true,
+                    }) as string[],
+                    3: t('intro.terminal.output4', {
+                      env,
+                      returnObjects: true,
+                    }) as string[],
                   }}
                   className='max-w-4xl'
                 />
@@ -248,27 +213,34 @@ export const Intro = () => {
                 style={ctaSpring}
                 className='mt-10 flex flex-col md:flex-row items-center justify-center gap-6'
               >
-                <ImagesBadge
-                  images={ctaBadgeImages}
-                  href='#contact'
-                  hoverSpread={28}
-                  hoverRotation={14}
-                  hoverTranslateY={-35}
-                  imageSize={34}
-                  className='group relative px-8 py-4 bg-primary-main text-ct-on-primary font-bold rounded-lg overflow-hidden transition-all active:scale-95 shadow-[0_0_20px_rgba(208,188,255,0.3)] inline-flex items-center gap-2'
-                >
-                  {t('nav.initContact')}
-                </ImagesBadge>
+                <ContactDropdown>
+                  <ImagesBadge
+                    images={ctaBadgeImages}
+                    hoverSpread={28}
+                    hoverRotation={14}
+                    hoverTranslateY={-35}
+                    imageSize={34}
+                    className='group relative px-8 py-4 bg-primary-main text-ct-on-primary font-bold rounded-lg overflow-hidden transition-all active:scale-95 shadow-[0_0_20px_rgba(208,188,255,0.3)] inline-flex items-center gap-2'
+                  >
+                    {t('nav.initContact')}
+                  </ImagesBadge>
+                </ContactDropdown>
                 <ImagesBadge
                   images={ctaBadgeImages.slice(0, 3)}
-                  href='#projects'
+                  onClick={() =>
+                    window.open(
+                      '/resume/FULL_STACK_DEVELOPER_NGUYEN_TRUONG_KY_CV.pdf',
+                      '_blank',
+                      'noopener,noreferrer'
+                    )
+                  }
                   hoverSpread={22}
                   hoverRotation={10}
                   hoverTranslateY={-30}
                   imageSize={30}
                   className='px-8 py-4 border border-ct-secondary/30 text-ct-secondary font-bold rounded-lg hover:bg-ct-secondary/5 transition-all inline-flex items-center gap-2'
                 >
-                  VIEW_MANIFESTO
+                  {t('intro.downloadCV')}
                 </ImagesBadge>
               </animated.div>
             </div>
@@ -292,137 +264,92 @@ export const Intro = () => {
               className='absolute top-24 left-8 lg:left-16 z-20 pointer-events-none'
             >
               <h2 className='text-ct-secondary font-label-grotesk text-xs font-black tracking-[0.3em] uppercase mb-2'>
-                01 {'// '}THE_EVOLUTION
+                01 {'// '}
+                {t('workExperience.sectionTitle')}
               </h2>
               <h3 className='font-serif-display text-4xl md:text-5xl text-ct-on-surface'>
-                TACTICAL_PATH
+                {t('nav.tacticalPath').toUpperCase().replace(' ', '_')}
               </h3>
             </motion.div>
 
-            {/* Horizontal Scrolling Grid */}
-            <motion.div
-              style={{ x, width: `${totalPages * 100}vw` }}
-              className='relative flex items-center h-full mt-16 pointer-events-auto'
-            >
-              {/* S-Curve Tracing Beam — one cycle per viewport */}
-              {(() => {
-                const segW = 1000 / totalPages;
-                let d = '';
-                for (let p = 0; p < totalPages; p++) {
-                  const x0 = p * segW;
-                  const x1 = (p + 1) * segW;
-                  const goingDown = p % 2 === 0;
-                  const y0 = goingDown ? 50 : 350;
-                  const y1 = goingDown ? 350 : 50;
-                  if (p === 0) d += `M${x0},${y0}`;
-                  d += ` C${x0 + segW * 0.35},${y0} ${x0 + segW * 0.65},${y1} ${x1},${y1}`;
-                }
-                return (
-                  <svg
-                    className='absolute top-1/2 left-0 w-full h-[500px] -translate-y-1/2 pointer-events-none z-0'
-                    preserveAspectRatio='none'
-                    viewBox='0 0 1000 400'
-                  >
-                    <path
-                      className='opacity-40'
-                      d={d}
-                      fill='none'
-                      stroke='#4edea3'
-                      strokeWidth='2'
-                      strokeDasharray='8 4'
-                      style={{ animation: 'pulse-beam 3s infinite linear' }}
-                    />
-                    <path
-                      className='opacity-70'
-                      d={d}
-                      fill='none'
-                      stroke='#4edea3'
-                      strokeWidth='0.8'
-                    />
-                    <path
-                      className='opacity-10'
-                      d={d}
-                      fill='none'
-                      stroke='#4edea3'
-                      strokeWidth='8'
-                      filter='blur(4px)'
-                    />
-                  </svg>
-                );
-              })()}
+            {/* Horizontal Scrolling Grid Wrapper */}
+            <div className='relative w-full h-full overflow-x-clip pointer-events-none'>
+              <motion.div
+                style={{ x, width: `${totalPages * 100}%` }}
+                className='relative flex items-center h-full mt-16 pointer-events-auto'
+              >
+                {/* S-Curve Tracing Beam — one cycle per viewport */}
+                {(() => {
+                  const segW = 1000 / totalPages;
+                  let d = '';
+                  for (let p = 0; p < totalPages; p++) {
+                    const x0 = p * segW;
+                    const x1 = (p + 1) * segW;
+                    const goingDown = p % 2 === 0;
+                    const y0 = goingDown ? 50 : 350;
+                    const y1 = goingDown ? 350 : 50;
+                    if (p === 0) d += `M${x0},${y0}`;
+                    d += ` C${x0 + segW * 0.35},${y0} ${x0 + segW * 0.65},${y1} ${x1},${y1}`;
+                  }
+                  return (
+                    <svg
+                      className='absolute top-1/2 left-0 w-full h-[500px] -translate-y-1/2 pointer-events-none z-0'
+                      preserveAspectRatio='none'
+                      viewBox='0 0 1000 400'
+                    >
+                      <path
+                        className='opacity-40'
+                        d={d}
+                        fill='none'
+                        stroke='#4edea3'
+                        strokeWidth='2'
+                        strokeDasharray='8 4'
+                        style={{ animation: 'pulse-beam 3s infinite linear' }}
+                      />
+                      <path
+                        className='opacity-70'
+                        d={d}
+                        fill='none'
+                        stroke='#4edea3'
+                        strokeWidth='0.8'
+                      />
+                      <path
+                        className='opacity-10'
+                        d={d}
+                        fill='none'
+                        stroke='#4edea3'
+                        strokeWidth='8'
+                        filter='blur(4px)'
+                      />
+                    </svg>
+                  );
+                })()}
 
-              {/* History Cards — dynamic pages, 2 cards each */}
-              {Array.from({ length: totalPages }, (_, pageIdx) => {
-                const startIdx = pageIdx * 2;
-                const pageEntries = workHistory.slice(startIdx, startIdx + 2);
-                const goingDown = pageIdx % 2 === 0;
-                return (
-                  <div
-                    key={pageIdx}
-                    className='w-screen shrink-0 flex items-center justify-evenly h-full px-8 lg:px-16'
-                  >
-                    {pageEntries.map((entry, i) => {
-                      const globalIdx = startIdx + i;
-                      // Card position within the page curve (0 = start, 1 = end)
-                      const t =
-                        pageEntries.length > 1
-                          ? i / (pageEntries.length - 1)
-                          : 0.5;
-                      // Follow the S-curve: goingDown → first card high, second card low
-                      const yOffset = goingDown
-                        ? -100 + t * 200 // −100 → +100
-                        : 100 - t * 200; // +100 → −100
-                      return (
-                        <div
-                          key={`${entry.company}-${entry.period}`}
-                          className='w-[85vw] md:w-[60vw] lg:w-[600px] xl:w-[720px] 2xl:w-[840px] shrink-0 relative z-10'
-                          style={{ transform: `translateY(${yOffset}px)` }}
-                        >
-                          <div
-                            className='glass-panel p-6 md:p-10 lg:p-14 rounded-2xl md:rounded-3xl border-2 border-primary-main/40 shadow-[0_0_30px_rgba(208,188,255,0.15)] relative overflow-hidden hover:border-primary-main/80 transition-all duration-500 group'
-                            style={{
-                              animation: `float 6s ease-in-out infinite${
-                                globalIdx % 2 !== 0 ? ' -3s' : ''
-                              }`,
-                            }}
-                          >
-                            <div
-                              className={`absolute ${
-                                globalIdx % 2 === 0
-                                  ? '-top-10 -right-10'
-                                  : '-bottom-10 -left-10'
-                              } w-24 h-24 md:w-32 md:h-32 bg-primary-main/10 rounded-full blur-3xl group-hover:bg-primary-main/20 transition-all`}
-                            />
-                            <div className='text-ct-secondary font-label-grotesk text-xs md:text-sm lg:text-base mb-3 md:mb-5 tracking-widest'>
-                              [ {entry.period.toUpperCase()} ]
-                            </div>
-                            <h4 className='text-2xl md:text-3xl lg:text-4xl font-bold text-ct-on-surface mb-2 md:mb-4 tracking-tight'>
-                              {entry.role}
-                            </h4>
-                            <div className='text-[10px] md:text-xs text-ct-outline uppercase tracking-widest mb-3 md:mb-5'>
-                              {entry.company}
-                            </div>
-                            <p className='text-ct-on-surface-variant text-sm md:text-base lg:text-lg leading-relaxed mb-6 md:mb-10'>
-                              {entry.description}
-                            </p>
-                            <div className='flex flex-wrap gap-2'>
-                              {entry.technologies.map(tech => (
-                                <span
-                                  key={tech}
-                                  className='px-2 py-1 md:px-3 md:py-1.5 bg-ct-surface-container text-primary-main text-[10px] md:text-xs font-bold rounded border border-primary-main/20'
-                                >
-                                  {tech}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                );
-              })}
-            </motion.div>
+                {/* History Cards — dynamic pages, 2 cards each */}
+                {Array.from({ length: totalPages }, (_, pageIdx) => {
+                  const startIdx = pageIdx * 2;
+                  const pageEntries = workHistory.slice(startIdx, startIdx + 2);
+                  return (
+                    <div
+                      key={pageIdx}
+                      className='shrink-0 flex items-center justify-evenly h-full px-8 lg:px-16'
+                      style={{ width: `${100 / totalPages}%` }}
+                    >
+                      {pageEntries.map((entry, i) => {
+                        const globalIdx = startIdx + i;
+                        return (
+                          <ExpandableWorkCard
+                            key={`${entry.company}-${entry.period}`}
+                            entry={entry}
+                            index={globalIdx}
+                          />
+                        );
+                      })}
+                    </div>
+                  );
+                })}
+              </motion.div>
+            </div>
           </motion.div>
         </div>
       </div>
@@ -439,11 +366,7 @@ export const Intro = () => {
         >
           <div className='mb-4 md:mb-0 text-left'>
             <h4 className='font-black text-2xl tracking-tighter leading-tight'>
-              PRECISION
-              <br />
-              OVER
-              <br />
-              POLISH.
+              {t('intro.precisionOverPolish')}
             </h4>
           </div>
           <span className='text-4xl opacity-50 hidden md:block'>✦</span>
@@ -456,11 +379,11 @@ export const Intro = () => {
         >
           <div className='absolute -top-10 -right-10 w-32 h-32 bg-ct-secondary/5 rounded-full blur-3xl group-hover:bg-ct-secondary/10 transition-all' />
           <div className='relative z-10'>
-            <div className='text-5xl font-serif-display italic mb-2 text-ct-secondary'>
+            <div className='font-serif-display text-5xl italic mb-2 text-ct-secondary'>
               {workHistory.length}+
             </div>
             <div className='text-xs text-ct-outline uppercase tracking-widest font-label-grotesk font-black'>
-              Successful Missions
+              {t('intro.successfulMissions')}
             </div>
           </div>
         </animated.div>

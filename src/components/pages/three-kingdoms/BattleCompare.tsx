@@ -1,4 +1,4 @@
-import { ArrowLeft, LayoutList } from 'lucide-react';
+import { CaretLeft, ListBullets } from '@phosphor-icons/react';
 import { animated, useSpring } from '@react-spring/web';
 import { PFTypography } from '@components/core';
 import { StatsRadarChart } from './StatsRadarChart';
@@ -11,6 +11,7 @@ import {
 import type { ThreeKingdomsCharacter } from '@constants/three-kingdoms';
 import { useThemeMode } from '@contexts/theme-mode';
 import { cn } from '@utils/core/cn';
+import { SpotlightCard } from '@components/customs/aceternity';
 
 interface BattleCompareProps {
   fighter1: ThreeKingdomsCharacter;
@@ -35,7 +36,7 @@ const AnimatedBar = ({
   const spring = useSpring({
     from: { width: '0%' },
     to: { width: `${(value / max) * 100}%` },
-    config: { duration: 800 },
+    config: { tension: 120, friction: 14 },
   });
 
   return (
@@ -76,53 +77,51 @@ export const BattleCompare = ({
   const enterSpring = useSpring({
     from: { opacity: 0, y: 20 },
     to: { opacity: 1, y: 0 },
-    config: { duration: 400 },
+    config: { tension: 280, friction: 60 },
   });
 
   const avatar1Spring = useSpring({
     from: { scale: 0.7, opacity: 0, x: -30 },
     to: { scale: 1, opacity: 1, x: 0 },
     delay: 100,
-    config: { duration: 400 },
+    config: { tension: 200, friction: 20 },
   });
 
   const avatar2Spring = useSpring({
     from: { scale: 0.7, opacity: 0, x: 30 },
     to: { scale: 1, opacity: 1, x: 0 },
     delay: 150,
-    config: { duration: 400 },
+    config: { tension: 200, friction: 20 },
   });
 
   const vsSpring = useSpring({
     from: { scale: 0, rotate: -20 },
     to: { scale: 1, rotate: 0 },
     delay: 250,
-    config: { tension: 200, friction: 15 },
+    config: { tension: 300, friction: 15 },
   });
 
   const renderAvatar = (
     fighter: ThreeKingdomsCharacter,
     km: ReturnType<typeof getKingdomMeta>,
-    size: { xs: number; md: number }
+    size: number
   ) => (
     <div
-      className='rounded-full border-[3px] overflow-hidden flex items-center justify-center flex-shrink-0'
+      className='rounded-full glass-panel overflow-hidden flex items-center justify-center flex-shrink-0 p-1 primary-glow transition-all duration-500 hover:scale-110'
       style={{
-        width: size.md,
-        height: size.md,
-        borderColor: km.color,
-        boxShadow: `0 2px 16px ${km.color}50`,
-        backgroundColor: `${km.color}20`,
+        width: size,
+        height: size,
+        borderColor: `${km.color}80`,
       }}
     >
       <MultiFormatImage
         basePath={`/images/three-kingdoms/avatar/${fighter.id}`}
         alt={fighter.name.en}
-        className='w-full h-full object-cover'
+        className='w-full h-full rounded-full object-cover'
         fallback={
           <PFTypography
             variant='h4'
-            className='font-extrabold leading-none'
+            className='font-black'
             style={{ color: km.color }}
           >
             {fighter.name.cn.charAt(0)}
@@ -133,313 +132,257 @@ export const BattleCompare = ({
   );
 
   return (
-    <animated.div style={enterSpring} className='flex-1 min-h-0 overflow-auto'>
-      <div
-        className={cn(
-          'rounded-3xl overflow-hidden relative border transition-all duration-300',
-          isLight
-            ? 'border-primary-main/20 shadow-xl'
-            : 'border-primary-main/20 shadow-black/40'
-        )}
-      >
-        {/* ── Full-height split background images ── */}
-        <div className='absolute inset-0 flex z-0'>
-          <div className='flex-1 relative overflow-hidden'>
-            <div
-              className='absolute inset-0 z-10'
-              style={{
-                background: `linear-gradient(135deg, ${km1.color}20 0%, transparent 100%)`,
-              }}
-            />
-            <MultiFormatImage
-              basePath={`/images/three-kingdoms/background/${fighter1.id}`}
-              className='absolute inset-0 w-full h-full object-cover object-center md:object-[center_20%]'
-            />
-            <div
-              className={cn(
-                'absolute inset-0 z-20',
-                isLight
-                  ? 'bg-gradient-to-r from-white/15 via-white/70 to-white/95'
-                  : 'bg-gradient-to-r from-background-default/20 via-background-default/70 to-background-default/95'
-              )}
-            />
-            <div
-              className='absolute top-0 left-0 right-0 h-1 z-30'
-              style={{ background: km1.color }}
-            />
-          </div>
-          <div
-            className={cn(
-              'w-0.5 z-30',
-              'bg-gradient-to-b from-primary-main/30 to-transparent'
-            )}
-          />
-          <div className='flex-1 relative overflow-hidden'>
-            <div
-              className='absolute inset-0 z-10'
-              style={{
-                background: `linear-gradient(225deg, ${km2.color}20 0%, transparent 100%)`,
-              }}
-            />
-            <MultiFormatImage
-              basePath={`/images/three-kingdoms/background/${fighter2.id}`}
-              className='absolute inset-0 w-full h-full object-cover object-center md:object-[center_20%]'
-            />
-            <div
-              className={cn(
-                'absolute inset-0 z-20',
-                isLight
-                  ? 'bg-gradient-to-l from-white/15 via-white/70 to-white/95'
-                  : 'bg-gradient-to-l from-background-default/20 via-background-default/70 to-background-default/95'
-              )}
-            />
-            <div
-              className='absolute top-0 left-0 right-0 h-1 z-30'
-              style={{ background: km2.color }}
-            />
-          </div>
-        </div>
-
-        {/* ── Foreground content ── */}
-        <div className='relative z-40 p-6 md:p-10'>
-          <div className='flex items-center justify-center gap-4 md:gap-12 mb-10'>
-            <div className='flex flex-col items-center gap-2'>
-              <animated.div style={avatar1Spring}>
-                {renderAvatar(fighter1, km1, { xs: 64, md: 80 })}
-              </animated.div>
-              <PFTypography
-                variant='h5'
-                className='font-black'
+    <animated.div
+      style={enterSpring}
+      className='flex-1 min-h-0 overflow-auto py-4 px-2'
+    >
+      <SpotlightCard className='w-full border-none bg-transparent'>
+        <div className='glass-panel rounded-3xl overflow-hidden relative ambient-shadow'>
+          {/* ── Full-height split background images ── */}
+          <div className='absolute inset-0 flex z-0'>
+            <div className='flex-1 relative overflow-hidden'>
+              <div
+                className='absolute inset-0 z-10'
                 style={{
-                  color: km1.color,
-                  textShadow: isLight
-                    ? '0 1px 8px rgba(255,255,255,0.9)'
-                    : '0 1px 8px rgba(0,0,0,0.7)',
+                  background: `linear-gradient(135deg, ${km1.color}20 0%, transparent 100%)`,
                 }}
-              >
-                {fighter1.name.cn}
-              </PFTypography>
-              <PFTypography
-                variant='caption'
+              />
+              <MultiFormatImage
+                basePath={`/images/three-kingdoms/background/${fighter1.id}`}
+                className='absolute inset-0 w-full h-full object-cover object-center md:object-[center_20%]'
+              />
+              <div
                 className={cn(
-                  'font-medium opacity-80',
-                  isLight ? 'text-text-primary' : 'text-[#d4c9b8]'
+                  'absolute inset-0 z-20',
+                  isLight
+                    ? 'bg-gradient-to-r from-white/10 via-white/60 to-white/95'
+                    : 'bg-gradient-to-r from-ct-bg/10 via-ct-bg/60 to-ct-bg/95'
                 )}
-                style={{
-                  textShadow: isLight
-                    ? '0 1px 4px rgba(255,255,255,0.7)'
-                    : '0 1px 4px rgba(0,0,0,0.5)',
-                }}
-              >
-                {fighter1.name.vi} · {fighter1.name.en}
-              </PFTypography>
+              />
             </div>
-
-            <animated.div
-              style={vsSpring}
-              className={cn(
-                'w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center backdrop-blur-xl border-2 shadow-2xl z-50',
-                isLight
-                  ? 'bg-white/90 border-primary-main/40 shadow-black/10'
-                  : 'bg-background-default/85 border-primary-main/40 shadow-black/50'
-              )}
-            >
-              <PFTypography
-                variant='h6'
-                className='font-black'
+            <div className='w-px z-30 bg-ct-secondary/20 shadow-[0_0_15px_rgba(78,222,163,0.3)]' />
+            <div className='flex-1 relative overflow-hidden'>
+              <div
+                className='absolute inset-0 z-10'
                 style={{
-                  backgroundImage: `linear-gradient(135deg, ${km1.color}, ${km2.color})`,
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
+                  background: `linear-gradient(225deg, ${km2.color}20 0%, transparent 100%)`,
                 }}
-              >
-                VS
-              </PFTypography>
-            </animated.div>
-
-            <div className='flex flex-col items-center gap-2'>
-              <animated.div style={avatar2Spring}>
-                {renderAvatar(fighter2, km2, { xs: 64, md: 80 })}
-              </animated.div>
-              <PFTypography
-                variant='h5'
-                className='font-black'
-                style={{
-                  color: km2.color,
-                  textShadow: isLight
-                    ? '0 1px 8px rgba(255,255,255,0.9)'
-                    : '0 1px 8px rgba(0,0,0,0.7)',
-                }}
-              >
-                {fighter2.name.cn}
-              </PFTypography>
-              <PFTypography
-                variant='caption'
+              />
+              <MultiFormatImage
+                basePath={`/images/three-kingdoms/background/${fighter2.id}`}
+                className='absolute inset-0 w-full h-full object-cover object-center md:object-[center_20%]'
+              />
+              <div
                 className={cn(
-                  'font-medium opacity-80',
-                  isLight ? 'text-text-primary' : 'text-[#d4c9b8]'
+                  'absolute inset-0 z-20',
+                  isLight
+                    ? 'bg-gradient-to-l from-white/10 via-white/60 to-white/95'
+                    : 'bg-gradient-to-l from-ct-bg/10 via-ct-bg/60 to-ct-bg/95'
                 )}
-                style={{
-                  textShadow: isLight
-                    ? '0 1px 4px rgba(255,255,255,0.7)'
-                    : '0 1px 4px rgba(0,0,0,0.5)',
-                }}
-              >
-                {fighter2.name.vi} · {fighter2.name.en}
-              </PFTypography>
+              />
             </div>
           </div>
 
-          {/* Radar chart */}
-          <div className='max-w-sm mx-auto mb-10'>
-            <StatsRadarChart
-              stats={fighter1.stats}
-              color={km1.color}
-              label={fighter1.name.en}
-              compareStats={fighter2.stats}
-              compareColor={km2.color}
-              compareLabel={fighter2.name.en}
-            />
-          </div>
+          {/* ── Foreground content ── */}
+          <div className='relative z-40 p-6 md:p-10'>
+            <div className='flex items-center justify-center gap-4 md:gap-16 mb-12'>
+              <div className='flex flex-col items-center gap-3'>
+                <animated.div style={avatar1Spring}>
+                  {renderAvatar(fighter1, km1, 96)}
+                </animated.div>
+                <PFTypography
+                  variant='h4'
+                  className='font-serif-display font-black uppercase tracking-tight'
+                  style={{ color: km1.color }}
+                >
+                  {fighter1.name.cn}
+                </PFTypography>
+                <span className='hud-label text-[10px] opacity-60'>
+                  {fighter1.name.en}
+                </span>
+              </div>
 
-          {/* Stat bars */}
-          <div className='flex flex-col gap-6 mb-10'>
-            {STAT_KEYS.map(key => {
-              const v1 = fighter1.stats[key];
-              const v2 = fighter2.stats[key];
-              const max = Math.max(v1, v2);
-              return (
-                <div key={key} className='flex flex-col gap-1.5'>
-                  <div className='flex justify-between items-center px-1'>
-                    <PFTypography
-                      variant='caption'
-                      className='font-black tabular-nums'
-                      style={{
-                        color: v1 > v2 ? km1.color : 'inherit',
-                        opacity: v1 > v2 ? 1 : 0.6,
-                      }}
-                    >
-                      {v1}
-                    </PFTypography>
-                    <PFTypography
-                      variant='caption'
-                      className='font-bold uppercase tracking-tighter opacity-70'
-                    >
-                      {STAT_LABELS[key].en}
-                    </PFTypography>
-                    <PFTypography
-                      variant='caption'
-                      className='font-black tabular-nums'
-                      style={{
-                        color: v2 > v1 ? km2.color : 'inherit',
-                        opacity: v2 > v1 ? 1 : 0.6,
-                      }}
-                    >
-                      {v2}
-                    </PFTypography>
-                  </div>
-                  <div className='flex gap-1 h-2'>
-                    <div className='flex-1 flex justify-end bg-white/5 rounded-l-full overflow-hidden'>
-                      <AnimatedBar
-                        value={v1}
-                        max={max}
-                        color={km1.color}
-                        isWinner={v1 >= v2}
-                        direction='left'
-                      />
-                    </div>
-                    <div className='flex-1 bg-white/5 rounded-r-full overflow-hidden'>
-                      <AnimatedBar
-                        value={v2}
-                        max={max}
-                        color={km2.color}
-                        isWinner={v2 >= v1}
-                        direction='right'
-                      />
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          <div className='h-px w-full bg-white/10 mb-8' />
-
-          {/* Verdict */}
-          <div
-            className={cn(
-              'p-6 rounded-2xl text-center backdrop-blur-xl border transition-all duration-500',
-              isLight
-                ? 'bg-white/85 border-primary-main/15'
-                : 'bg-background-default/70 border-primary-main/15'
-            )}
-          >
-            <PFTypography
-              variant='subtitle2'
-              className='font-black uppercase tracking-widest text-primary-main mb-2'
-            >
-              ⚖️ Battle Verdict
-            </PFTypography>
-            <PFTypography
-              variant='body2'
-              className='text-text-secondary leading-relaxed font-medium'
-            >
-              <span className='font-bold' style={{ color: km1.color }}>
-                {fighter1.name.en}
-              </span>
-              {' wins '}
-              <span className='font-black'>{wins1}</span>
-              {' / 5 stats, '}
-              <span className='font-bold' style={{ color: km2.color }}>
-                {fighter2.name.en}
-              </span>
-              {' wins '}
-              <span className='font-black'>{wins2}</span>
-              {' / 5 stats. '}
-              <br className='hidden md:block' />
-              Total Potential: <span className='font-black'>
-                {total1}
-              </span> vs <span className='font-black'>{total2}</span>.
-              {total1 > total2
-                ? ` ${fighter1.name.cn} has the overall edge! 🏆`
-                : total2 > total1
-                  ? ` ${fighter2.name.cn} has the overall edge! 🏆`
-                  : " It's a dead even match! ⚔️"}
-            </PFTypography>
-          </div>
-
-          <div className='flex flex-wrap gap-4 mt-10'>
-            {onBackToDetail && (
-              <button
-                onClick={() => onBackToDetail(fighter1)}
-                className={cn(
-                  'inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm backdrop-blur-md border transition-all hover:scale-105 active:scale-95',
-                  isLight
-                    ? 'bg-white/80 border-primary-main/20 text-primary-dark'
-                    : 'bg-background-default/60 border-primary-main/20 text-primary-light'
-                )}
-                style={{ color: km1.color, borderColor: `${km1.color}40` }}
+              <animated.div
+                style={vsSpring}
+                className='w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center glass-elevated border-ct-secondary/40 shadow-2xl z-50 primary-glow'
               >
-                <ArrowLeft className='w-4 h-4' /> Back to {fighter1.name.en}
-              </button>
-            )}
-            {onBackToBrowse && (
-              <button
-                onClick={onBackToBrowse}
-                className={cn(
-                  'inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm backdrop-blur-md border transition-all hover:scale-105 active:scale-95',
-                  isLight
-                    ? 'bg-white/80 border-primary-main/20 text-primary-dark'
-                    : 'bg-background-default/60 border-primary-main/20 text-primary-light'
-                )}
+                <PFTypography
+                  variant='h6'
+                  className='font-black'
+                  style={{
+                    backgroundImage: `linear-gradient(135deg, ${km1.color}, ${km2.color})`,
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                  }}
+                >
+                  VS
+                </PFTypography>
+              </animated.div>
+
+              <div className='flex flex-col items-center gap-3'>
+                <animated.div style={avatar2Spring}>
+                  {renderAvatar(fighter2, km2, 96)}
+                </animated.div>
+                <PFTypography
+                  variant='h4'
+                  className='font-serif-display font-black uppercase tracking-tight'
+                  style={{ color: km2.color }}
+                >
+                  {fighter2.name.cn}
+                </PFTypography>
+                <span className='hud-label text-[10px] opacity-60'>
+                  {fighter2.name.en}
+                </span>
+              </div>
+            </div>
+
+            <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-12'>
+              {/* Radar chart */}
+              <div className='max-w-sm mx-auto w-full p-8 rounded-3xl border border-ct-outline-variant/10'>
+                <StatsRadarChart
+                  stats={fighter1.stats}
+                  color={km1.color}
+                  label={fighter1.name.en}
+                  compareStats={fighter2.stats}
+                  compareColor={km2.color}
+                  compareLabel={fighter2.name.en}
+                />
+              </div>
+
+              {/* Stat bars */}
+              <div className='flex flex-col gap-6 w-full'>
+                <h2 className='text-ct-secondary text-[10px] font-black tracking-[0.3em] uppercase mb-2'>
+                  COMPARATIVE_METRICS
+                </h2>
+                {STAT_KEYS.map(key => {
+                  const v1 = fighter1.stats[key];
+                  const v2 = fighter2.stats[key];
+                  const max = Math.max(v1, v2, 1);
+                  return (
+                    <div key={key} className='flex flex-col gap-2'>
+                      <div className='flex justify-between items-center px-1'>
+                        <span
+                          className='text-xs font-black tabular-nums'
+                          style={{
+                            color: v1 > v2 ? km1.color : 'inherit',
+                            opacity: v1 > v2 ? 1 : 0.4,
+                          }}
+                        >
+                          {v1}
+                        </span>
+                        <span className='text-[10px] font-black uppercase tracking-widest text-ct-on-surface-variant'>
+                          {STAT_LABELS[key].en}
+                        </span>
+                        <span
+                          className='text-xs font-black tabular-nums'
+                          style={{
+                            color: v2 > v1 ? km2.color : 'inherit',
+                            opacity: v2 > v1 ? 1 : 0.4,
+                          }}
+                        >
+                          {v2}
+                        </span>
+                      </div>
+                      <div className='flex gap-2 h-2'>
+                        <div className='flex-1 flex justify-end bg-ct-surface-container-highest/10 rounded-l-full overflow-hidden glass-panel border-none'>
+                          <AnimatedBar
+                            value={v1}
+                            max={max}
+                            color={km1.color}
+                            isWinner={v1 >= v2}
+                            direction='left'
+                          />
+                        </div>
+                        <div className='flex-1 bg-ct-surface-container-highest/10 rounded-r-full overflow-hidden glass-panel border-none'>
+                          <AnimatedBar
+                            value={v2}
+                            max={max}
+                            color={km2.color}
+                            isWinner={v2 >= v1}
+                            direction='right'
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Verdict */}
+            <div className='glass-panel p-8 rounded-3xl text-center border-ct-secondary/20 relative overflow-hidden'>
+              <div className='absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-ct-secondary to-transparent opacity-30' />
+              <PFTypography
+                variant='subtitle2'
+                className='font-black uppercase tracking-[0.3em] text-ct-secondary mb-4'
               >
-                <LayoutList className='w-4 h-4' /> Browse All
-              </button>
-            )}
+                ⚖️ DUEL_VERDICT
+              </PFTypography>
+              <PFTypography
+                variant='body1'
+                className='text-ct-on-surface-variant leading-relaxed font-medium max-w-2xl mx-auto'
+              >
+                <span
+                  className='font-black uppercase tracking-wider'
+                  style={{ color: km1.color }}
+                >
+                  {fighter1.name.en}
+                </span>
+                {' secured '}
+                <span className='text-ct-on-surface font-black px-2 py-0.5 glass-panel rounded-md mx-1'>
+                  {wins1}
+                </span>
+                {' victories, while '}
+                <span
+                  className='font-black uppercase tracking-wider'
+                  style={{ color: km2.color }}
+                >
+                  {fighter2.name.en}
+                </span>
+                {' dominated '}
+                <span className='text-ct-on-surface font-black px-2 py-0.5 glass-panel rounded-md mx-1'>
+                  {wins2}
+                </span>
+                {' metrics. '}
+                <br className='hidden md:block mt-4' />
+                Total Potential Output:{' '}
+                <span className='font-black text-ct-on-surface'>
+                  {total1}
+                </span>{' '}
+                vs{' '}
+                <span className='font-black text-ct-on-surface'>{total2}</span>.
+                <span className='block mt-4 text-ct-secondary font-black uppercase tracking-widest text-lg'>
+                  {total1 > total2
+                    ? `> ${fighter1.name.cn} maintains strategic superiority!`
+                    : total2 > total1
+                      ? `> ${fighter2.name.cn} maintains strategic superiority!`
+                      : '> Equilibrium achieved in battle archives.'}
+                </span>
+              </PFTypography>
+            </div>
+
+            <div className='flex flex-wrap justify-center gap-6 mt-12'>
+              {onBackToDetail && (
+                <button
+                  onClick={() => onBackToDetail(fighter1)}
+                  className='inline-flex items-center gap-3 px-6 py-3 rounded-xl font-black text-xs uppercase tracking-widest glass-panel border-ct-secondary/20 text-ct-on-surface hover:bg-ct-surface-container-highest transition-all duration-300 active:scale-95'
+                >
+                  <CaretLeft size={18} weight='bold' /> Back to Profile
+                </button>
+              )}
+              {onBackToBrowse && (
+                <button
+                  onClick={onBackToBrowse}
+                  className='inline-flex items-center gap-3 px-6 py-3 rounded-xl font-black text-xs uppercase tracking-widest glass-panel border-ct-secondary/20 text-ct-on-surface hover:bg-ct-surface-container-highest transition-all duration-300 active:scale-95'
+                >
+                  <ListBullets size={18} weight='bold' /> Return to Archives
+                </button>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      </SpotlightCard>
     </animated.div>
   );
 };

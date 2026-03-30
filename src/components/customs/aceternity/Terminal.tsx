@@ -277,6 +277,7 @@ export interface TerminalProps {
   commands: string[];
   outputs?: Record<number, string[]>;
   username?: string;
+  title?: string;
   className?: string;
   typingSpeed?: number;
   delayBetweenCommands?: number;
@@ -288,6 +289,7 @@ export function Terminal({
   commands = ['npx shadcn@latest init'],
   outputs = {},
   username = 'user',
+  title,
   className,
   typingSpeed = 50,
   delayBetweenCommands = 800,
@@ -429,7 +431,7 @@ export function Terminal({
           </div>
           <div className='flex-1 text-center'>
             <span className='truncate text-xs text-ct-outline/60 font-label-grotesk tracking-wider'>
-              {username} — bash
+              {title || `${username} — bash`}
             </span>
           </div>
           <div className='w-[52px]' />

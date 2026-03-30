@@ -9,6 +9,19 @@
    Light: The Pristine Blueprint (Clinical High-Tech)
    Dark: The Algorithmic Atelier (Obsidian, Purple, Mint)
    ───────────────────────────────────────────── */
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  width: 100%;
+}
+
 :root {
   /* ─── LIGHT MODE ("The Pristine Blueprint") ─── */
   --sys-primary-main: #630ed4;

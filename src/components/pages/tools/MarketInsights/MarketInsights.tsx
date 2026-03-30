@@ -1,30 +1,30 @@
 import { useState, useEffect, useCallback } from 'react';
 import {
-  TrendingUp,
-  Fuel,
+  TrendUp,
+  GasPump as Fuel,
   Sun,
   Globe,
-  RotateCw,
+  ArrowsClockwise as RotateCw,
   Wind,
-  Droplets,
+  Drop as Droplets,
   Eye,
-  Zap,
+  Lightning as Zap,
   Cloud,
   Umbrella,
   Compass,
   CloudSun,
   CloudLightning,
   Snowflake,
-  CloudDrizzle,
+  CloudRain,
   Waves,
-  AlertTriangle,
+  Warning as AlertTriangle,
   Clock,
-  Search,
-  ChevronLeft,
-  ChevronRight,
-  ExternalLink,
+  MagnifyingGlass as Search,
+  CaretLeft as ChevronLeft,
+  CaretRight as ChevronRight,
+  ArrowSquareOut as ExternalLink,
   MapPin,
-} from 'lucide-react';
+} from '@phosphor-icons/react';
 import ToolPageLayout from '../ToolPageLayout';
 import { PFTypography } from '@components/core';
 import { useTranslation } from 'react-i18next';
@@ -353,7 +353,7 @@ const MarketInsights = () => {
     if (code >= 51 && code <= 57)
       return {
         label: 'Mưa phùn',
-        icon: CloudDrizzle,
+        icon: CloudRain,
         bg: 'bg-gradient-to-br from-cyan-600 to-blue-200',
         animate: { y: [0, 5, 0], rotate: [-5, 5, -5] },
       };
@@ -1045,7 +1045,7 @@ const MarketInsights = () => {
             <div className='sm:col-span-1'>
               <CardWrapper
                 title={t('tools.items.marketInsights.goldPrice')}
-                icon={TrendingUp}
+                icon={TrendUp}
                 loading={loading.gold}
                 onRefresh={fetchGold}
                 type='gold'
