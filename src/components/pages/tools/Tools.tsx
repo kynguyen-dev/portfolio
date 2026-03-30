@@ -21,22 +21,22 @@ interface ToolItem {
 
 const TOOLS: ToolItem[] = [
   {
-    emoji: '🖼️',
-    titleKey: 'tools.items.gallery.title',
-    descriptionKey: 'tools.items.gallery.description',
-    route: ROUTES.TOOLS.GALLERY,
-    colSpan: 8,
-    height: 'h-[500px]',
-    techLabelKey: 'tools.items.gallery.techLabel',
-  },
-  {
     image: '/images/three-kingdoms/logo.jpg',
     titleKey: 'tools.items.threeKingdoms.title',
     descriptionKey: 'tools.items.threeKingdoms.description',
     route: ROUTES.TOOLS.THREE_KINGDOMS,
-    colSpan: 4,
+    colSpan: 8,
     height: 'h-[500px]',
     techLabelKey: 'tools.items.threeKingdoms.techLabel',
+  },
+  {
+    emoji: '🖼️',
+    titleKey: 'tools.items.gallery.title',
+    descriptionKey: 'tools.items.gallery.description',
+    route: ROUTES.TOOLS.GALLERY,
+    colSpan: 4,
+    height: 'h-[500px]',
+    techLabelKey: 'tools.items.gallery.techLabel',
   },
   {
     emoji: '🤖',

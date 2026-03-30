@@ -117,7 +117,7 @@ export const Intro = () => {
       style={{ overflowX: 'clip' }}
     >
       {/* 500vh container houses both Hero and Tactical Path */}
-      <div ref={containerRef} className='h-[500vh] relative antialiased'>
+      <div ref={containerRef} className='h-[200vh] md:h-[500vh] relative antialiased'>
         {/* Sticky viewport container */}
         <div className='sticky top-0 h-screen w-full flex flex-col justify-center [perspective:1000px] overflow-hidden'>
           {/* Topology Grid Background */}
@@ -134,7 +134,7 @@ export const Intro = () => {
             }}
             className='absolute inset-0 z-30 flex justify-center items-center px-4 md:px-8'
           >
-            <div className='w-full max-w-4xl flex flex-col items-center mx-auto relative'>
+            <div className='w-full max-w-4xl flex flex-col items-center mx-auto relative px-2'>
               {/* Floating Data Node */}
               <animated.div
                 style={statusSpring}
@@ -151,22 +151,22 @@ export const Intro = () => {
 
               {/* Hero Headline */}
               <animated.div style={statusSpring} className='text-center mb-2'>
-                <span className='inline-flex items-center gap-2 px-4 py-1.5 bg-ct-secondary/5 border border-ct-secondary/15 rounded-full text-ct-secondary text-[11px] font-label-grotesk font-bold tracking-[0.2em] uppercase'>
+                <span className='inline-flex items-center gap-2 px-3 py-1.5 bg-ct-secondary/5 border border-ct-secondary/15 rounded-full text-ct-secondary text-[10px] md:text-[11px] font-label-grotesk font-bold tracking-[0.15em] md:tracking-[0.2em] uppercase'>
                   <span className='w-1.5 h-1.5 rounded-full bg-ct-secondary animate-pulse' />
                   {t('intro.establishingConnection')}
                 </span>
               </animated.div>
 
-              <animated.div style={headingSpring} className='text-center mb-10'>
-                <h1 className='font-serif-display text-3xl md:text-5xl lg:text-6xl text-ct-secondary tracking-tighter leading-none mb-4'>
+              <animated.div style={headingSpring} className='text-center mb-6 md:mb-10'>
+                <h1 className='font-serif-display text-xl sm:text-2xl md:text-5xl lg:text-6xl text-ct-secondary tracking-tighter leading-tight md:leading-none mb-3 md:mb-4 break-words'>
                   {'> '}
                   {t('intro.heroTitle')}
-                  <br className='hidden md:block' />
-                  <span className='text-ct-on-surface opacity-90 italic text-2xl md:text-4xl lg:text-5xl'>
+                  <br />
+                  <span className='text-ct-on-surface opacity-90 italic text-lg sm:text-xl md:text-4xl lg:text-5xl'>
                     {t('intro.heroTitleAccent')}
                   </span>
                 </h1>
-                <p className='max-w-2xl mx-auto text-base md:text-lg text-ct-on-surface-variant/60 font-label-grotesk tracking-wide'>
+                <p className='max-w-2xl mx-auto text-sm md:text-lg text-ct-on-surface-variant/60 font-label-grotesk tracking-wide px-2 md:px-0'>
                   {t('intro.heroSubtitle')}
                 </p>
               </animated.div>
@@ -211,7 +211,7 @@ export const Intro = () => {
               {/* CTA Buttons */}
               <animated.div
                 style={ctaSpring}
-                className='mt-10 flex flex-col md:flex-row items-center justify-center gap-6'
+                className='mt-6 md:mt-10 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 w-full'
               >
                 <ContactDropdown>
                   <ImagesBadge
@@ -256,7 +256,7 @@ export const Intro = () => {
               translateY,
               opacity: pathOpacity,
             }}
-            className='absolute inset-0 z-10 w-full h-full flex items-center [transform-style:preserve-3d]'
+            className='absolute inset-0 z-10 w-full h-full hidden md:flex items-center [transform-style:preserve-3d]'
           >
             {/* Tactical Path Heading */}
             <motion.div
