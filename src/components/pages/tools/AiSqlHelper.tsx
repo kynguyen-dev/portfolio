@@ -1,12 +1,12 @@
 import { useState, useRef, useEffect } from 'react';
 import {
-  PaperPlaneTilt,
-  Copy,
-  Sparkle,
-  Bug,
-  CircleNotch,
-  X,
-  WarningCircle,
+  PaperPlaneTiltIcon,
+  CopyIcon,
+  SparkleIcon,
+  BugIcon,
+  CircleNotchIcon,
+  XIcon,
+  WarningCircleIcon,
 } from '@phosphor-icons/react';
 import ToolPageLayout from './ToolPageLayout';
 import { PFTypography, PFButton } from '@components/core';
@@ -217,7 +217,10 @@ const AiSqlHelper = () => {
         <div className='px-6 py-4 border-b border-ct-outline-variant/10 flex justify-between items-center bg-ct-surface-container-low/40'>
           <div className='flex items-center gap-3'>
             <div className='p-2 rounded-lg bg-primary-main/10'>
-              <Sparkle className='w-5 h-5 text-primary-main' weight='fill' />
+              <SparkleIcon
+                className='w-5 h-5 text-primary-main'
+                weight='fill'
+              />
             </div>
             <div className='flex flex-col items-start'>
               <PFTypography
@@ -258,7 +261,7 @@ const AiSqlHelper = () => {
             className='p-2 rounded-lg hover:bg-ct-surface-container-high text-ct-on-surface-variant opacity-40 hover:opacity-100 transition-all cursor-pointer'
             title='Debug Models'
           >
-            <Bug className='w-5 h-5' />
+            <BugIcon className='w-5 h-5' />
           </button>
         </div>
 
@@ -272,7 +275,7 @@ const AiSqlHelper = () => {
           ))}
           {isLoading && (
             <div className='self-center mt-4 flex items-center gap-3 text-primary-main glass-panel px-4 py-2 rounded-full animate-pulse'>
-              <CircleNotch className='w-4 h-4 animate-spin' weight='bold' />
+              <CircleNotchIcon className='w-4 h-4 animate-spin' weight='bold' />
               <span className='text-[10px] font-black tracking-widest uppercase'>
                 Neural Link Processing...
               </span>
@@ -309,7 +312,7 @@ const AiSqlHelper = () => {
               className='h-14 w-14 rounded-xl p-0 flex items-center justify-center shrink-0 shadow-lg shadow-primary-main/10 bg-primary-main hover:bg-primary-dark transition-all'
               magnet
             >
-              <PaperPlaneTilt
+              <PaperPlaneTiltIcon
                 className='w-6 h-6 text-primary-contrast'
                 weight='bold'
               />
@@ -326,7 +329,7 @@ const AiSqlHelper = () => {
             className='fixed bottom-8 left-1/2 -translate-x-1/2 z-[200000]'
           >
             <div className='bg-red-500/90 backdrop-blur-md text-white px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 border border-red-400/20'>
-              <WarningCircle className='w-5 h-5' weight='bold' />
+              <WarningCircleIcon className='w-5 h-5' weight='bold' />
               <span className='text-xs font-bold tracking-wide uppercase'>
                 {msg}
               </span>
@@ -334,7 +337,7 @@ const AiSqlHelper = () => {
                 onClick={() => setErrorMsg(null)}
                 className='p-1 hover:bg-white/10 rounded-lg cursor-pointer'
               >
-                <X className='w-4 h-4' weight='bold' />
+                <XIcon className='w-4 h-4' weight='bold' />
               </button>
             </div>
           </animated.div>
@@ -398,9 +401,9 @@ const MessageBubble = ({
           <button
             onClick={() => onCopy(msg.content)}
             className='absolute top-4 right-4 p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-all hover:bg-ct-surface-container-highest text-ct-on-surface-variant cursor-pointer'
-            title='Copy SQL'
+            title='CopyIcon SQL'
           >
-            <Copy className='w-4 h-4' weight='bold' />
+            <CopyIcon className='w-4 h-4' weight='bold' />
           </button>
         )}
       </div>

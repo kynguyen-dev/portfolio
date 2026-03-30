@@ -14,6 +14,8 @@ import {
   ImagesBadge,
   ExpandableWorkCard,
   TracingBeam,
+  SparklesCore,
+  AuroraBackground,
 } from '@components/customs/aceternity';
 import { ContactDropdown } from '@components/customs/ContactDropdown';
 
@@ -131,8 +133,29 @@ export const Intro = () => {
       <div ref={containerRef} className='2xl:h-[500vh] relative antialiased'>
         {/* Sticky viewport container — only sticky on 2xl+ for horizontal scroll */}
         <div className='h-screen 2xl:sticky 2xl:top-0 w-full flex flex-col justify-center [perspective:1000px] overflow-hidden'>
+          {/* Aurora Background — ambient purple/mint glow */}
+          <AuroraBackground
+            className='absolute inset-0 z-0 pointer-events-none'
+            showRadialGradient={true}
+          >
+            <></>
+          </AuroraBackground>
           {/* Topology Grid Background */}
-          <div className='absolute inset-0 topology-grid opacity-20 pointer-events-none' />
+          <div className='absolute inset-0 topology-grid opacity-20 pointer-events-none z-[1]' />
+
+          {/* Sparkles ambient background */}
+          <div className='absolute inset-0 z-20 pointer-events-none'>
+            <SparklesCore
+              id='hero-sparkles'
+              background='transparent'
+              minSize={0.4}
+              maxSize={1.4}
+              particleDensity={80}
+              className='w-full h-full'
+              particleColor='#d0bcff'
+              speed={2}
+            />
+          </div>
 
           {/* =========================================
               HERO FOREGROUND LAYER
@@ -172,7 +195,10 @@ export const Intro = () => {
                 </span>
               </animated.div>
 
-              <animated.div style={headingSpring} className='text-center mb-6 md:mb-10'>
+              <animated.div
+                style={headingSpring}
+                className='text-center mb-6 md:mb-10'
+              >
                 <h1 className='font-serif-display text-xl sm:text-2xl md:text-5xl lg:text-6xl text-ct-secondary tracking-tighter leading-tight md:leading-none mb-3 md:mb-4 break-words'>
                   {'> '}
                   {t('intro.heroTitle')}

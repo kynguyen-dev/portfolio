@@ -1,6 +1,6 @@
 import { animated, useTrail } from '@react-spring/web';
 import { PFTypography } from '@components/core';
-import { SkillBox, SkillBoxProps } from '../boxs/skill-box';
+import { SkillBox, SkillBoxProps } from '@components/customs/boxs/skill-box';
 import { useInView } from '@utils/animations/springVariants';
 
 export interface HorizontalSkillListProps {

@@ -1,4 +1,4 @@
-import { X, ArrowsLeftRight } from '@phosphor-icons/react';
+import { XIcon, ArrowsLeftRightIcon } from '@phosphor-icons/react';
 import { animated, useSpring } from '@react-spring/web';
 import { PFTypography } from '@components/core';
 import { StatsRadarChart } from './StatsRadarChart';
@@ -82,7 +82,7 @@ export const CharacterDetail = ({
               aria-label='Close detail'
               className='absolute top-4 right-4 z-10 p-2.5 rounded-2xl glass-panel hover:bg-ct-surface-container-highest transition-all duration-300 active:scale-90'
             >
-              <X size={20} weight='bold' className='text-ct-on-surface' />
+              <XIcon size={20} weight='bold' className='text-ct-on-surface' />
             </button>
 
             <div className='absolute bottom-6 left-6 md:left-10 right-6 md:right-10 z-10 flex items-end gap-6'>
@@ -184,7 +184,7 @@ export const CharacterDetail = ({
                     onClick={() => onCompare(character)}
                     className='inline-flex items-center gap-3 px-6 py-3 rounded-xl font-black text-xs uppercase tracking-widest transition-all duration-300 hover:scale-105 active:scale-95 group glass-panel border-ct-secondary/30 text-ct-secondary hover:bg-ct-secondary hover:text-ct-on-secondary primary-glow'
                   >
-                    <ArrowsLeftRight
+                    <ArrowsLeftRightIcon
                       size={18}
                       weight='bold'
                       className='transition-transform group-hover:rotate-180'

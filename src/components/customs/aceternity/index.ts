@@ -14,3 +14,5 @@ export { Terminal } from './Terminal';
 export type { TerminalProps } from './Terminal';
 export { ExpandableWorkCard } from './ExpandableWorkCard';
 export { TracingBeam } from './TracingBeam';
+export { SparklesCore } from './SparklesCore';
+export { AuroraBackground } from './AuroraBackground';

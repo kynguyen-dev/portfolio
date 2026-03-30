@@ -62,9 +62,7 @@ export const TracingBeam = ({
         <motion.div
           transition={{ duration: 0.2, delay: 0.5 }}
           animate={{
-            boxShadow: beamTop
-              ? 'none'
-              : '0 0 24px rgba(78, 222, 163, 0.35)',
+            boxShadow: beamTop ? 'none' : '0 0 24px rgba(78, 222, 163, 0.35)',
           }}
           className='ml-[27px] flex h-4 w-4 items-center justify-center rounded-full border border-ct-secondary/30 bg-ct-surface shadow-sm'
         >

@@ -1,4 +1,4 @@
-import { CaretLeft } from '@phosphor-icons/react';
+import { CaretLeftIcon } from '@phosphor-icons/react';
 import { useNavigate } from '@tanstack/react-router';
 import { PFTypography, PFGradientTypography } from '@components/core';
 import { SunriseBackground } from '@components/customs/backgrounds/SunriseBackground';
@@ -46,7 +46,7 @@ const ToolPageLayout = ({
             aria-label='Back to portfolio'
             className='flex items-center justify-center w-10 h-10 rounded-full text-ct-on-surface glass-panel hover:bg-ct-surface-container-high/90 transition-all duration-300 cursor-pointer active:scale-95'
           >
-            <CaretLeft size={20} weight='bold' />
+            <CaretLeftIcon size={20} weight='bold' />
           </button>
         </div>
 

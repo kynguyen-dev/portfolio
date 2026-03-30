@@ -1,6 +1,6 @@
 import { animated, useSpring, useTrail } from '@react-spring/web';
 import { useTranslation } from 'react-i18next';
-import { User } from 'lucide-react';
+import { UserIcon } from '@phosphor-icons/react';
 import { useInView } from '@utils/animations/springVariants';
 
 export const Testimonials = () => {
@@ -85,7 +85,10 @@ export const Testimonials = () => {
             {/* Author */}
             <div className='flex items-center gap-4'>
               <div className='w-12 h-12 rounded-full bg-ct-surface-container-highest border border-ct-outline-variant/30 flex items-center justify-center'>
-                <User className={iconColors[i % iconColors.length]} size={20} />
+                <UserIcon
+                  className={iconColors[i % iconColors.length]}
+                  size={20}
+                />
               </div>
               <div>
                 <div className='font-bold text-ct-on-surface'>

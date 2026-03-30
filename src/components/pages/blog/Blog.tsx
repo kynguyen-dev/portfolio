@@ -1,5 +1,5 @@
 import { animated, useTrail } from '@react-spring/web';
-import { ExternalLink } from 'lucide-react';
+import { ArrowSquareOutIcon } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import {
   PFGradientTypography,
@@ -103,7 +103,7 @@ export const Blog = () => {
                       >
                         {post.titleKey}
                       </PFTypography>
-                      <ExternalLink
+                      <ArrowSquareOutIcon
                         size={18}
                         className='text-ct-on-surface-variant/40'
                       />

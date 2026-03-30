@@ -1,5 +1,9 @@
 import { useState, useMemo, useEffect, useCallback } from 'react';
-import { CaretLeft, MagnifyingGlass, X } from '@phosphor-icons/react';
+import {
+  CaretLeftIcon,
+  MagnifyingGlassIcon,
+  XIcon,
+} from '@phosphor-icons/react';
 import { useNavigate } from '@tanstack/react-router';
 import { animated, useSpring, useTransition } from '@react-spring/web';
 import { PFAppBar, PFGradientTypography, PFTypography } from '@components/core';
@@ -184,7 +188,7 @@ const ThreeKingdoms = () => {
             aria-label='Back'
             className='flex items-center justify-center w-10 h-10 rounded-full text-ct-on-surface glass-panel hover:bg-ct-surface-container-high/90 transition-all duration-300 cursor-pointer active:scale-90 shadow-lg shadow-black/10'
           >
-            <CaretLeft size={20} weight='bold' />
+            <CaretLeftIcon size={20} weight='bold' />
           </button>
         </div>
 
@@ -281,7 +285,7 @@ const ThreeKingdoms = () => {
                       onClick={handleCancelCompare}
                       className='flex items-center gap-1 px-3 py-1.5 rounded-lg cursor-pointer text-xs font-black text-ct-secondary uppercase tracking-widest glass-panel hover:bg-ct-surface-container-highest transition-all duration-300'
                     >
-                      <X size={14} weight='bold' /> Cancel
+                      <XIcon size={14} weight='bold' /> Cancel
                     </button>
                   </div>
                 )}
@@ -289,7 +293,7 @@ const ThreeKingdoms = () => {
                 {/* Search + filter */}
                 <div className='flex flex-col md:flex-row gap-6 md:items-center mb-8'>
                   <div className='relative flex-1 max-w-[400px]'>
-                    <MagnifyingGlass
+                    <MagnifyingGlassIcon
                       size={20}
                       className='absolute left-4 top-1/2 -translate-y-1/2 text-ct-secondary z-10'
                       weight='bold'

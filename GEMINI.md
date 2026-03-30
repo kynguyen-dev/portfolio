@@ -38,8 +38,16 @@ Maintain the established directory structure in `src/components/`:
   - Router paths (`ROUTER_PATHS`).
 - **Icons:**
   - Use `@phosphor-icons/react` as the **sole icon library** for all UI icons.
+  - **Always use the `Icon` suffix naming convention** (e.g., `ArrowLeftIcon`, `GithubLogoIcon`, `EnvelopeIcon`). The names without `Icon` suffix (e.g., `ArrowLeft`, `GithubLogo`) are **deprecated** in phosphor v2.1+.
+  - When aliasing icons for readability, use the `Icon` suffix source with a descriptive alias: `import { CaretLeftIcon as ChevronLeft } from '@phosphor-icons/react'`.
   - For brand icons not available in Phosphor (e.g., Zalo), use custom inline SVG components in `src/components/customs/icons/`.
   - **Do NOT** use `lucide-react`, `@mui/icons-material`, `@icons-pack/react-simple-icons`, or any other icon library.
+- **Imports:**
+  - **Always use `@` path aliases** for imports (e.g., `@components/core`, `@utils/core/cn`, `@constants`, `@contexts/theme-mode`). **Never** use relative paths like `./` or `../` for cross-directory imports.
+  - Path aliases are configured in `tsconfig.app.json` and `vite.config.ts`.
+- **Third-Party UI:**
+  - **Do NOT** use `npx shadcn` CLI to add components. It injects conflicting CSS, `@theme` overrides, and `lib/utils` that break the existing design system.
+  - Instead, manually copy Aceternity/shadcn component source code into `src/components/customs/aceternity/` and adapt it to use the project's `cn()` utility and design tokens.
 
 ## 4. Design System — Algorithmic Atelier
 

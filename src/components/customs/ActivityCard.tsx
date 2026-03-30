@@ -1,7 +1,11 @@
 'use client';
 
 import { animated, useSpring } from '@react-spring/web';
-import { Activity, Zap, ArrowUp } from 'lucide-react';
+import {
+  HeartbeatIcon,
+  LightningIcon,
+  ArrowUpIcon,
+} from '@phosphor-icons/react';
 import { cn } from '@utils/core/cn';
 
 interface ActivityRingProps {
@@ -69,7 +73,7 @@ export default function ActivityCard({ className }: { className?: string }) {
       <div className='flex items-center justify-between mb-8'>
         <h3 className='text-text-secondary font-medium'>Activity</h3>
         <div className='p-2 rounded-full bg-white/5'>
-          <Activity className='w-4 h-4 text-primary-main' />
+          <HeartbeatIcon className='w-4 h-4 text-primary-main' />
         </div>
       </div>
 
@@ -108,7 +112,7 @@ export default function ActivityCard({ className }: { className?: string }) {
       <div className='space-y-4'>
         <div className='flex items-center gap-3'>
           <div className='p-1.5 rounded-lg bg-primary-main/10'>
-            <ArrowUp className='w-4 h-4 text-primary-main' />
+            <ArrowUpIcon className='w-4 h-4 text-primary-main' />
           </div>
           <div>
             <p className='text-[10px] text-text-disabled uppercase tracking-widest'>
@@ -125,7 +129,7 @@ export default function ActivityCard({ className }: { className?: string }) {
 
         <div className='flex items-center gap-3'>
           <div className='p-1.5 rounded-lg bg-secondary-main/10'>
-            <Zap className='w-4 h-4 text-secondary-main' />
+            <LightningIcon className='w-4 h-4 text-secondary-main' />
           </div>
           <div>
             <p className='text-[10px] text-text-disabled uppercase tracking-widest'>

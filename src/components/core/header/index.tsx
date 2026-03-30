@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { List, X, CaretLeft } from '@phosphor-icons/react';
+import { ListIcon, XIcon, CaretLeftIcon } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from '@components/core/language-switcher/LanguageSwitcher';
 import { ThemeModeToggle } from '@components/core/theme-toggle/ThemeModeToggle';
@@ -100,7 +100,7 @@ export const PFAppBar = ({ onBack, brandText, brandLogo }: PFAppBarProps) => {
                 aria-label='Back'
                 className='flex items-center justify-center w-10 h-10 rounded-full text-ct-on-surface glass-panel hover:bg-ct-surface-container-high/90 transition-all duration-300 cursor-pointer active:scale-90'
               >
-                <CaretLeft size={20} weight='bold' />
+                <CaretLeftIcon size={20} weight='bold' />
               </button>
             )}
             {/* Brand — Conditional text */}
@@ -150,7 +150,7 @@ export const PFAppBar = ({ onBack, brandText, brandLogo }: PFAppBarProps) => {
                   className='p-2 text-ct-secondary'
                   aria-label='Toggle menu'
                 >
-                  {mobileOpen ? <X /> : <List />}
+                  {mobileOpen ? <XIcon /> : <ListIcon />}
                 </button>
               </>
             ) : (
@@ -190,7 +190,7 @@ export const PFAppBar = ({ onBack, brandText, brandLogo }: PFAppBarProps) => {
               className='p-2 text-ct-on-surface'
               aria-label={t('common.closeMenu')}
             >
-              <X />
+              <XIcon />
             </button>
           </div>
           <div className='flex-1 overflow-y-auto py-6'>

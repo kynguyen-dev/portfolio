@@ -5,12 +5,12 @@ import {
   MovingBorder,
 } from '@components/customs/aceternity';
 import {
-  Code,
-  Database,
-  HardDrives,
-  Cloud,
-  ShieldCheck,
-  Lightning,
+  CodeIcon,
+  DatabaseIcon,
+  HardDrivesIcon,
+  CloudIcon,
+  ShieldCheckIcon,
+  LightningIcon,
 } from '@phosphor-icons/react';
 
 /* ─── HoverEffect ─── */
@@ -31,37 +31,37 @@ export const Default: HoverStory = {
         title: 'React 18',
         description:
           'Component-driven architecture with hooks, concurrent features, and server components.',
-        icon: <Code size={24} />,
+        icon: <CodeIcon size={24} />,
       },
       {
         title: 'TypeScript',
         description:
           'Strict type system for reliable, maintainable codebases at scale.',
-        icon: <ShieldCheck size={24} />,
+        icon: <ShieldCheckIcon size={24} />,
       },
       {
         title: 'PostgreSQL',
         description:
           'Relational data modeling with advanced indexing and query optimization.',
-        icon: <Database size={24} />,
+        icon: <DatabaseIcon size={24} />,
       },
       {
         title: 'Node.js',
         description:
           'Event-driven runtime for high-throughput backend services.',
-        icon: <HardDrives size={24} />,
+        icon: <HardDrivesIcon size={24} />,
       },
       {
         title: 'AWS EC2',
         description:
           'Scalable cloud compute with auto-scaling and load balancing.',
-        icon: <Cloud size={24} />,
+        icon: <CloudIcon size={24} />,
       },
       {
         title: 'Vite',
         description:
           'Next-gen build tooling with instant HMR and optimized bundling.',
-        icon: <Lightning size={24} />,
+        icon: <LightningIcon size={24} />,
       },
     ],
   },

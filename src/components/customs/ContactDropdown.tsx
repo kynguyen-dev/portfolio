@@ -4,7 +4,7 @@
  */
 import { useState, useRef, useEffect, useCallback, ReactNode } from 'react';
 import { animated, useSpring } from '@react-spring/web';
-import { Envelope, ChatCircle } from '@phosphor-icons/react';
+import { EnvelopeIcon, ChatCircleIcon } from '@phosphor-icons/react';
 import { cn } from '@utils/core/cn';
 import { APP_INFORMATION } from '@constants';
 
@@ -95,7 +95,7 @@ export const ContactDropdown = ({
               onClick={() => setIsOpen(false)}
             >
               <div className='w-10 h-10 rounded-lg bg-primary-main/10 flex items-center justify-center group-hover:bg-primary-main/20 transition-colors'>
-                <Envelope
+                <EnvelopeIcon
                   size={20}
                   weight='duotone'
                   className='text-primary-main'
@@ -123,7 +123,11 @@ export const ContactDropdown = ({
               onClick={() => setIsOpen(false)}
             >
               <div className='w-10 h-10 rounded-lg bg-ct-secondary/10 flex items-center justify-center group-hover:bg-ct-secondary/20 transition-colors'>
-                <ChatCircle size={20} weight='duotone' className='text-ct-secondary' />
+                <ChatCircleIcon
+                  size={20}
+                  weight='duotone'
+                  className='text-ct-secondary'
+                />
               </div>
               <div>
                 <div className='text-sm font-bold text-ct-on-surface font-label-grotesk tracking-wide'>

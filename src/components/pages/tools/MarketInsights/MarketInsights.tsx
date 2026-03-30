@@ -1,31 +1,31 @@
 import { useState, useEffect, useCallback } from 'react';
 import {
-  TrendUp,
-  GasPump as Fuel,
-  Sun,
-  Globe,
-  ArrowsClockwise as RotateCw,
-  Wind,
-  Drop as Droplets,
-  Eye,
-  Lightning as Zap,
-  Cloud,
-  Umbrella,
-  Compass,
-  CloudSun,
-  CloudLightning,
-  Snowflake,
-  CloudRain,
-  Waves,
-  Warning as AlertTriangle,
-  Clock,
-  MagnifyingGlass as Search,
-  CaretLeft as ChevronLeft,
-  CaretRight as ChevronRight,
-  ArrowSquareOut as ExternalLink,
-  MapPin,
+  TrendUpIcon,
+  GasPumpIcon as Fuel,
+  SunIcon,
+  GlobeIcon,
+  ArrowsClockwiseIcon as RotateCw,
+  WindIcon,
+  DropIcon as Droplets,
+  EyeIcon,
+  LightningIcon as Zap,
+  CloudIcon,
+  UmbrellaIcon,
+  CompassIcon,
+  CloudSunIcon,
+  CloudLightningIcon,
+  SnowflakeIcon,
+  CloudRainIcon,
+  WavesIcon,
+  WarningIcon as AlertTriangle,
+  ClockIcon,
+  MagnifyingGlassIcon as Search,
+  CaretLeftIcon as ChevronLeft,
+  CaretRightIcon as ChevronRight,
+  ArrowSquareOutIcon as ExternalLink,
+  MapPinIcon,
 } from '@phosphor-icons/react';
-import ToolPageLayout from '../ToolPageLayout';
+import ToolPageLayout from '@components/pages/tools/ToolPageLayout';
 import { PFTypography } from '@components/core';
 import { useTranslation } from 'react-i18next';
 
@@ -167,7 +167,7 @@ const LocalClock = ({ utcOffset }: { utcOffset: number }) => {
 
   return (
     <div className='flex items-center gap-2 opacity-90 text-white mb-2'>
-      <Clock className='w-4 h-4' />
+      <ClockIcon className='w-4 h-4' />
       <PFTypography variant='caption' className='font-bold'>
         {t('tools.items.marketInsights.localTime')}: {time}
       </PFTypography>
@@ -318,42 +318,42 @@ const MarketInsights = () => {
     if (code === 0)
       return {
         label: 'Trời quang',
-        icon: Sun,
+        icon: SunIcon,
         bg: 'bg-gradient-to-br from-orange-500 to-yellow-400',
         animate: { rotate: 360 },
       };
     if (code === 1)
       return {
         label: 'Chủ yếu quang đãng',
-        icon: Sun,
+        icon: SunIcon,
         bg: 'bg-gradient-to-br from-orange-400 to-yellow-500',
         animate: { scale: [1, 1.1, 1] },
       };
     if (code === 2)
       return {
         label: 'Mây rải rác',
-        icon: CloudSun,
+        icon: CloudSunIcon,
         bg: 'bg-gradient-to-br from-slate-500 to-blue-200',
         animate: { x: [-5, 5, -5] },
       };
     if (code === 3)
       return {
         label: 'Nhiều mây',
-        icon: Cloud,
+        icon: CloudIcon,
         bg: 'bg-gradient-to-br from-slate-600 to-slate-400',
         animate: { y: [0, -10, 0] },
       };
     if (code === 45 || code === 48)
       return {
         label: 'Sương mù',
-        icon: Cloud,
+        icon: CloudIcon,
         bg: 'bg-gradient-to-br from-slate-100 to-slate-300',
         animate: { opacity: [0.4, 1, 0.4] },
       };
     if (code >= 51 && code <= 57)
       return {
         label: 'Mưa phùn',
-        icon: CloudRain,
+        icon: CloudRainIcon,
         bg: 'bg-gradient-to-br from-cyan-600 to-blue-200',
         animate: { y: [0, 5, 0], rotate: [-5, 5, -5] },
       };
@@ -367,14 +367,14 @@ const MarketInsights = () => {
     if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86))
       return {
         label: 'Có tuyết',
-        icon: Snowflake,
+        icon: SnowflakeIcon,
         bg: 'bg-gradient-to-br from-blue-300 to-blue-100',
         animate: { rotate: 360, scale: [1, 1.2, 1] },
       };
     if (code >= 95)
       return {
         label: 'Dông bão',
-        icon: CloudLightning,
+        icon: CloudLightningIcon,
         bg: 'bg-gradient-to-br from-indigo-900 via-purple-900 to-slate-900',
         animate: {
           scale: [1, 1.1, 1],
@@ -383,7 +383,7 @@ const MarketInsights = () => {
       };
     return {
       label: 'Không xác định',
-      icon: Waves,
+      icon: WavesIcon,
       bg: 'bg-gradient-to-br from-primary-main to-primary-light',
       animate: {},
     };
@@ -718,7 +718,7 @@ const MarketInsights = () => {
                             }}
                             className='w-full px-4 py-3 text-left text-sm hover:bg-white/10 transition-colors flex items-center gap-2'
                           >
-                            <MapPin className='w-4 h-4 text-primary-main' />
+                            <MapPinIcon className='w-4 h-4 text-primary-main' />
                             {city.label}
                           </button>
                         ))}
@@ -763,7 +763,7 @@ const MarketInsights = () => {
 
             <CardWrapper
               title={t('tools.items.marketInsights.weather')}
-              icon={weatherVisual?.icon || Sun}
+              icon={weatherVisual?.icon || SunIcon}
               loading={loading.weather}
               onRefresh={fetchWeather}
               type='weather'
@@ -847,13 +847,13 @@ const MarketInsights = () => {
                               unit: 'hPa',
                             },
                             {
-                              icon: Wind,
+                              icon: WindIcon,
                               label: t('tools.items.marketInsights.windSpeed'),
                               value: `${weatherData.wind_speed_10m}`,
                               unit: 'km/h',
                             },
                             {
-                              icon: Compass,
+                              icon: CompassIcon,
                               label: t(
                                 'tools.items.marketInsights.windDirection'
                               ),
@@ -862,18 +862,18 @@ const MarketInsights = () => {
                               ),
                             },
                             {
-                              icon: Eye,
+                              icon: EyeIcon,
                               label: t('tools.items.marketInsights.visibility'),
                               value: `${(weatherData.visibility / 1000).toFixed(1)}`,
                               unit: 'km',
                             },
                             {
-                              icon: Cloud,
+                              icon: CloudIcon,
                               label: t('tools.items.marketInsights.cloudCover'),
                               value: `${weatherData.cloud_cover}%`,
                             },
                             {
-                              icon: Umbrella,
+                              icon: UmbrellaIcon,
                               label: t('tools.items.marketInsights.rainAmount'),
                               value: `${weatherData.precipitation}`,
                               unit: 'mm',
@@ -882,7 +882,7 @@ const MarketInsights = () => {
                               ),
                             },
                             {
-                              icon: Sun,
+                              icon: SunIcon,
                               label: t('tools.items.marketInsights.uvIndex'),
                               value: weatherForecast[0].uv.toString(),
                               highlight: getUVStatus(weatherForecast[0].uv),
@@ -963,7 +963,7 @@ const MarketInsights = () => {
                         <div className='grid grid-cols-2 gap-3'>
                           {[
                             {
-                              icon: Umbrella,
+                              icon: UmbrellaIcon,
                               label: t('tools.items.marketInsights.rainProb'),
                               value: `${weatherForecast[selectedDayIdx].rainProb}%`,
                             },
@@ -973,12 +973,12 @@ const MarketInsights = () => {
                               value: `${weatherForecast[selectedDayIdx].rainSum} mm`,
                             },
                             {
-                              icon: Wind,
+                              icon: WindIcon,
                               label: t('tools.items.marketInsights.windSpeed'),
                               value: `${weatherForecast[selectedDayIdx].windMax} km/h`,
                             },
                             {
-                              icon: Sun,
+                              icon: SunIcon,
                               label: t(
                                 'tools.items.marketInsights.solarRadiation'
                               ),
@@ -1045,7 +1045,7 @@ const MarketInsights = () => {
             <div className='sm:col-span-1'>
               <CardWrapper
                 title={t('tools.items.marketInsights.goldPrice')}
-                icon={TrendUp}
+                icon={TrendUpIcon}
                 loading={loading.gold}
                 onRefresh={fetchGold}
                 type='gold'
@@ -1115,7 +1115,7 @@ const MarketInsights = () => {
             <div className='sm:col-span-2'>
               <CardWrapper
                 title={t('tools.items.marketInsights.news')}
-                icon={Globe}
+                icon={GlobeIcon}
                 loading={loading.news}
                 onRefresh={fetchNews}
                 type='news'
@@ -1149,7 +1149,7 @@ const MarketInsights = () => {
                                 {news.source}
                               </span>
                               <span className='text-[8px] font-bold opacity-50 flex items-center gap-1'>
-                                <Clock className='w-2.5 h-2.5' />
+                                <ClockIcon className='w-2.5 h-2.5' />
                                 {news.time}
                               </span>
                             </div>

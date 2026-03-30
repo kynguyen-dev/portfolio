@@ -1,7 +1,12 @@
 import { useState } from 'react';
 import { animated, useSpring } from '@react-spring/web';
-import { Github, Linkedin, Mail, Smartphone } from 'lucide-react';
-import { ChatCircle } from '@phosphor-icons/react';
+import {
+  GithubLogoIcon,
+  LinkedinLogoIcon,
+  EnvelopeIcon,
+  DeviceMobileIcon,
+  ChatCircleIcon,
+} from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { APP_INFORMATION, EMAIL, GITHUB, LINKEDIN, PHONE } from '@constants';
 
@@ -16,31 +21,31 @@ interface ContactProps {
 
 const contacts: ContactProps[] = [
   {
-    icon: Github,
+    icon: GithubLogoIcon,
     id: GITHUB,
     href: APP_INFORMATION.GITHUB_URL,
     messageKey: 'contact.visitMyGithub',
   },
   {
-    icon: Linkedin,
+    icon: LinkedinLogoIcon,
     id: LINKEDIN,
     href: APP_INFORMATION.LINKEDIN_URL,
     messageKey: 'contact.visitMyLinkedIn',
   },
   {
-    icon: Mail,
+    icon: EnvelopeIcon,
     id: EMAIL,
     href: APP_INFORMATION.EMAIL_TO,
     messageKey: 'contact.sendMeEmail',
   },
   {
-    icon: ChatCircle,
+    icon: ChatCircleIcon,
     id: 'zalo',
     href: 'https://zalo.me/84868772887',
     messageKey: 'Zalo',
   },
   {
-    icon: Smartphone,
+    icon: DeviceMobileIcon,
     id: PHONE,
     href: APP_INFORMATION.PHONE_NUMBER_TO,
     messageKey: 'contact.callMe',

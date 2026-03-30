@@ -6,7 +6,7 @@ import {
   PFWhiteButton,
 } from '@components/core';
 import { fn } from '@storybook/test';
-import { Send, Download } from 'lucide-react';
+import { PaperPlaneTiltIcon, DownloadSimpleIcon } from '@phosphor-icons/react';
 
 const meta = {
   title: 'Core/Button/Gallery',
@@ -45,10 +45,13 @@ export const AllVariants = () => (
 
     <h3 className='text-lg font-semibold text-ct-on-surface'>With Icons</h3>
     <div className='flex flex-row gap-4 flex-wrap justify-center'>
-      <PFSolidButton startIcon={<Send size={16} />} onClick={fn()}>
+      <PFSolidButton
+        startIcon={<PaperPlaneTiltIcon size={16} />}
+        onClick={fn()}
+      >
         Send
       </PFSolidButton>
-      <PFStrokeButton endIcon={<Download size={16} />} onClick={fn()}>
+      <PFStrokeButton endIcon={<DownloadSimpleIcon size={16} />} onClick={fn()}>
         Download
       </PFStrokeButton>
     </div>

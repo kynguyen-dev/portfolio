@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { CaretUp } from '@phosphor-icons/react';
+import { CaretUpIcon } from '@phosphor-icons/react';
 import { animated, useSpring } from '@react-spring/web';
 
 /**
@@ -30,7 +30,7 @@ export const BackToTop = ({ threshold = 400 }: { threshold?: number }) => {
       style={spring}
       className='fixed bottom-6 left-6 z-[1500] w-10 h-10 flex items-center justify-center rounded-full weaver-gradient text-white shadow-[0_4px_20px_rgba(208,188,255,0.4)] hover:shadow-[0_6px_28px_rgba(208,188,255,0.5)] transition-shadow cursor-pointer'
     >
-      <CaretUp size={20} weight='bold' />
+      <CaretUpIcon size={20} weight='bold' />
     </animated.button>
   );
 };
