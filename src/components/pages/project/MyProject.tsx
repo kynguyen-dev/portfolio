@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { animated, useTrail } from '@react-spring/web';
 import { PFGradientTypography, PFTypography } from '@components/core';
 import { Overlay, OverlayContent } from '@components/core/overlay';
-import { GithubLogo } from '@phosphor-icons/react';
+import { GithubLogoIcon } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import {
   APP_INFORMATION,
@@ -270,7 +270,7 @@ export const MyProject = () => {
                             className='text-white flex hover:text-secondary-light transition-colors'
                             aria-label={`View ${title} on GitHub`}
                           >
-                            <GithubLogo size={24} />
+                            <GithubLogoIcon size={24} />
                           </a>
                         )}
                       </div>

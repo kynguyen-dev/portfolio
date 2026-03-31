@@ -1,4 +1,4 @@
-import { CaretLeft, ListBullets } from '@phosphor-icons/react';
+import { CaretLeftIcon, ListBulletsIcon } from '@phosphor-icons/react';
 import { animated, useSpring } from '@react-spring/web';
 import { PFTypography } from '@components/core';
 import { StatsRadarChart } from './StatsRadarChart';
@@ -368,7 +368,7 @@ export const BattleCompare = ({
                   onClick={() => onBackToDetail(fighter1)}
                   className='inline-flex items-center gap-3 px-6 py-3 rounded-xl font-black text-xs uppercase tracking-widest glass-panel border-ct-secondary/20 text-ct-on-surface hover:bg-ct-surface-container-highest transition-all duration-300 active:scale-95'
                 >
-                  <CaretLeft size={18} weight='bold' /> Back to Profile
+                  <CaretLeftIcon size={18} weight='bold' /> Back to Profile
                 </button>
               )}
               {onBackToBrowse && (
@@ -376,7 +376,7 @@ export const BattleCompare = ({
                   onClick={onBackToBrowse}
                   className='inline-flex items-center gap-3 px-6 py-3 rounded-xl font-black text-xs uppercase tracking-widest glass-panel border-ct-secondary/20 text-ct-on-surface hover:bg-ct-surface-container-highest transition-all duration-300 active:scale-95'
                 >
-                  <ListBullets size={18} weight='bold' /> Return to Archives
+                  <ListBulletsIcon size={18} weight='bold' /> Return to Archives
                 </button>
               )}
             </div>

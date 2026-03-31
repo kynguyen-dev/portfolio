@@ -1,14 +1,14 @@
 import { useState, useEffect, useCallback } from 'react';
 import { animated, useSpring, useTrail } from '@react-spring/web';
 import {
-  FilePdf,
-  Envelope,
-  LinkedinLogo,
-  GithubLogo,
-  Plus,
-  X,
-  Phone,
-  ChatCircle,
+  EnvelopeIcon,
+  LinkedinLogoIcon,
+  GithubLogoIcon,
+  PlusIcon,
+  XIcon,
+  PhoneIcon,
+  ChatCircleIcon,
+  FilePdfIcon,
 } from '@phosphor-icons/react';
 import { APP_INFORMATION } from '@constants';
 import { useTranslation } from 'react-i18next';
@@ -36,7 +36,7 @@ export const SpeedDialCustom = () => {
 
   const actions = [
     {
-      icon: <GithubLogo size={20} weight='duotone' />,
+      icon: <GithubLogoIcon size={20} weight='duotone' />,
       name: 'GitHub',
       onClick: () =>
         window.open(
@@ -46,7 +46,7 @@ export const SpeedDialCustom = () => {
         ),
     },
     {
-      icon: <LinkedinLogo size={20} weight='duotone' />,
+      icon: <LinkedinLogoIcon size={20} weight='duotone' />,
       name: 'LinkedIn',
       onClick: () =>
         window.open(
@@ -56,29 +56,7 @@ export const SpeedDialCustom = () => {
         ),
     },
     {
-      icon: <Envelope size={20} weight='duotone' />,
-      name: t('contact.sendMeEmail'),
-      onClick: () => {
-        window.open(
-          `https://mail.google.com/mail/?view=cm&fs=1&to=${APP_INFORMATION.EMAIL_TO.replace('mailto:', '')}`,
-          '_blank',
-          'noopener,noreferrer'
-        );
-      },
-    },
-    {
-      icon: <ChatCircle size={20} weight='duotone' />,
-      name: 'Zalo',
-      onClick: () => {
-        window.open(
-          'https://zalo.me/84868772887',
-          '_blank',
-          'noopener,noreferrer'
-        );
-      },
-    },
-    {
-      icon: <Phone size={20} weight='duotone' />,
+      icon: <PhoneIcon size={20} weight='duotone' />,
       name: t('contact.callMe'),
       onClick: () => {
         const phoneNumber = APP_INFORMATION.PHONE_NUMBER_TO.replace('tel:', '');
@@ -89,11 +67,43 @@ export const SpeedDialCustom = () => {
       },
     },
     {
-      icon: <FilePdf size={20} weight='duotone' />,
-      name: t('intro.downloadCV'),
+      icon: <ChatCircleIcon size={20} weight='duotone' />,
+      name: 'Zalo',
+      onClick: () => {
+        window.open(
+          'https://zalo.me/84868772887',
+          '_blank',
+          'noopener,noreferrer'
+        );
+      },
+    },
+    {
+      icon: <EnvelopeIcon size={20} weight='duotone' />,
+      name: t('contact.sendMeEmail'),
+      onClick: () => {
+        window.open(
+          `https://mail.google.com/mail/?view=cm&fs=1&to=${APP_INFORMATION.EMAIL_TO.replace('mailto:', '')}`,
+          '_blank',
+          'noopener,noreferrer'
+        );
+      },
+    },
+    {
+      icon: <LinkedinLogoIcon size={20} weight='duotone' />,
+      name: 'LinkedIn',
       onClick: () =>
         window.open(
-          '/resume/FULL_STACK_DEVELOPER_NGUYEN_TRUONG_KY_CV.pdf',
+          APP_INFORMATION.LINKEDIN_URL,
+          '_blank',
+          'noopener,noreferrer'
+        ),
+    },
+    {
+      icon: <FilePdfIcon size={20} weight='duotone' />,
+      name: t('contact.getResume'),
+      onClick: () =>
+        window.open(
+          APP_INFORMATION.RESUME_URL,
           '_blank',
           'noopener,noreferrer'
         ),
@@ -186,9 +196,9 @@ export const SpeedDialCustom = () => {
           className='w-14 h-14 rounded-full weaver-gradient text-white flex items-center justify-center shadow-[0_4px_20px_rgba(208,188,255,0.4)] hover:shadow-[0_6px_28px_rgba(208,188,255,0.5)] transition-shadow cursor-pointer'
         >
           {open ? (
-            <X size={24} weight='bold' />
+            <XIcon size={24} weight='bold' />
           ) : (
-            <Plus size={24} weight='bold' />
+            <PlusIcon size={24} weight='bold' />
           )}
         </animated.button>
       </animated.div>

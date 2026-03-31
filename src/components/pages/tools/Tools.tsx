@@ -1,6 +1,6 @@
 import { useNavigate } from '@tanstack/react-router';
 import { animated, useTrail } from '@react-spring/web';
-import { ArrowUpRight } from '@phosphor-icons/react';
+import { ArrowUpRightIcon } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { ROUTES } from '@constants/router';
 import { useInView } from '@utils/animations/springVariants';
@@ -21,22 +21,22 @@ interface ToolItem {
 
 const TOOLS: ToolItem[] = [
   {
-    emoji: '🖼️',
-    titleKey: 'tools.items.gallery.title',
-    descriptionKey: 'tools.items.gallery.description',
-    route: ROUTES.TOOLS.GALLERY,
-    colSpan: 8,
-    height: 'h-[500px]',
-    techLabelKey: 'tools.items.gallery.techLabel',
-  },
-  {
     image: '/images/three-kingdoms/logo.jpg',
     titleKey: 'tools.items.threeKingdoms.title',
     descriptionKey: 'tools.items.threeKingdoms.description',
     route: ROUTES.TOOLS.THREE_KINGDOMS,
-    colSpan: 4,
+    colSpan: 8,
     height: 'h-[500px]',
     techLabelKey: 'tools.items.threeKingdoms.techLabel',
+  },
+  {
+    emoji: '🖼️',
+    titleKey: 'tools.items.gallery.title',
+    descriptionKey: 'tools.items.gallery.description',
+    route: ROUTES.TOOLS.GALLERY,
+    colSpan: 4,
+    height: 'h-[500px]',
+    techLabelKey: 'tools.items.gallery.techLabel',
   },
   {
     emoji: '🤖',
@@ -152,7 +152,7 @@ export const Tools = () => {
               <div className='mt-6 flex gap-4'>
                 <span className='px-6 py-2 bg-ct-secondary text-ct-on-secondary text-xs font-bold rounded inline-flex items-center gap-2 group-hover:shadow-[0_0_20px_rgba(78,222,163,0.3)] transition-shadow'>
                   {t('tools.explore')}
-                  <ArrowUpRight size={14} weight='bold' />
+                  <ArrowUpRightIcon size={14} weight='bold' />
                 </span>
                 <span className='text-ct-outline-variant flex items-center gap-2 text-xs'>
                   {'// '}
@@ -178,7 +178,7 @@ export const Tools = () => {
             href='#contact'
             className='w-16 h-16 rounded-full bg-primary-main text-ct-on-primary flex items-center justify-center hover:scale-110 transition-transform flex-shrink-0'
           >
-            <ArrowUpRight size={24} weight='bold' />
+            <ArrowUpRightIcon size={24} weight='bold' />
           </a>
         </animated.div>
       </div>

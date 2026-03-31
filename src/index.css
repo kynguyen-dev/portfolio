@@ -2,8 +2,6 @@
 @import '@fontsource-variable/noto-serif';
 @import '@fontsource-variable/space-grotesk';
 
-@custom-variant dark (&:is(.dark *));
-
 /* ─────────────────────────────────────────────
    The Dual Theme System
    Light: The Pristine Blueprint (Clinical High-Tech)
@@ -196,14 +194,6 @@ body {
     font-family: var(--font-sans);
     background-color: var(--color-ct-bg);
     color: var(--color-ct-on-surface);
-    @apply font-sans;
-  }
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-    overflow-x: hidden;
   }
 }
 
@@ -342,4 +332,21 @@ body {
 
 .animate-meteor {
   animation: meteor 5s linear infinite;
+}
+
+@keyframes aurora {
+  from {
+    background-position:
+      50% 50%,
+      50% 50%;
+  }
+  to {
+    background-position:
+      350% 50%,
+      350% 50%;
+  }
+}
+
+.animate-aurora {
+  animation: aurora 60s linear infinite;
 }

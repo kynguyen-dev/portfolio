@@ -1,4 +1,4 @@
-import { Terminal, Code, Construction } from 'lucide-react';
+import { TerminalIcon, CodeIcon, WrenchIcon } from '@phosphor-icons/react';
 import { animated, useTrail } from '@react-spring/web';
 import { GradientPaper } from '@components/customs/paper/GradientPaper.tsx';
 import { PFGradientTypography, PFTypography } from '@components/core';
@@ -27,7 +27,7 @@ interface SkillsDef {
 const skillDefs: SkillsDef[] = [
   {
     titleKey: 'profile.backEndDeveloper',
-    icon: <Terminal className='w-12 h-12 text-primary-light' />,
+    icon: <TerminalIcon className='w-12 h-12 text-primary-light' />,
     quoteKey: 'profile.backEndQuote',
     highlights: [
       { labelKey: 'profile.enjoyCoding', items: ['Java', 'TypeScript'] },
@@ -51,7 +51,7 @@ const skillDefs: SkillsDef[] = [
   },
   {
     titleKey: 'profile.frontEndDeveloper',
-    icon: <Code className='w-12 h-12 text-primary-light' />,
+    icon: <CodeIcon className='w-12 h-12 text-primary-light' />,
     quoteKey: 'profile.frontEndQuote',
     highlights: [
       { labelKey: 'profile.languages', items: ['HTML', 'CSS', 'TypeScript'] },
@@ -78,14 +78,14 @@ const skillDefs: SkillsDef[] = [
   },
   {
     titleKey: 'profile.tools',
-    icon: <Construction className='w-12 h-12 text-primary-light' />,
+    icon: <WrenchIcon className='w-12 h-12 text-primary-light' />,
     quoteKey: 'profile.toolEndQuote',
     highlights: [
       { labelKey: 'profile.methods', items: ['Scrum/Agile'] },
       {
         labelKey: 'profile.toolsIUse',
         items: [
-          'Visual Studio Code',
+          'Visual Studio CodeIcon',
           'WebStorm',
           'IntelliJ IDE',
           'Postman',

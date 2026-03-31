@@ -1,5 +1,5 @@
 import { animated, useTransition, useSpring } from '@react-spring/web';
-import { X, ExternalLink } from 'lucide-react';
+import { XIcon, ArrowSquareOutIcon } from '@phosphor-icons/react';
 import { PFTypography } from '@components/core';
 import { useEffect, useCallback, useState } from 'react';
 import { useThemeMode } from '@contexts/theme-mode';
@@ -88,7 +88,7 @@ export const Lightbox = ({ photo, onClose }: LightboxProps) => {
               onMouseLeave={() => setCloseHovered(false)}
               onClick={onClose}
             >
-              <X size={20} />
+              <XIcon size={20} />
             </animated.button>
 
             <div
@@ -132,7 +132,7 @@ export const Lightbox = ({ photo, onClose }: LightboxProps) => {
                   className='flex items-center hover:opacity-80'
                   style={{ color: isLight ? '#B8891F' : '#F5D060' }}
                 >
-                  <ExternalLink size={16} />
+                  <ArrowSquareOutIcon size={16} />
                 </a>
               </div>
             </div>

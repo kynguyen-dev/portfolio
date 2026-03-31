@@ -1,8 +1,8 @@
 'use client';
-import React, { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useOutsideClick } from '@hooks/use-outside-click';
-import { X } from '@phosphor-icons/react';
+import { XIcon } from '@phosphor-icons/react';
 import { Portal } from '@components/core';
 import { cn } from '@utils/core/cn';
 
@@ -73,7 +73,7 @@ export function ExpandableWorkCard({
                 className='flex absolute top-6 right-6 lg:hidden items-center justify-center bg-ct-surface-container rounded-full h-8 w-8 border border-ct-outline/20'
                 onClick={() => setActive(null)}
               >
-                <X weight='bold' />
+                <XIcon weight='bold' />
               </motion.button>
               <motion.div
                 layoutId={`card-${entry.company}-${id}`}
@@ -194,14 +194,16 @@ export function ExpandableWorkCard({
       <motion.div
         layoutId={`card-${entry.company}-${id}`}
         onClick={() => setActive(entry)}
-        className='w-[90vw] md:w-[840px] shrink-0 relative z-10 cursor-pointer'
-        style={{
-          // Follow the S-curve logic from the parent
-          transform: `translateY(${index % 2 === 0 ? -100 : 100}px)`,
-        }}
+        className={cn(
+          'w-full 2xl:w-[840px] shrink-0 relative z-10 cursor-pointer',
+          // S-curve offset only on 2xl+ horizontal scroll
+          index % 2 === 0
+            ? '2xl:-translate-y-[100px]'
+            : '2xl:translate-y-[100px]'
+        )}
       >
         <div
-          className='glass-panel p-10 md:p-14 rounded-3xl border-2 border-primary-main/40 shadow-[0_0_30px_rgba(208,188,255,0.15)] relative overflow-hidden hover:border-primary-main/80 transition-all duration-500 group'
+          className='glass-panel p-6 md:p-14 rounded-3xl border-2 border-primary-main/40 shadow-[0_0_30px_rgba(208,188,255,0.15)] relative overflow-hidden hover:border-primary-main/80 transition-all duration-500 group'
           style={{
             animation: `float 6s ease-in-out infinite${
               index % 2 !== 0 ? ' -3s' : ''
@@ -252,7 +254,7 @@ export function ExpandableWorkCard({
           </div>
 
           <div className='mt-8 text-xs font-black text-ct-secondary tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2'>
-            Click to Expand <X weight='bold' className='rotate-45' />
+            Click to Expand <XIcon weight='bold' className='rotate-45' />
           </div>
         </div>
       </motion.div>

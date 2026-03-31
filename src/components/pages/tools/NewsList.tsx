@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import {
-  CaretLeft,
-  NewspaperClipping,
-  CircleNotch,
+  CaretLeftIcon,
+  NewspaperClippingIcon,
+  CircleNotchIcon,
 } from '@phosphor-icons/react';
 import ToolPageLayout from './ToolPageLayout';
 import { PFTypography } from '@components/core';
@@ -162,7 +162,7 @@ const NewsList = () => {
             href='/tools/market-insights'
             className='inline-flex items-center gap-2 font-black text-[10px] tracking-[0.2em] uppercase text-ct-secondary hover:text-ct-secondary-light transition-colors group'
           >
-            <CaretLeft
+            <CaretLeftIcon
               size={14}
               weight='bold'
               className='group-hover:-translate-x-1 transition-transform'
@@ -196,7 +196,7 @@ const NewsList = () => {
                   )}
                   <div className='flex-1 flex flex-col gap-4 p-6'>
                     <div className='flex items-center gap-2 text-ct-secondary opacity-60'>
-                      <NewspaperClipping size={16} weight='duotone' />
+                      <NewspaperClippingIcon size={16} weight='duotone' />
                       <span className='text-[10px] font-black tracking-widest uppercase'>
                         {item.source}
                       </span>
@@ -240,7 +240,7 @@ const NewsList = () => {
         >
           {hasMore && news.length > 0 && (
             <>
-              <CircleNotch
+              <CircleNotchIcon
                 className='w-8 h-8 text-ct-secondary animate-spin'
                 weight='bold'
               />

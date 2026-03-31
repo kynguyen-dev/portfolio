@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Translate } from '@phosphor-icons/react';
+import { TranslateIcon } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { SUPPORTED_LANGUAGES } from '@i18n';
 import { cn } from '@lib/utils';
@@ -33,7 +33,10 @@ export const LanguageSwitcher = () => {
         aria-label='Change language'
         className='flex items-center gap-2 cursor-pointer text-[var(--color-text-primary)] px-2 py-1 rounded transition-colors hover:bg-[var(--color-primary-light)]/10'
       >
-        <Translate size={16} className='text-[var(--color-primary-light)]' />
+        <TranslateIcon
+          size={16}
+          className='text-[var(--color-primary-light)]'
+        />
         <span className='text-sm font-semibold text-[var(--color-primary-light)]'>
           {currentLang.flag} {currentLang.label}
         </span>

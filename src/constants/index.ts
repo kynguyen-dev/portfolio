@@ -80,6 +80,7 @@ export enum APP_INFORMATION {
   PHONE_NUMBER_TO = 'tel:+84868772887',
   GITHUB_URL = 'https://github.com/kynguyen-dev',
   LINKEDIN_URL = 'https://www.linkedin.com/in/kynguyen-dev',
+  RESUME_URL = '/resume/FULL_STACK_DEVELOPER_NGUYEN_TRUONG_KY_CV.pdf',
 }
 
 export const GITHUB = 'github';

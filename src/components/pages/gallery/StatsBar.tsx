@@ -1,5 +1,5 @@
 import { animated, useSpring } from '@react-spring/web';
-import { Gauge, Cpu, Image, Eye } from 'lucide-react';
+import { GaugeIcon, CpuIcon, ImageIcon, EyeIcon } from '@phosphor-icons/react';
 import { useThemeMode } from '@contexts/theme-mode';
 
 interface StatsBarProps {
@@ -28,23 +28,23 @@ export const StatsBar = ({
 
   const stats = [
     {
-      icon: <Image size={14} color={iconColor} />,
+      icon: <ImageIcon size={14} color={iconColor} />,
       label: 'Total',
       value: totalPhotos.toLocaleString(),
     },
     {
-      icon: <Eye size={14} color={iconColor} />,
+      icon: <EyeIcon size={14} color={iconColor} />,
       label: 'In DOM',
       value: renderedPhotos.toString(),
     },
     {
-      icon: <Gauge size={14} color={iconColor} />,
+      icon: <GaugeIcon size={14} color={iconColor} />,
       label: 'FPS',
       value: fps.toString(),
       color: fpsColor,
     },
     {
-      icon: <Cpu size={14} color={iconColor} />,
+      icon: <CpuIcon size={14} color={iconColor} />,
       label: 'DOM Saved',
       value: memSaved,
       color: '#4caf50',

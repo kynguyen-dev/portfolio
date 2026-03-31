@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   motion,
   useScroll,
@@ -13,6 +13,9 @@ import {
   Terminal,
   ImagesBadge,
   ExpandableWorkCard,
+  TracingBeam,
+  SparklesCore,
+  AuroraBackground,
 } from '@components/customs/aceternity';
 import { ContactDropdown } from '@components/customs/ContactDropdown';
 
@@ -43,6 +46,16 @@ export const Intro = () => {
   const workHistory = t('intro.workHistory', {
     returnObjects: true,
   }) as TimelineEntry[];
+
+  /* ─── Detect 2xl+ for scroll-driven animations ─── */
+  const [isAbove2xl, setIsAbove2xl] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1536px)');
+    setIsAbove2xl(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsAbove2xl(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
 
   /* ─── Scroll & Parallax Setup ─── */
   const containerRef = useRef<HTMLDivElement>(null);
@@ -117,24 +130,55 @@ export const Intro = () => {
       style={{ overflowX: 'clip' }}
     >
       {/* 500vh container houses both Hero and Tactical Path */}
-      <div ref={containerRef} className='h-[500vh] relative antialiased'>
-        {/* Sticky viewport container */}
-        <div className='sticky top-0 h-screen w-full flex flex-col justify-center [perspective:1000px] overflow-hidden'>
+      <div ref={containerRef} className='2xl:h-[500vh] relative antialiased'>
+        {/* Anchor point for Desktop Experience nav link */}
+        <div
+          id={isAbove2xl ? 'path' : undefined}
+          className='hidden 2xl:block absolute w-full pointer-events-none'
+          style={{ top: '80vh' }}
+        />
+        {/* Sticky viewport container — only sticky on 2xl+ for horizontal scroll */}
+        <div className='h-screen 2xl:sticky 2xl:top-0 w-full flex flex-col justify-center [perspective:1000px] overflow-hidden'>
+          {/* Aurora Background — ambient purple/mint glow */}
+          <AuroraBackground
+            className='absolute inset-0 z-0 pointer-events-none'
+            showRadialGradient={true}
+          >
+            <></>
+          </AuroraBackground>
           {/* Topology Grid Background */}
-          <div className='absolute inset-0 topology-grid opacity-20 pointer-events-none' />
+          <div className='absolute inset-0 topology-grid opacity-20 pointer-events-none z-[1]' />
+
+          {/* Sparkles ambient background */}
+          <div className='absolute inset-0 z-20 pointer-events-none'>
+            <SparklesCore
+              id='hero-sparkles'
+              background='transparent'
+              minSize={0.4}
+              maxSize={1.4}
+              particleDensity={80}
+              className='w-full h-full'
+              particleColor='#d0bcff'
+              speed={2}
+            />
+          </div>
 
           {/* =========================================
               HERO FOREGROUND LAYER
               ========================================= */}
           <motion.div
-            style={{
-              opacity: heroOpacity,
-              y: heroTranslateY,
-              display: heroDisplay,
-            }}
-            className='absolute inset-0 z-30 flex justify-center items-center px-4 md:px-8'
+            style={
+              isAbove2xl
+                ? {
+                    opacity: heroOpacity,
+                    y: heroTranslateY,
+                    display: heroDisplay,
+                  }
+                : undefined
+            }
+            className='absolute inset-0 z-30 flex flex-col items-center pt-24 md:pt-32 pb-8 px-4 md:px-8'
           >
-            <div className='w-full max-w-4xl flex flex-col items-center mx-auto relative'>
+            <div className='w-full max-w-4xl flex flex-col items-center mx-auto relative px-2 my-auto'>
               {/* Floating Data Node */}
               <animated.div
                 style={statusSpring}
@@ -151,22 +195,25 @@ export const Intro = () => {
 
               {/* Hero Headline */}
               <animated.div style={statusSpring} className='text-center mb-2'>
-                <span className='inline-flex items-center gap-2 px-4 py-1.5 bg-ct-secondary/5 border border-ct-secondary/15 rounded-full text-ct-secondary text-[11px] font-label-grotesk font-bold tracking-[0.2em] uppercase'>
+                <span className='inline-flex items-center gap-2 px-3 py-1.5 bg-ct-secondary/5 border border-ct-secondary/15 rounded-full text-ct-secondary text-[10px] md:text-[11px] font-label-grotesk font-bold tracking-[0.15em] md:tracking-[0.2em] uppercase'>
                   <span className='w-1.5 h-1.5 rounded-full bg-ct-secondary animate-pulse' />
                   {t('intro.establishingConnection')}
                 </span>
               </animated.div>
 
-              <animated.div style={headingSpring} className='text-center mb-10'>
-                <h1 className='font-serif-display text-3xl md:text-5xl lg:text-6xl text-ct-secondary tracking-tighter leading-none mb-4'>
+              <animated.div
+                style={headingSpring}
+                className='text-center mb-4 md:mb-6 lg:mb-10'
+              >
+                <h1 className='font-serif-display text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl text-ct-secondary tracking-tighter leading-tight md:leading-none mb-2 md:mb-3 lg:mb-4 break-words'>
                   {'> '}
                   {t('intro.heroTitle')}
-                  <br className='hidden md:block' />
-                  <span className='text-ct-on-surface opacity-90 italic text-2xl md:text-4xl lg:text-5xl'>
+                  <br />
+                  <span className='text-ct-on-surface opacity-90 italic text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl'>
                     {t('intro.heroTitleAccent')}
                   </span>
                 </h1>
-                <p className='max-w-2xl mx-auto text-base md:text-lg text-ct-on-surface-variant/60 font-label-grotesk tracking-wide'>
+                <p className='max-w-2xl mx-auto text-sm md:text-base lg:text-lg text-ct-on-surface-variant/60 font-label-grotesk tracking-wide px-2 md:px-0'>
                   {t('intro.heroSubtitle')}
                 </p>
               </animated.div>
@@ -211,7 +258,7 @@ export const Intro = () => {
               {/* CTA Buttons */}
               <animated.div
                 style={ctaSpring}
-                className='mt-10 flex flex-col md:flex-row items-center justify-center gap-6'
+                className='mt-4 md:mt-6 lg:mt-10 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 w-full'
               >
                 <ContactDropdown>
                   <ImagesBadge
@@ -256,7 +303,7 @@ export const Intro = () => {
               translateY,
               opacity: pathOpacity,
             }}
-            className='absolute inset-0 z-10 w-full h-full flex items-center [transform-style:preserve-3d]'
+            className='absolute inset-0 z-10 w-full h-full hidden 2xl:flex items-center [transform-style:preserve-3d]'
           >
             {/* Tactical Path Heading */}
             <motion.div
@@ -352,6 +399,31 @@ export const Intro = () => {
             </div>
           </motion.div>
         </div>
+      </div>
+
+      {/* ─── Mobile Tactical Path (Tracing Beam) ─── */}
+      <div
+        id={!isAbove2xl ? 'path' : undefined}
+        className='2xl:hidden px-6 pt-16 pb-8 relative z-10'
+      >
+        <h2 className='text-ct-secondary font-label-grotesk text-xs font-black tracking-[0.3em] uppercase mb-2'>
+          01 {'// '}
+          {t('workExperience.sectionTitle')}
+        </h2>
+        <h3 className='font-serif-display text-3xl text-ct-on-surface mb-10'>
+          {t('workExperience.heading')}
+        </h3>
+        <TracingBeam>
+          <div className='flex flex-col gap-8 pl-8'>
+            {workHistory.map((entry, idx) => (
+              <ExpandableWorkCard
+                key={`${entry.company}-${entry.period}`}
+                entry={entry}
+                index={idx}
+              />
+            ))}
+          </div>
+        </TracingBeam>
       </div>
 
       {/* ─── Accent Cards Grid ─── */}

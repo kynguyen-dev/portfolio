@@ -4,7 +4,7 @@ import {
   animated,
   useScroll,
   config,
-  SpringValue,
+  Interpolation,
 } from '@react-spring/web';
 import { cn } from '@utils/core/cn';
 
@@ -35,6 +35,7 @@ export const HeroParallax = ({
 }: HeroParallaxProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
+    // @ts-expect-error container type discrepancy
     container: ref,
     default: {
       immediate: true,
@@ -132,7 +133,8 @@ export const HeroParallax = ({
 
 interface ProductCardProps {
   product: HeroParallaxProduct;
-  translate: SpringValue<number>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  translate: Interpolation<number, any>;
 }
 
 const ProductCard = ({ product, translate }: ProductCardProps) => {
@@ -195,7 +197,8 @@ export const GRADIENT_PLACEHOLDERS = [
 
 interface GradientCardProps {
   product: HeroParallaxProduct;
-  translate: SpringValue<number>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  translate: Interpolation<number, any>;
   gradient: string;
 }
 
@@ -252,6 +255,7 @@ export const HeroParallaxWithGradients = ({
 }: HeroParallaxProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
+    // @ts-expect-error container type discrepancy
     container: ref,
     default: {
       immediate: true,

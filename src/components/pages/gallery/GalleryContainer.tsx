@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeftIcon } from '@phosphor-icons/react';
 import { useNavigate } from '@tanstack/react-router';
 import { PFGradientTypography, PFTypography } from '@components/core';
 import { SunriseBackground } from '@components/customs/backgrounds/SunriseBackground';
@@ -74,7 +74,7 @@ export const GalleryContainer = () => {
             title='Back to portfolio'
             className='flex items-center justify-center w-10 h-10 rounded-full text-ct-on-surface bg-ct-surface-container/80 backdrop-blur-xl border border-ct-outline-variant/20 hover:bg-ct-surface-container-high/90 transition-colors cursor-pointer'
           >
-            <ArrowLeft size={20} />
+            <ArrowLeftIcon size={20} />
           </button>
         </div>
 

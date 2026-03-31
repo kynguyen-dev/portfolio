@@ -1,6 +1,6 @@
 import { animated, useSpring } from '@react-spring/web';
 import { useTranslation } from 'react-i18next';
-import { ArrowRight } from '@phosphor-icons/react';
+import { ArrowRightIcon } from '@phosphor-icons/react';
 import { useInView } from '@utils/animations/springVariants';
 import { ImagesBadge } from '@components/customs/aceternity';
 import { ContactDropdown } from '@components/customs/ContactDropdown';
@@ -58,7 +58,7 @@ export const ContactForm = () => {
               className='inline-flex items-center gap-4 bg-ct-secondary text-ct-on-secondary px-10 py-5 rounded-full font-bold text-xl transition-all duration-300 shadow-[0_10px_40px_rgba(78,222,163,0.2)] group cursor-pointer no-underline'
             >
               {t('contact.ctaButton')}
-              <ArrowRight
+              <ArrowRightIcon
                 className='group-hover:translate-x-2 transition-transform'
                 size={24}
                 weight='bold'

@@ -12,10 +12,10 @@ export default defineConfig(_configEnv => {
             'import.meta.env.APP_VERSION': JSON.stringify(pkg.version),
         },
         server: {
-            port: 8000,
+            port: 3000,
         },
         preview: {
-            port: 8000,
+            port: 3000,
         },
         resolve: {
             alias: {

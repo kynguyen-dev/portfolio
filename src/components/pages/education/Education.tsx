@@ -1,5 +1,5 @@
 import { animated, useSpring } from '@react-spring/web';
-import { GraduationCap } from 'lucide-react';
+import { GraduationCapIcon } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { PFGradientTypography, PFTypography } from '@components/core';
 import { APP_THEMES, APP_TYPOGRAPHIES } from '@constants';
@@ -47,7 +47,7 @@ export const Education = () => {
           <animated.div key={edu.institution} ref={ref} style={slideSpring}>
             <div className='w-full max-w-[700px] glass rounded-2xl p-8 transition-transform duration-200 hover:scale-[1.02]'>
               <div className='flex flex-col sm:flex-row sm:items-center gap-4 mb-4 flex-wrap'>
-                <GraduationCap className='text-primary-light' size={36} />
+                <GraduationCapIcon className='text-primary-light' size={36} />
                 <div className='flex-1'>
                   <PFTypography
                     variant='h6'

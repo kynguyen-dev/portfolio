@@ -10,33 +10,33 @@ import { useTranslation } from 'react-i18next';
 import { useInView } from '@utils/animations/springVariants';
 import { cn } from '@utils/core/cn';
 import {
-  CodeBlock,
-  Database,
-  GearSix,
-  Rocket,
-  GitBranch,
-  Check,
-  ArrowsClockwise,
-  BookOpen,
-  Kanban,
-  Atom,
-  Globe,
-  FileTs,
-  AngularLogo,
-  Wind,
-  Palette,
-  Leaf,
-  FileCss,
-  CloudArrowUp,
-  Tree,
-  TestTube,
-  Package,
-  Bug,
-  TerminalWindow,
-  GitlabLogo,
-  Timer,
-  FigmaLogo,
-  Browsers,
+  CodeBlockIcon,
+  DatabaseIcon,
+  GearSixIcon,
+  RocketIcon,
+  GitBranchIcon,
+  CheckIcon,
+  ArrowsClockwiseIcon,
+  BookOpenIcon,
+  KanbanIcon,
+  AtomIcon,
+  GlobeIcon,
+  FileTsIcon,
+  AngularLogoIcon,
+  WindIcon,
+  PaletteIcon,
+  LeafIcon,
+  FileCssIcon,
+  CloudArrowUpIcon,
+  TreeIcon,
+  TestTubeIcon,
+  PackageIcon,
+  BugIcon,
+  TerminalWindowIcon,
+  GitlabLogoIcon,
+  TimerIcon,
+  FigmaLogoIcon,
+  BrowsersIcon,
 } from '@phosphor-icons/react';
 import { GlareCard } from '@components/customs/aceternity';
 import { getYearsOfExperience } from '@utils/core/career';
@@ -52,7 +52,6 @@ interface ArsenalPanel {
   icon: ReactNode;
   accentClass: string;
   accentGradient: string;
-  glareColor: string;
   chipStyle: string;
   skills: SkillTag[];
 }
@@ -60,79 +59,90 @@ interface ArsenalPanel {
 const arsenalPanels: ArsenalPanel[] = [
   {
     titleKey: 'skills.coreFrontend',
-    icon: <CodeBlock weight='duotone' />,
+    icon: <CodeBlockIcon weight='duotone' />,
     accentClass: 'text-ct-secondary',
     accentGradient: 'from-ct-secondary/80 to-ct-secondary/30',
-    glareColor: 'rgba(78, 222, 163, 0.10)',
     chipStyle:
       'bg-ct-secondary/8 text-ct-secondary border-ct-secondary/15 hover:bg-ct-secondary/15',
     skills: [
-      { label: 'React (3+ years)', icon: <Atom size={12} weight='bold' /> },
-      { label: 'Next.js (SSR)', icon: <Globe size={12} weight='bold' /> },
-      { label: 'TypeScript', icon: <FileTs size={12} weight='bold' /> },
-      { label: 'AngularJS', icon: <AngularLogo size={12} weight='bold' /> },
-      { label: 'Tailwind CSS', icon: <Wind size={12} weight='bold' /> },
-      { label: 'MUI / Ant Design', icon: <Palette size={12} weight='bold' /> },
+      { label: 'React (3+ years)', icon: <AtomIcon size={12} weight='bold' /> },
+      { label: 'Next.js (SSR)', icon: <GlobeIcon size={12} weight='bold' /> },
+      { label: 'TypeScript', icon: <FileTsIcon size={12} weight='bold' /> },
+      { label: 'AngularJS', icon: <AngularLogoIcon size={12} weight='bold' /> },
+      { label: 'Tailwind CSS', icon: <WindIcon size={12} weight='bold' /> },
+      {
+        label: 'MUI / Ant Design',
+        icon: <PaletteIcon size={12} weight='bold' />,
+      },
     ],
   },
   {
     titleKey: 'skills.dataArchitecture',
-    icon: <Database weight='duotone' />,
+    icon: <DatabaseIcon weight='duotone' />,
     accentClass: 'text-primary-main',
     accentGradient: 'from-primary-main/80 to-primary-main/30',
-    glareColor: 'rgba(208, 188, 255, 0.10)',
     chipStyle:
       'bg-primary-main/8 text-primary-main border-primary-main/15 hover:bg-primary-main/15',
     skills: [
-      { label: 'Java (Spring)', icon: <Leaf size={12} weight='bold' /> },
-      { label: 'PHP (Laravel)', icon: <FileCss size={12} weight='bold' /> },
+      { label: 'Java (Spring)', icon: <LeafIcon size={12} weight='bold' /> },
+      { label: 'PHP (Laravel)', icon: <FileCssIcon size={12} weight='bold' /> },
       {
         label: 'RESTful API',
-        icon: <ArrowsClockwise size={12} weight='bold' />,
+        icon: <ArrowsClockwiseIcon size={12} weight='bold' />,
       },
-      { label: 'PostgreSQL', icon: <Database size={12} weight='bold' /> },
-      { label: 'MongoDB', icon: <Tree size={12} weight='bold' /> },
-      { label: 'Docker / MinIO', icon: <Package size={12} weight='bold' /> },
+      { label: 'PostgreSQL', icon: <DatabaseIcon size={12} weight='bold' /> },
+      { label: 'MongoDB', icon: <TreeIcon size={12} weight='bold' /> },
+      {
+        label: 'Docker / MinIO',
+        icon: <PackageIcon size={12} weight='bold' />,
+      },
     ],
   },
   {
     titleKey: 'skills.toolingOps',
-    icon: <GearSix weight='duotone' />,
+    icon: <GearSixIcon weight='duotone' />,
     accentClass: 'text-ct-secondary',
     accentGradient: 'from-ct-secondary/80 to-ct-secondary/30',
-    glareColor: 'rgba(78, 222, 163, 0.10)',
     chipStyle:
       'bg-ct-secondary/8 text-ct-secondary border-ct-secondary/15 hover:bg-ct-secondary/15',
     skills: [
-      { label: 'AWS / Vercel', icon: <CloudArrowUp size={12} weight='bold' /> },
+      {
+        label: 'AWS / Vercel',
+        icon: <CloudArrowUpIcon size={12} weight='bold' />,
+      },
       {
         label: 'GitLab / GitHub',
-        icon: <GitlabLogo size={12} weight='bold' />,
+        icon: <GitlabLogoIcon size={12} weight='bold' />,
       },
-      { label: 'ESLint / Prettier', icon: <Bug size={12} weight='bold' /> },
-      { label: 'Vite / Gradle', icon: <Timer size={12} weight='bold' /> },
+      { label: 'ESLint / Prettier', icon: <BugIcon size={12} weight='bold' /> },
+      { label: 'Vite / Gradle', icon: <TimerIcon size={12} weight='bold' /> },
       {
         label: 'Postman / Insomnia',
-        icon: <TerminalWindow size={12} weight='bold' />,
+        icon: <TerminalWindowIcon size={12} weight='bold' />,
       },
-      { label: 'Figma / Notion', icon: <FigmaLogo size={12} weight='bold' /> },
+      {
+        label: 'Figma / Notion',
+        icon: <FigmaLogoIcon size={12} weight='bold' />,
+      },
     ],
   },
   {
     titleKey: 'skills.execution',
-    icon: <Rocket weight='duotone' />,
+    icon: <RocketIcon weight='duotone' />,
     accentClass: 'text-primary-main',
     accentGradient: 'from-primary-main/80 to-primary-main/30',
-    glareColor: 'rgba(208, 188, 255, 0.10)',
     chipStyle:
       'bg-primary-main/8 text-primary-main border-primary-main/15 hover:bg-primary-main/15',
     skills: [
-      { label: 'Agile / Scrum', icon: <Kanban size={12} weight='bold' /> },
-      { label: 'CI/CD Pipelines', icon: <GitBranch size={12} weight='bold' /> },
-      { label: 'Jest / RTL', icon: <TestTube size={12} weight='bold' /> },
-      { label: 'Storybook', icon: <Browsers size={12} weight='bold' /> },
-      { label: 'Clean Code', icon: <Check size={12} weight='bold' /> },
-      { label: 'Code Review', icon: <BookOpen size={12} weight='bold' /> },
+      { label: 'Agile / Scrum', icon: <KanbanIcon size={12} weight='bold' /> },
+      {
+        label: 'CI/CD Pipelines',
+        icon: <GitBranchIcon size={12} weight='bold' />,
+      },
+      { label: 'Jest / RTL', icon: <TestTubeIcon size={12} weight='bold' /> },
+      { label: 'Storybook', icon: <BrowsersIcon size={12} weight='bold' /> },
+      { label: 'Clean Code', icon: <CheckIcon size={12} weight='bold' /> },
+      { label: 'Code Review', icon: <BookOpenIcon size={12} weight='bold' /> },
     ],
   },
 ];
@@ -350,7 +360,7 @@ export const Skills = () => {
                     }}
                     className={isWide ? 'lg:col-span-2' : ''}
                   >
-                    <GlareCard glareColor={panel.glareColor} className='h-full'>
+                    <GlareCard className='h-full'>
                       <ArsenalCardContent panel={panel} panelIdx={panelIdx} />
                     </GlareCard>
                   </animated.div>
