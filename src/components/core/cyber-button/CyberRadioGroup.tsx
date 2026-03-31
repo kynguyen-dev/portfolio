@@ -1,39 +1,24 @@
 import { InputHTMLAttributes } from 'react';
 import { cn } from '@utils/core/cn';
-import styles from './CyberButton.module.css';
-
-/* ─────────────────────────────────────────────
-   CyberRadio — Glitch-punk Radio Button
-   ───────────────────────────────────────────── */
+import { CyberButton } from './CyberButton';
 
 export interface CyberRadioOption {
-  /** Unique value for this option */
   value: string;
-  /** Display label */
   label: string;
-  /** Glitch text overlay. Defaults to label if not provided */
   glitchText?: string;
-  /** Small corner tag (e.g. "r1") */
   tag?: string;
 }
 
 export interface CyberRadioGroupProps {
-  /** The radio group name (shared across all radios) */
   name: string;
-  /** List of options */
   options: CyberRadioOption[];
-  /** Currently selected value */
   value?: string;
-  /** Change handler */
   onChange?: (value: string) => void;
-  /** Size variant */
   size?: 'sm' | 'md' | 'lg';
-  /** Additional className for the group container */
   className?: string;
-  /** Extra props forwarded to each hidden radio input */
   inputProps?: Omit<
     InputHTMLAttributes<HTMLInputElement>,
-    'type' | 'name' | 'value' | 'checked' | 'onChange' | 'className'
+    'type' | 'name' | 'value' | 'checked' | 'onChange' | 'className' | 'onClick'
   >;
 }
 
@@ -44,22 +29,18 @@ export const CyberRadioGroup = ({
   onChange,
   size = 'md',
   className,
+  inputProps,
 }: CyberRadioGroupProps) => {
-  const sizeClass = size !== 'md' ? styles[`btn--${size}`] : '';
-  const wrapperSize =
-    size === 'sm'
-      ? styles['wrapper--sm']
-      : size === 'lg'
-        ? styles['wrapper--lg']
-        : '';
-
   return (
-    <div className={cn(styles.radioGroup, className)}>
+    <div className={cn('flex flex-row flex-wrap gap-0', className)}>
       {options.map(opt => {
         const isChecked = value === opt.value;
 
         return (
-          <div key={opt.value} className={cn(styles.wrapper, wrapperSize)}>
+          <div
+            key={opt.value}
+            className='relative flex items-center justify-center'
+          >
             <input
               type='radio'
               id={`${name}-${opt.value}`}
@@ -67,19 +48,20 @@ export const CyberRadioGroup = ({
               value={opt.value}
               checked={isChecked}
               onChange={() => onChange?.(opt.value)}
-              className={styles.hiddenInput}
+              className='absolute inset-0 z-20 m-0 h-full w-full cursor-pointer opacity-0'
+              {...inputProps}
             />
-            <div className={cn(styles.btn, sizeClass)}>
+
+            <CyberButton
+              type='button'
+              tabIndex={-1}
+              active={isChecked}
+              size={size}
+              tag={opt.tag}
+              glitchText={opt.glitchText}
+            >
               {opt.label}
-              <span aria-hidden='true' className={styles.glitch}>
-                {opt.glitchText ?? opt.label}
-              </span>
-              {opt.tag && (
-                <span className={styles.tag} aria-hidden='true'>
-                  {opt.tag}
-                </span>
-              )}
-            </div>
+            </CyberButton>
           </div>
         );
       })}

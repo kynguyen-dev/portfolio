@@ -131,6 +131,96 @@ body {
 }
 
 @theme {
+  --cyber-clip: polygon(
+    11% 0,
+    95% 0,
+    100% 25%,
+    90% 90%,
+    95% 90%,
+    85% 90%,
+    85% 100%,
+    7% 100%,
+    0 80%
+  );
+  --cyber-clip-1: polygon(
+    0 2%,
+    100% 2%,
+    100% 95%,
+    95% 95%,
+    95% 90%,
+    85% 90%,
+    85% 95%,
+    8% 95%,
+    0 70%
+  );
+  --cyber-clip-2: polygon(
+    0 78%,
+    100% 78%,
+    100% 100%,
+    95% 100%,
+    95% 90%,
+    85% 90%,
+    85% 100%,
+    8% 100%,
+    0 78%
+  );
+  --cyber-clip-3: polygon(
+    0 44%,
+    100% 44%,
+    100% 54%,
+    95% 54%,
+    95% 54%,
+    85% 54%,
+    85% 54%,
+    8% 54%,
+    0 54%
+  );
+  --cyber-clip-4: polygon(
+    0 0,
+    100% 0,
+    100% 0,
+    95% 0,
+    95% 0,
+    85% 0,
+    85% 0,
+    8% 0,
+    0 0
+  );
+  --cyber-clip-5: polygon(
+    0 0,
+    100% 0,
+    100% 0,
+    95% 0,
+    95% 0,
+    85% 0,
+    85% 0,
+    8% 0,
+    0 0
+  );
+  --cyber-clip-6: polygon(
+    0 40%,
+    100% 40%,
+    100% 85%,
+    95% 85%,
+    95% 85%,
+    85% 85%,
+    85% 85%,
+    8% 85%,
+    0 70%
+  );
+  --cyber-clip-7: polygon(
+    0 63%,
+    100% 63%,
+    100% 80%,
+    95% 80%,
+    95% 80%,
+    85% 80%,
+    85% 80%,
+    8% 80%,
+    0 70%
+  );
+  --cyber-shimmy: 5%;
+
   --color-primary-main: var(--sys-primary-main);
   --color-primary-light: var(--sys-primary-light);
   --color-primary-dark: var(--sys-primary-dark);
@@ -349,4 +439,77 @@ body {
 
 .animate-aurora {
   animation: aurora 60s linear infinite;
+}
+
+@keyframes cyber-glitch {
+  0% {
+    clip-path: var(--cyber-clip-1);
+  }
+  2%,
+  8% {
+    clip-path: var(--cyber-clip-2);
+    transform: translate(calc(var(--cyber-shimmy) * -1), 0);
+  }
+  6% {
+    clip-path: var(--cyber-clip-2);
+    transform: translate(calc(var(--cyber-shimmy) * 1), 0);
+  }
+  9% {
+    clip-path: var(--cyber-clip-2);
+    transform: translate(0, 0);
+  }
+  10% {
+    clip-path: var(--cyber-clip-3);
+    transform: translate(calc(var(--cyber-shimmy) * 1), 0);
+  }
+  13% {
+    clip-path: var(--cyber-clip-3);
+    transform: translate(0, 0);
+  }
+  14%,
+  21% {
+    clip-path: var(--cyber-clip-4);
+    transform: translate(calc(var(--cyber-shimmy) * 1), 0);
+  }
+  25% {
+    clip-path: var(--cyber-clip-5);
+    transform: translate(calc(var(--cyber-shimmy) * 1), 0);
+  }
+  30% {
+    clip-path: var(--cyber-clip-5);
+    transform: translate(calc(var(--cyber-shimmy) * -1), 0);
+  }
+  35%,
+  45% {
+    clip-path: var(--cyber-clip-6);
+    transform: translate(calc(var(--cyber-shimmy) * -1));
+  }
+  40% {
+    clip-path: var(--cyber-clip-6);
+    transform: translate(calc(var(--cyber-shimmy) * 1));
+  }
+  50% {
+    clip-path: var(--cyber-clip-6);
+    transform: translate(0, 0);
+  }
+  55% {
+    clip-path: var(--cyber-clip-7);
+    transform: translate(calc(var(--cyber-shimmy) * 1), 0);
+  }
+  60% {
+    clip-path: var(--cyber-clip-7);
+    transform: translate(0, 0);
+  }
+  31%,
+  61%,
+  100% {
+    clip-path: var(--cyber-clip-4);
+  }
+}
+
+.animate-cyber-glitch {
+  animation: cyber-glitch 2s infinite;
+}
+.animate-cyber-glitch-active {
+  animation: cyber-glitch 5s infinite;
 }
