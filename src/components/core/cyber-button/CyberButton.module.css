@@ -1,0 +1,357 @@
+/* ─────────────────────────────────────────────
+   CyberButton — Glitch-punk UI Component
+   Ported from stitch/radio.css prototype
+   ───────────────────────────────────────────── */
+
+/* ─── Wrapper (shared by radio + button mode) ─── */
+.wrapper {
+  position: relative;
+  height: 42px;
+  min-width: 100px;
+  margin: 3px;
+  display: inline-block;
+}
+
+.wrapper--sm {
+  height: 34px;
+  min-width: 72px;
+}
+
+.wrapper--lg {
+  height: 50px;
+  min-width: 130px;
+}
+
+/* ─── Hidden radio input ─── */
+.hiddenInput {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  cursor: pointer;
+  z-index: 10;
+  opacity: 0;
+}
+
+/* ─── The visible cyber btn surface ─── */
+.btn {
+  --cyber-primary: #ff184c;
+  --cyber-shadow: #fded00;
+  --cyber-color: white;
+  --cyber-font-size: 9px;
+  --cyber-shadow-secondary-hue: 60;
+  --cyber-shadow-secondary: hsl(var(--cyber-shadow-secondary-hue), 90%, 60%);
+  --cyber-clip: polygon(
+    11% 0,
+    95% 0,
+    100% 25%,
+    90% 90%,
+    95% 90%,
+    85% 90%,
+    85% 100%,
+    7% 100%,
+    0 80%
+  );
+  --cyber-border: 5px;
+  --cyber-shimmy: 5;
+  --cyber-clip-one: polygon(
+    0 2%,
+    100% 2%,
+    100% 95%,
+    95% 95%,
+    95% 90%,
+    85% 90%,
+    85% 95%,
+    8% 95%,
+    0 70%
+  );
+  --cyber-clip-two: polygon(
+    0 78%,
+    100% 78%,
+    100% 100%,
+    95% 100%,
+    95% 90%,
+    85% 90%,
+    85% 100%,
+    8% 100%,
+    0 78%
+  );
+  --cyber-clip-three: polygon(
+    0 44%,
+    100% 44%,
+    100% 54%,
+    95% 54%,
+    95% 54%,
+    85% 54%,
+    85% 54%,
+    8% 54%,
+    0 54%
+  );
+  --cyber-clip-four: polygon(
+    0 0,
+    100% 0,
+    100% 0,
+    95% 0,
+    95% 0,
+    85% 0,
+    85% 0,
+    8% 0,
+    0 0
+  );
+  --cyber-clip-five: polygon(
+    0 0,
+    100% 0,
+    100% 0,
+    95% 0,
+    95% 0,
+    85% 0,
+    85% 0,
+    8% 0,
+    0 0
+  );
+  --cyber-clip-six: polygon(
+    0 40%,
+    100% 40%,
+    100% 85%,
+    95% 85%,
+    95% 85%,
+    85% 85%,
+    85% 85%,
+    8% 85%,
+    0 70%
+  );
+  --cyber-clip-seven: polygon(
+    0 63%,
+    100% 63%,
+    100% 80%,
+    95% 80%,
+    95% 80%,
+    85% 80%,
+    85% 80%,
+    8% 80%,
+    0 70%
+  );
+
+  color: var(--cyber-color);
+  text-transform: uppercase;
+  font-size: var(--cyber-font-size);
+  letter-spacing: 3px;
+  position: relative;
+  z-index: 1;
+  font-weight: 900;
+  width: 100%;
+  height: 100%;
+  line-height: 42px;
+  text-align: center;
+  transition:
+    background 0.2s,
+    font-size 0.3s;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  padding: 0 12px;
+  font-family: var(--font-label-grotesk, 'Space Grotesk Variable', sans-serif);
+}
+
+.btn--sm {
+  line-height: 34px;
+  letter-spacing: 2px;
+  --cyber-font-size: 8px;
+}
+
+.btn--lg {
+  line-height: 50px;
+  letter-spacing: 4px;
+  --cyber-font-size: 11px;
+  padding: 0 18px;
+}
+
+/* ─── Color Variants ─── */
+
+/* Default: Red + Yellow */
+
+/* Checked / Active: Purple + Mint (Atelier palette) */
+.hiddenInput:checked + .btn,
+.btn--active {
+  --cyber-primary: #8b00ff;
+  --cyber-shadow: #00e572;
+}
+
+/* Hover: Darker red + larger font */
+.hiddenInput:hover + .btn,
+.btn:hover {
+  --cyber-primary: #cc133c;
+  --cyber-font-size: 11px;
+}
+
+.btn--sm:hover,
+.hiddenInput:hover + .btn--sm {
+  --cyber-font-size: 9px;
+}
+
+.btn--lg:hover,
+.hiddenInput:hover + .btn--lg {
+  --cyber-font-size: 13px;
+}
+
+/* ─── Pseudo-element backgrounds ─── */
+.btn::after,
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  clip-path: var(--cyber-clip);
+  z-index: -1;
+}
+
+.btn::before {
+  background: var(--cyber-shadow);
+  transform: translate(var(--cyber-border), 0);
+}
+
+.btn::after {
+  background: var(--cyber-primary);
+}
+
+/* ─── Glitch overlay ─── */
+.glitch {
+  position: absolute;
+  top: calc(var(--cyber-border) * -1);
+  left: calc(var(--cyber-border) * -1);
+  right: calc(var(--cyber-border) * -1);
+  bottom: calc(var(--cyber-border) * -1);
+  background: var(--cyber-shadow);
+  text-shadow:
+    2px 2px var(--cyber-shadow),
+    -2px -2px var(--cyber-shadow-secondary);
+  clip-path: var(--cyber-clip);
+  animation: cyberGlitch 2s infinite;
+  display: none;
+  line-height: inherit;
+  text-align: center;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  text-transform: uppercase;
+  color: var(--cyber-color);
+  padding: 0 12px;
+}
+
+/* Show on hover */
+.hiddenInput:hover + .btn .glitch,
+.btn:hover .glitch {
+  display: block;
+}
+
+/* Show on checked (slower anim) */
+.hiddenInput:checked + .btn .glitch,
+.btn--active .glitch {
+  display: block;
+  animation: cyberGlitch 5s infinite;
+}
+
+.glitch::before {
+  content: '';
+  position: absolute;
+  top: calc(var(--cyber-border) * 1);
+  right: calc(var(--cyber-border) * 1);
+  bottom: calc(var(--cyber-border) * 1);
+  left: calc(var(--cyber-border) * 1);
+  clip-path: var(--cyber-clip);
+  background: var(--cyber-primary);
+  z-index: -1;
+}
+
+/* ─── Corner tag (r1, r2, r3…) ─── */
+.tag {
+  background: var(--cyber-shadow);
+  color: #323232;
+  font-size: 5.5px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  position: absolute;
+  width: 15px;
+  height: 6px;
+  top: 0;
+  left: 81%;
+  line-height: 6.2px;
+  text-transform: uppercase;
+}
+
+/* ─── Glitch keyframes ─── */
+@keyframes cyberGlitch {
+  0% {
+    clip-path: var(--cyber-clip-one);
+  }
+  2%,
+  8% {
+    clip-path: var(--cyber-clip-two);
+    transform: translate(calc(var(--cyber-shimmy) * -1%), 0);
+  }
+  6% {
+    clip-path: var(--cyber-clip-two);
+    transform: translate(calc(var(--cyber-shimmy) * 1%), 0);
+  }
+  9% {
+    clip-path: var(--cyber-clip-two);
+    transform: translate(0, 0);
+  }
+  10% {
+    clip-path: var(--cyber-clip-three);
+    transform: translate(calc(var(--cyber-shimmy) * 1%), 0);
+  }
+  13% {
+    clip-path: var(--cyber-clip-three);
+    transform: translate(0, 0);
+  }
+  14%,
+  21% {
+    clip-path: var(--cyber-clip-four);
+    transform: translate(calc(var(--cyber-shimmy) * 1%), 0);
+  }
+  25% {
+    clip-path: var(--cyber-clip-five);
+    transform: translate(calc(var(--cyber-shimmy) * 1%), 0);
+  }
+  30% {
+    clip-path: var(--cyber-clip-five);
+    transform: translate(calc(var(--cyber-shimmy) * -1%), 0);
+  }
+  35%,
+  45% {
+    clip-path: var(--cyber-clip-six);
+    transform: translate(calc(var(--cyber-shimmy) * -1%));
+  }
+  40% {
+    clip-path: var(--cyber-clip-six);
+    transform: translate(calc(var(--cyber-shimmy) * 1%));
+  }
+  50% {
+    clip-path: var(--cyber-clip-six);
+    transform: translate(0, 0);
+  }
+  55% {
+    clip-path: var(--cyber-clip-seven);
+    transform: translate(calc(var(--cyber-shimmy) * 1%), 0);
+  }
+  60% {
+    clip-path: var(--cyber-clip-seven);
+    transform: translate(0, 0);
+  }
+  31%,
+  61%,
+  100% {
+    clip-path: var(--cyber-clip-four);
+  }
+}
+
+/* ─── Radio group container ─── */
+.radioGroup {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0;
+}
