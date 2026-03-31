@@ -11,21 +11,13 @@ import { APP_PAGES } from '@constants';
 import { useInView } from '@utils/animations/springVariants';
 import {
   Terminal,
-  ImagesBadge,
   ExpandableWorkCard,
   TracingBeam,
   SparklesCore,
   AuroraBackground,
 } from '@components/customs/aceternity';
 import { ContactDropdown } from '@components/customs/ContactDropdown';
-
-/* Badge images for CTA hover effect */
-const ctaBadgeImages = [
-  '/icons/developer.png',
-  '/icons/dashboard-icon.png',
-  '/icons/medicare-icon.png',
-  '/icons/air-conditioner.png',
-];
+import { CyberButton } from '@components/core';
 
 /* ─── Work History Data ─── */
 interface TimelineEntry {
@@ -258,22 +250,23 @@ export const Intro = () => {
               {/* CTA Buttons */}
               <animated.div
                 style={ctaSpring}
-                className='mt-4 md:mt-6 lg:mt-10 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 w-full'
+                className='mt-4 md:mt-6 lg:mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 w-full'
               >
                 <ContactDropdown>
-                  <ImagesBadge
-                    images={ctaBadgeImages}
-                    hoverSpread={28}
-                    hoverRotation={14}
-                    hoverTranslateY={-35}
-                    imageSize={34}
-                    className='group relative px-8 py-4 bg-primary-main text-ct-on-primary font-bold rounded-lg overflow-hidden transition-all active:scale-95 shadow-[0_0_20px_rgba(208,188,255,0.3)] inline-flex items-center gap-2'
+                  <CyberButton
+                    size='lg'
+                    tag='doc'
+                    glitchText={t('nav.initContact')}
                   >
                     {t('nav.initContact')}
-                  </ImagesBadge>
+                  </CyberButton>
                 </ContactDropdown>
-                <ImagesBadge
-                  images={ctaBadgeImages.slice(0, 3)}
+
+                <CyberButton
+                  size='lg'
+                  tag='sys'
+                  active
+                  glitchText={t('intro.downloadCV')}
                   onClick={() =>
                     window.open(
                       '/resume/FULL_STACK_DEVELOPER_NGUYEN_TRUONG_KY_CV.pdf',
@@ -281,14 +274,9 @@ export const Intro = () => {
                       'noopener,noreferrer'
                     )
                   }
-                  hoverSpread={22}
-                  hoverRotation={10}
-                  hoverTranslateY={-30}
-                  imageSize={30}
-                  className='px-8 py-4 border border-ct-secondary/30 text-ct-secondary font-bold rounded-lg hover:bg-ct-secondary/5 transition-all inline-flex items-center gap-2'
                 >
                   {t('intro.downloadCV')}
-                </ImagesBadge>
+                </CyberButton>
               </animated.div>
             </div>
           </motion.div>

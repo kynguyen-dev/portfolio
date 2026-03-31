@@ -20,11 +20,27 @@ export const CyberButton = ({
   className,
   ...props
 }: CyberButtonProps) => {
-  // We use inline CSS var injection for the primary and shadow colors so we can
-  // utilize arbitrary value injection via Tailwind cleanly for pseudo elements.
+  // We use inline CSS var injection for the dynamic shape colors to automatically
+  // utilize proper Tailwind design tokens for active and inactive states.
+  // Active: Primary (Purple) / Secondary (Mint)
+  // Inactive: Surface Container High / Outline Variant
   const activeStyle = active
-    ? { '--c-prim': '#8b00ff', '--c-shad': '#00e572' }
-    : { '--c-prim': '#ff184c', '--c-shad': '#fded00' };
+    ? {
+        '--c-prim': 'var(--color-primary-main)',
+        '--c-shad': 'var(--color-secondary-main)',
+        '--c-hover-prim': 'var(--color-primary-light)',
+        '--c-text-main': 'var(--color-ct-on-primary)',
+        '--c-text-glitch': 'var(--color-ct-on-secondary)',
+        '--c-shadow-glitch': 'var(--color-tertiary)',
+      }
+    : {
+        '--c-prim': 'var(--color-ct-surface-container-high)',
+        '--c-shad': 'var(--color-ct-outline-variant)',
+        '--c-hover-prim': 'var(--color-ct-surface-container-highest)',
+        '--c-text-main': 'var(--color-ct-on-surface)',
+        '--c-text-glitch': 'var(--color-ct-on-surface-variant)',
+        '--c-shadow-glitch': 'var(--color-ct-outline)',
+      };
 
   return (
     <div
@@ -40,7 +56,7 @@ export const CyberButton = ({
       <button
         type='button'
         className={cn(
-          'group relative z-[1] flex h-full w-full cursor-pointer items-center justify-center border-none bg-transparent font-label-grotesk font-black uppercase text-white transition-all duration-300',
+          'group relative z-[1] flex h-full w-full cursor-pointer items-center justify-center border-none bg-transparent font-label-grotesk font-black uppercase text-[var(--c-text-main)] transition-all duration-300',
           size === 'sm' &&
             'px-[12px] text-[8px] tracking-[2px] group-hover:text-[9px]',
           size === 'md' &&
@@ -54,14 +70,7 @@ export const CyberButton = ({
         <div className='absolute inset-0 -z-10 translate-x-[5px] bg-[var(--c-shad)] transition-colors [clip-path:var(--cyber-clip)]' />
 
         {/* Main Background */}
-        <div
-          className={cn(
-            'absolute inset-0 -z-10 transition-colors [clip-path:var(--cyber-clip)]',
-            active
-              ? 'bg-[var(--c-prim)]'
-              : 'bg-[var(--c-prim)] group-hover:bg-[#cc133c]'
-          )}
-        />
+        <div className='absolute inset-0 -z-10 bg-[var(--c-prim)] transition-colors group-hover:bg-[var(--c-hover-prim)] [clip-path:var(--cyber-clip)]' />
 
         {children}
 
@@ -70,27 +79,21 @@ export const CyberButton = ({
           aria-hidden='true'
           className={cn(
             'absolute inset-[-5px] z-10 hidden items-center justify-center uppercase',
-            'bg-[var(--c-shad)] text-white [clip-path:var(--cyber-clip)]',
+            'bg-[var(--c-shad)] text-[var(--c-text-glitch)] [clip-path:var(--cyber-clip)]',
+            '[text-shadow:2px_2px_var(--c-shad),-2px_-2px_var(--c-shadow-glitch)]',
             active
-              ? '[text-shadow:2px_2px_var(--c-shad),-2px_-2px_hsl(180,90%,60%)] animate-cyber-glitch-active block'
-              : '[text-shadow:2px_2px_var(--c-shad),-2px_-2px_hsl(60,90%,60%)] group-hover:block group-hover:animate-cyber-glitch'
+              ? 'animate-cyber-glitch-active block'
+              : 'group-hover:block group-hover:animate-cyber-glitch'
           )}
         >
-          <div
-            className={cn(
-              'absolute inset-[5px] -z-10 transition-colors [clip-path:var(--cyber-clip)]',
-              active
-                ? 'bg-[var(--c-prim)]'
-                : 'bg-[var(--c-prim)] group-hover:bg-[#cc133c]'
-            )}
-          />
+          <div className='absolute inset-[5px] -z-10 bg-[var(--c-prim)] transition-colors group-hover:bg-[var(--c-hover-prim)] [clip-path:var(--cyber-clip)]' />
           {glitchText ?? children}
         </span>
 
         {/* Corner Tag */}
         {tag && (
           <span
-            className='absolute top-0 left-[81%] flex h-[6px] w-[15px] items-center justify-center bg-[var(--c-shad)] text-[5.5px] font-bold tracking-[1px] text-[#323232] uppercase transition-colors'
+            className='absolute top-0 left-[81%] flex h-[6px] min-w-[15px] items-center justify-center bg-[var(--c-shad)] px-[2px] text-[5.5px] font-bold uppercase tracking-[1px] text-[var(--c-text-glitch)] transition-colors'
             aria-hidden='true'
           >
             {tag}
