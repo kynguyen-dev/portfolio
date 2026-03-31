@@ -12,6 +12,7 @@ interface ContactDropdownProps {
   children: ReactNode;
   /** Additional className for the trigger wrapper */
   className?: string;
+  enableCyberStyles?: boolean;
 }
 
 const ZALO_PHONE = '+84868772887';
@@ -20,14 +21,18 @@ const ZALO_URL = `https://zalo.me/${ZALO_PHONE.replace('+', '')}`;
 export const ContactDropdown = ({
   children,
   className,
+  enableCyberStyles = false,
 }: ContactDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [dropDirection, setDropDirection] = useState<'bottom' | 'top'>(
+    'bottom'
+  );
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Animation
+  // Animation reacts accurately to drop direction
   const dropdownSpring = useSpring({
     opacity: isOpen ? 1 : 0,
-    y: isOpen ? 0 : -8,
+    y: isOpen ? 0 : dropDirection === 'top' ? 12 : -12,
     scale: isOpen ? 1 : 0.95,
     config: { tension: 400, friction: 26 },
   });
@@ -61,6 +66,20 @@ export const ContactDropdown = ({
   const toggleDropdown = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+
+    // Dynamically calculate space before opening
+    if (!isOpen && dropdownRef.current) {
+      const rect = dropdownRef.current.getBoundingClientRect();
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const spaceAbove = rect.top;
+      // Assume dropdown is ~180px tall
+      if (spaceBelow < 180 && spaceAbove > 180) {
+        setDropDirection('top');
+      } else {
+        setDropDirection('bottom');
+      }
+    }
+
     setIsOpen(prev => !prev);
   };
 
@@ -80,60 +99,155 @@ export const ContactDropdown = ({
               y => `translateY(${y}px) scale(${dropdownSpring.scale.get()})`
             ),
           }}
-          className='absolute left-1/2 -translate-x-1/2 mt-3 z-50 min-w-[220px]'
+          className={cn(
+            'absolute left-1/2 -translate-x-1/2 z-50 min-w-[200px] md:min-w-[240px]',
+            dropDirection === 'bottom'
+              ? 'top-full mt-2 md:mt-3'
+              : 'bottom-full mb-2 md:mb-3',
+            enableCyberStyles
+              ? 'drop-shadow-[0_0_15px_rgba(208,188,255,0.4)]' // Neon Glow
+              : 'shadow-[0_20px_60px_rgba(0,0,0,0.4)]'
+          )}
         >
-          {/* Arrow */}
-          <div className='absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 rotate-45 bg-ct-surface-container-high border-l border-t border-ct-outline-variant/20' />
+          {/* Arrow is NOT cyber style */}
+          {!enableCyberStyles && (
+            <div
+              className={cn(
+                'absolute left-1/2 -translate-x-1/2 w-3 h-3 md:w-4 md:h-4 rotate-45 bg-ct-surface-container-high border-ct-outline-variant/20',
+                dropDirection === 'bottom'
+                  ? '-top-1.5 md:-top-2 border-l border-t'
+                  : '-bottom-1.5 md:-bottom-2 border-r border-b'
+              )}
+            />
+          )}
 
-          <div className='rounded-xl glass-elevated overflow-hidden border border-ct-outline-variant/15 shadow-[0_20px_60px_rgba(0,0,0,0.4)]'>
+          <div
+            className={cn(
+              'overflow-hidden flex flex-col',
+              enableCyberStyles
+                ? 'bg-ct-surface-container-highest [clip-path:var(--cyber-clip)] p-0.5 md:p-1'
+                : 'rounded-xl glass-elevated border border-ct-outline-variant/15'
+            )}
+          >
+            {/* Cyber Inner Background Outline */}
+            {enableCyberStyles && (
+              <div className='absolute inset-0 -z-10 bg-primary-main/20' />
+            )}
+
             {/* Gmail Option */}
             <a
               href={`https://mail.google.com/mail/?view=cm&fs=1&to=${APP_INFORMATION.EMAIL_TO.replace('mailto:', '')}`}
               target='_blank'
               rel='noopener noreferrer'
-              className='flex items-center gap-4 px-5 py-4 hover:bg-primary-main/10 transition-colors duration-200 group no-underline'
+              className={cn(
+                'flex items-center gap-3 md:gap-4 px-4 py-3 md:px-5 md:py-4 transition-all duration-200 group no-underline relative z-10',
+                enableCyberStyles
+                  ? 'hover:bg-primary-main text-ct-on-surface hover:text-ct-on-primary'
+                  : 'hover:bg-primary-main/10 text-ct-on-surface'
+              )}
               onClick={() => setIsOpen(false)}
             >
-              <div className='w-10 h-10 rounded-lg bg-primary-main/10 flex items-center justify-center group-hover:bg-primary-main/20 transition-colors'>
+              <div
+                className={cn(
+                  'w-8 h-8 md:w-10 md:h-10 flex shrink-0 items-center justify-center transition-colors',
+                  enableCyberStyles
+                    ? 'bg-primary-main/20 group-hover:bg-ct-surface-container-highest'
+                    : 'rounded-md md:rounded-lg bg-primary-main/10 group-hover:bg-primary-main/20'
+                )}
+              >
                 <EnvelopeIcon
-                  size={20}
+                  size='100%'
                   weight='duotone'
-                  className='text-primary-main'
+                  className={cn(
+                    'w-4 h-4 md:w-5 md:h-5',
+                    enableCyberStyles
+                      ? 'text-primary-main group-hover:text-primary-main'
+                      : 'text-primary-main'
+                  )}
                 />
               </div>
-              <div>
-                <div className='text-sm font-bold text-ct-on-surface font-label-grotesk tracking-wide'>
-                  GMAIL
+              <div className='min-w-0'>
+                <div
+                  className={cn(
+                    'font-bold font-label-grotesk tracking-wide transition-colors truncate',
+                    enableCyberStyles
+                      ? 'uppercase group-hover:text-ct-on-primary text-[11px] md:text-sm'
+                      : 'text-[11px] md:text-sm'
+                  )}
+                >
+                  {enableCyberStyles ? '> SYS.EMAIL' : 'GMAIL'}
                 </div>
-                <div className='text-[10px] text-ct-on-surface-variant font-label-grotesk tracking-wider'>
+                <div
+                  className={cn(
+                    'text-[9px] md:text-[10px] font-label-grotesk tracking-wider opacity-80 transition-colors truncate',
+                    enableCyberStyles && 'group-hover:text-ct-on-primary'
+                  )}
+                >
                   kynt101099@gmail.com
                 </div>
               </div>
             </a>
 
             {/* Divider */}
-            <div className='h-px bg-ct-outline-variant/10 mx-4' />
+            <div
+              className={cn(
+                'h-px mx-3 md:mx-4',
+                enableCyberStyles
+                  ? 'bg-primary-main/30'
+                  : 'bg-ct-outline-variant/10'
+              )}
+            />
 
             {/* Zalo Option */}
             <a
               href={ZALO_URL}
               target='_blank'
               rel='noopener noreferrer'
-              className='flex items-center gap-4 px-5 py-4 hover:bg-ct-secondary/10 transition-colors duration-200 group no-underline'
+              className={cn(
+                'flex items-center gap-3 md:gap-4 px-4 py-3 md:px-5 md:py-4 transition-all duration-200 group no-underline relative z-10',
+                enableCyberStyles
+                  ? 'hover:bg-ct-secondary text-ct-on-surface hover:text-ct-surface-container-highest'
+                  : 'hover:bg-ct-secondary/10 text-ct-on-surface'
+              )}
               onClick={() => setIsOpen(false)}
             >
-              <div className='w-10 h-10 rounded-lg bg-ct-secondary/10 flex items-center justify-center group-hover:bg-ct-secondary/20 transition-colors'>
+              <div
+                className={cn(
+                  'w-8 h-8 md:w-10 md:h-10 flex shrink-0 items-center justify-center transition-colors',
+                  enableCyberStyles
+                    ? 'bg-ct-secondary/20 group-hover:bg-ct-surface-container-highest'
+                    : 'rounded-md md:rounded-lg bg-ct-secondary/10 group-hover:bg-ct-secondary/20'
+                )}
+              >
                 <ChatCircleIcon
-                  size={20}
+                  size='100%'
                   weight='duotone'
-                  className='text-ct-secondary'
+                  className={cn(
+                    'w-4 h-4 md:w-5 md:h-5',
+                    enableCyberStyles
+                      ? 'text-ct-secondary group-hover:text-ct-secondary'
+                      : 'text-ct-secondary'
+                  )}
                 />
               </div>
-              <div>
-                <div className='text-sm font-bold text-ct-on-surface font-label-grotesk tracking-wide'>
-                  ZALO
+              <div className='min-w-0'>
+                <div
+                  className={cn(
+                    'font-bold font-label-grotesk tracking-wide transition-colors truncate',
+                    enableCyberStyles
+                      ? 'uppercase group-hover:text-ct-surface-container-highest text-[11px] md:text-sm'
+                      : 'text-[11px] md:text-sm'
+                  )}
+                >
+                  {enableCyberStyles ? '> COMMS.ZALO' : 'ZALO'}
                 </div>
-                <div className='text-[10px] text-ct-on-surface-variant font-label-grotesk tracking-wider'>
+                <div
+                  className={cn(
+                    'text-[9px] md:text-[10px] font-label-grotesk tracking-wider opacity-80 transition-colors truncate',
+                    enableCyberStyles &&
+                      'group-hover:text-ct-surface-container-highest'
+                  )}
+                >
                   {ZALO_PHONE}
                 </div>
               </div>

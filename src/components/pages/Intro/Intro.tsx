@@ -7,7 +7,7 @@ import {
 } from 'motion/react';
 import { animated, useSpring, useTrail } from '@react-spring/web';
 import { useTranslation } from 'react-i18next';
-import { APP_PAGES } from '@constants';
+import { APP_PAGES, APP_INFORMATION } from '@constants';
 import { useInView } from '@utils/animations/springVariants';
 import {
   Terminal,
@@ -34,7 +34,6 @@ interface TimelineEntry {
 
 export const Intro = () => {
   const { t } = useTranslation();
-  const env = import.meta.env.MODE === 'production' ? 'PROD' : 'DEV';
   const workHistory = t('intro.workHistory', {
     returnObjects: true,
   }) as TimelineEntry[];
@@ -168,44 +167,49 @@ export const Intro = () => {
                   }
                 : undefined
             }
-            className='absolute inset-0 z-30 flex flex-col items-center pt-24 md:pt-32 pb-8 px-4 md:px-8'
+            className='absolute inset-0 z-30 flex flex-col items-center pt-[10vh] lg:pt-[12vh] 2xl:pt-[15vh] pb-4 px-4 md:px-8 overflow-hidden'
           >
-            <div className='w-full max-w-4xl flex flex-col items-center mx-auto relative px-2 my-auto'>
+            <div className='w-full max-w-4xl flex flex-col items-center mx-auto relative px-2 my-auto max-h-[900px]:scale-[0.95] max-h-[800px]:scale-90 max-h-[700px]:scale-[0.8] origin-top transition-transform duration-300'>
               {/* Floating Data Node */}
               <animated.div
                 style={statusSpring}
-                className='absolute -top-12 right-0 lg:right-12 glass-panel p-4 rounded-xl hidden md:flex flex-col gap-1 z-10'
+                className='absolute -top-6 xl:-top-10 right-0 lg:right-4 xl:right-12 glass-panel p-2 xl:p-3 rounded-xl hidden md:flex flex-col gap-1 z-10 scale-75 xl:scale-100 origin-top-right'
               >
-                <div className='flex items-center gap-2 text-ct-secondary text-[10px] font-bold tracking-tighter'>
-                  <span className='w-2 h-2 rounded-full bg-ct-secondary animate-pulse' />
+                <div className='flex items-center gap-1.5 xl:gap-2 text-ct-secondary text-[9px] xl:text-[10px] font-bold tracking-tighter'>
+                  <span className='w-1.5 h-1.5 xl:w-2 xl:h-2 rounded-full bg-ct-secondary animate-pulse' />
                   {t('intro.systemStatus')}
                 </div>
-                <div className='text-[10px] text-ct-outline font-label-grotesk opacity-60'>
+                <div className='text-[8px] xl:text-[10px] text-ct-outline font-label-grotesk opacity-60'>
                   10.7627° N, 106.6602° E
                 </div>
               </animated.div>
 
               {/* Hero Headline */}
-              <animated.div style={statusSpring} className='text-center mb-2'>
-                <span className='inline-flex items-center gap-2 px-3 py-1.5 bg-ct-secondary/5 border border-ct-secondary/15 rounded-full text-ct-secondary text-[10px] md:text-[11px] font-label-grotesk font-bold tracking-[0.15em] md:tracking-[0.2em] uppercase'>
-                  <span className='w-1.5 h-1.5 rounded-full bg-ct-secondary animate-pulse' />
+              <animated.div
+                style={statusSpring}
+                className='text-center mb-1 md:mb-2'
+              >
+                <span className='inline-flex items-center gap-1.5 px-2.5 py-1 xl:px-3 xl:py-1.5 bg-ct-secondary/5 border border-ct-secondary/15 rounded-full text-ct-secondary text-[8px] xl:text-[10px] font-label-grotesk font-bold tracking-[0.15em] xl:tracking-[0.2em] uppercase'>
+                  <span className='w-1 h-1 xl:w-1.5 xl:h-1.5 rounded-full bg-ct-secondary animate-pulse' />
                   {t('intro.establishingConnection')}
                 </span>
               </animated.div>
 
               <animated.div
                 style={headingSpring}
-                className='text-center mb-4 md:mb-6 lg:mb-10'
+                className='text-center mb-2 md:mb-3 2xl:mb-6'
               >
-                <h1 className='font-serif-display text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl text-ct-secondary tracking-tighter leading-tight md:leading-none mb-2 md:mb-3 lg:mb-4 break-words'>
-                  {'> '}
-                  {t('intro.heroTitle')}
+                <h1 className='font-serif-display text-ct-secondary tracking-tighter leading-tight md:leading-none mb-1 md:mb-2 2xl:mb-3'>
+                  <span className='whitespace-nowrap text-[3.8vw] min-[400px]:text-base sm:text-2xl md:text-3xl lg:text-4xl xl:text-[40px] 2xl:text-6xl'>
+                    {'> '}
+                    {t('intro.heroTitle')}
+                  </span>
                   <br />
-                  <span className='text-ct-on-surface opacity-90 italic text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl'>
+                  <span className='text-ct-on-surface opacity-90 italic text-[3vw] min-[400px]:text-sm sm:text-lg md:text-xl lg:text-3xl 2xl:text-4xl'>
                     {t('intro.heroTitleAccent')}
                   </span>
                 </h1>
-                <p className='max-w-2xl mx-auto text-sm md:text-base lg:text-lg text-ct-on-surface-variant/60 font-label-grotesk tracking-wide px-2 md:px-0'>
+                <p className='max-w-xl 2xl:max-w-2xl mx-auto text-[11px] sm:text-xs md:text-sm lg:text-base 2xl:text-lg text-ct-on-surface-variant/60 font-label-grotesk tracking-wide px-2 md:px-0'>
                   {t('intro.heroSubtitle')}
                 </p>
               </animated.div>
@@ -213,7 +217,7 @@ export const Intro = () => {
               {/* Terminal HUD */}
               <animated.div
                 style={ctaSpring}
-                className='w-full hidden md:block'
+                className='w-full hidden md:block scale-[0.85] lg:scale-[0.9] 2xl:scale-100 origin-top -mt-2 lg:-mt-1 2xl:mt-2 -mb-2'
               >
                 <Terminal
                   username='kynguyen.dev'
@@ -221,12 +225,10 @@ export const Intro = () => {
                   enableSound={false}
                   typingSpeed={40}
                   delayBetweenCommands={600}
-                  initialDelay={1200}
+                  initialDelay={600}
                   commands={[
                     t('intro.terminal.command1'),
                     t('intro.terminal.command2'),
-                    t('intro.terminal.command3'),
-                    t('intro.terminal.command4'),
                   ]}
                   outputs={{
                     0: t('intro.terminal.output1', {
@@ -235,24 +237,17 @@ export const Intro = () => {
                     1: t('intro.terminal.output2', {
                       returnObjects: true,
                     }) as string[],
-                    2: t('intro.terminal.output3', {
-                      returnObjects: true,
-                    }) as string[],
-                    3: t('intro.terminal.output4', {
-                      env,
-                      returnObjects: true,
-                    }) as string[],
                   }}
-                  className='max-w-4xl'
+                  className='max-w-4xl mx-auto'
                 />
               </animated.div>
 
               {/* CTA Buttons */}
               <animated.div
                 style={ctaSpring}
-                className='mt-4 md:mt-6 lg:mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 w-full'
+                className='mt-2 md:mt-3 2xl:mt-6 flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 lg:gap-6 w-full'
               >
-                <ContactDropdown>
+                <ContactDropdown enableCyberStyles>
                   <CyberButton
                     size='lg'
                     tag='doc'
@@ -269,7 +264,7 @@ export const Intro = () => {
                   glitchText={t('intro.downloadCV')}
                   onClick={() =>
                     window.open(
-                      '/resume/FULL_STACK_DEVELOPER_NGUYEN_TRUONG_KY_CV.pdf',
+                      APP_INFORMATION.RESUME_URL,
                       '_blank',
                       'noopener,noreferrer'
                     )

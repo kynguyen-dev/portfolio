@@ -1,8 +1,9 @@
 import { useTranslation } from 'react-i18next';
-import { EnvelopeIcon } from '@phosphor-icons/react';
+import { EnvelopeIcon, GlobeIcon, PhoneIcon } from '@phosphor-icons/react';
 import { useThemeMode } from '@contexts/theme-mode';
 import { useInView } from '@utils/animations/springVariants';
 import { animated, useSpring } from '@react-spring/web';
+import { APP_INFORMATION } from '@constants';
 
 export const ContactForm = () => {
   const { t } = useTranslation();
@@ -39,36 +40,53 @@ export const ContactForm = () => {
 
           <div>
             <h2 className='font-serif-display text-4xl md:text-5xl text-ct-on-surface mb-4 tracking-tight'>
-              {t('contact.title', 'Contact us')}
+              {t('contact.heading', 'Get In Touch')}
             </h2>
             <p className='text-ct-on-surface-variant text-base md:text-lg font-label-grotesk max-w-md leading-relaxed'>
               {t(
-                'contact.description',
-                'We are always looking for ways to improve our products and services. Contact us and let us know how we can help you.'
+                'contact.subtitle',
+                "Have a project in mind or just want to chat? I'd love to hear from you."
               )}
             </p>
           </div>
 
           <div className='flex flex-wrap items-center gap-4 text-xs font-label-grotesk font-medium text-ct-outline tracking-wider'>
             <a
-              href='mailto:contact@kynguyen.dev'
-              className='hover:text-ct-secondary transition-colors'
+              href='https://kynguyen.vercel.app/'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='flex items-center gap-1.5 hover:text-ct-secondary transition-colors'
             >
-              contact@kynguyen.dev
+              <GlobeIcon
+                size={16}
+                weight='duotone'
+                className='text-ct-secondary'
+              />
+              kynguyen.vercel.app
             </a>
             <span className='w-1 h-1 rounded-full bg-ct-outline-variant/40' />
             <a
-              href='tel:+84868772887'
-              className='hover:text-ct-secondary transition-colors'
+              href={APP_INFORMATION.EMAIL_TO}
+              className='flex items-center gap-1.5 hover:text-ct-secondary transition-colors'
             >
-              +1 (800) 123 XX21
+              <EnvelopeIcon
+                size={16}
+                weight='duotone'
+                className='text-ct-secondary'
+              />
+              kynt101099@gmail.com
             </a>
             <span className='w-1 h-1 rounded-full bg-ct-outline-variant/40' />
             <a
-              href='mailto:support@kynguyen.dev'
-              className='hover:text-ct-secondary transition-colors'
+              href={APP_INFORMATION.PHONE_NUMBER_TO}
+              className='flex items-center gap-1.5 hover:text-ct-secondary transition-colors'
             >
-              support@kynguyen.dev
+              <PhoneIcon
+                size={16}
+                weight='duotone'
+                className='text-ct-secondary'
+              />
+              (+84) 868 772 887
             </a>
           </div>
 
@@ -126,12 +144,12 @@ export const ContactForm = () => {
                 htmlFor='fullName'
                 className='text-xs font-label-grotesk font-black text-ct-on-surface-variant uppercase tracking-[0.15em]'
               >
-                {t('contact.form.fullName', 'Full name')}
+                {t('contact.nameLabel', 'Your Name')}
               </label>
               <input
                 id='fullName'
                 type='text'
-                placeholder='Manu Arora'
+                placeholder={t('contact.namePlaceholder', 'John Doe')}
                 className={`w-full px-5 py-4 rounded-xl border border-ct-outline-variant/30 text-ct-on-surface font-label-grotesk placeholder:text-ct-outline focus:outline-none focus:ring-1 focus:ring-ct-secondary/50 focus:border-ct-secondary/50 transition-all ${
                   isLight
                     ? 'bg-ct-surface/40 hover:bg-ct-surface/60'
@@ -146,12 +164,12 @@ export const ContactForm = () => {
                 htmlFor='email'
                 className='text-xs font-label-grotesk font-black text-ct-on-surface-variant uppercase tracking-[0.15em]'
               >
-                {t('contact.form.email', 'Email Address')}
+                {t('contact.emailLabel', 'Your Email')}
               </label>
               <input
                 id='email'
                 type='email'
-                placeholder='support@aceternity.com'
+                placeholder={t('contact.emailPlaceholder', 'john@example.com')}
                 className={`w-full px-5 py-4 rounded-xl border border-ct-outline-variant/30 text-ct-on-surface font-label-grotesk placeholder:text-ct-outline focus:outline-none focus:ring-1 focus:ring-ct-secondary/50 focus:border-ct-secondary/50 transition-all ${
                   isLight
                     ? 'bg-ct-surface/40 hover:bg-ct-surface/60'
@@ -166,12 +184,15 @@ export const ContactForm = () => {
                 htmlFor='company'
                 className='text-xs font-label-grotesk font-black text-ct-on-surface-variant uppercase tracking-[0.15em]'
               >
-                {t('contact.form.company', 'Company')}
+                {t('contact.companyLabel', 'Company (Optional)')}
               </label>
               <input
                 id='company'
                 type='text'
-                placeholder='Aceternity Labs LLC'
+                placeholder={t(
+                  'contact.companyPlaceholder',
+                  'Acme Corporation'
+                )}
                 className={`w-full px-5 py-4 rounded-xl border border-ct-outline-variant/30 text-ct-on-surface font-label-grotesk placeholder:text-ct-outline focus:outline-none focus:ring-1 focus:ring-ct-secondary/50 focus:border-ct-secondary/50 transition-all ${
                   isLight
                     ? 'bg-ct-surface/40 hover:bg-ct-surface/60'
@@ -186,12 +207,15 @@ export const ContactForm = () => {
                 htmlFor='message'
                 className='text-xs font-label-grotesk font-black text-ct-on-surface-variant uppercase tracking-[0.15em]'
               >
-                {t('contact.form.message', 'Message')}
+                {t('contact.messageLabel', 'Your Message')}
               </label>
               <textarea
                 id='message'
                 rows={4}
-                placeholder='Type your message here'
+                placeholder={t(
+                  'contact.messagePlaceholder',
+                  'Type your message here...'
+                )}
                 className={`w-full px-5 py-4 rounded-xl border border-ct-outline-variant/30 text-ct-on-surface font-label-grotesk placeholder:text-ct-outline focus:outline-none focus:ring-1 focus:ring-ct-secondary/50 focus:border-ct-secondary/50 transition-all resize-y min-h-[120px] ${
                   isLight
                     ? 'bg-ct-surface/40 hover:bg-ct-surface/60'
@@ -206,7 +230,7 @@ export const ContactForm = () => {
                 type='button'
                 className='px-8 py-3.5 bg-ct-on-surface text-ct-surface-container rounded-xl font-label-grotesk font-black uppercase tracking-[0.15em] text-xs hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg hover:shadow-xl hover:bg-ct-secondary hover:text-ct-on-secondary'
               >
-                {t('contact.form.submit', 'Submit')}
+                {t('contact.send', 'Send Message')}
               </button>
             </div>
           </div>

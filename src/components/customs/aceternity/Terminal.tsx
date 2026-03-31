@@ -419,28 +419,34 @@ export function Terminal({
   return (
     <div
       ref={containerRef}
-      className={cn('mx-auto w-full font-mono text-sm', className)}
+      className={cn(
+        'mx-auto w-full font-mono text-[10px] sm:text-xs md:text-sm',
+        className
+      )}
     >
       <div className='overflow-hidden rounded-2xl border border-ct-outline/10 bg-transparent'>
         {/* Title Bar */}
-        <div className='flex items-center gap-2 bg-ct-surface-container-lowest/30 backdrop-blur-sm px-5 py-3.5'>
-          <div className='flex items-center gap-2'>
-            <div className='h-3.5 w-3.5 rounded-full bg-[#ff5f57] transition-colors hover:bg-[#ff5f57]/80' />
-            <div className='h-3.5 w-3.5 rounded-full bg-[#febc2e] transition-colors hover:bg-[#febc2e]/80' />
-            <div className='h-3.5 w-3.5 rounded-full bg-[#28c840] transition-colors hover:bg-[#28c840]/80' />
+        <div className='flex items-center gap-1.5 md:gap-2 bg-ct-surface-container-lowest/30 backdrop-blur-sm px-4 md:px-5 py-2.5 md:py-3.5'>
+          <div className='flex items-center gap-1.5 md:gap-2'>
+            <div className='h-2.5 w-2.5 md:h-3.5 md:w-3.5 rounded-full bg-[#ff5f57] transition-colors hover:bg-[#ff5f57]/80' />
+            <div className='h-2.5 w-2.5 md:h-3.5 md:w-3.5 rounded-full bg-[#febc2e] transition-colors hover:bg-[#febc2e]/80' />
+            <div className='h-2.5 w-2.5 md:h-3.5 md:w-3.5 rounded-full bg-[#28c840] transition-colors hover:bg-[#28c840]/80' />
           </div>
           <div className='flex-1 text-center'>
-            <span className='truncate text-xs text-ct-outline/60 font-label-grotesk tracking-wider'>
+            <span className='truncate text-[9px] md:text-xs text-ct-outline/60 font-label-grotesk tracking-wider'>
               {title || `${username} — bash`}
             </span>
           </div>
-          <div className='w-[52px]' />
+          <div className='w-[40px] md:w-[52px]' />
         </div>
 
         {/* Terminal Content */}
-        <div ref={contentRef} className='p-6 font-mono'>
+        <div ref={contentRef} className='p-3 sm:p-4 md:p-6 font-mono'>
           {lines.map((line, i) => (
-            <div key={i} className='leading-relaxed whitespace-pre-wrap'>
+            <div
+              key={i}
+              className='leading-normal md:leading-relaxed whitespace-pre-wrap mb-1 md:mb-0'
+            >
               {line.type === 'command' ? (
                 <span>
                   {prompt}
@@ -455,21 +461,21 @@ export function Terminal({
           ))}
 
           {phase === 'typing' && (
-            <div className='leading-relaxed whitespace-pre-wrap'>
+            <div className='leading-normal md:leading-relaxed whitespace-pre-wrap'>
               {prompt}
               <SyntaxHighlightedText text={currentText} />
-              <span className='ml-0.5 inline-block h-4 w-2 bg-ct-secondary align-middle' />
+              <span className='ml-0.5 inline-block h-3 w-1.5 md:h-4 md:w-2 bg-ct-secondary align-middle' />
             </div>
           )}
 
           {(phase === 'done' ||
             phase === 'pausing' ||
             phase === 'outputting') && (
-            <div className='leading-relaxed whitespace-pre-wrap'>
+            <div className='leading-normal md:leading-relaxed whitespace-pre-wrap'>
               {prompt}
               <span
                 className={cn(
-                  'inline-block h-4 w-2 bg-ct-secondary align-middle transition-opacity duration-100',
+                  'inline-block h-3 w-1.5 md:h-4 md:w-2 bg-ct-secondary align-middle transition-opacity duration-100',
                   !cursorVisible && 'opacity-0'
                 )}
               />

@@ -44,7 +44,7 @@ export const en = {
       command3: 'architect --sync',
       command4: 'curl -s https://api.kynguyen.dev/ping',
       output1: [
-        '[ IDENTITY_SCAN_COMPLETE ]',
+        '[██████████████] IDENTITY_SCAN_COMPLETE',
         '------------------------------------------',
         'IDENTIFIER : Ky Nguyen Truong',
         'STATUS     : [ ONLINE ]',
@@ -403,8 +403,13 @@ export const en = {
     subtitle:
       "Have a project in mind or just want to chat? I'd love to hear from you.",
     nameLabel: 'Your Name',
+    namePlaceholder: 'John Doe',
     emailLabel: 'Your Email',
+    emailPlaceholder: 'john@example.com',
+    companyLabel: 'Company (Optional)',
+    companyPlaceholder: 'Acme Corporation',
     messageLabel: 'Your Message',
+    messagePlaceholder: 'Type your message here...',
     send: 'Send Message',
     sending: 'Sending...',
     successTitle: 'Message sent!',
