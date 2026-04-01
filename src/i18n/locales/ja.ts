@@ -399,7 +399,7 @@ export const ja = {
     ],
   },
   contact: {
-    heading: 'お問い合わせ',
+    heading: 'お問い合わせください',
     subtitle: 'プロジェクトやお話がありましたら、お気軽にどうぞ。',
     nameLabel: 'お名前',
     namePlaceholder: '山田 太郎',

@@ -21,7 +21,7 @@ export const vi = {
   intro: {
     title: 'Ky Nguyễn — Full-Stack Developer',
     description:
-      'Kỹ sư Full-Stack năng động với hơn 3 năm kinh nghiệm trong việc xây dựng các hệ sinh thái hiệu suất cao trong các lĩnh vực Fintech, Cryptos, Logistics, Y tế, Giáo dục và Dịch vụ cho thuê. Chuyên gia về việc kết hợp logic backend phức tạp với giao diện mượt mà, phản hồi nhanh.',
+      'Kỹ sư Full-Stack năng động với hơn 4 năm kinh nghiệm trong việc xây dựng các hệ sinh thái hiệu suất cao trong các lĩnh vực Fintech, Cryptos, Logistics, Y tế, Giáo dục và Dịch vụ cho thuê. Chuyên gia về việc kết hợp logic backend phức tạp với giao diện mượt mà, phản hồi nhanh.',
     viewMyWork: 'Khám phá dự án',
     downloadCV: 'TẢI_CV',
     yearsExperience: '{{years}}+ Năm kinh nghiệm',
@@ -31,7 +31,7 @@ export const vi = {
     heroTitle: 'SYNTHESIZING_SCALABLE_ARCHITECTURE',
     heroTitleAccent: 'into_QUANTUM_PRECISION',
     heroSubtitle:
-      'Kỹ sư Full-Stack năng động với hơn 3 năm kinh nghiệm trong việc xây dựng các hệ sinh thái hiệu suất cao trong các lĩnh vực Fintech, Cryptos, Logistics, Y tế, Giáo dục và Dịch vụ cho thuê. Chuyên gia về việc kết hợp logic backend phức tạp với giao diện mượt mà, phản hồi nhanh.',
+      'Kỹ sư Full-Stack năng động với hơn 4 năm kinh nghiệm trong việc xây dựng các hệ sinh thái hiệu suất cao trong các lĩnh vực Fintech, Cryptos, Logistics, Y tế, Giáo dục và Dịch vụ cho thuê. Chuyên gia về việc kết hợp logic backend phức tạp với giao diện mượt mà, phản hồi nhanh.',
     techBadges: ['ReactJS', 'NextJS', 'Java', 'Laravel', 'Docker'],
     establishingConnection: 'Đang đồng bộ tư duy sáng tạo...',
     viewManifesto: 'KHÁM_PHÁ_HỆ_THỐNG',
@@ -375,7 +375,7 @@ export const vi = {
     ],
   },
   contact: {
-    heading: 'Liên hệ',
+    heading: 'Liên hệ với tôi',
     subtitle: 'Có dự án hoặc muốn trò chuyện? Tôi rất vui được nghe từ bạn.',
     nameLabel: 'Họ tên',
     namePlaceholder: 'Nguyễn Văn A',
@@ -384,7 +384,7 @@ export const vi = {
     phoneLabel: 'Số điện thoại (Không bắt buộc)',
     phonePlaceholder: '(+84) 000 000 000',
     companyLabel: 'Công ty (Không bắt buộc)',
-    companyPlaceholder: 'Acme Corporation',
+    companyPlaceholder: 'Công ty ABC',
     messageLabel: 'Nội dung tin nhắn',
     messagePlaceholder: 'Nhập nội dung tin nhắn của bạn...',
     send: 'Gửi tin nhắn',

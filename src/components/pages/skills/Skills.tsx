@@ -65,7 +65,7 @@ const arsenalPanels: ArsenalPanel[] = [
     chipStyle:
       'bg-ct-secondary/8 text-ct-secondary border-ct-secondary/15 hover:bg-ct-secondary/15',
     skills: [
-      { label: 'React (3+ years)', icon: <AtomIcon size={12} weight='bold' /> },
+      { label: 'React (4+ years)', icon: <AtomIcon size={12} weight='bold' /> },
       { label: 'Next.js (SSR)', icon: <GlobeIcon size={12} weight='bold' /> },
       { label: 'TypeScript', icon: <FileTsIcon size={12} weight='bold' /> },
       { label: 'AngularJS', icon: <AngularLogoIcon size={12} weight='bold' /> },

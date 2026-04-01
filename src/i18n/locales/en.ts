@@ -21,7 +21,7 @@ export const en = {
   intro: {
     title: 'Ky Nguyen — Full-Stack Developer',
     description:
-      'Dynamic Full-Stack Engineer with 3+ years of experience orchestrating high-performance ecosystems across Fintech, Cryptos, Logistics, Healthcare, Education, and Rental Services. Specializing in bridging complex back-end logic with fluid, responsive interfaces.',
+      'Dynamic Full-Stack Engineer with 4+ years of experience orchestrating high-performance ecosystems across Fintech, Cryptos, Logistics, Healthcare, Education, and Rental Services. Specializing in bridging complex back-end logic with fluid, responsive interfaces.',
     viewMyWork: 'Explore My Work',
     downloadCV: 'EXTRACT_CV',
     yearsExperience: '{{years}}+ Years Exp',
@@ -31,7 +31,7 @@ export const en = {
     heroTitle: 'SYNTHESIZING_SCALABLE_ARCHITECTURE',
     heroTitleAccent: 'into_QUANTUM_PRECISION',
     heroSubtitle:
-      'Dynamic Full-Stack Engineer with 3+ years of experience orchestrating high-performance ecosystems across Fintech, Cryptos, Logistics, Healthcare, Education, and Rental Services. Specializing in bridging complex back-end logic with fluid, responsive interfaces.',
+      'Dynamic Full-Stack Engineer with 4+ years of experience orchestrating high-performance ecosystems across Fintech, Cryptos, Logistics, Healthcare, Education, and Rental Services. Specializing in bridging complex back-end logic with fluid, responsive interfaces.',
     techBadges: ['ReactJS', 'NextJS', 'Java', 'Laravel', 'Docker'],
     establishingConnection: 'Syncing Creative Logic...',
     viewManifesto: 'EXPLORE_SYSTEMS',
@@ -227,7 +227,7 @@ export const en = {
   },
   aboutMe: {
     heading: 'About Me',
-    p1: 'Dynamic Full-Stack Engineer with 3+ years of experience orchestrating high-performance ecosystems across Fintech, Cryptos, Logistics, Healthcare, Education, and Rental Services. Specializing in bridging complex back-end logic with fluid, responsive interfaces.',
+    p1: 'Dynamic Full-Stack Engineer with 4+ years of experience orchestrating high-performance ecosystems across Fintech, Cryptos, Logistics, Healthcare, Education, and Rental Services. Specializing in bridging complex back-end logic with fluid, responsive interfaces.',
     p2: "I graduated from FPT University with a degree in Software Engineering, where I built a strong foundation in architectural principles. Since then, I've worked in Agile environments — architecting front-ends, engineering complex PDF management systems, integrating RESTful APIs, and optimizing database migrations.",
     p3: "I'm trilingual — fluent in Vietnamese, conversational in English and Japanese — which allows me to collaborate effectively in cross-cultural teams. I'm dedicated to code quality through documentation, mentoring, and continuous learning of modern technologies.",
     p4: 'Always open to strategic partnerships and architectural consulting engagements — feel free to reach out.',
@@ -399,7 +399,7 @@ export const en = {
     ],
   },
   contact: {
-    heading: 'Get In Touch',
+    heading: 'Contact Us',
     subtitle:
       "Have a project in mind or just want to chat? I'd love to hear from you.",
     nameLabel: 'Your Name',

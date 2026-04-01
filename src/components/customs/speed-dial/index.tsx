@@ -11,6 +11,7 @@ import {
   FilePdfIcon,
 } from '@phosphor-icons/react';
 import { APP_INFORMATION } from '@constants';
+import { downloadFile } from '@utils/core/downloadFile';
 import { useTranslation } from 'react-i18next';
 
 const useIsMobile = () => {
@@ -101,12 +102,7 @@ export const SpeedDialCustom = () => {
     {
       icon: <FilePdfIcon size={20} weight='duotone' />,
       name: t('contact.getResume'),
-      onClick: () =>
-        window.open(
-          APP_INFORMATION.RESUME_URL,
-          '_blank',
-          'noopener,noreferrer'
-        ),
+      onClick: () => downloadFile(APP_INFORMATION.RESUME_URL),
     },
   ];
 

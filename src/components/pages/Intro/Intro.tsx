@@ -18,6 +18,7 @@ import {
 } from '@components/customs/aceternity';
 import { ContactDropdown } from '@components/customs/ContactDropdown';
 import { CyberButton } from '@components/core';
+import { downloadFile } from '@utils/core/downloadFile';
 
 /* ─── Work History Data ─── */
 interface TimelineEntry {
@@ -263,13 +264,7 @@ export const Intro = () => {
                   type='active'
                   active
                   glitchText={t('intro.downloadCV')}
-                  onClick={() =>
-                    window.open(
-                      APP_INFORMATION.RESUME_URL,
-                      '_blank',
-                      'noopener,noreferrer'
-                    )
-                  }
+                  onClick={() => downloadFile(APP_INFORMATION.RESUME_URL)}
                 >
                   {t('intro.downloadCV')}
                 </CyberButton>

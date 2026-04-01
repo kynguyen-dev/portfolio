@@ -16,6 +16,10 @@ export { ExpandableWorkCard } from './ExpandableWorkCard';
 export { TracingBeam } from './TracingBeam';
 export { SparklesCore } from './SparklesCore';
 export { AuroraBackground } from './AuroraBackground';
+export { Input } from './Input';
+export { Label } from './Label';
+export { Textarea } from './Textarea';
+export { HoverBorderGradient } from './HoverBorderGradient';
 export {
   Navbar as ResizableNavbar,
   NavBody,
