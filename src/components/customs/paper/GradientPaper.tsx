@@ -1,45 +1,43 @@
-import { ReactNode } from 'react';
-import { Paper, PaperProps, useTheme } from '@mui/material';
-import { motion } from 'framer-motion';
+import { ReactNode, HTMLAttributes, useState } from 'react';
+import { animated, useSpring } from '@react-spring/web';
+import { useThemeMode } from '@contexts/theme-mode';
+import { cn } from '@utils/core/cn';
 
-interface GradientPaperProps extends PaperProps {
+interface GradientPaperProps extends HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;
 }
 
 export const GradientPaper = ({
   children,
-  sx,
+  className,
   ...props
 }: GradientPaperProps) => {
-  const { palette } = useTheme();
-  const isLight = palette.mode === 'light';
+  const { mode } = useThemeMode();
+  const isLight = mode === 'light';
+  const [hovered, setHovered] = useState(false);
+
+  const hoverSpring = useSpring({
+    scale: hovered ? 1.03 : 1,
+    rotateX: hovered ? 5 : 0,
+    rotateY: hovered ? 5 : 0,
+    config: { duration: 300 },
+  });
 
   return (
-    <Paper
-      component={motion.div}
-      whileHover={{ scale: 1.03, rotateX: 5, rotateY: 5 }}
-      transition={{ duration: 0.3, ease: 'easeInOut' }}
-      elevation={0}
-      sx={{
-        background: isLight
-          ? 'linear-gradient(160deg, rgba(255,248,240,0.95) 0%, rgba(250,232,176,0.85) 50%, rgba(255,248,240,0.95) 100%)'
-          : 'linear-gradient(160deg, rgba(11,13,46,0.85) 0%, rgba(75,25,66,0.75) 50%, rgba(11,13,46,0.85) 100%)',
-        backdropFilter: 'blur(16px)',
-        border: isLight
-          ? '1px solid rgba(184,137,31,0.3)'
-          : '1px solid rgba(245,208,96,0.25)',
-        boxShadow: isLight
-          ? '0 8px 32px rgba(0,0,0,0.08), inset 0 1px 0 rgba(212,168,67,0.2)'
-          : '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(232,168,56,0.15)',
-        p: 4,
-        borderRadius: 3,
-        textAlign: 'center',
-        color: palette.text.primary,
-        ...sx,
-      }}
+    <animated.div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={hoverSpring}
+      className={cn(
+        'p-8 rounded-xl text-center backdrop-blur-lg border transition-all duration-300',
+        isLight
+          ? 'bg-gradient-to-br from-[#FFF8F0]/95 via-[#FAE8B0]/85 to-[#FFF8F0]/95 border-[#B8891F]/30 shadow-[0_8px_32px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(212,168,67,0.2)] text-text-primary'
+          : 'bg-gradient-to-br from-[#0B0D2E]/85 via-[#4B1942]/75 to-[#0B0D2E]/85 border-[#F5D060]/25 shadow-[0_8px_32px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(232,168,56,0.15)] text-white',
+        className
+      )}
       {...props}
     >
       {children}
-    </Paper>
+    </animated.div>
   );
 };

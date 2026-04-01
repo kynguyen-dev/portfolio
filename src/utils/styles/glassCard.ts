@@ -17,7 +17,7 @@ export interface GlassCardOptions {
 
 export const glassCardSx = (
   isLight: boolean,
-  options: GlassCardOptions = {},
+  options: GlassCardOptions = {}
 ) => {
   const {
     blur = 12,
@@ -27,9 +27,7 @@ export const glassCardSx = (
   } = options;
 
   return {
-    background: isLight
-      ? 'rgba(255,248,240,0.85)'
-      : 'rgba(11, 13, 46, 0.55)',
+    background: isLight ? 'rgba(255,248,240,0.85)' : 'rgba(11, 13, 46, 0.55)',
     backdropFilter: `blur(${blur}px)`,
     border: `1px solid ${
       isLight ? 'rgba(184,137,31,0.15)' : 'rgba(245, 208, 96, 0.15)'

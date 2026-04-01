@@ -1,13 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { BackToTop } from '@components/core/back-to-top/BackToTop';
-import { Box, Typography, Stack } from '@mui/material';
+import { PFTypography } from '@components/core';
 
 const meta = {
   title: 'Core/BackToTop',
   component: BackToTop,
-  parameters: {
-    layout: 'fullscreen',
-  },
+  parameters: { layout: 'fullscreen' },
   tags: ['autodocs'],
   argTypes: {
     threshold: {
@@ -21,36 +19,26 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {
-    threshold: 200,
-  },
-  render: (args) => (
-    <Box>
-      <Stack spacing={3} sx={{ p: 4 }}>
-        <Typography variant="h4" fontWeight={700}>
+  args: { threshold: 200 },
+  render: args => (
+    <div>
+      <div className='flex flex-col gap-6 p-8'>
+        <PFTypography variant='h4' fontWeight={700}>
           Back to Top Button
-        </Typography>
-        <Typography variant="body1" color="text.secondary">
-          Scroll down past {args.threshold}px to reveal the floating button in
-          the bottom-left corner.
-        </Typography>
+        </PFTypography>
+        <PFTypography variant='body1' className='text-text-secondary'>
+          Scroll down past {args.threshold}px to reveal the floating button.
+        </PFTypography>
         {Array.from({ length: 25 }, (_, i) => (
-          <Box
-            key={i}
-            sx={{
-              p: 3,
-              borderRadius: 2,
-              background: `rgba(128, 128, 128, ${0.05 + (i % 3) * 0.03})`,
-            }}
-          >
-            <Typography variant="h6">Section {i + 1}</Typography>
-            <Typography variant="body2" color="text.secondary">
+          <div key={i} className='p-6 rounded-lg bg-ct-surface-container-low'>
+            <PFTypography variant='h6'>Section {i + 1}</PFTypography>
+            <PFTypography variant='body2' className='text-text-secondary'>
               Keep scrolling to see the back-to-top button appear.
-            </Typography>
-          </Box>
+            </PFTypography>
+          </div>
         ))}
-      </Stack>
+      </div>
       <BackToTop threshold={args.threshold} />
-    </Box>
+    </div>
   ),
 };

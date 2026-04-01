@@ -23,8 +23,8 @@ export const TypewriterEffect = ({
   }, [text, speed]);
 
   return (
-    <span aria-label={text} role="text">
-      <span aria-hidden="true">{visibleText}</span>
+    <span aria-label={text} role='text'>
+      <span aria-hidden='true'>{visibleText}</span>
     </span>
   );
 };

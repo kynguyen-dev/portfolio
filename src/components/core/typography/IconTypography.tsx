@@ -1,23 +1,23 @@
-import { Stack, Typography, TypographyProps } from '@mui/material';
-import { common } from '@mui/material/colors';
 import { ReactNode } from 'react';
+import { cn } from '@utils/core/cn';
 
-interface IconTypographyProps extends TypographyProps {
+interface IconTypographyProps {
   icon: ReactNode;
   text: string;
+  className?: string;
 }
 
 export const IconTypography = ({
   icon,
   text,
-  ...props
+  className,
 }: IconTypographyProps) => {
   return (
-    <Stack direction='row' alignItems='center' gap={1}>
+    <span
+      className={cn('inline-flex items-center gap-2 text-white', className)}
+    >
       {icon}
-      <Typography color={common.white} variant='body1' {...props}>
-        {text}
-      </Typography>
-    </Stack>
+      <span>{text}</span>
+    </span>
   );
 };

@@ -1,4 +1,4 @@
-import { lazy } from 'react';
+import { lazy, useEffect, useState, useRef } from 'react';
 import {
   createRouter,
   createRoute,
@@ -6,25 +6,39 @@ import {
   Outlet,
   useRouterState,
 } from '@tanstack/react-router';
-import { AnimatePresence, motion } from 'framer-motion';
+import { useTransition, animated } from '@react-spring/web';
 import { FullScreenLoading } from '@components/pages/loadings';
 
 /* ─── Root layout with animated page transitions ─── */
 const RootLayout = () => {
   const { location } = useRouterState();
+  const [currentKey, setCurrentKey] = useState(location.pathname);
+  const prevKeyRef = useRef(location.pathname);
+
+  useEffect(() => {
+    if (location.pathname !== prevKeyRef.current) {
+      prevKeyRef.current = location.pathname;
+      setCurrentKey(location.pathname);
+    }
+  }, [location.pathname]);
+
+  const transitions = useTransition(currentKey, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+    config: { duration: 300 },
+  });
 
   return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        key={location.pathname}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.3, ease: 'easeInOut' }}
-      >
-        <Outlet />
-      </motion.div>
-    </AnimatePresence>
+    <>
+      {transitions((style, key) =>
+        key === currentKey ? (
+          <animated.div key={key} style={style}>
+            <Outlet />
+          </animated.div>
+        ) : null
+      )}
+    </>
   );
 };
 
@@ -37,28 +51,18 @@ const rootRoute = createRootRoute({
 /* ─── Lazy page imports ─── */
 const HomePage = lazy(() => import('@pages/Home'));
 const NotFoundPage = lazy(() => import('@pages/NotFound'));
-const WeatherAdvisorPage = lazy(() => import('@pages/tools/WeatherAdvisor'));
-const DbExplorerPage = lazy(() => import('@pages/tools/DbExplorer'));
+
 const GalleryPage = lazy(() => import('@pages/tools/Gallery'));
 const ThreeKingdomsPage = lazy(() => import('@pages/tools/ThreeKingdoms'));
+const AiSqlHelperPage = lazy(() => import('@pages/tools/AiSqlHelper'));
+const MarketInsightsPage = lazy(() => import('@pages/tools/MarketInsights'));
+const NewsListPage = lazy(() => import('@pages/tools/NewsList'));
 
 /* ─── Route definitions ─── */
 const homeRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/',
   component: HomePage,
-});
-
-const weatherRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: '/tools/weather-advisor',
-  component: WeatherAdvisorPage,
-});
-
-const dbExplorerRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: '/tools/db-explorer',
-  component: DbExplorerPage,
 });
 
 const galleryRoute = createRoute({
@@ -73,6 +77,24 @@ const threeKingdomsRoute = createRoute({
   component: ThreeKingdomsPage,
 });
 
+const aiSqlHelperRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/tools/ai-sql-helper',
+  component: AiSqlHelperPage,
+});
+
+const marketInsightsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/tools/market-insights',
+  component: MarketInsightsPage,
+});
+
+const newsListRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/tools/market-insights/news',
+  component: NewsListPage,
+});
+
 const notFoundRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '*',
@@ -82,10 +104,12 @@ const notFoundRoute = createRoute({
 /* ─── Route tree & router ─── */
 const routeTree = rootRoute.addChildren([
   homeRoute,
-  weatherRoute,
-  dbExplorerRoute,
+
   galleryRoute,
   threeKingdomsRoute,
+  aiSqlHelperRoute,
+  marketInsightsRoute,
+  newsListRoute,
   notFoundRoute,
 ]);
 

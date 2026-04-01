@@ -1,13 +1,21 @@
-import { Box, Stack, IconButton, Chip, useTheme, Divider } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
-import { motion } from 'framer-motion';
+import { XIcon, ArrowsLeftRightIcon } from '@phosphor-icons/react';
+import { animated, useSpring } from '@react-spring/web';
 import { PFTypography } from '@components/core';
 import { StatsRadarChart } from './StatsRadarChart';
-import { getKingdomMeta, STAT_LABELS } from '@constants/three-kingdoms';
-import type { ThreeKingdomsCharacter, StatKey } from '@constants/three-kingdoms';
-
-const STAT_KEYS: StatKey[] = ['might', 'intelligence', 'politics', 'charisma', 'leadership'];
+import { MultiFormatImage } from './MultiFormatImage';
+import {
+  getKingdomMeta,
+  STAT_LABELS,
+  STAT_KEYS,
+} from '@constants/three-kingdoms';
+import type { ThreeKingdomsCharacter } from '@constants/three-kingdoms';
+import { useThemeMode } from '@contexts/theme-mode';
+import { cn } from '@utils/core/cn';
+import {
+  SpotlightCard,
+  TextGenerateEffect,
+} from '@components/customs/aceternity';
+import { useRef } from 'react';
 
 interface CharacterDetailProps {
   character: ThreeKingdomsCharacter;
@@ -15,165 +23,246 @@ interface CharacterDetailProps {
   onCompare: (character: ThreeKingdomsCharacter) => void;
 }
 
-export const CharacterDetail = ({ character, onClose, onCompare }: CharacterDetailProps) => {
-  const { palette } = useTheme();
-  const isLight = palette.mode === 'light';
+export const CharacterDetail = ({
+  character,
+  onClose,
+  onCompare,
+}: CharacterDetailProps) => {
+  const { mode } = useThemeMode();
+  const isLight = mode === 'light';
   const km = getKingdomMeta(character.kingdom);
 
+  const fadeSlide = useSpring({
+    from: { opacity: 0, x: 40 },
+    to: { opacity: 1, x: 0 },
+    config: { tension: 280, friction: 60 },
+  });
+
+  const avatarSpring = useSpring({
+    from: { scale: 0.8, opacity: 0 },
+    to: { scale: 1, opacity: 1 },
+    delay: 150,
+    config: { tension: 200, friction: 20 },
+  });
+
+  // Magnetic Button Effect
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [{ mx, my }, magneticApi] = useSpring(() => ({ mx: 0, my: 0 }));
+
+  const handleMagneticMove = (e: React.MouseEvent) => {
+    if (!buttonRef.current) return;
+    const rect = buttonRef.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const distanceX = e.clientX - centerX;
+    const distanceY = e.clientY - centerY;
+
+    // Magnetic pull (max factor 0.2)
+    magneticApi.start({ mx: distanceX * 0.2, my: distanceY * 0.2 });
+  };
+
+  const resetMagnetic = () => magneticApi.start({ mx: 0, my: 0 });
+
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 40 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: 40 }}
-      transition={{ duration: 0.3 }}
+    <animated.div
+      style={fadeSlide}
+      className='flex-1 min-h-0 overflow-auto py-4 px-2'
     >
-      <Box
-        sx={{
-          background: isLight
-            ? 'rgba(255,248,240,0.92)'
-            : 'rgba(11,13,46,0.8)',
-          backdropFilter: 'blur(16px)',
-          border: `1px solid ${isLight ? 'rgba(184,137,31,0.2)' : 'rgba(245,208,96,0.2)'}`,
-          borderRadius: 3,
-          p: { xs: 2.5, md: 4 },
-          position: 'relative',
-        }}
+      <SpotlightCard
+        className='w-full border-none bg-transparent'
+        spotlightColor={`${km.color}20`}
       >
-        {/* Close button */}
-        <IconButton
-          onClick={onClose}
-          aria-label="Close detail"
-          sx={{
-            position: 'absolute',
-            top: 12,
-            right: 12,
-            color: isLight ? '#5C4A32' : '#FFE4B5',
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
+        <div className='glass-panel rounded-3xl overflow-hidden relative ambient-shadow'>
+          {/* ── Hero banner with background ── */}
+          <div className='relative h-60 md:h-72 overflow-hidden'>
+            <MultiFormatImage
+              basePath={`/images/three-kingdoms/background/${character.id}`}
+              className='absolute inset-0 w-full h-full object-cover object-center md:object-[center_20%]'
+            />
 
-        {/* Header */}
-        <Stack spacing={1.5} sx={{ mb: 3 }}>
-          <Stack direction="row" alignItems="center" spacing={1.5}>
-            <Box sx={{ fontSize: '2.5rem', lineHeight: 1 }}>{km.emoji}</Box>
-            <Box>
-              <PFTypography variant="h4" sx={{ fontWeight: 800, color: km.color }}>
-                {character.name.cn}
-              </PFTypography>
-              <PFTypography variant="subtitle1" sx={{ color: palette.text.secondary }}>
-                {character.name.en} · {character.name.vi}
-              </PFTypography>
-            </Box>
-          </Stack>
+            <div
+              className={cn(
+                'absolute inset-0',
+                isLight
+                  ? 'bg-gradient-to-b from-transparent via-white/40 to-white/95'
+                  : 'bg-gradient-to-b from-transparent via-ct-bg/40 to-ct-bg/95'
+              )}
+            />
 
-          <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-            <Chip
-              label={`${km.name.en} (${km.name.cn})`}
-              size="small"
-              sx={{
-                backgroundColor: `${km.color}18`,
-                color: km.color,
-                fontWeight: 600,
-                border: `1px solid ${km.color}40`,
+            <div
+              className='absolute top-0 left-0 right-0 h-1.5'
+              style={{
+                background: `linear-gradient(90deg, ${km.color}, ${km.color}80, transparent)`,
               }}
             />
-            <Chip
-              label={`📍 ${character.hometown}`}
-              size="small"
-              variant="outlined"
-              sx={{ borderColor: isLight ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.15)' }}
-            />
-            <Chip
-              label={character.weapon}
-              size="small"
-              variant="outlined"
-              sx={{ borderColor: isLight ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.15)' }}
-            />
-          </Stack>
-        </Stack>
 
-        {/* Radar chart */}
-        <Box sx={{ maxWidth: 320, mx: 'auto', mb: 3 }}>
-          <StatsRadarChart stats={character.stats} color={km.color} label={character.name.en} />
-        </Box>
+            <animated.button
+              ref={buttonRef}
+              onClick={onClose}
+              onMouseMove={handleMagneticMove}
+              onMouseLeave={resetMagnetic}
+              style={{
+                x: mx,
+                y: my,
+              }}
+              aria-label='Close detail'
+              className='absolute top-4 right-4 z-10 p-2.5 rounded-2xl glass-panel hover:bg-ct-surface-container-highest transition-all duration-300 active:scale-90'
+            >
+              <XIcon size={20} weight='bold' className='text-ct-on-surface' />
+            </animated.button>
 
-        {/* Stat bars */}
-        <Stack spacing={1} sx={{ mb: 3 }}>
-          {STAT_KEYS.map(key => (
-            <Stack key={key} direction="row" alignItems="center" spacing={1.5}>
-              <PFTypography
-                variant="caption"
-                sx={{
-                  width: 80,
-                  fontWeight: 600,
-                  color: palette.text.secondary,
-                  textAlign: 'right',
-                }}
+            <div className='absolute bottom-6 left-6 md:left-10 right-6 md:right-10 z-10 flex items-end gap-6'>
+              <animated.div style={avatarSpring}>
+                <div
+                  className='w-24 h-24 md:w-32 md:h-32 rounded-full glass-panel overflow-hidden flex-shrink-0 flex items-center justify-center p-1 primary-glow'
+                  style={{ borderColor: `${km.color}80` }}
+                >
+                  <MultiFormatImage
+                    basePath={`/images/three-kingdoms/avatar/${character.id}`}
+                    alt={character.name.en}
+                    className='w-full h-full rounded-full object-cover'
+                    fallback={
+                      <PFTypography
+                        variant='h2'
+                        className='font-black'
+                        style={{ color: km.color }}
+                      >
+                        {character.name.cn.charAt(0)}
+                      </PFTypography>
+                    }
+                  />
+                </div>
+              </animated.div>
+
+              <div className='pb-2'>
+                <PFTypography
+                  variant='h3'
+                  className='font-serif-display font-black tracking-tight uppercase'
+                  style={{ color: km.color }}
+                >
+                  {character.name.cn}
+                </PFTypography>
+                <PFTypography
+                  variant='subtitle1'
+                  className='font-black text-ct-on-surface-variant uppercase tracking-widest text-xs mt-1'
+                >
+                  {character.name.vi}{' '}
+                  <span className='mx-2 opacity-30'>{'//'}</span>{' '}
+                  {character.name.en}
+                </PFTypography>
+              </div>
+            </div>
+          </div>
+
+          {/* ── Body content ── */}
+          <div className='p-6 md:p-10 pt-8'>
+            <div className='flex flex-row flex-wrap gap-3 mb-10'>
+              <span
+                className='px-4 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-[0.2em] glass-panel'
+                style={{ color: km.color, borderColor: `${km.color}30` }}
               >
-                {STAT_LABELS[key].en}
-              </PFTypography>
-              <Box sx={{ flex: 1, height: 8, borderRadius: 1, backgroundColor: isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.08)' }}>
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: `${character.stats[key]}%` }}
-                  transition={{ duration: 0.6, ease: 'easeOut' }}
-                  style={{
-                    height: '100%',
-                    borderRadius: 4,
-                    background: `linear-gradient(90deg, ${km.color}, ${km.color}AA)`,
-                  }}
-                />
-              </Box>
-              <PFTypography
-                variant="caption"
-                sx={{ width: 28, fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}
-              >
-                {character.stats[key]}
-              </PFTypography>
-            </Stack>
-          ))}
-        </Stack>
+                {km.name.en}
+              </span>
+              <span className='px-4 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-[0.2em] glass-panel text-ct-secondary border-ct-secondary/20'>
+                📍 {character.hometown}
+              </span>
+              <span className='px-4 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-[0.2em] glass-panel text-ct-secondary border-ct-secondary/20'>
+                ⚔️ {character.weapon}
+              </span>
+            </div>
 
-        <Divider sx={{ mb: 2, borderColor: isLight ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.08)' }} />
+            <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 items-start'>
+              <div className='max-w-sm mx-auto w-full'>
+                <div className='p-6 rounded-3xl border border-ct-outline-variant/10'>
+                  <StatsRadarChart
+                    stats={character.stats}
+                    color={km.color}
+                    label={character.name.en}
+                  />
+                </div>
+              </div>
 
-        {/* Bio */}
-        <PFTypography
-          variant="body2"
-          sx={{ color: palette.text.secondary, lineHeight: 1.7, mb: 3 }}
-        >
-          {character.bio}
-        </PFTypography>
+              <div className='flex flex-col gap-5 w-full'>
+                <h2 className='text-ct-secondary text-[10px] font-black tracking-[0.3em] uppercase mb-2'>
+                  01 // STATISTICAL_ANALYSIS
+                </h2>
+                {STAT_KEYS.map(key => (
+                  <StatBar
+                    key={key}
+                    label={STAT_LABELS[key].en}
+                    value={character.stats[key]}
+                    color={km.color}
+                  />
+                ))}
 
-        {/* Compare button */}
-        <Box
-          onClick={() => onCompare(character)}
-          role="button"
-          tabIndex={0}
-          onKeyDown={e => { if (e.key === 'Enter') onCompare(character); }}
-          sx={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 1,
-            px: 2.5,
-            py: 1,
-            borderRadius: 2,
-            cursor: 'pointer',
-            fontWeight: 600,
-            fontSize: '0.85rem',
-            color: km.color,
-            border: `1px solid ${km.color}40`,
-            transition: 'all 0.2s',
-            '&:hover': {
-              backgroundColor: `${km.color}12`,
-              borderColor: km.color,
-            },
+                <div className='mt-8'>
+                  <h2 className='text-ct-secondary text-[10px] font-black tracking-[0.3em] uppercase mb-4'>
+                    02 // ARCHIVE_BIOGRAPHY
+                  </h2>
+                  <TextGenerateEffect
+                    words={character.bio}
+                    className='text-ct-on-surface-variant leading-relaxed font-medium text-sm'
+                  />
+                </div>
+
+                <div className='mt-8 flex justify-end'>
+                  <button
+                    onClick={() => onCompare(character)}
+                    className='inline-flex items-center gap-3 px-6 py-3 rounded-xl font-black text-xs uppercase tracking-widest transition-all duration-300 hover:scale-105 active:scale-95 group glass-panel border-ct-secondary/30 text-ct-secondary hover:bg-ct-secondary hover:text-ct-on-secondary primary-glow'
+                  >
+                    <ArrowsLeftRightIcon
+                      size={18}
+                      weight='bold'
+                      className='transition-transform group-hover:rotate-180'
+                    />
+                    Initiate Duel Simulation
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </SpotlightCard>
+    </animated.div>
+  );
+};
+
+/** Animated stat bar using react-spring */
+const StatBar = ({
+  label,
+  value,
+  color,
+}: {
+  label: string;
+  value: number;
+  color: string;
+}) => {
+  const spring = useSpring({
+    from: { width: '0%' },
+    to: { width: `${value}%` },
+    config: { tension: 120, friction: 14 },
+  });
+
+  return (
+    <div className='flex flex-col gap-1.5'>
+      <div className='flex justify-between items-center px-1'>
+        <span className='text-[10px] font-black text-ct-on-surface-variant uppercase tracking-widest'>
+          {label}
+        </span>
+        <span className='text-[10px] font-black tabular-nums' style={{ color }}>
+          {value}%
+        </span>
+      </div>
+      <div className='h-1.5 rounded-full bg-ct-surface-container-highest/10 overflow-hidden glass-panel border-none'>
+        <animated.div
+          style={{
+            ...spring,
+            background: `linear-gradient(90deg, ${color}AA, ${color})`,
+            boxShadow: `0 0 8px ${color}40`,
           }}
-        >
-          <CompareArrowsIcon fontSize="small" />
-          Compare with another warrior…
-        </Box>
-      </Box>
-    </motion.div>
+          className='h-full rounded-full'
+        />
+      </div>
+    </div>
   );
 };

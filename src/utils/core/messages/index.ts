@@ -136,7 +136,7 @@ export const APP_MESSAGES = {
     recentWork: 'My Recent Work',
     recentWorkDescriptions:
       "Here are a few past design projects I've worked on. Want to know more?",
-    emailMe: "Email me.",
+    emailMe: 'Email me.',
     frontEndDeveloper: 'Front-End Developer',
     backEndDeveloper: 'Back-End Developer',
     fullStackDeveloper: 'Full-Stack Developer',
@@ -148,5 +148,5 @@ export const APP_MESSAGES = {
     sendMeEmail: 'Send me an email',
     callMe: 'Call me',
     phoneCopied: 'Phone number copied to clipboard!',
-  }
+  },
 };

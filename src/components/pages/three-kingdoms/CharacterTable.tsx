@@ -1,4 +1,4 @@
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useState, useEffect } from 'react';
 import {
   useReactTable,
   getCoreRowModel,
@@ -8,11 +8,65 @@ import {
   createColumnHelper,
   type SortingState,
   type ColumnDef,
+  type Row,
+  type Cell,
 } from '@tanstack/react-table';
-import { useVirtualizer } from '@tanstack/react-virtual';
-import { Box, useTheme, useMediaQuery } from '@mui/material';
+import { useVirtualizer, type VirtualItem } from '@tanstack/react-virtual';
+import { useSpring, animated, to } from '@react-spring/web';
 import type { ThreeKingdomsCharacter } from '@constants/three-kingdoms';
 import { getKingdomMeta } from '@constants/three-kingdoms';
+import { useThemeMode } from '@contexts/theme-mode';
+import { MultiFormatImage } from './MultiFormatImage';
+import { cn } from '@utils/core/cn';
+
+const useIsMobile = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 600px)');
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+  return isMobile;
+};
+
+const AvatarCell = ({ character }: { character: ThreeKingdomsCharacter }) => {
+  const km = getKingdomMeta(character.kingdom);
+  return (
+    <div className='flex items-center gap-3'>
+      <div
+        className='w-10 h-10 rounded-full flex-shrink-0 overflow-hidden flex items-center justify-center p-0.5'
+        style={{
+          backgroundColor: `${km.color}20`,
+          border: `1.5px solid ${km.color}50`,
+        }}
+      >
+        <MultiFormatImage
+          basePath={`/images/three-kingdoms/avatar/${character.id}`}
+          alt={character.name.en}
+          className='w-full h-full rounded-full object-cover'
+          fallback={
+            <span
+              className='font-black text-[0.8rem] uppercase'
+              style={{ color: km.color }}
+            >
+              {character.name.cn.charAt(0)}
+            </span>
+          }
+        />
+      </div>
+      <div className='flex flex-col'>
+        <div className='font-black text-ct-on-surface leading-tight'>
+          {character.name.cn}
+        </div>
+        <div className='text-[0.7rem] font-bold text-ct-on-surface-variant/70 uppercase tracking-tighter'>
+          {character.name.vi} · {character.name.en}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const columnHelper = createColumnHelper<ThreeKingdomsCharacter>();
 
@@ -24,6 +78,104 @@ interface CharacterTableProps {
   onRowClick: (character: ThreeKingdomsCharacter) => void;
 }
 
+interface AnimatedRowProps {
+  row: Row<ThreeKingdomsCharacter>;
+  vRow: VirtualItem;
+  gridCols: string;
+  onRowClick: (character: ThreeKingdomsCharacter) => void;
+  index: number;
+}
+
+const AnimatedRow = ({
+  row,
+  vRow,
+  gridCols,
+  onRowClick,
+  index,
+}: AnimatedRowProps) => {
+  const km = getKingdomMeta(row.original.kingdom);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Staggered entry animation
+  const spring = useSpring({
+    from: { opacity: 0, x: -20 },
+    to: { opacity: 1, x: 0 },
+    delay: Math.min(index * 50, 500),
+    config: { tension: 200, friction: 20 },
+  });
+
+  // Spotlight effect
+  const [{ sx, sy, sOpacity }, spotlightApi] = useSpring(() => ({
+    sx: 0,
+    sy: 0,
+    sOpacity: 0,
+  }));
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    spotlightApi.start({
+      sx: e.clientX - rect.left,
+      sy: e.clientY - rect.top,
+      sOpacity: 1,
+    });
+  };
+
+  return (
+    <animated.div
+      ref={containerRef}
+      onClick={() => onRowClick(row.original)}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={() => spotlightApi.start({ sOpacity: 0 })}
+      role='button'
+      tabIndex={0}
+      onKeyDown={e => {
+        if (e.key === 'Enter') onRowClick(row.original);
+      }}
+      style={{
+        ...spring,
+        display: 'grid',
+        gridTemplateColumns: gridCols,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: `${vRow.size}px`,
+        transform: to(
+          [spring.x],
+          x => `translateY(${vRow.start}px) translateX(${x}px)`
+        ),
+        borderLeft: `3px solid ${km.color}`,
+      }}
+      className='ghost-border border-b border-ct-outline-variant/10 cursor-pointer transition-colors duration-150 hover:bg-ct-surface-container-high/30 focus-visible:outline-2 focus-visible:outline-primary-main focus-visible:-outline-offset-2 overflow-hidden group'
+    >
+      {/* Spotlight highlight */}
+      <animated.div
+        style={{
+          opacity: sOpacity,
+          background: to(
+            [sx, sy],
+            (x, y) =>
+              `radial-gradient(150px circle at ${x}px ${y}px, ${km.color}25, transparent 80%)`
+          ),
+        }}
+        className='pointer-events-none absolute inset-0 z-0'
+      />
+
+      {row
+        .getVisibleCells()
+        .map((cell: Cell<ThreeKingdomsCharacter, unknown>) => (
+          <div
+            key={cell.id}
+            className='px-3 flex items-center text-[0.85rem] text-ct-on-surface overflow-hidden relative z-10'
+          >
+            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+          </div>
+        ))}
+    </animated.div>
+  );
+};
+
 export const CharacterTable = ({
   data,
   globalFilter,
@@ -31,55 +183,40 @@ export const CharacterTable = ({
   onSortingChange,
   onRowClick,
 }: CharacterTableProps) => {
-  const { palette, breakpoints } = useTheme();
-  const isLight = palette.mode === 'light';
-  const isMobile = useMediaQuery(breakpoints.down('sm'));
+  const isMobile = useIsMobile();
   const parentRef = useRef<HTMLDivElement>(null);
+  const { mode } = useThemeMode();
+  const isLight = mode === 'light';
 
+  // Memoize column definitions for performance and type safety
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const columns: ColumnDef<ThreeKingdomsCharacter, any>[] = useMemo(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const base: ColumnDef<ThreeKingdomsCharacter, any>[] = [
       columnHelper.accessor(row => row.name.en, {
         id: 'name',
-        header: '⚔ Name',
-        cell: info => {
-          const row = info.row.original;
-          const km = getKingdomMeta(row.kingdom);
-          return (
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <Box
-                sx={{
-                  width: 10,
-                  height: 10,
-                  borderRadius: '50%',
-                  backgroundColor: km.color,
-                  flexShrink: 0,
-                }}
-              />
-              <Box>
-                <Box sx={{ fontWeight: 700, lineHeight: 1.2 }}>{row.name.cn}</Box>
-                <Box sx={{ fontSize: '0.75rem', opacity: 0.7 }}>{row.name.vi} · {row.name.en}</Box>
-              </Box>
-            </Box>
-          );
-        },
+        header: '⚔ Warrior',
+        cell: info => <AvatarCell character={info.row.original} />,
         enableSorting: true,
-        size: 200,
-        minSize: 140,
+        size: 240,
+        minSize: 180,
       }),
       columnHelper.accessor(row => row.kingdom, {
         id: 'kingdom',
-        header: 'Kingdom',
+        header: 'Allegiance',
         cell: info => {
           const km = getKingdomMeta(info.getValue());
           return (
-            <Box sx={{ color: km.color, fontWeight: 600, fontSize: '0.85rem' }}>
+            <span
+              className='font-black text-[0.7rem] uppercase tracking-widest px-2 py-0.5 rounded-md'
+              style={{ color: km.color, backgroundColor: `${km.color}15` }}
+            >
               {km.emoji} {km.name.en}
-            </Box>
+            </span>
           );
         },
-        size: 140,
-        minSize: 100,
+        size: 160,
+        minSize: 120,
       }),
       columnHelper.accessor(row => row.stats.might, {
         id: 'might',
@@ -91,17 +228,21 @@ export const CharacterTable = ({
     ];
 
     if (!isMobile) {
-      base.splice(2, 0, columnHelper.accessor(row => row.hometown, {
-        id: 'hometown',
-        header: '📍 Hometown',
-        cell: info => (
-          <Box sx={{ fontSize: '0.82rem', opacity: 0.85 }}>
-            {info.getValue()}
-          </Box>
-        ),
-        size: 160,
-        minSize: 120,
-      }));
+      base.splice(
+        2,
+        0,
+        columnHelper.accessor(row => row.hometown, {
+          id: 'hometown',
+          header: '📍 Domain',
+          cell: info => (
+            <span className='text-[0.75rem] font-medium text-ct-on-surface-variant'>
+              {info.getValue()}
+            </span>
+          ),
+          size: 160,
+          minSize: 120,
+        })
+      );
 
       base.push(
         columnHelper.accessor(row => row.stats.intelligence, {
@@ -109,29 +250,29 @@ export const CharacterTable = ({
           header: '🧠 Intel',
           cell: info => <StatCell value={info.getValue()} />,
           size: 100,
-        minSize: 70,
+          minSize: 70,
         }),
         columnHelper.accessor(row => row.stats.politics, {
           id: 'politics',
           header: '📜 Polit',
           cell: info => <StatCell value={info.getValue()} />,
           size: 100,
-        minSize: 70,
+          minSize: 70,
         }),
         columnHelper.accessor(row => row.stats.charisma, {
           id: 'charisma',
           header: '✨ Charm',
           cell: info => <StatCell value={info.getValue()} />,
           size: 100,
-        minSize: 70,
+          minSize: 70,
         }),
         columnHelper.accessor(row => row.stats.leadership, {
           id: 'leadership',
           header: '👑 Lead',
           cell: info => <StatCell value={info.getValue()} />,
           size: 100,
-        minSize: 70,
-        }),
+          minSize: 70,
+        })
       );
     }
 
@@ -152,7 +293,11 @@ export const CharacterTable = ({
     globalFilterFn: (row, _columnId, filterValue: string) => {
       const s = filterValue.toLowerCase();
       const { cn, en, vi } = row.original.name;
-      return cn.toLowerCase().includes(s) || en.toLowerCase().includes(s) || vi.toLowerCase().includes(s);
+      return (
+        cn.toLowerCase().includes(s) ||
+        en.toLowerCase().includes(s) ||
+        vi.toLowerCase().includes(s)
+      );
     },
   });
 
@@ -161,153 +306,110 @@ export const CharacterTable = ({
   const virtualizer = useVirtualizer({
     count: rows.length,
     getScrollElement: () => parentRef.current,
-    estimateSize: () => 56,
+    estimateSize: () => 72,
     overscan: 10,
   });
 
-  const headerColor = isLight ? '#5C4A32' : '#FFE4B5';
-  const rowHover = isLight ? 'rgba(184,137,31,0.06)' : 'rgba(245,208,96,0.06)';
-  const borderColor = isLight ? 'rgba(184,137,31,0.15)' : 'rgba(245,208,96,0.15)';
-
   const headerColumns = table.getHeaderGroups()[0]?.headers ?? [];
-  const gridCols = headerColumns.length > 0
-    ? `${headerColumns[0].getSize()}px ${headerColumns.slice(1).map(() => '1fr').join(' ')}`
-    : '1fr';
+  const gridCols =
+    headerColumns.length > 0
+      ? `${headerColumns[0].getSize()}px ${headerColumns
+          .slice(1)
+          .map(() => '1fr')
+          .join(' ')}`
+      : '1fr';
 
   return (
-    <Box
+    <div
       ref={parentRef}
-      sx={{
-        maxHeight: 'calc(100vh - 440px)',
+      className='w-full overflow-x-auto overflow-y-auto'
+      style={{
+        maxHeight: '100%',
         minHeight: 200,
-        overflowY: 'auto',
-        overflowX: 'auto',
-        borderRadius: 2,
-        border: `1px solid ${borderColor}`,
-        width: '100%',
-        backgroundColor: isLight ? 'rgba(255,248,240,0.5)' : 'rgba(11,13,46,0.35)',
-        backdropFilter: 'blur(8px)',
       }}
     >
       {/* Table header */}
-      <Box
-        sx={{
+      <div
+        className='sticky top-0 z-[2] border-b border-ct-outline-variant/10 shadow-sm'
+        style={{
           display: 'grid',
           gridTemplateColumns: gridCols,
-          position: 'sticky',
-          top: 0,
-          zIndex: 2,
-          backgroundColor: isLight ? 'rgba(251,246,238,0.95)' : 'rgba(11,13,46,0.9)',
-          backdropFilter: 'blur(12px)',
-          borderBottom: `1px solid ${borderColor}`,
+          backgroundColor: isLight
+            ? 'rgba(255,255,255,0.8)'
+            : 'rgba(16,20,26,0.9)',
+          backdropFilter: 'blur(16px)',
         }}
       >
         {table.getHeaderGroups().map(hg =>
           hg.headers.map(header => (
-            <Box
+            <div
               key={header.id}
               onClick={header.column.getToggleSortingHandler()}
-              sx={{
-                px: 1.5,
-                py: 1.5,
-                fontSize: '0.8rem',
-                fontWeight: 700,
-                color: headerColor,
+              className='px-4 py-4 hud-label text-[0.65rem] font-black whitespace-nowrap select-none flex items-center gap-1 transition-colors hover:text-ct-secondary active:scale-95'
+              style={{
                 cursor: header.column.getCanSort() ? 'pointer' : 'default',
-                userSelect: 'none',
-                whiteSpace: 'nowrap',
-                '&:hover': header.column.getCanSort()
-                  ? { backgroundColor: rowHover }
-                  : {},
               }}
             >
               {flexRender(header.column.columnDef.header, header.getContext())}
-              {header.column.getIsSorted() === 'asc' && ' ▲'}
-              {header.column.getIsSorted() === 'desc' && ' ▼'}
-            </Box>
-          )),
+              <span className='text-[10px] opacity-40'>
+                {header.column.getIsSorted() === 'asc' && ' ▴'}
+                {header.column.getIsSorted() === 'desc' && ' ▾'}
+              </span>
+            </div>
+          ))
         )}
-      </Box>
+      </div>
 
       {/* Virtualized rows */}
-      <Box sx={{ height: `${virtualizer.getTotalSize()}px`, position: 'relative' }}>
-        {virtualizer.getVirtualItems().map(vRow => {
+      <div
+        style={{
+          height: `${virtualizer.getTotalSize()}px`,
+          position: 'relative',
+        }}
+      >
+        {virtualizer.getVirtualItems().map((vRow, index) => {
           const row = rows[vRow.index];
-          const km = getKingdomMeta(row.original.kingdom);
+          if (!row) return null;
 
           return (
-            <Box
+            <AnimatedRow
               key={row.id}
-              onClick={() => onRowClick(row.original)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={e => {
-                if (e.key === 'Enter') onRowClick(row.original);
-              }}
-              sx={{
-                display: 'grid',
-                gridTemplateColumns: gridCols,
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: `${vRow.size}px`,
-                transform: `translateY(${vRow.start}px)`,
-                borderBottom: `1px solid ${borderColor}`,
-                borderLeft: `3px solid ${km.color}`,
-                cursor: 'pointer',
-                transition: 'background-color 0.15s',
-                '&:hover': { backgroundColor: rowHover },
-                '&:focus-visible': {
-                  outline: `2px solid ${palette.primary.main}`,
-                  outlineOffset: -2,
-                },
-              }}
-            >
-              {row.getVisibleCells().map(cell => (
-                <Box
-                  key={cell.id}
-                  sx={{
-                    px: 1.5,
-                    display: 'flex',
-                    alignItems: 'center',
-                    fontSize: '0.85rem',
-                    color: palette.text.primary,
-                    overflow: 'hidden',
-                  }}
-                >
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </Box>
-              ))}
-            </Box>
+              row={row}
+              vRow={vRow}
+              gridCols={gridCols}
+              onRowClick={onRowClick}
+              index={index}
+            />
           );
         })}
-      </Box>
+      </div>
 
       {/* Empty state */}
       {rows.length === 0 && (
-        <Box
-          sx={{
-            textAlign: 'center',
-            py: 6,
-            color: palette.text.secondary,
-            fontSize: '0.9rem',
-          }}
-        >
-          No warriors found 🏯
-        </Box>
+        <div className='flex flex-col items-center justify-center py-20 gap-4 opacity-40'>
+          <div className='text-4xl'>🏯</div>
+          <div className='hud-label text-xs'>
+            No warriors found in these archives
+          </div>
+        </div>
       )}
-    </Box>
+    </div>
   );
 };
 
 /* ─── Small stat cell with color scale ─── */
 const StatCell = ({ value }: { value: number }) => {
-  const color =
-    value >= 90 ? '#C41E3A' : value >= 70 ? '#D4A843' : value >= 50 ? '#2E5090' : '#6B7280';
+  const isHigh = value >= 90;
   return (
-    <Box sx={{ fontWeight: value >= 90 ? 700 : 500, color, fontVariantNumeric: 'tabular-nums' }}>
+    <span
+      className={cn(
+        'tabular-nums font-black text-xs px-2 py-1 rounded-sm',
+        isHigh
+          ? 'text-ct-secondary bg-ct-secondary/10'
+          : 'text-ct-on-surface-variant'
+      )}
+    >
       {value}
-    </Box>
+    </span>
   );
 };

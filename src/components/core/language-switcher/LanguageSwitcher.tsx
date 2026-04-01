@@ -1,81 +1,67 @@
-import { useState } from 'react';
-import { Box, Menu, MenuItem, Typography, useTheme } from '@mui/material';
-import LanguageIcon from '@mui/icons-material/Language';
+import { useState, useRef, useEffect } from 'react';
+import { TranslateIcon } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { SUPPORTED_LANGUAGES } from '@i18n';
+import { cn } from '@lib/utils';
 
 export const LanguageSwitcher = () => {
   const { i18n } = useTranslation();
-  const { palette } = useTheme();
-  const isLight = palette.mode === 'light';
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const currentLang = SUPPORTED_LANGUAGES.find(l => l.code === i18n.language) ?? SUPPORTED_LANGUAGES[0];
+  const currentLang =
+    SUPPORTED_LANGUAGES.find(l => l.code === i18n.language) ??
+    SUPPORTED_LANGUAGES[0];
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
-    <>
-      <Box
-        onClick={e => setAnchorEl(e.currentTarget)}
-        role="button"
-        aria-label="Change language"
-        tabIndex={0}
-        onKeyDown={e => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            setAnchorEl(e.currentTarget as HTMLElement);
-          }
-        }}
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 0.5,
-          cursor: 'pointer',
-          color: palette.text.primary,
-          px: 1,
-          py: 0.5,
-          borderRadius: 1,
-          transition: 'background 0.2s',
-          '&:hover': { background: `${palette.primary.light}18` },
-        }}
+    <div className='relative' ref={containerRef}>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        aria-label='Change language'
+        className='flex items-center gap-2 cursor-pointer text-[var(--color-text-primary)] px-2 py-1 rounded transition-colors hover:bg-[var(--color-primary-light)]/10'
       >
-        <LanguageIcon fontSize="small" sx={{ color: palette.primary.light }} />
-        <Typography variant="body2" fontWeight={600} sx={{ color: palette.primary.light }}>
+        <TranslateIcon
+          size={16}
+          className='text-[var(--color-primary-light)]'
+        />
+        <span className='text-sm font-semibold text-[var(--color-primary-light)]'>
           {currentLang.flag} {currentLang.label}
-        </Typography>
-      </Box>
-      <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={() => setAnchorEl(null)}
-        PaperProps={{
-          sx: {
-            background: isLight ? 'rgba(255,248,240,0.98)' : 'rgba(11, 13, 46, 0.95)',
-            backdropFilter: 'blur(12px)',
-            border: `1px solid ${isLight ? 'rgba(184,137,31,0.2)' : 'rgba(245,208,96,0.2)'}`,
-            color: palette.text.primary,
-            minWidth: 120,
-          },
-        }}
-      >
-        {SUPPORTED_LANGUAGES.map(lang => (
-          <MenuItem
-            key={lang.code}
-            selected={lang.code === i18n.language}
-            onClick={() => {
-              i18n.changeLanguage(lang.code);
-              setAnchorEl(null);
-            }}
-            sx={{
-            '&.Mui-selected': { background: `${palette.primary.light}26` },
-            '&:hover': { background: `${palette.primary.light}18` },
-            }}
-          >
-            <Typography variant="body2">
+        </span>
+      </button>
+
+      {isOpen && (
+        <div className='absolute right-0 mt-2 min-w-[120px] bg-[var(--color-background-paper)]/95 backdrop-blur-md border border-[var(--color-primary-light)]/20 rounded shadow-lg z-50 overflow-hidden'>
+          {SUPPORTED_LANGUAGES.map(lang => (
+            <button
+              key={lang.code}
+              onClick={() => {
+                i18n.changeLanguage(lang.code);
+                setIsOpen(false);
+              }}
+              className={cn(
+                'w-full text-left px-4 py-2 text-sm transition-colors hover:bg-[var(--color-primary-light)]/10 text-[var(--color-text-primary)]',
+                lang.code === i18n.language &&
+                  'bg-[var(--color-primary-light)]/15'
+              )}
+            >
               {lang.flag} {lang.label}
-            </Typography>
-          </MenuItem>
-        ))}
-      </Menu>
-    </>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
   );
 };

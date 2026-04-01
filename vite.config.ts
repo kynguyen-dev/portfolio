@@ -1,11 +1,20 @@
 import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
 import {defineConfig} from 'vite';
 import {resolve} from 'path';
+import pkg from './package.json';
 
 export default defineConfig(_configEnv => {
     return {
-        plugins: [react()],
+        base: process.env.BASE_PATH || '/',
+        plugins: [react(), tailwindcss()],
+        define: {
+            'import.meta.env.APP_VERSION': JSON.stringify(pkg.version),
+        },
         server: {
+            port: 3000,
+        },
+        preview: {
             port: 3000,
         },
         resolve: {
@@ -20,8 +29,10 @@ export default defineConfig(_configEnv => {
                 '@routers': resolve(__dirname, 'src/routers'),
                 '@utils': resolve(__dirname, 'src/utils'),
                 '@i18n': resolve(__dirname, 'src/i18n'),
+                '@lib': resolve(__dirname, 'src/lib'),
+                '@hooks': resolve(__dirname, 'src/hooks'),
             },
         },
-        optimizeDeps: {include: ['@mui/material']},
+        optimizeDeps: {include: []},
     };
 });
