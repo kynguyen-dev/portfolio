@@ -1,45 +1,57 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { PFCard } from '@components/core';
-import { Typography, Stack } from '@mui/material';
+import { PFTypography } from '@components/core';
 
 const meta = {
   title: 'Core/Card/Default',
   component: PFCard,
-  parameters: {
-    layout: 'centered',
-  },
+  parameters: { layout: 'centered' },
   tags: ['autodocs'],
 } satisfies Meta<typeof PFCard>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Elevated: Story = {
+export const Default: Story = {
   args: {
-    elevation: 4,
-    sx: { p: 3, minWidth: 280 },
+    className: 'min-w-[280px] p-6',
     children: (
-      <Stack spacing={1}>
-        <Typography variant="h6">Card Title</Typography>
-        <Typography variant="body2" color="text.secondary">
-          This is a PFCard component with elevation.
-        </Typography>
-      </Stack>
+      <div className='flex flex-col gap-2'>
+        <PFTypography variant='h6'>Tonal Card</PFTypography>
+        <PFTypography variant='body2' className='text-text-secondary'>
+          Uses surface-container-low → surface-container-high on hover.
+        </PFTypography>
+      </div>
     ),
   },
 };
 
-export const Outlined: Story = {
+export const Glass: Story = {
   args: {
-    variant: 'outlined',
-    sx: { p: 3, minWidth: 280 },
+    variant: 'glass',
+    className: 'min-w-[280px] p-6',
     children: (
-      <Stack spacing={1}>
-        <Typography variant="h6">Outlined Card</Typography>
-        <Typography variant="body2" color="text.secondary">
-          This is a PFCard component with outlined variant.
-        </Typography>
-      </Stack>
+      <div className='flex flex-col gap-2'>
+        <PFTypography variant='h6'>Glass Card</PFTypography>
+        <PFTypography variant='body2' className='text-text-secondary'>
+          Frosted obsidian pane with 60% opacity + blur(20px).
+        </PFTypography>
+      </div>
+    ),
+  },
+};
+
+export const Outline: Story = {
+  args: {
+    variant: 'outline',
+    className: 'min-w-[280px] p-6',
+    children: (
+      <div className='flex flex-col gap-2'>
+        <PFTypography variant='h6'>Ghost Border Card</PFTypography>
+        <PFTypography variant='body2' className='text-text-secondary'>
+          Uses outline-variant at 15% opacity.
+        </PFTypography>
+      </div>
     ),
   },
 };

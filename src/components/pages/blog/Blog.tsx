@@ -1,10 +1,12 @@
-import { Box, Chip, Stack, useTheme } from '@mui/material';
-import { motion } from 'framer-motion';
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import { animated, useTrail } from '@react-spring/web';
+import { ArrowSquareOutIcon } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
-import { PFGradientTypography, PFTypography } from '@components/core/typography';
+import {
+  PFGradientTypography,
+  PFTypography,
+} from '@components/core/typography';
 import { APP_THEMES, APP_TYPOGRAPHIES } from '@constants';
-import { glassCardSx } from '@utils/styles/glassCard';
+import { useInView } from '@utils/animations/springVariants';
 
 interface BlogPost {
   titleKey: string;
@@ -15,10 +17,6 @@ interface BlogPost {
   minRead: number;
 }
 
-/**
- * Static blog post data — replace URLs with your actual articles.
- * Title/summary are plain strings (not i18n keys) so you can edit quickly.
- */
 const posts: BlogPost[] = [
   {
     titleKey: 'Scaling React Apps with Feature-Based Architecture',
@@ -49,110 +47,96 @@ const posts: BlogPost[] = [
   },
 ];
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 40, scale: 0.95 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { delay: i * 0.15, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
-  }),
-};
-
 export const Blog = () => {
   const { t } = useTranslation();
-  const { palette } = useTheme();
-  const isLight = palette.mode === 'light';
+  const { ref, inView } = useInView({ threshold: 0.15 });
+
+  const trail = useTrail(posts.length, {
+    from: { opacity: 0, y: 40, scale: 0.95 },
+    to: inView
+      ? { opacity: 1, y: 0, scale: 1 }
+      : { opacity: 0, y: 40, scale: 0.95 },
+    config: { tension: 170, friction: 26 },
+  });
 
   return (
-    <Box
-      component="section"
+    <section
       aria-label={t('blog.heading')}
-      sx={{ py: { xs: 8, md: 12 }, px: { xs: 2, md: 6 }, maxWidth: 1100, mx: 'auto' }}
+      className='py-16 md:py-24 px-4 md:px-12 max-w-[1100px] mx-auto'
     >
       <PFGradientTypography
         variant={APP_TYPOGRAPHIES.HEADER_PRIMARY}
         theme={APP_THEMES.DARK}
-        fontWeight="bold"
-        align="center"
-        sx={{ mb: 1 }}
+        fontWeight='bold'
+        align='center'
+        className='mb-2'
       >
         {t('blog.heading')}
       </PFGradientTypography>
-      <PFTypography variant="body1" align="center" sx={{ color: palette.text.secondary, opacity: 0.7, mb: 6 }}>
+      <PFTypography
+        variant='body1'
+        align='center'
+        className='text-text-secondary opacity-70 mb-12'
+      >
         {t('blog.subtitle')}
       </PFTypography>
 
-      <Stack spacing={3}>
-        {posts.map((post, i) => (
-          <Box
-            key={i}
-            component={motion.a}
-            href={post.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            custom={i}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={cardVariants}
-            sx={{
-              display: 'block',
-              textDecoration: 'none',
-              ...glassCardSx(isLight),
-              p: { xs: 3, md: 4 },
-              cursor: 'pointer',
-              borderLeft: `3px solid ${palette.primary.light}`,
-              '&:focus-visible': {
-                outline: `2px solid ${palette.primary.light}`,
-                outlineOffset: 2,
-              },
-            }}
-          >
-            <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
-              <Box flex={1}>
-                <Stack direction="row" alignItems="center" gap={1} mb={1}>
-                  <PFTypography
-                    variant="h6"
-                    sx={{ color: palette.text.primary, fontWeight: 700 }}
-                  >
-                    {post.titleKey}
-                  </PFTypography>
-                  <OpenInNewIcon sx={{ color: 'rgba(245,208,96,0.4)', fontSize: 18 }} />
-                </Stack>
-                <PFTypography
-                  variant="body2"
-                  sx={{ color: palette.text.secondary, opacity: 0.8, lineHeight: 1.7, mb: 2 }}
-                >
-                  {post.summaryKey}
-                </PFTypography>
-                <Stack direction="row" flexWrap="wrap" gap={1} alignItems="center">
-                  {post.tags.map(tag => (
-                    <Chip
-                      key={tag}
-                      label={tag}
-                      size="small"
-                      sx={{
-                        background: `${palette.primary.light}18`,
-                        border: `1px solid ${palette.primary.light}33`,
-                        color: palette.primary.light,
-                        fontWeight: 600,
-                        fontSize: '0.7rem',
-                      }}
-                    />
-                  ))}
-                  <PFTypography
-                    variant="caption"
-                    sx={{ color: palette.text.secondary, opacity: 0.5, ml: 1 }}
-                  >
-                    {post.date} · {t('blog.minRead', { min: post.minRead })}
-                  </PFTypography>
-                </Stack>
-              </Box>
-            </Stack>
-          </Box>
-        ))}
-      </Stack>
-    </Box>
+      <div ref={ref} className='flex flex-col gap-6'>
+        {trail.map((style, i) => {
+          const post = posts[i];
+          return (
+            <animated.a
+              key={i}
+              href={post.url}
+              target='_blank'
+              rel='noopener noreferrer'
+              style={{ ...style, textDecoration: 'none', display: 'block' }}
+            >
+              <div className='glass rounded-2xl p-6 md:p-8 cursor-pointer border-l-[3px] border-l-primary-light focus-visible:outline-2 focus-visible:outline-primary-light focus-visible:outline-offset-2 transition-transform duration-200 hover:scale-[1.01]'>
+                <div className='flex flex-row justify-between items-start'>
+                  <div className='flex-1'>
+                    <div className='flex items-center gap-2 mb-2'>
+                      <PFTypography
+                        variant='h6'
+                        fontWeight={700}
+                        className='text-ct-on-surface'
+                      >
+                        {post.titleKey}
+                      </PFTypography>
+                      <ArrowSquareOutIcon
+                        size={18}
+                        className='text-ct-on-surface-variant/40'
+                      />
+                    </div>
+                    <PFTypography
+                      variant='body2'
+                      className='text-text-secondary opacity-80 leading-[1.7] mb-4'
+                    >
+                      {post.summaryKey}
+                    </PFTypography>
+                    <div className='flex flex-row flex-wrap gap-2 items-center'>
+                      {post.tags.map(tag => (
+                        <span
+                          key={tag}
+                          className='text-[0.7rem] font-semibold px-2 py-0.5 rounded-full border border-primary-light/20 bg-primary-light/10 text-primary-light'
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                      <PFTypography
+                        variant='caption'
+                        className='text-text-secondary opacity-50 ml-2'
+                      >
+                        {post.date} · {t('blog.minRead', { min: post.minRead })}
+                      </PFTypography>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </animated.a>
+          );
+        })}
+      </div>
+    </section>
   );
 };

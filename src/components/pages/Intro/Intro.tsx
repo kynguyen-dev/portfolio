@@ -1,246 +1,444 @@
-import { motion } from "framer-motion";
-import { Avatar, Box, Chip, Stack, useTheme } from "@mui/material";
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { PFGradientTypography, PFTypography } from "@components/core";
-import { StyledButton } from "@components/core/button";
-import { useTranslation } from "react-i18next";
+import { useEffect, useRef, useState } from 'react';
 import {
-  APP_PAGES,
-  APP_THEMES,
-  APP_TYPOGRAPHIES,
-  APP_TYPOGRAPHIES_ANIMATION,
-} from "@constants";
-import { staggerContainer, staggerItem, pop } from '@utils/animations/scrollVariants';
-import { getYearsOfExperience } from '@utils/core/career';
+  motion,
+  useScroll,
+  useTransform,
+  useSpring as fmSpring,
+} from 'motion/react';
+import { animated, useSpring, useTrail } from '@react-spring/web';
+import { useTranslation } from 'react-i18next';
+import { APP_PAGES, APP_INFORMATION } from '@constants';
+import { useInView } from '@utils/animations/springVariants';
+import {
+  Terminal,
+  ExpandableWorkCard,
+  TracingBeam,
+  SparklesCore,
+  AuroraBackground,
+} from '@components/customs/aceternity';
+import { ContactDropdown } from '@components/customs/ContactDropdown';
+import { CyberButton } from '@components/core';
+import { downloadFile } from '@utils/core/downloadFile';
+
+/* ─── Work History Data ─── */
+interface TimelineEntry {
+  company: string;
+  role: string;
+  period: string;
+  description: string;
+  technologies: string[];
+  domain?: string;
+  teamSize?: string;
+  tools?: string[];
+  achievements?: string[];
+}
 
 export const Intro = () => {
-  const { palette } = useTheme();
   const { t } = useTranslation();
-  const years = getYearsOfExperience();
+  const workHistory = t('intro.workHistory', {
+    returnObjects: true,
+  }) as TimelineEntry[];
 
-  const statBadges = [
-    { label: t('intro.yearsExperience', { years }) },
-    { label: t('intro.productionApps') },
-    { label: t('intro.techStack') },
-  ];
+  /* ─── Detect 2xl+ for scroll-driven animations ─── */
+  const [isAbove2xl, setIsAbove2xl] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1536px)');
+    setIsAbove2xl(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsAbove2xl(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+
+  /* ─── Scroll & Parallax Setup ─── */
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end end'],
+  });
+
+  const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
+  const smoothProgress = fmSpring(scrollYProgress, springConfig);
+
+  // 1. Hero Content fades out & translates up (0 to 0.15)
+  const heroOpacity = useTransform(smoothProgress, [0, 0.15], [1, 0]);
+  const heroTranslateY = useTransform(smoothProgress, [0, 0.15], [0, -300]);
+  // Use a string-returning function to hide the hero completely when faded out
+  const heroDisplay = useTransform(scrollYProgress, v =>
+    v > 0.15 ? 'none' : 'flex'
+  );
+
+  // 2. Tactical Path Background flattens from 3D (0 to 0.2)
+  const rotateX = useTransform(smoothProgress, [0, 0.2], [15, 0]);
+  const rotateZ = useTransform(smoothProgress, [0, 0.2], [10, 0]);
+  const translateY = useTransform(smoothProgress, [0, 0.2], [50, 0]);
+  const pathOpacity = useTransform(smoothProgress, [0, 0.2], [0.2, 1]);
+
+  // 3. Tactical Path Header fades in (0.1 to 0.2)
+  const headerOpacity = useTransform(smoothProgress, [0.1, 0.2], [0, 1]);
+  const headerDisplay = useTransform(scrollYProgress, v =>
+    v < 0.05 ? 'none' : 'block'
+  );
+
+  // 4. Tactical Path Horizontal Scroll (0.2 to 1.0)
+  const totalPages = Math.ceil(workHistory.length / 2);
+  const scrollEndPercent =
+    totalPages > 1 ? `-${((totalPages - 1) / totalPages) * 100}%` : '0%';
+  const x = useTransform(smoothProgress, [0.2, 1], ['0%', scrollEndPercent]);
+
+  /* ─── Intro Mount Animations (React-Spring) ─── */
+  const statusSpring = useSpring({
+    from: { opacity: 0, y: -20 },
+    to: { opacity: 1, y: 0 },
+    delay: 200,
+  });
+
+  const headingSpring = useSpring({
+    from: { opacity: 0, y: 30 },
+    to: { opacity: 1, y: 0 },
+    delay: 400,
+  });
+
+  const ctaSpring = useSpring({
+    from: { opacity: 0, scale: 0.9 },
+    to: { opacity: 1, scale: 1 },
+    delay: 1000,
+    config: { tension: 180, friction: 20 },
+  });
+
+  /* ─── Accent Cards Mount Animations ─── */
+  const { ref: gridRef, inView: gridInView } = useInView({ threshold: 0.15 });
+  const gridTrail = useTrail(2, {
+    from: { opacity: 0, y: 40, scale: 0.95 },
+    to: gridInView
+      ? { opacity: 1, y: 0, scale: 1 }
+      : { opacity: 0, y: 40, scale: 0.95 },
+    config: { tension: 200, friction: 20 },
+  });
 
   return (
-    <Box
-      component="section"
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
+    <section
       id={APP_PAGES.HOME.toLowerCase()}
-      aria-label={t('intro.title')}
-      sx={{ px: { xs: 3, md: 0 }, minHeight: '100vh', pt: { xs: 10, md: 12 }, pb: { xs: 4, md: 6 } }}
+      className='relative'
+      style={{ overflowX: 'clip' }}
     >
-      <Stack
-        alignItems="center"
-        justifyContent="center"
-        gap={4}
-        textAlign={{ xs: "center", md: "left" }}
-      >
-        <PFGradientTypography
-          variant={APP_TYPOGRAPHIES.HEADER_PRIMARY}
-          theme={APP_THEMES.DARK}
-          fontWeight="bold"
-          animations={[
-            APP_TYPOGRAPHIES_ANIMATION.TYPEWRITER,
-            APP_TYPOGRAPHIES_ANIMATION.OUTLINE_TO_SOLID,
-          ]}
-        >
-          {t('intro.title')}
-        </PFGradientTypography>
-        <PFTypography
-          variant={APP_TYPOGRAPHIES.SUBTITLE_PRIMARY}
-          color={palette.text.disabled}
-        >
-          {t('intro.description')}
-        </PFTypography>
-
-        {/* CTA Buttons */}
-        <motion.div
-          variants={staggerContainer(0.15, 0.3)}
-          initial="hidden"
-          animate="visible"
-        >
-          <Stack direction={{ xs: 'column', sm: 'row' }} gap={2} alignItems="center">
-            <motion.div variants={staggerItem}>
-              <StyledButton
-                variant="contained"
-                size="large"
-                onClick={() => {
-                  const el = document.getElementById(APP_PAGES.PROJECTS.toLowerCase());
-                  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }}
-              >
-                {t('intro.viewMyWork')}
-              </StyledButton>
-            </motion.div>
-            <motion.div variants={staggerItem}>
-              <StyledButton
-                variant="outlined"
-                size="large"
-                onClick={() => {
-                  window.open('/resume/Ky_Nguyen_CV.pdf', '_blank', 'noopener,noreferrer');
-                }}
-              >
-                {t('intro.downloadCV')}
-              </StyledButton>
-            </motion.div>
-          </Stack>
-        </motion.div>
-
-        {/* Stat Badges */}
-        <Stack
-          component={motion.div}
-          variants={staggerContainer(0.1, 0.6)}
-          initial="hidden"
-          animate="visible"
-          direction="row"
-          flexWrap="wrap"
-          justifyContent="center"
-          gap={1.5}
-        >
-          {statBadges.map(badge => (
-            <motion.div key={badge.label} variants={pop}>
-              <Chip
-                label={badge.label}
-                sx={{
-                  background: `${palette.primary.light}1E`,
-                  border: `1px solid ${palette.primary.light}59`,
-                  color: palette.primary.light,
-                  fontWeight: 600,
-                  fontSize: { xs: '0.75rem', sm: '0.85rem' },
-                  px: 1,
-                  backdropFilter: 'blur(6px)',
-                }}
-              />
-            </motion.div>
-          ))}
-        </Stack>
-
-        <Box
-          component={motion.div}
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ type: 'spring', stiffness: 80, damping: 15, delay: 0.3 }}
-          whileHover={{ scale: 1.08, transition: { duration: 0.3 } }}
-          sx={{ position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
-        >
-          {/* Outer rotating dashed ring */}
-          <Box
-            component={motion.div}
-            animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-            sx={{
-              position: 'absolute',
-              width: { md: 220, xs: 155 },
-              height: { md: 220, xs: 155 },
-              borderRadius: '50%',
-              border: `2px dashed ${palette.primary.light}40`,
-            }}
-          />
-          {/* Middle pulsing glow ring */}
-          <Box
-            component={motion.div}
-            animate={{
-              boxShadow: [
-                `0 0 20px ${palette.primary.main}30, 0 0 40px ${palette.primary.main}10`,
-                `0 0 30px ${palette.primary.main}60, 0 0 60px ${palette.primary.main}30`,
-                `0 0 20px ${palette.primary.main}30, 0 0 40px ${palette.primary.main}10`,
-              ],
-            }}
-            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-            sx={{
-              position: 'absolute',
-              width: { md: 200, xs: 140 },
-              height: { md: 200, xs: 140 },
-              borderRadius: '50%',
-              border: `2px solid ${palette.primary.light}50`,
-            }}
-          />
-          {/* Floating orbital dots */}
-          {[0, 1, 2, 3].map(i => (
-            <Box
-              key={i}
-              component={motion.div}
-              animate={{ rotate: 360 }}
-              transition={{
-                duration: 8 + i * 2,
-                repeat: Infinity,
-                ease: 'linear',
-                delay: i * 0.5,
-              }}
-              sx={{
-                position: 'absolute',
-                width: { md: 210 + i * 8, xs: 148 + i * 6 },
-                height: { md: 210 + i * 8, xs: 148 + i * 6 },
-              }}
-            >
-              <Box
-                component={motion.div}
-                animate={{
-                  scale: [1, 1.5, 1],
-                  opacity: [0.6, 1, 0.6],
-                }}
-                transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
-                sx={{
-                  position: 'absolute',
-                  top: 0,
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  width: { md: 8, xs: 6 },
-                  height: { md: 8, xs: 6 },
-                  borderRadius: '50%',
-                  background: i % 2 === 0 ? palette.primary.light : palette.secondary.light,
-                  boxShadow: `0 0 8px ${i % 2 === 0 ? palette.primary.light : palette.secondary.light}`,
-                }}
-              />
-            </Box>
-          ))}
-          {/* Avatar image */}
-          <Avatar
-            src="/images/avatar.jpg"
-            alt="Ky Nguyen's avatar"
-            sx={{
-              width: { md: 180, xs: 120 },
-              height: { md: 180, xs: 120 },
-              boxShadow: `0 0 30px ${palette.primary.main}60, 0 0 60px ${palette.secondary.main}30`,
-              background: palette.primary.main,
-              border: `3px solid ${palette.primary.light}`,
-              zIndex: 1,
-            }}
-          />
-        </Box>
-
-        <Box
-          component={motion.img}
-          src='/images/home.svg'
-          alt='Home illustration'
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          height='auto'
-          width={{ xs: '100%', md: '800px' }}
-          pt={6}
+      {/* 500vh container houses both Hero and Tactical Path */}
+      <div ref={containerRef} className='2xl:h-[500vh] relative antialiased'>
+        {/* Anchor point for Desktop Experience nav link */}
+        <div
+          id={isAbove2xl ? 'path' : undefined}
+          className='hidden 2xl:block absolute w-full pointer-events-none'
+          style={{ top: '80vh' }}
         />
+        {/* Sticky viewport container — only sticky on 2xl+ for horizontal scroll */}
+        <div className='h-screen 2xl:sticky 2xl:top-0 w-full flex flex-col justify-center [perspective:1000px] overflow-hidden'>
+          {/* Aurora Background — ambient purple/mint glow */}
+          <AuroraBackground
+            className='absolute inset-0 z-0 pointer-events-none'
+            showRadialGradient={true}
+          >
+            <></>
+          </AuroraBackground>
+          {/* Topology Grid Background */}
+          <div className='absolute inset-0 topology-grid opacity-20 pointer-events-none z-[1]' />
 
-        {/* Scroll-down indicator */}
-        <Box
-          component={motion.div}
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-          sx={{ mt: 2, cursor: 'pointer', opacity: 0.6 }}
-          onClick={() => {
-            const el = document.getElementById('about');
-            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }}
+          {/* Sparkles ambient background */}
+          <div className='absolute inset-0 z-20 pointer-events-none'>
+            <SparklesCore
+              id='hero-sparkles'
+              background='transparent'
+              minSize={0.4}
+              maxSize={1.4}
+              particleDensity={80}
+              className='w-full h-full'
+              particleColor='#d0bcff'
+              speed={2}
+            />
+          </div>
+
+          {/* =========================================
+              HERO FOREGROUND LAYER
+              ========================================= */}
+          <motion.div
+            style={
+              isAbove2xl
+                ? {
+                    opacity: heroOpacity,
+                    y: heroTranslateY,
+                    display: heroDisplay,
+                  }
+                : undefined
+            }
+            className='absolute inset-0 z-30 flex flex-col items-center pt-[10vh] lg:pt-[12vh] 2xl:pt-[15vh] pb-4 px-4 md:px-8 overflow-hidden'
+          >
+            <div className='w-full max-w-4xl flex flex-col items-center mx-auto relative px-2 my-auto max-h-[900px]:scale-[0.95] max-h-[800px]:scale-90 max-h-[700px]:scale-[0.8] origin-top transition-transform duration-300'>
+              {/* Floating Data Node */}
+              <animated.div
+                style={statusSpring}
+                className='absolute -top-6 xl:-top-10 right-0 lg:right-4 xl:right-12 glass-panel p-2 xl:p-3 rounded-xl hidden md:flex flex-col gap-1 z-10 scale-75 xl:scale-100 origin-top-right'
+              >
+                <div className='flex items-center gap-1.5 xl:gap-2 text-ct-secondary text-[9px] xl:text-[10px] font-bold tracking-tighter'>
+                  <span className='w-1.5 h-1.5 xl:w-2 xl:h-2 rounded-full bg-ct-secondary animate-pulse' />
+                  {t('intro.systemStatus')}
+                </div>
+                <div className='text-[8px] xl:text-[10px] text-ct-outline font-label-grotesk opacity-60'>
+                  10.7627° N, 106.6602° E
+                </div>
+              </animated.div>
+
+              {/* Hero Headline */}
+              <animated.div
+                style={statusSpring}
+                className='text-center mb-1 md:mb-2'
+              >
+                <span className='inline-flex items-center gap-1.5 px-2.5 py-1 xl:px-3 xl:py-1.5 bg-ct-secondary/5 border border-ct-secondary/15 rounded-full text-ct-secondary text-[8px] xl:text-[10px] font-label-grotesk font-bold tracking-[0.15em] xl:tracking-[0.2em] uppercase'>
+                  <span className='w-1 h-1 xl:w-1.5 xl:h-1.5 rounded-full bg-ct-secondary animate-pulse' />
+                  {t('intro.establishingConnection')}
+                </span>
+              </animated.div>
+
+              <animated.div
+                style={headingSpring}
+                className='text-center mb-2 md:mb-3 2xl:mb-6'
+              >
+                <h1 className='font-serif-display text-ct-secondary tracking-tighter leading-tight md:leading-none mb-1 md:mb-2 2xl:mb-3'>
+                  <span className='whitespace-nowrap text-[3.8vw] min-[400px]:text-base sm:text-2xl md:text-3xl lg:text-4xl xl:text-[40px] 2xl:text-6xl'>
+                    {'> '}
+                    {t('intro.heroTitle')}
+                  </span>
+                  <br />
+                  <span className='text-ct-on-surface opacity-90 italic text-[3vw] min-[400px]:text-sm sm:text-lg md:text-xl lg:text-3xl 2xl:text-4xl'>
+                    {t('intro.heroTitleAccent')}
+                  </span>
+                </h1>
+                <p className='max-w-xl 2xl:max-w-2xl mx-auto text-[11px] sm:text-xs md:text-sm lg:text-base 2xl:text-lg text-ct-on-surface-variant/60 font-label-grotesk tracking-wide px-2 md:px-0'>
+                  {t('intro.heroSubtitle')}
+                </p>
+              </animated.div>
+
+              {/* Terminal HUD */}
+              <animated.div
+                style={ctaSpring}
+                className='w-full hidden md:block scale-[0.85] lg:scale-[0.9] 2xl:scale-100 origin-top -mt-2 lg:-mt-1 2xl:mt-2 -mb-2'
+              >
+                <Terminal
+                  username='kynguyen.dev'
+                  title={t('intro.terminal.header')}
+                  enableSound={false}
+                  typingSpeed={40}
+                  delayBetweenCommands={600}
+                  initialDelay={600}
+                  commands={[
+                    t('intro.terminal.command1'),
+                    t('intro.terminal.command2'),
+                  ]}
+                  outputs={{
+                    0: t('intro.terminal.output1', {
+                      returnObjects: true,
+                    }) as string[],
+                    1: t('intro.terminal.output2', {
+                      returnObjects: true,
+                    }) as string[],
+                  }}
+                  className='max-w-4xl mx-auto'
+                />
+              </animated.div>
+
+              {/* CTA Buttons */}
+              <animated.div
+                style={ctaSpring}
+                className='mt-2 md:mt-3 2xl:mt-6 flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 lg:gap-6 w-full'
+              >
+                <ContactDropdown enableCyberStyles>
+                  <CyberButton
+                    size='lg'
+                    tag='contact'
+                    glitchText={t('nav.initContact')}
+                  >
+                    {t('nav.initContact')}
+                  </CyberButton>
+                </ContactDropdown>
+
+                <CyberButton
+                  size='lg'
+                  tag='cv'
+                  type='active'
+                  active
+                  glitchText={t('intro.downloadCV')}
+                  onClick={() => downloadFile(APP_INFORMATION.RESUME_URL)}
+                >
+                  {t('intro.downloadCV')}
+                </CyberButton>
+              </animated.div>
+            </div>
+          </motion.div>
+
+          {/* =========================================
+              TACTICAL PATH BACKGROUND & HORIZONTAL SCROLL
+              ========================================= */}
+          <motion.div
+            style={{
+              rotateX,
+              rotateZ,
+              translateY,
+              opacity: pathOpacity,
+            }}
+            className='absolute inset-0 z-10 w-full h-full hidden 2xl:flex items-center [transform-style:preserve-3d]'
+          >
+            {/* Tactical Path Heading */}
+            <motion.div
+              style={{ opacity: headerOpacity, display: headerDisplay }}
+              className='absolute top-24 left-8 lg:left-16 z-20 pointer-events-none'
+            >
+              <h2 className='text-ct-secondary font-label-grotesk text-xs font-black tracking-[0.3em] uppercase mb-2'>
+                01 {'// '}
+                {t('workExperience.sectionTitle')}
+              </h2>
+              <h3 className='font-serif-display text-4xl md:text-5xl text-ct-on-surface'>
+                {t('nav.tacticalPath').toUpperCase().replace(' ', '_')}
+              </h3>
+            </motion.div>
+
+            {/* Horizontal Scrolling Grid Wrapper */}
+            <div className='relative w-full h-full overflow-x-clip pointer-events-none'>
+              <motion.div
+                style={{ x, width: `${totalPages * 100}%` }}
+                className='relative flex items-center h-full mt-16 pointer-events-auto'
+              >
+                {/* S-Curve Tracing Beam — one cycle per viewport */}
+                {(() => {
+                  const segW = 1000 / totalPages;
+                  let d = '';
+                  for (let p = 0; p < totalPages; p++) {
+                    const x0 = p * segW;
+                    const x1 = (p + 1) * segW;
+                    const goingDown = p % 2 === 0;
+                    const y0 = goingDown ? 50 : 350;
+                    const y1 = goingDown ? 350 : 50;
+                    if (p === 0) d += `M${x0},${y0}`;
+                    d += ` C${x0 + segW * 0.35},${y0} ${x0 + segW * 0.65},${y1} ${x1},${y1}`;
+                  }
+                  return (
+                    <svg
+                      className='absolute top-1/2 left-0 w-full h-[500px] -translate-y-1/2 pointer-events-none z-0'
+                      preserveAspectRatio='none'
+                      viewBox='0 0 1000 400'
+                    >
+                      <path
+                        className='opacity-40'
+                        d={d}
+                        fill='none'
+                        stroke='#4edea3'
+                        strokeWidth='2'
+                        strokeDasharray='8 4'
+                        style={{ animation: 'pulse-beam 3s infinite linear' }}
+                      />
+                      <path
+                        className='opacity-70'
+                        d={d}
+                        fill='none'
+                        stroke='#4edea3'
+                        strokeWidth='0.8'
+                      />
+                      <path
+                        className='opacity-10'
+                        d={d}
+                        fill='none'
+                        stroke='#4edea3'
+                        strokeWidth='8'
+                        filter='blur(4px)'
+                      />
+                    </svg>
+                  );
+                })()}
+
+                {/* History Cards — dynamic pages, 2 cards each */}
+                {Array.from({ length: totalPages }, (_, pageIdx) => {
+                  const startIdx = pageIdx * 2;
+                  const pageEntries = workHistory.slice(startIdx, startIdx + 2);
+                  return (
+                    <div
+                      key={pageIdx}
+                      className='shrink-0 flex items-center justify-evenly h-full px-8 lg:px-16'
+                      style={{ width: `${100 / totalPages}%` }}
+                    >
+                      {pageEntries.map((entry, i) => {
+                        const globalIdx = startIdx + i;
+                        return (
+                          <ExpandableWorkCard
+                            key={`${entry.company}-${entry.period}`}
+                            entry={entry}
+                            index={globalIdx}
+                          />
+                        );
+                      })}
+                    </div>
+                  );
+                })}
+              </motion.div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* ─── Mobile Tactical Path (Tracing Beam) ─── */}
+      <div
+        id={!isAbove2xl ? 'path' : undefined}
+        className='2xl:hidden px-6 pt-16 pb-8 relative z-10'
+      >
+        <h2 className='text-ct-secondary font-label-grotesk text-xs font-black tracking-[0.3em] uppercase mb-2'>
+          01 {'// '}
+          {t('workExperience.sectionTitle')}
+        </h2>
+        <h3 className='font-serif-display text-3xl text-ct-on-surface mb-10'>
+          {t('workExperience.heading')}
+        </h3>
+        <TracingBeam>
+          <div className='flex flex-col gap-8 pl-8'>
+            {workHistory.map((entry, idx) => (
+              <ExpandableWorkCard
+                key={`${entry.company}-${entry.period}`}
+                entry={entry}
+                index={idx}
+              />
+            ))}
+          </div>
+        </TracingBeam>
+      </div>
+
+      {/* ─── Accent Cards Grid ─── */}
+      <div
+        ref={gridRef}
+        className='grid grid-cols-1 md:grid-cols-2 gap-6 px-8 lg:px-16 pb-24 pt-24 relative z-10'
+      >
+        {/* Accent Card — Philosophy */}
+        <animated.div
+          style={gridTrail[0]}
+          className='bg-ct-secondary text-ct-on-secondary p-8 rounded-2xl flex flex-col justify-between items-start md:items-center text-center md:flex-row'
         >
-          <KeyboardArrowDownIcon sx={{ fontSize: 36, color: palette.primary.light }} />
-        </Box>
-      </Stack>
-    </Box>
+          <div className='mb-4 md:mb-0 text-left'>
+            <h4 className='font-black text-2xl tracking-tighter leading-tight'>
+              {t('intro.precisionOverPolish')}
+            </h4>
+          </div>
+          <span className='text-4xl opacity-50 hidden md:block'>✦</span>
+        </animated.div>
+
+        {/* Accent Card — Stats */}
+        <animated.div
+          style={gridTrail[1]}
+          className='bg-ct-surface-container-low p-8 rounded-2xl border-l-[6px] border-ct-secondary/40 flex flex-col justify-center relative overflow-hidden group hover:bg-ct-surface-container-high transition-colors'
+        >
+          <div className='absolute -top-10 -right-10 w-32 h-32 bg-ct-secondary/5 rounded-full blur-3xl group-hover:bg-ct-secondary/10 transition-all' />
+          <div className='relative z-10'>
+            <div className='font-serif-display text-5xl italic mb-2 text-ct-secondary'>
+              {workHistory.length}+
+            </div>
+            <div className='text-xs text-ct-outline uppercase tracking-widest font-label-grotesk font-black'>
+              {t('intro.successfulMissions')}
+            </div>
+          </div>
+        </animated.div>
+      </div>
+    </section>
   );
 };

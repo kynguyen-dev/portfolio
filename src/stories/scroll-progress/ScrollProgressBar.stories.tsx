@@ -1,46 +1,34 @@
 import { Meta } from '@storybook/react';
 import { ScrollProgressBar } from '@components/core/scroll-progress/ScrollProgressBar';
-import { Box, Typography, Stack } from '@mui/material';
+import { PFTypography } from '@components/core';
 
 const meta = {
   title: 'Core/ScrollProgressBar',
   component: ScrollProgressBar,
-  parameters: {
-    layout: 'fullscreen',
-  },
+  parameters: { layout: 'fullscreen' },
   tags: ['autodocs'],
 } satisfies Meta<typeof ScrollProgressBar>;
 
 export default meta;
 
 export const Default = () => (
-  <Box>
+  <div>
     <ScrollProgressBar />
-    <Stack spacing={4} sx={{ p: 4 }}>
-      <Typography variant="h4" fontWeight={700}>
+    <div className='flex flex-col gap-8 p-8'>
+      <PFTypography variant='h4' fontWeight={700}>
         Scroll Progress Bar
-      </Typography>
-      <Typography variant="body1" color="text.secondary">
-        Scroll down in this panel to see the progress bar at the top. The bar
-        uses a gradient of the primary and secondary colors and animates
-        smoothly with a spring physics.
-      </Typography>
-      {/* Generate tall content so the user can scroll */}
+      </PFTypography>
+      <PFTypography variant='body1' className='text-text-secondary'>
+        Scroll down in this panel to see the progress bar at the top.
+      </PFTypography>
       {Array.from({ length: 20 }, (_, i) => (
-        <Box
-          key={i}
-          sx={{
-            p: 3,
-            borderRadius: 2,
-            background: `rgba(128, 128, 128, ${0.05 + (i % 3) * 0.03})`,
-          }}
-        >
-          <Typography variant="h6">Section {i + 1}</Typography>
-          <Typography variant="body2" color="text.secondary">
+        <div key={i} className='p-6 rounded-lg bg-ct-surface-container-low'>
+          <PFTypography variant='h6'>Section {i + 1}</PFTypography>
+          <PFTypography variant='body2' className='text-text-secondary'>
             Scroll content placeholder to demonstrate the progress indicator.
-          </Typography>
-        </Box>
+          </PFTypography>
+        </div>
       ))}
-    </Stack>
-  </Box>
+    </div>
+  </div>
 );

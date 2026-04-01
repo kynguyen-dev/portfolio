@@ -1,13 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GradientPaper } from '@components/customs';
-import { Typography, Stack } from '@mui/material';
+import { PFTypography } from '@components/core';
 
 const meta = {
   title: 'Customs/GradientPaper',
   component: GradientPaper,
-  parameters: {
-    layout: 'centered',
-  },
+  parameters: { layout: 'centered' },
   tags: ['autodocs'],
 } satisfies Meta<typeof GradientPaper>;
 
@@ -16,32 +14,32 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    sx: { minWidth: 300, minHeight: 160 },
+    className: 'min-w-[300px] min-h-[160px]',
     children: (
-      <Stack spacing={1} alignItems="center">
-        <Typography variant="h5" fontWeight={700}>
+      <div className='flex flex-col items-center gap-2'>
+        <PFTypography variant='h5' fontWeight={700}>
           Gradient Paper
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
+        </PFTypography>
+        <PFTypography variant='body2' className='text-text-secondary'>
           Glassmorphic card with hover 3D tilt effect
-        </Typography>
-      </Stack>
+        </PFTypography>
+      </div>
     ),
   },
 };
 
 export const WithCustomPadding: Story = {
   args: {
-    sx: { minWidth: 320, p: 6 },
+    className: 'min-w-[320px] p-10',
     children: (
-      <Stack spacing={2} alignItems="center">
-        <Typography variant="h4" fontWeight={700}>
+      <div className='flex flex-col items-center gap-4'>
+        <PFTypography variant='h4' fontWeight={700}>
           ✨ Featured
-        </Typography>
-        <Typography variant="body1" color="text.secondary">
-          A premium-looking paper with gradient background, blur, and animated hover.
-        </Typography>
-      </Stack>
+        </PFTypography>
+        <PFTypography variant='body1' className='text-text-secondary'>
+          A premium paper with gradient background, blur, and animated hover.
+        </PFTypography>
+      </div>
     ),
   },
 };

@@ -1,5 +1,2 @@
-import { GalleryContainer } from '@components/pages/gallery';
-
-const Gallery = () => <GalleryContainer />;
-
+import Gallery from '@components/pages/tools/Gallery';
 export default Gallery;

@@ -36,13 +36,21 @@ export interface KingdomMeta {
 
 export type StatKey = keyof CharacterStats;
 
-export const STAT_LABELS: Record<StatKey, { cn: string; en: string; vi: string }> = {
-  might:        { cn: '武力', en: 'Might',        vi: 'Võ lực' },
-  intelligence: { cn: '智力', en: 'Intelligence',  vi: 'Trí tuệ' },
-  politics:     { cn: '政治', en: 'Politics',      vi: 'Chính trị' },
-  charisma:     { cn: '魅力', en: 'Charisma',      vi: 'Mị lực' },
-  leadership:   { cn: '統率', en: 'Leadership',    vi: 'Thống soái' },
+export const STAT_LABELS: Record<
+  StatKey,
+  { cn: string; en: string; vi: string }
+> = {
+  might: { cn: '武力', en: 'Might', vi: 'Võ lực' },
+  intelligence: { cn: '智力', en: 'Intelligence', vi: 'Trí tuệ' },
+  politics: { cn: '政治', en: 'Politics', vi: 'Chính trị' },
+  charisma: { cn: '魅力', en: 'Charisma', vi: 'Mị lực' },
+  leadership: { cn: '統率', en: 'Leadership', vi: 'Thống soái' },
 };
 
-export const STAT_KEYS: StatKey[] = ['might', 'intelligence', 'politics', 'charisma', 'leadership'];
-
+export const STAT_KEYS: StatKey[] = [
+  'might',
+  'intelligence',
+  'politics',
+  'charisma',
+  'leadership',
+];

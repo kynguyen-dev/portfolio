@@ -31,7 +31,7 @@ export const QUOTES: TKQuote[] = [
   {
     cn: '吾弟張翼德，於百萬軍中取上將首級，如探囊取物。',
     vi: 'Em ta Trương Dực Đức, trong trăm vạn quân lấy đầu thượng tướng, dễ như lấy đồ trong túi.',
-    en: 'My brother Zhang Fei can take a general\'s head among a million troops as easily as reaching into a bag.',
+    en: "My brother Zhang Fei can take a general's head among a million troops as easily as reaching into a bag.",
     author: '關羽 (Quan Vũ)',
   },
   {

@@ -16,27 +16,30 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
-export const Contained: Story = {
+export const Solid: Story = {
   args: {
-    variant: 'contained',
-    color: 'primary',
-    children: 'Contained',
+    variant: 'solid',
+    children: 'Solid (Purple Glow)',
   },
 };
 
-export const Outline: Story = {
+export const Stroke: Story = {
   args: {
-    variant: 'outlined',
-    color: 'error',
-    children: 'Outline',
+    variant: 'stroke',
+    children: 'Stroke (Ghost Border)',
   },
 };
 
-export const Text: Story = {
+export const Ghost: Story = {
   args: {
-    variant: 'text',
-    color: 'info',
-    children: 'Text',
+    variant: 'ghost',
+    children: 'Ghost',
+  },
+};
+
+export const Mint: Story = {
+  args: {
+    variant: 'mint',
+    children: 'Mint Logic',
   },
 };

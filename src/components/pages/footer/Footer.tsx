@@ -1,77 +1,75 @@
-import {Stack, useTheme} from '@mui/material';
-import {motion} from 'framer-motion';
+import { animated, useSpring } from '@react-spring/web';
 import { useTranslation } from 'react-i18next';
-import { PFGradientTypography } from '@components/core';
 import { Contact } from '@components/pages/contacts/Contact.tsx';
-import { TechStack } from '@components/pages/footer/TechStack.tsx';
-import { APP_TYPOGRAPHIES } from '@constants';
-import { fadeUp, blurIn } from '@utils/animations/scrollVariants';
+import { useInView } from '@utils/animations/springVariants';
 
 export const Footer = () => {
   const { t } = useTranslation();
-  const { palette } = useTheme();
-  const isLight = palette.mode === 'light';
+  const { ref, inView } = useInView();
+  const version = import.meta.env.APP_VERSION || '1.0.0';
+
+  const spring = useSpring({
+    from: { opacity: 0, y: 30 },
+    to: inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 },
+    config: { tension: 170, friction: 26 },
+  });
+
   return (
-    <Stack
-      component="footer"
+    <footer
       id='footer'
-      display='flex'
-      justifyContent='space-between'
-      alignItems='center'
-      gap={7}
-      sx={{
-        position: 'relative',
-        background: isLight
-          ? `linear-gradient(
-              180deg,
-              transparent 0%,
-              rgba(184,137,31,0.04) 15%,
-              rgba(184,137,31,0.08) 40%,
-              rgba(184,137,31,0.14) 100%
-            )`
-          : `linear-gradient(
-              180deg,
-              transparent 0%,
-              rgba(0,0,0,0.06) 15%,
-              rgba(0,0,0,0.15) 40%,
-              rgba(11,13,46,0.35) 100%
-            )`,
-        backdropFilter: 'blur(2px)',
-      }}
-      px={3}
-      pb={4}
+      className='py-12 border-t border-ct-outline-variant/10 px-8 lg:px-16'
     >
-      {/* Centered Content */}
-      <Stack
-        component={motion.div}
-        variants={fadeUp}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        display='flex'
-        alignItems='center'
-        mt={10}
+      <animated.div
+        ref={ref}
+        style={spring}
+        className='flex flex-col md:flex-row justify-between items-center gap-8'
       >
-        <PFGradientTypography
-          variant={APP_TYPOGRAPHIES.HEADER_SECONDARY}
-          textAlign={'center'}
-        >
-          {t('footer.quote')}
-        </PFGradientTypography>
-      </Stack>
+        {/* Brand */}
+        <div className='flex items-center gap-4'>
+          <div className='font-label-grotesk font-black tracking-widest text-lg text-ct-secondary uppercase'>
+            {t('nav.brandOther')}
+          </div>
+        </div>
+
+        {/* Navigation */}
+        <div className='flex gap-8'>
+          <a
+            className='text-xs text-ct-on-surface-variant hover:text-ct-secondary transition-colors uppercase tracking-widest cursor-pointer'
+            href='#path'
+          >
+            {t('nav.experience')}
+          </a>
+          <a
+            className='text-xs text-ct-on-surface-variant hover:text-ct-secondary transition-colors uppercase tracking-widest cursor-pointer'
+            href='#skills'
+          >
+            {t('nav.theArsenal')}
+          </a>
+          <a
+            className='text-xs text-ct-on-surface-variant hover:text-ct-secondary transition-colors uppercase tracking-widest cursor-pointer'
+            href='#tools'
+          >
+            {t('nav.tools')}
+          </a>
+          <a
+            className='text-xs text-ct-on-surface-variant hover:text-ct-secondary transition-colors uppercase tracking-widest cursor-pointer'
+            href='#contact'
+          >
+            {t('nav.contact')}
+          </a>
+        </div>
+      </animated.div>
 
       {/* Social Icons */}
-      <motion.div
-        variants={blurIn}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-      >
+      <div className='mt-8 flex justify-center'>
         <Contact />
-      </motion.div>
+      </div>
 
-      {/* Footer - Stays at the Bottom */}
-      <TechStack />
-    </Stack>
+      <div className='mt-8 text-center'>
+        <div className='text-[10px] font-label-grotesk text-ct-on-surface-variant/40 tracking-[0.5em] uppercase'>
+          {t('footer.builtFor', { version })}
+        </div>
+      </div>
+    </footer>
   );
 };

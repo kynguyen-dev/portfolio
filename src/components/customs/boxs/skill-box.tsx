@@ -1,49 +1,70 @@
-import { type ReactNode } from 'react';
-import { motion } from 'framer-motion';
-import { Box, CardMedia, useTheme } from '@mui/material';
+import { type ReactNode, useState } from 'react';
+import { animated, useSpring } from '@react-spring/web';
 import { PFTypography } from '@components/core';
+import { cn } from '@utils/core/cn';
 
 export interface SkillBoxProps {
   imageUrl?: string;
   icon?: ReactNode;
   title: string;
   titleColor?: string;
+  link?: string;
 }
+
 export const SkillBox = (props: SkillBoxProps) => {
-  const { palette } = useTheme();
-  return (
-    <Box
-      display='flex'
-      flexDirection='column'
-      alignItems={'center'}
-      justifyContent={'center'}
-      width={'96px'}
-      gap={1}
+  const [hovered, setHovered] = useState(false);
+
+  const hoverSpring = useSpring({
+    y: hovered ? -6 : 0,
+    config: { tension: 300, friction: 15 },
+  });
+
+  const content = (
+    <div
+      className={cn(
+        'flex flex-col items-center justify-center w-24 gap-3',
+        props.link ? 'cursor-pointer' : 'cursor-default'
+      )}
     >
-      <motion.div
-        whileHover={{ y: -6 }}
-        transition={{ type: 'spring', stiffness: 300, damping: 15 }}
-        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+      <animated.div
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        style={hoverSpring}
+        className='flex items-center justify-center'
       >
         {props.icon ? (
           props.icon
         ) : (
-          <CardMedia
-            component="img"
-            image={props.imageUrl}
+          <img
+            src={props.imageUrl}
             alt={props.title}
-            loading="lazy"
-            sx={{ width: '96px', height: '96px', objectFit: 'contain' }}
+            loading='lazy'
+            className='w-24 h-24 object-contain'
           />
         )}
-      </motion.div>
+      </animated.div>
       <PFTypography
         variant='body1'
-        color={props.titleColor ?? palette.primary.contrastText}
-        align='center'
+        className='text-center'
+        style={{ color: props.titleColor }}
       >
         {props.title}
       </PFTypography>
-    </Box>
+    </div>
   );
+
+  if (props.link) {
+    return (
+      <a
+        href={props.link}
+        target='_blank'
+        rel='noopener noreferrer'
+        className='no-underline color-inherit'
+      >
+        {content}
+      </a>
+    );
+  }
+
+  return content;
 };

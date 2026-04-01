@@ -1,33 +1,28 @@
-import { IconButton, Tooltip, useTheme } from '@mui/material';
-import LightModeIcon from '@mui/icons-material/LightMode';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
+import { SunIcon, MoonIcon } from '@phosphor-icons/react';
 import { useThemeMode } from '@contexts/theme-mode';
 import { useTranslation } from 'react-i18next';
+import { cn } from '@lib/utils';
 
 export const ThemeModeToggle = () => {
   const { mode, toggleMode } = useThemeMode();
   const { t } = useTranslation();
-  const { palette } = useTheme();
-  const isLight = palette.mode === 'light';
+  const isLight = mode === 'light';
 
-  const label = mode === 'dark' ? t('common.lightMode') : t('common.darkMode');
+  const label = isLight ? t('common.darkMode') : t('common.lightMode');
 
   return (
-    <Tooltip title={label} arrow>
-      <IconButton
-        onClick={toggleMode}
-        aria-label={label}
-        sx={{
-          color: isLight ? '#5C4A32' : '#FFE4B5',
-          transition: 'transform 0.3s ease, color 0.3s ease',
-          '&:hover': {
-            color: isLight ? '#B8891F' : '#F5D060',
-            transform: 'rotate(30deg)',
-          },
-        }}
-      >
-        {mode === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
-      </IconButton>
-    </Tooltip>
+    <button
+      onClick={toggleMode}
+      aria-label={label}
+      title={label}
+      className={cn(
+        'p-2 rounded-full transition-all duration-300 hover:rotate-[30deg]',
+        isLight
+          ? 'text-[#5C4A32] hover:text-[#B8891F] hover:bg-[#5C4A32]/5'
+          : 'text-[#FFE4B5] hover:text-[#F5D060] hover:bg-[#FFE4B5]/10'
+      )}
+    >
+      {isLight ? <MoonIcon size={20} /> : <SunIcon size={20} />}
+    </button>
   );
 };

@@ -1,6 +1,11 @@
-import { useRef, type ReactNode } from 'react';
-import { Box } from '@mui/material';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import {
+  useRef,
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
+import { animated, useSpring } from '@react-spring/web';
 
 interface ParallaxSectionProps {
   children: ReactNode;
@@ -12,8 +17,7 @@ interface ParallaxSectionProps {
 
 /**
  * Wraps a section and gives it a subtle parallax depth shift as the user
- * scrolls. Uses framer-motion `useScroll` + `useTransform` so the effect
- * is purely GPU-accelerated and doesn't cause layout recalculations.
+ * scrolls. Uses react-spring for smooth GPU-accelerated animation.
  */
 export const ParallaxSection = ({
   children,
@@ -21,19 +25,38 @@ export const ParallaxSection = ({
   id,
 }: ParallaxSectionProps) => {
   const ref = useRef<HTMLDivElement>(null);
+  const [scrollY, setScrollY] = useState(0);
 
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'end start'], // 0 when section enters, 1 when it leaves
+  const handleScroll = useCallback(() => {
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const windowH = window.innerHeight;
+    const progress = Math.max(
+      0,
+      Math.min(1, (windowH - rect.top) / (windowH + rect.height))
+    );
+    setScrollY(offset - progress * offset * 2);
+  }, [offset]);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
+
+  const spring = useSpring({
+    y: scrollY,
+    config: { tension: 120, friction: 14 },
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], [offset, -offset]);
-
   return (
-    <Box ref={ref} id={id} sx={{ overflow: 'hidden' }}>
-      <motion.div style={{ y }}>
+    <div ref={ref} id={id} className='overflow-hidden'>
+      <animated.div
+        style={{ transform: spring.y.to(v => `translateY(${v}px)`) }}
+      >
         {children}
-      </motion.div>
-    </Box>
+      </animated.div>
+    </div>
   );
 };
