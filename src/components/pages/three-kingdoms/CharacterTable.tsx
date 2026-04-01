@@ -15,6 +15,7 @@ import { useVirtualizer, type VirtualItem } from '@tanstack/react-virtual';
 import { useSpring, animated, to } from '@react-spring/web';
 import type { ThreeKingdomsCharacter } from '@constants/three-kingdoms';
 import { getKingdomMeta } from '@constants/three-kingdoms';
+import { useThemeMode } from '@contexts/theme-mode';
 import { MultiFormatImage } from './MultiFormatImage';
 import { cn } from '@utils/core/cn';
 
@@ -184,10 +185,14 @@ export const CharacterTable = ({
 }: CharacterTableProps) => {
   const isMobile = useIsMobile();
   const parentRef = useRef<HTMLDivElement>(null);
+  const { mode } = useThemeMode();
+  const isLight = mode === 'light';
 
-  // ... (rest of the component logic until return) ...
-  const columns: ColumnDef<ThreeKingdomsCharacter, unknown>[] = useMemo(() => {
-    const base: ColumnDef<ThreeKingdomsCharacter, unknown>[] = [
+  // Memoize column definitions for performance and type safety
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const columns: ColumnDef<ThreeKingdomsCharacter, any>[] = useMemo(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const base: ColumnDef<ThreeKingdomsCharacter, any>[] = [
       columnHelper.accessor(row => row.name.en, {
         id: 'name',
         header: '⚔ Warrior',

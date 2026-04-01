@@ -175,7 +175,7 @@ export const ContactDropdown = ({
                       : 'text-[11px] md:text-sm'
                   )}
                 >
-                  {enableCyberStyles ? '> SYS.EMAIL' : 'GMAIL'}
+                  {'GMAIL'}
                 </div>
                 <div
                   className={cn(
@@ -239,7 +239,7 @@ export const ContactDropdown = ({
                       : 'text-[11px] md:text-sm'
                   )}
                 >
-                  {enableCyberStyles ? '> COMMS.ZALO' : 'ZALO'}
+                  {'ZALO'}
                 </div>
                 <div
                   className={cn(

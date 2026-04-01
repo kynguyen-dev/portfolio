@@ -35,9 +35,9 @@ export const Footer = () => {
         <div className='flex gap-8'>
           <a
             className='text-xs text-ct-on-surface-variant hover:text-ct-secondary transition-colors uppercase tracking-widest cursor-pointer'
-            href='#projects'
+            href='#path'
           >
-            {t('nav.projects')}
+            {t('nav.experience')}
           </a>
           <a
             className='text-xs text-ct-on-surface-variant hover:text-ct-secondary transition-colors uppercase tracking-widest cursor-pointer'
@@ -47,9 +47,15 @@ export const Footer = () => {
           </a>
           <a
             className='text-xs text-ct-on-surface-variant hover:text-ct-secondary transition-colors uppercase tracking-widest cursor-pointer'
-            href='#path'
+            href='#tools'
           >
-            {t('nav.tacticalPath')}
+            {t('nav.tools')}
+          </a>
+          <a
+            className='text-xs text-ct-on-surface-variant hover:text-ct-secondary transition-colors uppercase tracking-widest cursor-pointer'
+            href='#contact'
+          >
+            {t('nav.contact')}
           </a>
         </div>
       </animated.div>

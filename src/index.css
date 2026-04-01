@@ -503,7 +503,7 @@ body {
   31%,
   61%,
   100% {
-    clip-path: var(--cyber-clip-4);
+    clip-path: var(--cyber-clip);
   }
 }
 
@@ -511,5 +511,5 @@ body {
   animation: cyber-glitch 2s infinite;
 }
 .animate-cyber-glitch-active {
-  animation: cyber-glitch 5s infinite;
+  animation: cyber-glitch 3s infinite;
 }

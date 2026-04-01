@@ -250,7 +250,7 @@ export const Intro = () => {
                 <ContactDropdown enableCyberStyles>
                   <CyberButton
                     size='lg'
-                    tag='doc'
+                    tag='contact'
                     glitchText={t('nav.initContact')}
                   >
                     {t('nav.initContact')}
@@ -259,7 +259,8 @@ export const Intro = () => {
 
                 <CyberButton
                   size='lg'
-                  tag='sys'
+                  tag='cv'
+                  type='active'
                   active
                   glitchText={t('intro.downloadCV')}
                   onClick={() =>

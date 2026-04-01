@@ -50,7 +50,7 @@ export const WorkTimeline = () => {
                 {t('workExperience.sectionTitle')}
               </h2>
               <h3 className='font-serif-display text-4xl md:text-5xl text-ct-on-surface'>
-                {t('nav.tacticalPath').toUpperCase().replace(' ', '_')}
+                {t('nav.experience').toUpperCase().replace(' ', '_')}
               </h3>
             </div>
             <div className='hidden md:block h-[1px] flex-grow mx-12 bg-gradient-to-r from-ct-outline-variant/30 to-transparent' />

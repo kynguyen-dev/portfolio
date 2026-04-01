@@ -35,6 +35,16 @@ export const Default: Story = {
   },
 };
 
+export const TypeActive: Story = {
+  args: {
+    children: 'Sketch Anim',
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    type: 'active' as any,
+    glitchText: 'Lifting...',
+    tag: 'a1',
+  },
+};
+
 export const Active: Story = {
   args: {
     children: '_Radio',

@@ -2,13 +2,14 @@ import { ButtonHTMLAttributes, ReactNode } from 'react';
 import { cn } from '@utils/core/cn';
 
 export interface CyberButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement> {
+  extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
   children: ReactNode;
   glitchText?: string;
   tag?: string;
   active?: boolean;
   size?: 'sm' | 'md' | 'lg';
   className?: string;
+  type?: 'button' | 'submit' | 'reset' | 'active';
 }
 
 export const CyberButton = ({
@@ -18,8 +19,12 @@ export const CyberButton = ({
   active = false,
   size = 'md',
   className,
+  type = 'button',
   ...props
 }: CyberButtonProps) => {
+  const isTypeActive = type === 'active';
+  const htmlType = type === 'active' ? 'button' : type;
+
   // We use inline CSS var injection for the dynamic shape colors to automatically
   // utilize proper Tailwind design tokens for active and inactive states.
   // Active: Primary (Purple) / Secondary (Mint)
@@ -45,16 +50,18 @@ export const CyberButton = ({
   return (
     <div
       className={cn(
-        'relative m-[3px] inline-block',
+        'relative m-[3px] inline-block transition-all duration-300',
         size === 'sm' && 'h-[34px] min-w-[72px]',
         size === 'md' && 'h-[42px] min-w-[100px]',
         size === 'lg' && 'h-[50px] min-w-[130px]',
+        isTypeActive && 'hover:-translate-x-1 hover:-translate-y-1',
+        active && isTypeActive && '-translate-x-1 -translate-y-1',
         className
       )}
       style={activeStyle as React.CSSProperties}
     >
       <button
-        type='button'
+        type={htmlType as 'button' | 'submit' | 'reset'}
         className={cn(
           'group relative z-[1] flex h-full w-full cursor-pointer items-center justify-center border-none bg-transparent font-label-grotesk font-black uppercase text-[var(--c-text-main)] transition-all duration-300',
           size === 'sm' &&
@@ -67,7 +74,14 @@ export const CyberButton = ({
         {...props}
       >
         {/* Shadow Background */}
-        <div className='absolute inset-0 -z-10 translate-x-[5px] bg-[var(--c-shad)] transition-colors [clip-path:var(--cyber-clip)]' />
+        <div
+          className={cn(
+            'absolute inset-0 -z-10 translate-x-[5px] bg-[var(--c-shad)] transition-all duration-300 [clip-path:var(--cyber-clip)]',
+            isTypeActive &&
+              'group-hover:translate-x-[9px] group-hover:translate-y-[4px]',
+            active && isTypeActive && 'translate-x-[9px] translate-y-[4px]'
+          )}
+        />
 
         {/* Main Background */}
         <div className='absolute inset-0 -z-10 bg-[var(--c-prim)] transition-colors group-hover:bg-[var(--c-hover-prim)] [clip-path:var(--cyber-clip)]' />
@@ -82,8 +96,8 @@ export const CyberButton = ({
             'bg-[var(--c-shad)] text-[var(--c-text-glitch)] [clip-path:var(--cyber-clip)]',
             '[text-shadow:2px_2px_var(--c-shad),-2px_-2px_var(--c-shadow-glitch)]',
             active
-              ? 'animate-cyber-glitch-active block'
-              : 'group-hover:block group-hover:animate-cyber-glitch'
+              ? 'animate-cyber-glitch-active flex'
+              : 'group-hover:flex group-hover:animate-cyber-glitch'
           )}
         >
           <div className='absolute inset-[5px] -z-10 bg-[var(--c-prim)] transition-colors group-hover:bg-[var(--c-hover-prim)] [clip-path:var(--cyber-clip)]' />
