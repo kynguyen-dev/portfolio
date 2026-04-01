@@ -33,10 +33,10 @@ const CONTAINER_CLASSES =
   'relative isolate transition-transform delay-[var(--delay)] duration-[var(--duration)] ease-[var(--easing)] will-change-transform [contain:layout_style] [perspective:600px]';
 
 const INNER_GRID_CLASSES =
-  'grid h-full origin-center [transform:rotateY(var(--r-x))_rotateX(var(--r-y))] overflow-hidden rounded-[var(--radius)] border border-slate-800 transition-transform delay-[var(--delay)] duration-[var(--duration)] ease-[var(--easing)] will-change-transform hover:filter-none hover:[--duration:200ms] hover:[--easing:linear] hover:[--opacity:0.6]';
+  'grid h-full origin-center [transform:rotateY(var(--r-x))_rotateX(var(--r-y))] overflow-hidden rounded-[var(--radius)] border border-ct-outline-variant dark:border-slate-800 transition-transform delay-[var(--delay)] duration-[var(--duration)] ease-[var(--easing)] will-change-transform hover:filter-none hover:[--duration:200ms] hover:[--easing:linear] hover:[--opacity:0.6]';
 
 const GLARE_CLASSES =
-  'transition-background will-change-background grid h-full w-full opacity-[var(--opacity)] mix-blend-soft-light transition-opacity delay-[var(--delay)] duration-[var(--duration)] ease-[var(--easing)] [background:radial-gradient(farthest-corner_circle_at_var(--m-x)_var(--m-y),_rgba(255,255,255,0.8)_10%,_rgba(255,255,255,0.65)_20%,_rgba(255,255,255,0)_90%)] [clip-path:inset(0_0_1px_0_round_var(--radius))] [grid-area:1/1]';
+  'transition-background will-change-background grid h-full w-full opacity-[var(--opacity)] mix-blend-overlay transition-opacity delay-[var(--delay)] duration-[var(--duration)] ease-[var(--easing)] [clip-path:inset(0_0_1px_0_round_var(--radius))] [grid-area:1/1]';
 
 const FOIL_CLASSES = [
   'will-change-background',
@@ -48,7 +48,7 @@ const FOIL_CLASSES = [
   'relative grid h-full w-full',
   'opacity-[var(--opacity)]',
   '[background-blend-mode:hue_hue_hue_overlay]',
-  'mix-blend-color-dodge transition-opacity',
+  'mix-blend-overlay dark:mix-blend-color-dodge transition-opacity',
   '[background:var(--pattern),_var(--rainbow),_var(--diagonal),_var(--shade)]',
   '[clip-path:inset(0_0_1px_0_round_var(--radius))]',
   '[grid-area:1/1]',
@@ -96,6 +96,11 @@ export const GlareCard = ({ children, className }: GlareCardProps) => {
     '--shade':
       'radial-gradient( farthest-corner circle at var(--m-x) var(--m-y),rgba(255,255,255,0.1) 12%,rgba(255,255,255,0.15) 20%,rgba(255,255,255,0.25) 120% ) var(--bg-x) var(--bg-y)/300% no-repeat',
     backgroundBlendMode: 'hue, hue, hue, overlay',
+  };
+
+  const glareStyle: React.CSSProperties = {
+    background:
+      'radial-gradient(farthest-corner circle at var(--m-x) var(--m-y), color-mix(in srgb, var(--color-ct-secondary) 80%, transparent) 10%, color-mix(in srgb, var(--color-ct-secondary) 65%, transparent) 20%, transparent 90%)',
   };
 
   const updateStyles = () => {
@@ -163,12 +168,12 @@ export const GlareCard = ({ children, className }: GlareCardProps) => {
       }}
     >
       <div className={INNER_GRID_CLASSES}>
-        <div className='grid h-full w-full mix-blend-soft-light [clip-path:inset(0_0_0_0_round_var(--radius))] [grid-area:1/1]'>
-          <div className={cn('h-full w-full bg-slate-950', className)}>
+        <div className='grid h-full w-full dark:mix-blend-soft-light [clip-path:inset(0_0_0_0_round_var(--radius))] [grid-area:1/1]'>
+          <div className={cn('h-full w-full bg-ct-surface-container-low dark:bg-slate-950', className)}>
             {children}
           </div>
         </div>
-        <div className={GLARE_CLASSES} />
+        <div className={GLARE_CLASSES} style={glareStyle} />
         <div className={FOIL_CLASSES} style={{ ...backgroundStyle }} />
       </div>
     </div>
