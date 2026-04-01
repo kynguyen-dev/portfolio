@@ -1,0 +1,520 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/noto-serif';
+@import '@fontsource-variable/space-grotesk';
+
+/* ─────────────────────────────────────────────
+   The Dual Theme System
+   Light: The Pristine Blueprint (Clinical High-Tech)
+   Dark: The Algorithmic Atelier (Obsidian, Purple, Mint)
+   ───────────────────────────────────────────── */
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+:root {
+  /* ─── LIGHT MODE ("The Pristine Blueprint") ─── */
+  --sys-primary-main: #630ed4;
+  --sys-primary-light: #7c3aed;
+  --sys-primary-dark: #4b0aa1;
+  --sys-primary-contrast: #ffffff;
+  --sys-primary-container: #7c3aed;
+  --sys-primary-fixed-dim: #630ed4;
+
+  --sys-secondary-main: #006c49;
+  --sys-secondary-light: #10b981;
+  --sys-secondary-dark: #004d34;
+  --sys-secondary-container: #6cf8bb;
+
+  --sys-tertiary: #adc6ff;
+  --sys-tertiary-container: #4d8eff;
+
+  /* Surface Hierarchy */
+  --sys-bg: #f7f9fb;
+  --sys-surface: #f7f9fb;
+  --sys-surface-container: #eceef0;
+  --sys-surface-container-low: #f2f4f6;
+  --sys-surface-container-high: #e1e3e5;
+  --sys-surface-container-highest: #d8dadc;
+  --sys-surface-container-lowest: #ffffff;
+  --sys-surface-bright: #f7f9fb;
+
+  /* On-Surface Text */
+  --sys-on-surface: #10141a;
+  --sys-on-surface-variant: #31353c;
+  --sys-outline: #8c9094;
+  --sys-outline-variant: rgba(216, 218, 220, 0.4);
+
+  --sys-on-secondary: #ffffff;
+  --sys-on-primary: #ffffff;
+
+  --sys-error: #ba1a1a;
+  --sys-error-container: #ffdad6;
+
+  --sys-border: oklch(0 0 0 / 8%);
+
+  /* Effects */
+  --sys-glass-bg: rgba(255, 255, 255, 0.7);
+  --sys-glass-border: rgba(255, 255, 255, 0.4);
+  --sys-glass-elevated: rgba(255, 255, 255, 0.85);
+
+  --sys-weaver-gradient: linear-gradient(135deg, #630ed4, #7c3aed);
+  --sys-topology-color: #d8dadc;
+
+  --sys-glow-primary: rgba(99, 14, 212, 0.2);
+  --sys-glow-primary-hover: rgba(99, 14, 212, 0.3);
+  --sys-glow-mint: rgba(0, 108, 73, 0.15);
+  --sys-ambient-shadow: 0 10px 30px rgba(25, 28, 30, 0.04);
+}
+
+.dark {
+  /* ─── DARK MODE ("The Algorithmic Atelier") ─── */
+  --sys-primary-main: #d0bcff;
+  --sys-primary-light: #e9ddff;
+  --sys-primary-dark: #6d3bd7;
+  --sys-primary-contrast: #1d1b20;
+  --sys-primary-container: #a078ff;
+  --sys-primary-fixed-dim: #d0bcff;
+
+  --sys-secondary-main: #4edea3;
+  --sys-secondary-light: #6ffbbe;
+  --sys-secondary-dark: #00a572;
+  --sys-secondary-container: #00a572;
+
+  --sys-tertiary: #adc6ff;
+  --sys-tertiary-container: #4d8eff;
+
+  /* Surface Hierarchy */
+  --sys-bg: #10141a;
+  --sys-surface: #10141a;
+  --sys-surface-container: #1c2026;
+  --sys-surface-container-low: #181c22;
+  --sys-surface-container-high: #262a31;
+  --sys-surface-container-highest: #31353c;
+  --sys-surface-container-lowest: #0a0e14;
+  --sys-surface-bright: #353940;
+
+  /* On-Surface Text */
+  --sys-on-surface: #dfe2eb;
+  --sys-on-surface-variant: #cbc3d7;
+  --sys-outline: #958ea0;
+  --sys-outline-variant: #494454;
+
+  --sys-on-secondary: #003824;
+  --sys-on-primary: #3c0091;
+
+  --sys-error: #ffb4ab;
+  --sys-error-container: #93000a;
+
+  --sys-border: oklch(1 0 0 / 8%);
+
+  /* Effects */
+  --sys-glass-bg: rgba(16, 20, 26, 0.6);
+  --sys-glass-border: rgba(73, 68, 84, 0.15);
+  --sys-glass-elevated: rgba(28, 32, 38, 0.65);
+
+  --sys-weaver-gradient: linear-gradient(90deg, #d0bcff, #4edea3);
+  --sys-topology-color: #31353c;
+
+  --sys-glow-primary: rgba(208, 188, 255, 0.2);
+  --sys-glow-primary-hover: rgba(208, 188, 255, 0.3);
+  --sys-glow-mint: rgba(78, 222, 163, 0.15);
+  --sys-ambient-shadow: 0 20px 50px rgba(13, 17, 23, 0.5);
+}
+
+@theme {
+  --cyber-clip: polygon(
+    11% 0,
+    95% 0,
+    100% 25%,
+    90% 90%,
+    95% 90%,
+    85% 90%,
+    85% 100%,
+    7% 100%,
+    0 80%
+  );
+  --cyber-clip-1: polygon(
+    0 2%,
+    100% 2%,
+    100% 95%,
+    95% 95%,
+    95% 90%,
+    85% 90%,
+    85% 95%,
+    8% 95%,
+    0 70%
+  );
+  --cyber-clip-2: polygon(
+    0 78%,
+    100% 78%,
+    100% 100%,
+    95% 100%,
+    95% 90%,
+    85% 90%,
+    85% 100%,
+    8% 100%,
+    0 78%
+  );
+  --cyber-clip-3: polygon(
+    0 44%,
+    100% 44%,
+    100% 54%,
+    95% 54%,
+    95% 54%,
+    85% 54%,
+    85% 54%,
+    8% 54%,
+    0 54%
+  );
+  --cyber-clip-4: polygon(
+    0 0,
+    100% 0,
+    100% 0,
+    95% 0,
+    95% 0,
+    85% 0,
+    85% 0,
+    8% 0,
+    0 0
+  );
+  --cyber-clip-5: polygon(
+    0 0,
+    100% 0,
+    100% 0,
+    95% 0,
+    95% 0,
+    85% 0,
+    85% 0,
+    8% 0,
+    0 0
+  );
+  --cyber-clip-6: polygon(
+    0 40%,
+    100% 40%,
+    100% 85%,
+    95% 85%,
+    95% 85%,
+    85% 85%,
+    85% 85%,
+    8% 85%,
+    0 70%
+  );
+  --cyber-clip-7: polygon(
+    0 63%,
+    100% 63%,
+    100% 80%,
+    95% 80%,
+    95% 80%,
+    85% 80%,
+    85% 80%,
+    8% 80%,
+    0 70%
+  );
+  --cyber-shimmy: 5%;
+
+  --color-primary-main: var(--sys-primary-main);
+  --color-primary-light: var(--sys-primary-light);
+  --color-primary-dark: var(--sys-primary-dark);
+  --color-primary-contrast: var(--sys-primary-contrast);
+  --color-primary-container: var(--sys-primary-container);
+  --color-primary-fixed-dim: var(--sys-primary-fixed-dim);
+
+  --color-secondary-main: var(--sys-secondary-main);
+  --color-secondary-light: var(--sys-secondary-light);
+  --color-secondary-dark: var(--sys-secondary-dark);
+  --color-secondary-container: var(--sys-secondary-container);
+
+  --color-tertiary: var(--sys-tertiary);
+  --color-tertiary-container: var(--sys-tertiary-container);
+
+  /* Mapping to previous variables to prevent breaking changes */
+  --color-background-default: var(--sys-bg);
+  --color-background-paper: var(--sys-surface-container-low);
+
+  --color-text-primary: var(--sys-on-surface);
+  --color-text-secondary: var(--sys-on-surface-variant);
+  --color-text-disabled: var(--sys-outline);
+
+  --color-ct-bg: var(--sys-bg);
+  --color-ct-surface: var(--sys-surface);
+  --color-ct-surface-container: var(--sys-surface-container);
+  --color-ct-surface-container-low: var(--sys-surface-container-low);
+  --color-ct-surface-container-high: var(--sys-surface-container-high);
+  --color-ct-surface-container-highest: var(--sys-surface-container-highest);
+  --color-ct-surface-container-lowest: var(--sys-surface-container-lowest);
+  --color-ct-surface-bright: var(--sys-surface-bright);
+
+  --color-ct-on-surface: var(--sys-on-surface);
+  --color-ct-on-surface-variant: var(--sys-on-surface-variant);
+  --color-ct-outline: var(--sys-outline);
+  --color-ct-outline-variant: var(--sys-outline-variant);
+
+  --color-ct-primary-container: var(--sys-primary-container);
+  --color-ct-secondary: var(--sys-secondary-main);
+  --color-ct-on-secondary: var(--sys-on-secondary);
+  --color-ct-on-primary: var(--sys-on-primary);
+
+  --color-error: var(--sys-error);
+  --color-error-container: var(--sys-error-container);
+
+  --color-border: var(--sys-border);
+  --color-background: var(--sys-bg);
+  --color-foreground: var(--sys-on-surface);
+  --color-ring: oklch(0.556 0 0);
+
+  /* Typography */
+  --font-serif-display: 'Noto Serif Variable', Georgia, serif;
+  --font-mono-code: 'Space Grotesk Variable', monospace;
+  --font-label-grotesk: 'Space Grotesk Variable', sans-serif;
+  --font-headline: 'Noto Serif Variable', Georgia, serif;
+  --font-sans: 'Space Grotesk Variable', sans-serif;
+
+  /* Aceternity Input Shadow */
+  --shadow-input: 0px 2px 3px -1px rgba(0, 0, 0, 0.1),
+    0px 1px 0px 0px rgba(25, 28, 33, 0.02),
+    0px 0px 0px 1px rgba(25, 28, 33, 0.08);
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    background-color: var(--color-ct-bg);
+    color: var(--color-ct-on-surface);
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Glass Panel System
+   ───────────────────────────────────────────── */
+.glass-panel,
+.glass {
+  background: var(--sys-glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--sys-glass-border);
+}
+
+.glass-elevated {
+  background: var(--sys-glass-elevated);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--sys-glass-border);
+}
+
+/* ─── Layout & Tonal Utilities ─── */
+.topology-grid {
+  background-image: radial-gradient(
+    var(--sys-topology-color) 0.5px,
+    transparent 0.5px
+  );
+  background-size: 30px 30px;
+}
+
+.tonal-hover {
+  transition: background-color 300ms ease;
+}
+.tonal-hover:hover {
+  background-color: var(--color-ct-surface-container-high);
+}
+
+.ghost-border {
+  border: 1px solid var(--sys-outline-variant);
+}
+.ghost-border:focus,
+.ghost-border:focus-within {
+  border-color: rgba(78, 222, 163, 0.4);
+}
+
+/* ─── Glow & Shadow Utilities ─── */
+.primary-glow {
+  box-shadow: 0 0 24px var(--sys-glow-primary);
+}
+.primary-glow:hover {
+  box-shadow: 0 0 36px var(--sys-glow-primary-hover);
+}
+
+.mint-glow {
+  box-shadow: 0 0 20px var(--sys-glow-mint);
+}
+
+.ambient-shadow {
+  box-shadow: var(--sys-ambient-shadow);
+}
+
+.weaver-gradient {
+  background: var(--sys-weaver-gradient);
+}
+
+/* ─── Typography & Specific Components ─── */
+.font-serif-display {
+  font-family: var(--font-serif-display);
+}
+.font-mono-code {
+  font-family: var(--font-mono-code);
+}
+.font-label-grotesk {
+  font-family: var(--font-label-grotesk);
+}
+
+.hud-label {
+  font-family: var(--font-label-grotesk);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-ct-secondary);
+}
+
+.hud-breadcrumb {
+  font-family: var(--font-label-grotesk);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-ct-secondary);
+}
+.hud-breadcrumb-separator {
+  color: rgba(78, 222, 163, 0.4);
+  margin: 0 0.5rem;
+}
+
+::selection {
+  background-color: var(--sys-glow-mint);
+  color: var(--color-ct-secondary);
+}
+
+@keyframes pulse-beam {
+  0%,
+  100% {
+    opacity: 0.4;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    opacity: 1;
+    stroke-dashoffset: 20;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) rotateX(0deg) rotateY(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotateX(2deg) rotateY(1deg);
+  }
+}
+
+@keyframes meteor {
+  0% {
+    transform: rotate(215deg) translateX(0);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(215deg) translateX(-500px);
+    opacity: 0;
+  }
+}
+
+.animate-meteor {
+  animation: meteor 5s linear infinite;
+}
+
+@keyframes aurora {
+  from {
+    background-position:
+      50% 50%,
+      50% 50%;
+  }
+  to {
+    background-position:
+      350% 50%,
+      350% 50%;
+  }
+}
+
+.animate-aurora {
+  animation: aurora 60s linear infinite;
+}
+
+@keyframes cyber-glitch {
+  0% {
+    clip-path: var(--cyber-clip-1);
+  }
+  2%,
+  8% {
+    clip-path: var(--cyber-clip-2);
+    transform: translate(calc(var(--cyber-shimmy) * -1), 0);
+  }
+  6% {
+    clip-path: var(--cyber-clip-2);
+    transform: translate(calc(var(--cyber-shimmy) * 1), 0);
+  }
+  9% {
+    clip-path: var(--cyber-clip-2);
+    transform: translate(0, 0);
+  }
+  10% {
+    clip-path: var(--cyber-clip-3);
+    transform: translate(calc(var(--cyber-shimmy) * 1), 0);
+  }
+  13% {
+    clip-path: var(--cyber-clip-3);
+    transform: translate(0, 0);
+  }
+  14%,
+  21% {
+    clip-path: var(--cyber-clip-4);
+    transform: translate(calc(var(--cyber-shimmy) * 1), 0);
+  }
+  25% {
+    clip-path: var(--cyber-clip-5);
+    transform: translate(calc(var(--cyber-shimmy) * 1), 0);
+  }
+  30% {
+    clip-path: var(--cyber-clip-5);
+    transform: translate(calc(var(--cyber-shimmy) * -1), 0);
+  }
+  35%,
+  45% {
+    clip-path: var(--cyber-clip-6);
+    transform: translate(calc(var(--cyber-shimmy) * -1));
+  }
+  40% {
+    clip-path: var(--cyber-clip-6);
+    transform: translate(calc(var(--cyber-shimmy) * 1));
+  }
+  50% {
+    clip-path: var(--cyber-clip-6);
+    transform: translate(0, 0);
+  }
+  55% {
+    clip-path: var(--cyber-clip-7);
+    transform: translate(calc(var(--cyber-shimmy) * 1), 0);
+  }
+  60% {
+    clip-path: var(--cyber-clip-7);
+    transform: translate(0, 0);
+  }
+  31%,
+  61%,
+  100% {
+    clip-path: var(--cyber-clip);
+  }
+}
+
+.animate-cyber-glitch {
+  animation: cyber-glitch 2s infinite;
+}
+.animate-cyber-glitch-active {
+  animation: cyber-glitch 3s infinite;
+}

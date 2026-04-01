@@ -1,36 +1,16 @@
-import { Stack, Box, useTheme } from '@mui/material';
-import { lazy, Suspense } from 'react';
-import { motion, type Variants } from 'framer-motion';
+import { lazy, Suspense, ReactNode } from 'react';
+import { useSpring, animated } from '@react-spring/web';
 import { Intro } from '@components/pages/Intro/Intro.tsx';
-import { AboutMe } from '@components/pages/about-me/AboutMe';
-import { SunriseBackground } from '@components/customs/backgrounds/SunriseBackground';
 import { PFAppBar } from '@components/core/header';
 import { ScrollProgressBar } from '@components/core/scroll-progress/ScrollProgressBar';
 import { BackToTop } from '@components/core/back-to-top/BackToTop';
-import { ParallaxSection } from '@components/customs/effects/ParallaxSection';
-import {
-  fadeUp,
-  slideInLeft,
-  slideInRight,
-  scaleUp,
-  blurIn,
-  rotateIn,
-} from '@utils/animations/scrollVariants';
+import { useInView } from '@utils/animations/springVariants';
+import { Meteors } from '@components/customs/aceternity';
 
 /* Below-the-fold sections — lazy loaded for faster initial paint */
-const Profile = lazy(() =>
-  import('@components/pages/profile/Profile.tsx').then(m => ({
-    default: m.Profile,
-  }))
-);
 const Footer = lazy(() =>
   import('@components/pages/footer/Footer.tsx').then(m => ({
     default: m.Footer,
-  }))
-);
-const WorkExperience = lazy(() =>
-  import('@components/pages/work-experience/WorkExperience.tsx').then(m => ({
-    default: m.WorkExperience,
   }))
 );
 const Skills = lazy(() =>
@@ -38,11 +18,7 @@ const Skills = lazy(() =>
     default: m.Skills,
   }))
 );
-const Education = lazy(() =>
-  import('@components/pages/education/Education.tsx').then(m => ({
-    default: m.Education,
-  }))
-);
+
 const Testimonials = lazy(() =>
   import('@components/pages/testimonials/Testimonials.tsx').then(m => ({
     default: m.Testimonials,
@@ -53,11 +29,10 @@ const ContactForm = lazy(() =>
     default: m.ContactForm,
   }))
 );
-const Blog = lazy(() =>
-  import('@components/pages/blog/Blog.tsx').then(m => ({ default: m.Blog }))
-);
 const Tools = lazy(() =>
-  import('@components/pages/tools/Tools.tsx').then(m => ({ default: m.Tools }))
+  import('@components/pages/tools/Tools.tsx').then(m => ({
+    default: m.Tools,
+  }))
 );
 const SpeedDialCustom = lazy(() =>
   import('@components/customs/speed-dial').then(m => ({
@@ -65,143 +40,97 @@ const SpeedDialCustom = lazy(() =>
   }))
 );
 
-/** Animated scroll-reveal wrapper — accepts a framer-motion variant */
+/** Animated scroll-reveal wrapper using react-spring */
 const Section = ({
   children,
-  variants = fadeUp,
+  variant = 'fadeUp',
 }: {
-  children: React.ReactNode;
-  variants?: Variants;
-}) => (
-  <motion.div
-    variants={variants}
-    initial='hidden'
-    whileInView='visible'
-    viewport={{ once: true, amount: 0.15 }}
-  >
-    {children}
-  </motion.div>
-);
+  children: ReactNode;
+  variant?: 'fadeUp' | 'slideInLeft' | 'blurIn' | 'scaleUp';
+}) => {
+  const { ref, inView } = useInView({ threshold: 0.15 });
+
+  const configs: Record<string, Record<string, unknown>> = {
+    fadeUp: {
+      from: { opacity: 0, y: 60 },
+      to: inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 },
+    },
+    slideInLeft: {
+      from: { opacity: 0, x: -80 },
+      to: inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -80 },
+    },
+    blurIn: {
+      from: { opacity: 0, scale: 0.95 },
+      to: inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 },
+    },
+    scaleUp: {
+      from: { opacity: 0, scale: 0.85 },
+      to: inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.85 },
+    },
+  };
+
+  const spring = useSpring({
+    ...configs[variant],
+    config: { tension: 170, friction: 26 },
+  });
+
+  return (
+    <animated.div ref={ref} style={spring}>
+      {children}
+    </animated.div>
+  );
+};
 
 /** Lightweight placeholder shown while lazy sections load */
 const SectionSkeleton = () => {
-  const { palette } = useTheme();
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        py: { xs: 8, md: 12 },
-        minHeight: 200,
-      }}
-    >
-      <Box
-        sx={{
-          width: 40,
-          height: 40,
-          borderRadius: '50%',
-          border: `3px solid ${palette.primary.light}30`,
-          borderTopColor: palette.primary.light,
-          animation: 'spin 0.8s linear infinite',
-          '@keyframes spin': {
-            to: { transform: 'rotate(360deg)' },
-          },
-        }}
-      />
-    </Box>
+    <div className='flex justify-center items-center py-20 md:py-32 min-h-[200px]'>
+      <div className='w-10 h-10 rounded-full border-3 border-primary-main/30 border-t-primary-main animate-spin' />
+    </div>
   );
 };
 
 const HomePage = () => {
   return (
-    <SunriseBackground>
+    <div className='bg-ct-surface-container-lowest min-h-screen relative'>
+      {/* Global Meteor Effect — ambient background animation */}
+      <div className='fixed inset-0 z-0 pointer-events-none overflow-hidden'>
+        <Meteors number={15} />
+      </div>
       <ScrollProgressBar />
       {/* Skip-to-content for keyboard / screen-reader users */}
       <a
         href='#main-content'
-        style={{
-          position: 'absolute',
-          left: '-9999px',
-          top: 'auto',
-          width: '1px',
-          height: '1px',
-          overflow: 'hidden',
-          zIndex: 9999,
-        }}
-        onFocus={e => {
-          e.currentTarget.style.position = 'fixed';
-          e.currentTarget.style.left = '16px';
-          e.currentTarget.style.top = '16px';
-          e.currentTarget.style.width = 'auto';
-          e.currentTarget.style.height = 'auto';
-          e.currentTarget.style.padding = '12px 24px';
-          e.currentTarget.style.background = '#0B0D2E';
-          e.currentTarget.style.color = '#F5D060';
-          e.currentTarget.style.borderRadius = '8px';
-          e.currentTarget.style.fontSize = '1rem';
-          e.currentTarget.style.textDecoration = 'none';
-        }}
-        onBlur={e => {
-          e.currentTarget.style.position = 'absolute';
-          e.currentTarget.style.left = '-9999px';
-          e.currentTarget.style.width = '1px';
-          e.currentTarget.style.height = '1px';
-        }}
+        className='absolute left-[-9999px] top-auto w-1 h-1 overflow-hidden z-[9999] focus:fixed focus:left-4 focus:top-4 focus:w-auto focus:h-auto focus:p-3 focus:px-6 focus:bg-ct-surface focus:text-primary-main focus:rounded-lg focus:text-base focus:no-underline'
       >
         Skip to content
       </a>
       <PFAppBar />
       <main id='main-content'>
-        <Stack component='div' direction={'column'}>
+        <div className='flex flex-col'>
           <Intro />
-          <ParallaxSection offset={40}>
-            <Section variants={blurIn}>
-              <AboutMe />
-            </Section>
-          </ParallaxSection>
           <Suspense fallback={<SectionSkeleton />}>
-            <Section variants={scaleUp}>
-              <Profile />
-            </Section>
-            <ParallaxSection offset={30}>
-              <Section variants={slideInLeft}>
-                <Education />
-              </Section>
-            </ParallaxSection>
-            <Section variants={fadeUp}>
+            <Section variant='fadeUp'>
               <Skills />
             </Section>
-            <ParallaxSection offset={50}>
-              <Section variants={slideInRight}>
-                <WorkExperience />
-              </Section>
-            </ParallaxSection>
-            <Section variants={rotateIn}>
-              <Blog />
+            <Section variant='scaleUp'>
+              <Tools />
             </Section>
-            <ParallaxSection offset={35}>
-              <Section variants={scaleUp}>
-                <Tools />
-              </Section>
-            </ParallaxSection>
-            <ParallaxSection offset={30}>
-              <Section variants={blurIn}>
-                <Testimonials />
-              </Section>
-            </ParallaxSection>
-            <Section variants={scaleUp}>
+            <Section variant='blurIn'>
+              <Testimonials />
+            </Section>
+            <Section variant='scaleUp'>
               <ContactForm />
             </Section>
             <Footer />
           </Suspense>
-        </Stack>
+        </div>
         <Suspense fallback={<SectionSkeleton />}>
           <SpeedDialCustom />
         </Suspense>
         <BackToTop />
       </main>
-    </SunriseBackground>
+    </div>
   );
 };
 

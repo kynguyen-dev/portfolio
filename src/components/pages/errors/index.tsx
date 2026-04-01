@@ -1,5 +1,4 @@
 import { PFSolidButton, PFTypography } from '@components/core';
-import { Stack, useTheme } from '@mui/material';
 
 export interface FullScreenErrorProps {
   title?: string;
@@ -7,39 +6,31 @@ export interface FullScreenErrorProps {
   buttonText?: string;
   onClick?: () => void;
 }
+
 export const FullScreenError = ({
   title = 'Sorry!',
   description = 'We could not load the page this time, Please try again',
   buttonText = 'Retry',
   onClick,
 }: FullScreenErrorProps) => {
-  const { palette } = useTheme();
-
   return (
-    <Stack
-      flex={1}
-      alignItems={'center'}
-      justifyContent={'center'}
-      width={'100%'}
-      height={'100%'}
-      spacing={3}
-    >
-      <Stack alignItems={'center'} spacing={1.5}>
+    <div className='flex-1 flex flex-col items-center justify-center w-full h-full gap-6'>
+      <div className='flex flex-col items-center gap-3'>
         <PFTypography
           variant='h1'
           fontWeight={600}
-          fontSize={'24px'}
-          color={palette.error.main}
-          textAlign={'center'}
+          fontSize='24px'
+          color='#D44040'
+          textAlign='center'
         >
           {title}
         </PFTypography>
-        <PFTypography variant='body1' textAlign={'center'}>
+        <PFTypography variant='body1' textAlign='center'>
           {description}
         </PFTypography>
-      </Stack>
+      </div>
 
       {onClick && <PFSolidButton onClick={onClick}>{buttonText}</PFSolidButton>}
-    </Stack>
+    </div>
   );
 };

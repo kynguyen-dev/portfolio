@@ -1,6 +1,6 @@
-import { Chip, Stack, useTheme } from '@mui/material';
 import { KINGDOMS } from '@constants/three-kingdoms';
 import type { Kingdom } from '@constants/three-kingdoms';
+import { cn } from '@utils/core/cn';
 
 interface KingdomFilterProps {
   selected: Kingdom | 'all';
@@ -8,46 +8,46 @@ interface KingdomFilterProps {
 }
 
 export const KingdomFilter = ({ selected, onChange }: KingdomFilterProps) => {
-  const { palette } = useTheme();
-  const isLight = palette.mode === 'light';
-
   return (
-    <Stack direction='row' spacing={1} flexWrap='wrap' useFlexGap>
-      <Chip
-        label='🏯 All'
-        variant={selected === 'all' ? 'filled' : 'outlined'}
+    <div className='flex flex-row gap-2 flex-wrap'>
+      <button
         onClick={() => onChange('all')}
-        sx={{
-          fontWeight: selected === 'all' ? 700 : 500,
-          borderColor: isLight
-            ? 'rgba(184,137,31,0.3)'
-            : 'rgba(245,208,96,0.3)',
-          ...(selected === 'all' && {
-            background: isLight
-              ? 'linear-gradient(135deg, rgba(184,137,31,0.15), rgba(196,30,58,0.08))'
-              : 'linear-gradient(135deg, rgba(245,208,96,0.15), rgba(196,30,58,0.08))',
-            color: isLight ? '#B8891F' : '#F5D060',
-            borderColor: isLight ? '#B8891F' : '#F5D060',
-          }),
-        }}
-      />
+        className={cn(
+          'px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest transition-all duration-300 cursor-pointer border',
+          selected === 'all'
+            ? 'bg-ct-secondary text-ct-on-secondary border-ct-secondary shadow-lg shadow-ct-secondary/20'
+            : 'glass-panel text-ct-on-surface-variant border-ct-outline-variant/30 hover:border-ct-secondary/50 hover:text-ct-secondary'
+        )}
+      >
+        🏯 All
+      </button>
       {KINGDOMS.map(k => (
-        <Chip
+        <button
           key={k.id}
-          label={`${k.emoji} ${k.name.en}`}
-          variant={selected === k.id ? 'filled' : 'outlined'}
           onClick={() => onChange(k.id)}
-          sx={{
-            fontWeight: selected === k.id ? 700 : 500,
-            borderColor: `${k.color}50`,
-            ...(selected === k.id && {
-              backgroundColor: `${k.color}20`,
-              color: k.color,
-              borderColor: k.color,
-            }),
-          }}
-        />
+          className={cn(
+            'px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest transition-all duration-300 cursor-pointer border flex items-center gap-2',
+            selected === k.id
+              ? 'shadow-lg'
+              : 'glass-panel text-ct-on-surface-variant hover:border-opacity-60'
+          )}
+          style={
+            selected === k.id
+              ? {
+                  backgroundColor: k.color,
+                  color: '#fff',
+                  borderColor: k.color,
+                  boxShadow: `0 4px 12px ${k.color}40`,
+                }
+              : {
+                  borderColor: `${k.color}40`,
+                }
+          }
+        >
+          <span>{k.emoji}</span>
+          <span>{k.name.en}</span>
+        </button>
       ))}
-    </Stack>
+    </div>
   );
 };

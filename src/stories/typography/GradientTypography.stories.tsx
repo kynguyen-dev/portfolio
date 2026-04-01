@@ -1,20 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { PFGradientTypography } from '@components/core';
 import { APP_THEMES, APP_TYPOGRAPHIES_ANIMATION } from '@constants';
-import { Stack } from '@mui/material';
 
 const meta = {
   title: 'Core/Typography/Gradient',
   component: PFGradientTypography,
-  parameters: {
-    layout: 'centered',
-  },
+  parameters: { layout: 'centered' },
   tags: ['autodocs'],
   argTypes: {
     theme: {
       control: 'select',
       options: [APP_THEMES.LIGHT, APP_THEMES.DARK],
-      description: 'Theme variant for gradient colors',
     },
     variant: {
       control: 'select',
@@ -33,7 +29,6 @@ export const Default: Story = {
     theme: APP_THEMES.LIGHT,
   },
 };
-
 export const DarkTheme: Story = {
   args: {
     children: 'Dark Gradient Text',
@@ -41,7 +36,6 @@ export const DarkTheme: Story = {
     theme: APP_THEMES.DARK,
   },
 };
-
 export const CustomColors: Story = {
   args: {
     children: 'Custom Colors',
@@ -49,7 +43,6 @@ export const CustomColors: Story = {
     colors: ['#FF6B6B', '#4ECDC4', '#FFE66D'],
   },
 };
-
 export const WithTypewriter: Story = {
   args: {
     children: 'Typewriter + Gradient',
@@ -60,12 +53,12 @@ export const WithTypewriter: Story = {
 };
 
 export const AllVariants = () => (
-  <Stack spacing={2} alignItems='start'>
+  <div className='flex flex-col gap-4 items-start'>
     <PFGradientTypography variant='h1'>Heading 1</PFGradientTypography>
     <PFGradientTypography variant='h2'>Heading 2</PFGradientTypography>
     <PFGradientTypography variant='h3'>Heading 3</PFGradientTypography>
     <PFGradientTypography variant='h4'>Heading 4</PFGradientTypography>
     <PFGradientTypography variant='h5'>Heading 5</PFGradientTypography>
     <PFGradientTypography variant='h6'>Heading 6</PFGradientTypography>
-  </Stack>
+  </div>
 );

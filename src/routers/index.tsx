@@ -1,4 +1,4 @@
-import { lazy } from 'react';
+import { lazy, useEffect, useState, useRef } from 'react';
 import {
   createRouter,
   createRoute,
@@ -6,25 +6,39 @@ import {
   Outlet,
   useRouterState,
 } from '@tanstack/react-router';
-import { AnimatePresence, motion } from 'framer-motion';
+import { useTransition, animated } from '@react-spring/web';
 import { FullScreenLoading } from '@components/pages/loadings';
 
 /* ─── Root layout with animated page transitions ─── */
 const RootLayout = () => {
   const { location } = useRouterState();
+  const [currentKey, setCurrentKey] = useState(location.pathname);
+  const prevKeyRef = useRef(location.pathname);
+
+  useEffect(() => {
+    if (location.pathname !== prevKeyRef.current) {
+      prevKeyRef.current = location.pathname;
+      setCurrentKey(location.pathname);
+    }
+  }, [location.pathname]);
+
+  const transitions = useTransition(currentKey, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+    config: { duration: 300 },
+  });
 
   return (
-    <AnimatePresence mode='wait'>
-      <motion.div
-        key={location.pathname}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.3, ease: 'easeInOut' }}
-      >
-        <Outlet />
-      </motion.div>
-    </AnimatePresence>
+    <>
+      {transitions((style, key) =>
+        key === currentKey ? (
+          <animated.div key={key} style={style}>
+            <Outlet />
+          </animated.div>
+        ) : null
+      )}
+    </>
   );
 };
 

@@ -1,14 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
-import { Box } from '@mui/material';
-import type { SxProps, Theme } from '@mui/material';
+import { cn } from '@utils/core/cn';
 
 const EXTENSIONS = ['jpg', 'png', 'webp', 'jpeg', 'gif'];
 
-interface MultiFormatImageProps {
+export interface MultiFormatImageProps {
   /** Base path WITHOUT extension, e.g. `/images/three-kingdoms/avatar/guan-yu` */
   basePath: string;
   alt?: string;
-  sx?: SxProps<Theme>;
+  className?: string;
+  style?: React.CSSProperties;
   /** Render when no image format loads successfully */
   fallback?: React.ReactNode;
 }
@@ -23,7 +23,8 @@ interface MultiFormatImageProps {
 export const MultiFormatImage = ({
   basePath,
   alt = '',
-  sx,
+  className,
+  style,
   fallback,
 }: MultiFormatImageProps) => {
   const [resolvedSrc, setResolvedSrc] = useState<string | null>(null);
@@ -81,21 +82,17 @@ export const MultiFormatImage = ({
   if (!resolvedSrc) {
     // Shimmer skeleton while probing
     return (
-      <Box
-        sx={{
-          ...((sx ?? {}) as Record<string, unknown>),
-          background:
-            'linear-gradient(90deg, rgba(128,128,128,0.08) 25%, rgba(128,128,128,0.18) 50%, rgba(128,128,128,0.08) 75%)',
-          backgroundSize: '200% 100%',
-          animation: 'shimmer 1.5s ease-in-out infinite',
-          '@keyframes shimmer': {
-            '0%': { backgroundPosition: '200% 0' },
-            '100%': { backgroundPosition: '-200% 0' },
-          },
-        }}
+      <div
+        className={cn(
+          'animate-pulse bg-ct-surface-container-high/30',
+          className
+        )}
+        style={style}
       />
     );
   }
 
-  return <Box component='img' src={resolvedSrc} alt={alt} sx={sx} />;
+  return (
+    <img src={resolvedSrc} alt={alt} className={className} style={style} />
+  );
 };

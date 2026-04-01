@@ -1,19 +1,9 @@
-import { getThemeByMode } from '@assets/themes';
-import { CssBaseline } from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
-import { ThemeProviderProps } from '@mui/material/styles/ThemeProvider';
-import { useThemeMode } from '@contexts/theme-mode';
+import { ReactNode } from 'react';
 
-export const PFThemeProvider = ({
-  children,
-  ...props
-}: Partial<ThemeProviderProps>) => {
-  const { mode } = useThemeMode();
-
-  return (
-    <ThemeProvider {...props} theme={getThemeByMode(mode)}>
-      <CssBaseline />
-      {children}
-    </ThemeProvider>
-  );
-};
+/**
+ * Theme provider — MUI has been removed.
+ * Theme mode is now handled purely through CSS/Tailwind tokens in index.css.
+ */
+export const PFThemeProvider = ({ children }: { children: ReactNode }) => (
+  <>{children}</>
+);

@@ -3,7 +3,13 @@
     "id": "liu-bei",
     "name": { "cn": "劉備", "en": "Liu Bei", "vi": "Lưu Bị" },
     "kingdom": "shu",
-    "stats": { "might": 71, "intelligence": 76, "politics": 78, "charisma": 99, "leadership": 82 },
+    "stats": {
+      "might": 71,
+      "intelligence": 76,
+      "politics": 78,
+      "charisma": 99,
+      "leadership": 82
+    },
     "weapon": "Dual Swords (雌雄雙股劍)",
     "hometown": "Trác Quận, U Châu",
     "bio": "Liu Bei (161–223 CE), courtesy name Xuande, was the founding emperor of Shu Han. Despite claiming descent from the Han imperial house, he grew up in poverty selling straw sandals and mats. He rose to prominence during the Yellow Turban Rebellion (184 CE), forming his legendary sworn brotherhood with Guan Yu and Zhang Fei. After years of wandering and seeking refuge with various warlords, the turning point came when he recruited Zhuge Liang by visiting his thatched cottage three times. The allied victory at Red Cliffs (208 CE) against Cao Cao gave him a foothold, and he went on to conquer Yi Province and Hanzhong. In 221 CE he declared himself Emperor, but his reign was cut short by a devastating defeat at the Battle of Yiling (222 CE) while trying to avenge Guan Yu. He died in 223 CE at Baidicheng, entrusting his son and kingdom to Zhuge Liang. Known for his benevolence and ability to attract talented followers, he remains one of China's most celebrated rulers."
@@ -12,7 +18,13 @@
     "id": "guan-yu",
     "name": { "cn": "關羽", "en": "Guan Yu", "vi": "Quan Vũ" },
     "kingdom": "shu",
-    "stats": { "might": 97, "intelligence": 75, "politics": 62, "charisma": 93, "leadership": 90 },
+    "stats": {
+      "might": 97,
+      "intelligence": 75,
+      "politics": 62,
+      "charisma": 93,
+      "leadership": 90
+    },
     "weapon": "Green Dragon Crescent Blade (青龍偃月刀)",
     "hometown": "Giải Lương, Hà Đông",
     "bio": "Guan Yu (died 220 CE), courtesy name Yunchang, was one of the greatest warriors in Chinese history and a sworn brother of Liu Bei. Famed for his unwavering loyalty, he once served Cao Cao temporarily but repaid the debt by slaying Yuan Shao's general Yan Liang at Boma before returning to Liu Bei. He governed Jing Province for seven years with distinction. His downfall came in 219 CE when Sun Quan's general Lü Meng launched a surprise attack on Jing Province while Guan Yu was besieging Fancheng. Caught between two fronts, he was captured and executed. After death, his legend only grew — he was deified as early as the Sui dynasty and is now worshipped across East Asia as the God of War and patron of righteousness, loyalty, and brotherhood. Temples dedicated to him are found throughout China, Taiwan, and Southeast Asia."
@@ -21,7 +33,13 @@
     "id": "zhang-fei",
     "name": { "cn": "張飛", "en": "Zhang Fei", "vi": "Trương Phi" },
     "kingdom": "shu",
-    "stats": { "might": 98, "intelligence": 36, "politics": 22, "charisma": 48, "leadership": 78 },
+    "stats": {
+      "might": 98,
+      "intelligence": 36,
+      "politics": 22,
+      "charisma": 48,
+      "leadership": 78
+    },
     "weapon": "Serpent Spear (丈八蛇矛)",
     "hometown": "Trác Quận, U Châu",
     "bio": "Zhang Fei (died 221 CE), courtesy name Yide, was one of Liu Bei's earliest and fiercest followers. He formed the legendary sworn brotherhood alongside Liu Bei and Guan Yu. His ferocity was legendary — at the Battle of Changban (208 CE), he single-handedly held a bridge against Cao Cao's pursuing army, bellowing a challenge so terrifying that no soldier dared approach. He fought in the Red Cliffs campaign, the conquest of Yi Province (212–214), and the Hanzhong Campaign (217–219). Despite his violent temper, historical records suggest he was also capable of calligraphy and painting. Tragically, he was assassinated by his own subordinates, Zhang Da and Fan Qiang, in 221 CE on the eve of Liu Bei's campaign to avenge Guan Yu. He was posthumously honored as Marquis of Xixiang."
@@ -30,7 +48,13 @@
     "id": "zhuge-liang",
     "name": { "cn": "諸葛亮", "en": "Zhuge Liang", "vi": "Gia Cát Lượng" },
     "kingdom": "shu",
-    "stats": { "might": 38, "intelligence": 100, "politics": 95, "charisma": 92, "leadership": 98 },
+    "stats": {
+      "might": 38,
+      "intelligence": 100,
+      "politics": 95,
+      "charisma": 92,
+      "leadership": 98
+    },
     "weapon": "Feather Fan (羽扇)",
     "hometown": "Dương Đô, Lang Nha",
     "bio": "Zhuge Liang (181–234 CE), courtesy name Kongming, known as the 'Sleeping Dragon' (臥龍), is widely regarded as China's greatest strategist. Orphaned early, he lived as a recluse in Longzhong until Liu Bei visited him three times to seek his counsel. He proposed the 'Longzhong Plan' — secure Jing and Yi provinces, ally with Eastern Wu, and resist Cao Wei. He was instrumental in forging the Sun-Liu alliance that defeated Cao Cao at Red Cliffs (208 CE). As Imperial Chancellor of Shu Han, he governed with strict discipline, clear laws, and meritocratic appointments. After Liu Bei's death (223 CE), he served as regent and launched five Northern Expeditions (228–234 CE) against Cao Wei, but logistical challenges and Wei's numerical superiority prevented success. He died at the Wuzhang Plains in 234 CE at age 53, having devoted himself utterly to the state — embodied in his famous words: 'I shall give my all until the day I die' (鞠躬盡瘁，死而後已)."
@@ -39,7 +63,13 @@
     "id": "zhao-yun",
     "name": { "cn": "趙雲", "en": "Zhao Yun", "vi": "Triệu Vân" },
     "kingdom": "shu",
-    "stats": { "might": 96, "intelligence": 76, "politics": 65, "charisma": 81, "leadership": 87 },
+    "stats": {
+      "might": 96,
+      "intelligence": 76,
+      "politics": 65,
+      "charisma": 81,
+      "leadership": 87
+    },
     "weapon": "Dragon Gallant Spear (龍膽槍)",
     "hometown": "Chân Định, Thường Sơn",
     "bio": "Zhao Yun (died 229 CE), courtesy name Zilong, initially served Gongsun Zan before joining Liu Bei. His most legendary feat was at the Battle of Changban (208 CE), where he single-handedly charged through Cao Cao's army to rescue Liu Bei's infant son, Liu Shan, cradling the child in his armor while cutting down enemy soldiers. He participated in the Red Cliffs campaign, the Hanzhong Campaign (217–219), and later the Northern Expeditions under Zhuge Liang until his death in 229 CE. Known for his valor, loyalty, and calm judgment, folklore and the novel 'Romance of the Three Kingdoms' celebrate him as one of the 'Five Tiger Generals.' Liu Shan posthumously honored him as Marquis Shunping in 261 CE, recognizing his lifetime of devoted service."
@@ -48,7 +78,13 @@
     "id": "ma-chao",
     "name": { "cn": "馬超", "en": "Ma Chao", "vi": "Mã Siêu" },
     "kingdom": "shu",
-    "stats": { "might": 97, "intelligence": 47, "politics": 33, "charisma": 75, "leadership": 82 },
+    "stats": {
+      "might": 97,
+      "intelligence": 47,
+      "politics": 33,
+      "charisma": 75,
+      "leadership": 82
+    },
     "weapon": "Spear of Vengeance (虎頭金槍)",
     "hometown": "Mậu Lăng, Phù Phong",
     "bio": "Ma Chao (176–222 CE), courtesy name Mengqi, nicknamed 'Ma Chao the Splendid' for his magnificent armor, was the eldest son of warlord Ma Teng. In 211 CE, he led a coalition of northwestern warlords against Cao Cao at the Battle of Tong Pass, fighting so fiercely that Cao Cao was forced to flee, cutting his beard and discarding his robe as disguise. After suffering devastating losses — including the execution of his entire family by Cao Cao — Ma Chao eventually joined Liu Bei and helped secure Yi Province. He served as General of Agile Cavalry and Governor of Liang Province under Shu Han. He died in 222 CE at age 46, one of the celebrated 'Five Tiger Generals.'"
@@ -57,7 +93,13 @@
     "id": "huang-zhong",
     "name": { "cn": "黃忠", "en": "Huang Zhong", "vi": "Hoàng Trung" },
     "kingdom": "shu",
-    "stats": { "might": 92, "intelligence": 52, "politics": 38, "charisma": 62, "leadership": 72 },
+    "stats": {
+      "might": 92,
+      "intelligence": 52,
+      "politics": 38,
+      "charisma": 62,
+      "leadership": 72
+    },
     "weapon": "Bow & Saber (弓刀)",
     "hometown": "Nam Dương",
     "bio": "Huang Zhong (died 220 CE) was a veteran general renowned for his exceptional archery and bravery despite his advanced age. He initially served Liu Biao and briefly Cao Cao before joining Liu Bei after the Battle of Red Cliffs. His most famous achievement was slaying Cao Cao's general Xiahou Yuan at the Battle of Mount Dingjun (219 CE), a pivotal victory that secured Hanzhong for Liu Bei. After this triumph, he was promoted to General Who Conquers the West. Celebrated as one of the 'Five Tiger Generals,' his story demonstrates that martial prowess knows no age."
@@ -66,7 +108,13 @@
     "id": "pang-tong",
     "name": { "cn": "龐統", "en": "Pang Tong", "vi": "Bàng Thống" },
     "kingdom": "shu",
-    "stats": { "might": 28, "intelligence": 98, "politics": 88, "charisma": 57, "leadership": 75 },
+    "stats": {
+      "might": 28,
+      "intelligence": 98,
+      "politics": 88,
+      "charisma": 57,
+      "leadership": 75
+    },
     "weapon": "Staff",
     "hometown": "Tương Dương, Kinh Châu",
     "bio": "Pang Tong (179–214 CE), courtesy name Shiyuan, known as the 'Young Phoenix' (鳳雛), was considered the equal of Zhuge Liang in strategic brilliance. He studied under the famed scholar Sima Hui and was initially dismissed from a minor post due to his plain appearance. However, his genius was eventually recognized by Lu Su and Zhuge Liang, who recommended him to Liu Bei. It was said: 'Obtain either the Sleeping Dragon or the Young Phoenix, and you can pacify the realm.' Pang Tong was instrumental in advising Liu Bei to conquer Yi Province, but was tragically killed by a stray arrow during the campaign at Luo County in 214 CE, cutting short a career of immense promise. He was posthumously honored as Marquis Jing."
@@ -75,7 +123,13 @@
     "id": "jiang-wei",
     "name": { "cn": "姜維", "en": "Jiang Wei", "vi": "Khương Duy" },
     "kingdom": "shu",
-    "stats": { "might": 90, "intelligence": 89, "politics": 68, "charisma": 72, "leadership": 88 },
+    "stats": {
+      "might": 90,
+      "intelligence": 89,
+      "politics": 68,
+      "charisma": 72,
+      "leadership": 88
+    },
     "weapon": "Spear (長槍)",
     "hometown": "Ký Huyện, Thiên Thủy",
     "bio": "Jiang Wei (202–264 CE), courtesy name Boyue, was originally a Wei military officer in Tianshui who defected to Shu during Zhuge Liang's first Northern Expedition in 228 CE. Zhuge Liang praised his loyalty and intellect, grooming him as his successor. After Zhuge Liang's death, Jiang Wei rose to become General-in-Chief and led 11 Northern Expeditions against Wei between 240–262 CE, continuing Zhuge Liang's dream of restoring the Han dynasty. When Wei invaded Shu in 263 CE, he successfully held Zhong Hui at Jiange, but Deng Ai's unexpected march through a mountain shortcut reached Chengdu, forcing Liu Shan to surrender. In a final desperate gambit, Jiang Wei attempted to incite Zhong Hui to rebel against Sima Zhao, hoping to restore Shu, but the plot failed and both were killed in 264 CE — a tragic end to Shu Han's last champion."
@@ -84,7 +138,13 @@
     "id": "wei-yan",
     "name": { "cn": "魏延", "en": "Wei Yan", "vi": "Ngụy Diên" },
     "kingdom": "shu",
-    "stats": { "might": 90, "intelligence": 62, "politics": 38, "charisma": 35, "leadership": 78 },
+    "stats": {
+      "might": 90,
+      "intelligence": 62,
+      "politics": 38,
+      "charisma": 35,
+      "leadership": 78
+    },
     "weapon": "Saber (大刀)",
     "hometown": "Nghĩa Dương",
     "bio": "Wei Yan (died 234 CE), courtesy name Wenchang, was a bold and capable general of Shu Han. He rose through the ranks after Liu Bei's conquest of Yi Province (214 CE), eventually becoming Administrator of Hanzhong. During the Northern Expeditions, he famously proposed a daring plan to march through the Ziwu Valley to attack Chang'an directly, but Zhuge Liang rejected it as too risky. He achieved significant victories, including defeating Sima Yi's forces alongside other Shu generals in 231 CE. After Zhuge Liang's death in 234 CE, a power struggle erupted between Wei Yan and Yang Yi over military command. Wei Yan was killed by Ma Dai, branded as a traitor — though historians debate whether he truly rebelled or was simply outmaneuvered politically."
@@ -93,7 +153,13 @@
     "id": "cao-cao",
     "name": { "cn": "曹操", "en": "Cao Cao", "vi": "Tào Tháo" },
     "kingdom": "wei",
-    "stats": { "might": 72, "intelligence": 91, "politics": 96, "charisma": 96, "leadership": 99 },
+    "stats": {
+      "might": 72,
+      "intelligence": 91,
+      "politics": 96,
+      "charisma": 96,
+      "leadership": 99
+    },
     "weapon": "Sword of Heaven (倚天劍)",
     "hometown": "Tiêu Huyện, Bái Quốc",
     "bio": "Cao Cao (155–220 CE), courtesy name Mengde, was the supreme warlord of northern China and founder of the Wei kingdom's foundation. Rising from a politically connected but controversial family, he gained power during the Yellow Turban Rebellion and seized control of Emperor Xian in 196 CE. His decisive victory over Yuan Shao at the Battle of Guandu (200 CE) unified the north. He was also a celebrated poet — his works, alongside those of his sons Cao Pi and Cao Zhi (the 'Three Caos'), pioneered the Jian'an poetic style. His famous poem 'Short Song Style' was written before Red Cliffs. Despite his military genius, he suffered a critical defeat at the Battle of Red Cliffs (208 CE) against the Sun-Liu alliance. He held the titles Duke of Wei (213) and King of Wei (216) but never declared himself emperor. After his death, his son Cao Pi usurped the Han throne, posthumously honoring him as Emperor Wu of Wei."
@@ -102,7 +168,13 @@
     "id": "xiahou-dun",
     "name": { "cn": "夏侯惇", "en": "Xiahou Dun", "vi": "Hạ Hầu Đôn" },
     "kingdom": "wei",
-    "stats": { "might": 90, "intelligence": 52, "politics": 48, "charisma": 72, "leadership": 80 },
+    "stats": {
+      "might": 90,
+      "intelligence": 52,
+      "politics": 48,
+      "charisma": 72,
+      "leadership": 80
+    },
     "weapon": "Crescent Blade (麒麟牙)",
     "hometown": "Tiêu Huyện, Bái Quốc",
     "bio": "Xiahou Dun (died 220 CE), courtesy name Yuanrang, was Cao Cao's cousin and most trusted general. Known for his fierce temper — he reportedly killed a man who insulted his mentor at age fourteen — he fought from the Yellow Turban Rebellion onward. His most famous incident occurred during a battle against Lü Bu's forces: struck by a stray arrow that pierced his eye, he tore out the arrow, devoured his own eyeball, and charged back into combat, declaring 'Essence of my parents, I cannot discard it!' He earned the nickname 'Blind Xiahou' (which he despised). Despite some battlefield setbacks, his unwavering loyalty made him the highest-ranked general in Wei's army by the time of Cao Cao's death."
@@ -111,7 +183,13 @@
     "id": "xiahou-yuan",
     "name": { "cn": "夏侯淵", "en": "Xiahou Yuan", "vi": "Hạ Hầu Uyên" },
     "kingdom": "wei",
-    "stats": { "might": 88, "intelligence": 48, "politics": 42, "charisma": 55, "leadership": 82 },
+    "stats": {
+      "might": 88,
+      "intelligence": 48,
+      "politics": 42,
+      "charisma": 55,
+      "leadership": 82
+    },
     "weapon": "Spear (長槍)",
     "hometown": "Tiêu Huyện, Bái Quốc",
     "bio": "Xiahou Yuan (died 219 CE), courtesy name Miaocai, was Cao Cao's cousin and a master of lightning warfare. His speed in military maneuvers was legendary — soldiers said: 'Xiahou Yuan travels 500 li in three days and 1,000 li in six days.' He pacified the western territories, defeating Ma Chao, Han Sui, and various Qiang and Di tribal forces. He also took the blame for a crime committed by young Cao Cao, who later rescued him — cementing their lifelong bond. He was killed at the Battle of Mount Dingjun (219 CE) by Huang Zhong while defending Hanzhong, a loss that deeply grieved Cao Cao."
@@ -120,7 +198,13 @@
     "id": "dian-wei",
     "name": { "cn": "典韋", "en": "Dian Wei", "vi": "Điển Vi" },
     "kingdom": "wei",
-    "stats": { "might": 96, "intelligence": 18, "politics": 12, "charisma": 48, "leadership": 50 },
+    "stats": {
+      "might": 96,
+      "intelligence": 18,
+      "politics": 12,
+      "charisma": 48,
+      "leadership": 50
+    },
     "weapon": "Twin Halberds (雙鐵戟)",
     "hometown": "Kỷ Ngô, Trần Lưu",
     "bio": "Dian Wei (died 197 CE) was Cao Cao's fearsome personal bodyguard, renowned for superhuman strength. He wielded a pair of iron halberds, each weighing 40 jin, and was a prodigious eater and drinker. Introduced to Cao Cao by Xiahou Dun, he proved his worth at the Battle of Puyang against Lü Bu and stood guard outside Cao Cao's tent day and night. His sacrifice came at Wan Castle in 197 CE: when Zhang Xiu launched a surprise night attack, Dian Wei's weapons were stolen as part of the plot. Despite being drunk and unarmed, he seized a battleaxe, killed dozens of attackers and covered Cao Cao's escape. Pierced by countless arrows, he died standing in the gateway, still blocking the enemy. Cao Cao deeply mourned his death, weeping openly for his fallen guardian."
@@ -129,7 +213,13 @@
     "id": "xu-chu",
     "name": { "cn": "許褚", "en": "Xu Chu", "vi": "Hứa Chử" },
     "kingdom": "wei",
-    "stats": { "might": 95, "intelligence": 22, "politics": 18, "charisma": 42, "leadership": 55 },
+    "stats": {
+      "might": 95,
+      "intelligence": 22,
+      "politics": 18,
+      "charisma": 42,
+      "leadership": 55
+    },
     "weapon": "Great Saber (大砍刀)",
     "hometown": "Tiều Huyện, Bái Quốc",
     "bio": "Xu Chu (died c. 230 CE), courtesy name Zhongkang, was Cao Cao's mighty bodyguard who replaced the fallen Dian Wei. Over eight feet tall with enormous strength, he earned the nickname 'Tiger Fool' — ferocious in combat but honest and simple-minded. In his youth, he led a militia defending his village against bandits, reportedly hurling boulders when arrows ran out. He foiled an assassination plot against Cao Cao by killing conspirators with his bare hands. At the Battle of Tong Pass (211 CE), he saved Cao Cao's life by carrying him onto a boat while arrows riddled his double layers of armor. He famously fought Ma Chao to a standstill, stripping off his armor mid-duel in a legendary clash. He served faithfully through Cao Cao's and Cao Pi's reigns."
@@ -138,7 +228,13 @@
     "id": "zhang-liao",
     "name": { "cn": "張遼", "en": "Zhang Liao", "vi": "Trương Liêu" },
     "kingdom": "wei",
-    "stats": { "might": 90, "intelligence": 72, "politics": 56, "charisma": 68, "leadership": 88 },
+    "stats": {
+      "might": 90,
+      "intelligence": 72,
+      "politics": 56,
+      "charisma": 68,
+      "leadership": 88
+    },
     "weapon": "Halberd (鉤鐮刀)",
     "hometown": "Mã Ấp, Nhạn Môn",
     "bio": "Zhang Liao (169–222 CE), courtesy name Wenyuan, served under Ding Yuan, Dong Zhuo, and Lü Bu before surrendering to Cao Cao after Lü Bu's defeat at Xiapi (199 CE). He became one of Wei's 'Five Great Generals.' His most legendary achievement was the Battle of Xiaoyao Ford (Hefei) in 215 CE: with merely 800 elite soldiers, he launched a daring dawn raid against Sun Quan's 100,000-strong army, nearly capturing Sun Quan himself and throwing the Wu forces into total chaos. This victory terrified Wu for years — mothers in Wu would silence crying children by saying 'Zhang Liao is coming!' He continued to serve under Cao Pi and died in 222 CE, with Cao Pi reportedly weeping at the news."
@@ -147,7 +243,13 @@
     "id": "sima-yi",
     "name": { "cn": "司馬懿", "en": "Sima Yi", "vi": "Tư Mã Ý" },
     "kingdom": "wei",
-    "stats": { "might": 48, "intelligence": 97, "politics": 94, "charisma": 78, "leadership": 92 },
+    "stats": {
+      "might": 48,
+      "intelligence": 97,
+      "politics": 94,
+      "charisma": 78,
+      "leadership": 92
+    },
     "weapon": "Feather Fan (羽扇)",
     "hometown": "Ôn Huyện, Hà Nội",
     "bio": "Sima Yi (179–251 CE), courtesy name Zhongda, was Zhuge Liang's greatest rival and the architect of Wei's eventual transformation into the Jin dynasty. Initially reluctant to serve Cao Cao, he proved himself an indispensable strategist and rose steadily through the ranks. He successfully defended Wei against Zhuge Liang's Northern Expeditions (231–234 CE) through patience and attrition rather than direct confrontation. After Emperor Cao Rui's death (239 CE), he became co-regent but was sidelined by the corrupt Cao Shuang. In 249 CE, Sima Yi orchestrated a brilliant coup d'état, seizing power and executing Cao Shuang's faction. He became the de facto ruler of Wei until his death. His grandson Sima Yan would formally establish the Jin dynasty, reunifying China — fulfilling the Sima family's patient, generational ambition."
@@ -156,7 +258,13 @@
     "id": "cao-ren",
     "name": { "cn": "曹仁", "en": "Cao Ren", "vi": "Tào Nhân" },
     "kingdom": "wei",
-    "stats": { "might": 82, "intelligence": 68, "politics": 62, "charisma": 52, "leadership": 85 },
+    "stats": {
+      "might": 82,
+      "intelligence": 68,
+      "politics": 62,
+      "charisma": 52,
+      "leadership": 85
+    },
     "weapon": "Saber (大刀)",
     "hometown": "Tiêu Huyện, Bái Quốc",
     "bio": "Cao Ren (168–223 CE), courtesy name Zixiao, was Cao Cao's cousin and Wei's finest defensive general. In his youth, he gathered over a thousand volunteers to join Cao Cao's cause. He fought in campaigns against Yuan Shu, Tao Qian, and the Yellow Turbans, often leading the vanguard cavalry. His defining moment came during Zhou Yu's siege of Jiangling, where he personally led a small rescue party to save his trapped subordinate Niu Jin from behind enemy lines — an act of bravery that inspired his entire garrison. He was appointed Grand Marshal (Da Sima) by Cao Pi, who credited Cao Ren's steadfast defense as essential to Wei's founding. He died in 223 CE at age 55."
@@ -165,7 +273,13 @@
     "id": "jia-xu",
     "name": { "cn": "賈詡", "en": "Jia Xu", "vi": "Giả Hử" },
     "kingdom": "wei",
-    "stats": { "might": 25, "intelligence": 96, "politics": 88, "charisma": 42, "leadership": 62 },
+    "stats": {
+      "might": 25,
+      "intelligence": 96,
+      "politics": 88,
+      "charisma": 42,
+      "leadership": 62
+    },
     "weapon": "None (謀士)",
     "hometown": "Cô Tạng, Vũ Uy",
     "bio": "Jia Xu (147–223 CE), courtesy name Wenhe, was one of the most cunning and pragmatic strategists of the era. After Dong Zhuo's assassination (192 CE), he advised the remnant forces of Li Jue and Guo Si to retake Chang'an, altering the political landscape. He later served Zhang Xiu, masterminding the devastating surprise attack at Wan Castle that killed Dian Wei and nearly killed Cao Cao. Recognizing Cao Cao's inevitable dominance, Jia Xu persuaded Zhang Xiu to surrender, joining Cao Cao's staff as a trusted advisor. His counsel contributed to victories at Guandu and beyond. Known for his survival instinct and unorthodox thinking, he was appointed Grand Commandant under Cao Pi. He is often regarded as the most representative pragmatic strategist of the Three Kingdoms era."
@@ -174,7 +288,13 @@
     "id": "guo-jia",
     "name": { "cn": "郭嘉", "en": "Guo Jia", "vi": "Quách Gia" },
     "kingdom": "wei",
-    "stats": { "might": 15, "intelligence": 98, "politics": 80, "charisma": 78, "leadership": 65 },
+    "stats": {
+      "might": 15,
+      "intelligence": 98,
+      "politics": 80,
+      "charisma": 78,
+      "leadership": 65
+    },
     "weapon": "None (謀士)",
     "hometown": "Dương Địch, Dĩnh Xuyên",
     "bio": "Guo Jia (170–207 CE), courtesy name Fengxiao, was Cao Cao's most brilliant and trusted young advisor. He initially served Yuan Shao but quickly left, recognizing Yuan's inability to make decisions. Recommended to Cao Cao by Xun Yu, he deeply impressed Cao Cao at their first meeting. During 11 years of service, his foresight proved uncanny — he predicted Cao Cao's victory at Guandu years in advance, accurately foretold Sun Ce's assassination, and devised strategies against Lü Bu and Yuan Shao's heirs. He died of illness in 207 CE at age 37, during the campaign against the Wuhuan tribes. Cao Cao mourned him deeply and later lamented after the defeat at Red Cliffs (208 CE): 'If Guo Jia had lived, I would never have suffered this disaster.'"
@@ -183,7 +303,13 @@
     "id": "sun-ce",
     "name": { "cn": "孫策", "en": "Sun Ce", "vi": "Tôn Sách" },
     "kingdom": "wu",
-    "stats": { "might": 92, "intelligence": 71, "politics": 62, "charisma": 90, "leadership": 88 },
+    "stats": {
+      "might": 92,
+      "intelligence": 71,
+      "politics": 62,
+      "charisma": 90,
+      "leadership": 88
+    },
     "weapon": "Spear (古錠刀)",
     "hometown": "Phú Xuân, Ngô Quận",
     "bio": "Sun Ce (175–200 CE), courtesy name Bofu, nicknamed 'The Little Conqueror' after the legendary Xiang Yu, founded the power base that would become Eastern Wu. After his father Sun Jian's death, the 16-year-old Sun Ce initially served Yuan Shu before breaking away to conquer the Jiangdong region with the help of Zhou Yu and Zhang Zhao. Handsome, charismatic, and full of laughter, he was a generous leader who employed people according to their abilities — his subjects willingly risked their lives for him. He pacified six commanderies with remarkable speed and strict military discipline. In 200 CE, while planning an audacious attack on Cao Cao's capital Xuchang, he was assassinated at age 25, leaving his realm to his younger brother Sun Quan."
@@ -192,7 +318,13 @@
     "id": "sun-quan",
     "name": { "cn": "孫權", "en": "Sun Quan", "vi": "Tôn Quyền" },
     "kingdom": "wu",
-    "stats": { "might": 62, "intelligence": 78, "politics": 88, "charisma": 90, "leadership": 85 },
+    "stats": {
+      "might": 62,
+      "intelligence": 78,
+      "politics": 88,
+      "charisma": 90,
+      "leadership": 85
+    },
     "weapon": "Sword (古鍛刀)",
     "hometown": "Phú Xuân, Ngô Quận",
     "bio": "Sun Quan (182–252 CE), courtesy name Zhongmou, was the founding emperor of Eastern Wu. Inheriting his brother Sun Ce's domain at age 18, he proved a patient, confident, and diligent ruler who brilliantly balanced diplomacy and military action. His alliance with Liu Bei produced the legendary victory at Red Cliffs (208 CE), orchestrated by Zhou Yu. He declared himself King of Wu in 222 CE and Emperor in 229 CE, ruling from Jianye (modern Nanjing). Even Cao Cao acknowledged his talent, saying: 'If I had a son like Sun Quan, that would be enough.' He reigned for 52 years — the longest among the Three Kingdoms founders — successfully preventing Wu from being absorbed by either Wei or Shu, though his later years were marred by internal strife."
@@ -201,7 +333,13 @@
     "id": "zhou-yu",
     "name": { "cn": "周瑜", "en": "Zhou Yu", "vi": "Chu Du" },
     "kingdom": "wu",
-    "stats": { "might": 68, "intelligence": 97, "politics": 81, "charisma": 90, "leadership": 93 },
+    "stats": {
+      "might": 68,
+      "intelligence": 97,
+      "politics": 81,
+      "charisma": 90,
+      "leadership": 93
+    },
     "weapon": "Sword (古錠刀)",
     "hometown": "Thư Huyện, Lư Giang",
     "bio": "Zhou Yu (175–210 CE), courtesy name Gongjin, was the brilliant strategist and military commander who secured Eastern Wu's survival. From a prestigious family, he befriended Sun Ce in their youth — their bond was so deep that Zhou Yu offered his home to Sun Ce's family and treated Sun Ce's mother as his own. After Sun Ce's death, Zhou Yu continued serving Sun Quan and masterminded the decisive victory at the Battle of Red Cliffs (208 CE) and the subsequent Battle of Jiangling (209 CE), destroying Cao Cao's naval fleet with a devastating fire attack. Handsome, accomplished in music, and brilliant in strategy, he was the complete warrior-scholar. He died at age 35 in 210 CE while planning an invasion of Yi Province. His dying lament in the novel — 'Since heaven produced Zhou Yu, why did it also produce Zhuge Liang?' — though fictional, has become one of Chinese literature's most famous lines."
@@ -210,7 +348,13 @@
     "id": "lu-xun",
     "name": { "cn": "陸遜", "en": "Lu Xun", "vi": "Lục Tốn" },
     "kingdom": "wu",
-    "stats": { "might": 55, "intelligence": 95, "politics": 85, "charisma": 72, "leadership": 90 },
+    "stats": {
+      "might": 55,
+      "intelligence": 95,
+      "politics": 85,
+      "charisma": 72,
+      "leadership": 90
+    },
     "weapon": "Sword (飛影劍)",
     "hometown": "Ngô Huyện, Ngô Quận",
     "bio": "Lu Xun (183–245 CE), courtesy name Boyan, rose from a minor official to become one of Wu's greatest strategists. He played a key role in the capture of Jing Province (219 CE), using deceptive letters to lull Guan Yu into complacency while Lü Meng's forces struck. His masterpiece was the Battle of Xiaoting/Yiling (222 CE), where as field commander he patiently waited for the perfect moment before unleashing a devastating fire attack that destroyed Liu Bei's massive army. This victory — achieved through discipline and timing rather than brute force — cemented his status as a strategic genius. Sun Quan named him Senior General-in-Chief when he declared himself Emperor in 229 CE. Lu Xun served Wu faithfully until his death in 245 CE."
@@ -219,7 +363,13 @@
     "id": "gan-ning",
     "name": { "cn": "甘寧", "en": "Gan Ning", "vi": "Cam Ninh" },
     "kingdom": "wu",
-    "stats": { "might": 92, "intelligence": 38, "politics": 22, "charisma": 55, "leadership": 72 },
+    "stats": {
+      "might": 92,
+      "intelligence": 38,
+      "politics": 22,
+      "charisma": 55,
+      "leadership": 72
+    },
     "weapon": "Chain & Blade (鈴鐺刀)",
     "hometown": "Lâm Giang, Ba Quận",
     "bio": "Gan Ning (175–222 CE), courtesy name Xingba, was a former river pirate turned fearless Wu general. In his outlaw youth, he led a band of rogues with silk sails on their boats and bells at their waists, earning the nickname 'Pirate with Silken Sails.' After reforming, he served briefly under Liu Biao and Huang Zu before joining Sun Quan, where his talents were finally recognized. He fought at the battles of Jiangxia, Red Cliffs, and Xiaoyao Ford. His most famous exploit was a daring night raid on Cao Cao's camp during the Battle of Ruxu with just 100 horsemen — riding in under cover of darkness, creating chaos, and escaping without losing a single man. His fearless, unconventional style made him one of Wu's most colorful and effective generals."
@@ -228,7 +378,13 @@
     "id": "taishi-ci",
     "name": { "cn": "太史慈", "en": "Taishi Ci", "vi": "Thái Sử Từ" },
     "kingdom": "wu",
-    "stats": { "might": 93, "intelligence": 48, "politics": 32, "charisma": 62, "leadership": 70 },
+    "stats": {
+      "might": 93,
+      "intelligence": 48,
+      "politics": 32,
+      "charisma": 62,
+      "leadership": 70
+    },
     "weapon": "Twin Rods (雙鐵鞭)",
     "hometown": "Hoàng Huyện, Đông Lai",
     "bio": "Taishi Ci (166–206 CE), courtesy name Ziyi, was one of the finest warriors to serve the Sun family. A skilled archer with a striking appearance, he gained early fame by cleverly delivering a report to the imperial court while blocking a rival document — a feat of both intelligence and loyalty. He famously engaged Sun Ce in a one-on-one duel that ended in a draw, neither warrior able to overcome the other. After being captured following his lord Liu Yao's defeat, Sun Ce was so impressed by his martial skill and integrity that he released him and recruited him. Taishi Ci served the Sun family loyally until his death in 206 CE at age 41. Before dying, he expressed regret: 'A great man should carve his name across the realm — how can I die with ambitions unfulfilled?'"
@@ -237,7 +393,13 @@
     "id": "huang-gai",
     "name": { "cn": "黃蓋", "en": "Huang Gai", "vi": "Hoàng Cái" },
     "kingdom": "wu",
-    "stats": { "might": 80, "intelligence": 68, "politics": 52, "charisma": 65, "leadership": 75 },
+    "stats": {
+      "might": 80,
+      "intelligence": 68,
+      "politics": 52,
+      "charisma": 65,
+      "leadership": 75
+    },
     "weapon": "Iron Whip (鐵鞭)",
     "hometown": "Tuyền Lăng, Linh Lăng",
     "bio": "Huang Gai (c. 145–early 210s CE), courtesy name Gongfu, was a veteran general who served three generations of the Sun family: Sun Jian, Sun Ce, and Sun Quan. He fought in campaigns from the Yellow Turban Rebellion through Sun Jian's wars against Liu Biao. His most famous contribution was at the Battle of Red Cliffs (208 CE), where he masterminded the critical fire attack — pretending to surrender to Cao Cao with ships loaded with oil and kindling, then igniting them to devastate Cao Cao's fleet. He was wounded by an arrow during the attack but survived, saved by Han Dang. Known for his compassion toward soldiers and strict discipline, he was promoted to Lieutenant-General before dying of illness."
@@ -246,7 +408,13 @@
     "id": "lu-meng",
     "name": { "cn": "呂蒙", "en": "Lu Meng", "vi": "Lữ Mông" },
     "kingdom": "wu",
-    "stats": { "might": 78, "intelligence": 82, "politics": 72, "charisma": 68, "leadership": 80 },
+    "stats": {
+      "might": 78,
+      "intelligence": 82,
+      "politics": 72,
+      "charisma": 68,
+      "leadership": 80
+    },
     "weapon": "Halberd (方天畫戟)",
     "hometown": "Phú Bi, Nhữ Nam",
     "bio": "Lü Meng (177–219 CE), courtesy name Ziming, transformed from an uneducated soldier into one of Wu's most brilliant strategists — inspiring the Chinese idiom 'Look at Lü Meng with new eyes' (士別三日，刮目相看). Encouraged by Sun Quan to study, he educated himself and was later praised by Lu Su for surpassing his earlier reputation. He fought at the battles of Jiangxia, Red Cliffs, and many other campaigns. His masterpiece was the capture of Jing Province in 219 CE: disguising his troops as merchants, he infiltrated Guan Yu's defenses along the Yangtze, leading to Guan Yu's defeat and death. He died of illness shortly after this triumph at age 42. In the novel, his death is dramatically attributed to Guan Yu's vengeful spirit."
@@ -255,7 +423,13 @@
     "id": "lu-bu",
     "name": { "cn": "呂布", "en": "Lü Bu", "vi": "Lữ Bố" },
     "kingdom": "other",
-    "stats": { "might": 100, "intelligence": 32, "politics": 18, "charisma": 30, "leadership": 45 },
+    "stats": {
+      "might": 100,
+      "intelligence": 32,
+      "politics": 18,
+      "charisma": 30,
+      "leadership": 45
+    },
     "weapon": "Sky Piercer Halberd (方天畫戟)",
     "hometown": "Cửu Nguyên, Ngũ Nguyên",
     "bio": "Lü Bu (died 199 CE), courtesy name Fengxian, was the most feared warrior of the Three Kingdoms era. Known as the 'Flying General,' his martial prowess, archery, and horsemanship were unmatched — the saying went: 'Among men, Lü Bu; among horses, Red Hare.' However, his character was deeply flawed. He first served Ding Yuan, then betrayed and killed him to join Dong Zhuo. He later assassinated Dong Zhuo as well, incited by Wang Yun and (in the novel) seduced by Diao Chan. Becoming a warlord himself, he drifted between alliances — serving and betraying Yuan Shu, Yuan Shao, and Liu Bei. His ambition and treachery led to his downfall at the Battle of Xiapi (199 CE), where the combined forces of Cao Cao and Liu Bei defeated him. Captured and bound, he begged for mercy, but Cao Cao had him executed."
@@ -264,7 +438,13 @@
     "id": "dong-zhuo",
     "name": { "cn": "董卓", "en": "Dong Zhuo", "vi": "Đổng Trác" },
     "kingdom": "other",
-    "stats": { "might": 78, "intelligence": 42, "politics": 38, "charisma": 18, "leadership": 60 },
+    "stats": {
+      "might": 78,
+      "intelligence": 42,
+      "politics": 38,
+      "charisma": 18,
+      "leadership": 60
+    },
     "weapon": "Sword (七星寶刀)",
     "hometown": "Lâm Thao, Lũng Tây",
     "bio": "Dong Zhuo (c. 140s–192 CE), courtesy name Zhongying, was the tyrant whose seizure of power ignited the chaos of the Three Kingdoms. Originally a frontier general from Liang Province known for his horsemanship and archery, he seized control of the capital Luoyang in 189 CE after Emperor Ling's death. He deposed the young Emperor Shao, installed Emperor Xian as a puppet, and declared himself Chancellor. His reign of terror — marked by embezzlement, atrocities, and abuse of power — united rival warlords into a coalition against him, including Yuan Shao, Sun Jian, and Cao Cao. Retreating to Chang'an, he burned Luoyang to the ground. He was assassinated in 192 CE by his own foster son, Lü Bu, in a conspiracy with Wang Yun. His death did not end the chaos — it only deepened it."
@@ -273,7 +453,13 @@
     "id": "yuan-shao",
     "name": { "cn": "袁紹", "en": "Yuan Shao", "vi": "Viên Thiệu" },
     "kingdom": "other",
-    "stats": { "might": 55, "intelligence": 65, "politics": 72, "charisma": 78, "leadership": 68 },
+    "stats": {
+      "might": 55,
+      "intelligence": 65,
+      "politics": 72,
+      "charisma": 78,
+      "leadership": 68
+    },
     "weapon": "Sword",
     "hometown": "Nhữ Dương, Nhữ Nam",
     "bio": "Yuan Shao (died 202 CE), courtesy name Benchu, was the most powerful warlord of northern China before Cao Cao's rise. Born into the supremely prestigious Yuan family — 'Four Generations with Three Dukes' — he was the elder half-brother of Yuan Shu. He led the coalition against Dong Zhuo and controlled vast territories across northern China. However, his indecisiveness and inability to heed his advisors' counsel proved fatal. At the Battle of Guandu (200 CE), despite commanding a far larger army, he was decisively defeated by Cao Cao after Cao Cao raided and destroyed his supply depot. Yuan Shao never recovered, dying of illness in 202 CE. His domain then fractured among his three sons, who fought each other rather than uniting against Cao Cao."
@@ -282,7 +468,13 @@
     "id": "diao-chan",
     "name": { "cn": "貂蟬", "en": "Diao Chan", "vi": "Điêu Thuyền" },
     "kingdom": "other",
-    "stats": { "might": 30, "intelligence": 75, "politics": 72, "charisma": 98, "leadership": 25 },
+    "stats": {
+      "might": 30,
+      "intelligence": 75,
+      "politics": 72,
+      "charisma": 98,
+      "leadership": 25
+    },
     "weapon": "Twin Maces (雙鋼鞭)",
     "hometown": "Mộc Nhĩ, Tịnh Châu",
     "bio": "Diao Chan is one of the legendary Four Beauties of ancient China, though she is largely a fictional creation of the novel 'Romance of the Three Kingdoms.' In the story, she was the adopted daughter of Wang Yun, a court official who devised the 'Chain Strategy' to destroy the tyrant Dong Zhuo. Wang Yun presented Diao Chan to Dong Zhuo as a concubine while secretly betrothing her to Lü Bu, Dong Zhuo's foster son. She skillfully manipulated both men, fueling their jealousy and desire until Lü Bu assassinated Dong Zhuo in 192 CE. Historically, records mention only a nameless maidservant with whom Lü Bu had an affair — Diao Chan's name and detailed story are later literary embellishments. Regardless, her character embodies themes of sacrifice, intelligence, and the power of strategy over brute force."
@@ -291,7 +483,13 @@
     "id": "hua-tuo",
     "name": { "cn": "華佗", "en": "Hua Tuo", "vi": "Hoa Đà" },
     "kingdom": "other",
-    "stats": { "might": 15, "intelligence": 88, "politics": 55, "charisma": 85, "leadership": 15 },
+    "stats": {
+      "might": 15,
+      "intelligence": 88,
+      "politics": 55,
+      "charisma": 85,
+      "leadership": 15
+    },
     "weapon": "Surgical Tools (手術刀)",
     "hometown": "Tiêu Huyện, Bái Quốc",
     "bio": "Hua Tuo (c. 140–208 CE), courtesy name Yuanhua, was China's most legendary physician. He pioneered the use of general anesthesia ('mafeisan' — a concoction of wine and herbal compounds) for surgery, centuries before the West. His medical expertise spanned acupuncture, moxibustion, herbal medicine, and surgery — including abdominal operations. He also created the 'Frolics of the Five Animals' (Wuqinxi), exercises mimicking the tiger, deer, bear, ape, and crane to promote health. In the novel, he famously treated Guan Yu's poisoned arrow wound, scraping poison from bone while Guan Yu calmly played Go. He served Cao Cao for chronic headaches, but when he proposed surgery to cure the condition, the suspicious Cao Cao had him executed in 208 CE. His invaluable medical writings were tragically lost."
@@ -300,7 +498,13 @@
     "id": "zhang-jiao",
     "name": { "cn": "張角", "en": "Zhang Jiao", "vi": "Trương Giác" },
     "kingdom": "other",
-    "stats": { "might": 35, "intelligence": 78, "politics": 62, "charisma": 88, "leadership": 72 },
+    "stats": {
+      "might": 35,
+      "intelligence": 78,
+      "politics": 62,
+      "charisma": 88,
+      "leadership": 72
+    },
     "weapon": "Taoist Staff (太平道杖)",
     "hometown": "Cự Lộc, Ký Châu",
     "bio": "Zhang Jiao (died 184 CE) was the founder of the Taiping Dao (Way of Great Peace) and leader of the Yellow Turban Rebellion that triggered the collapse of the Han dynasty. He received the Daoist scripture 'Taiping Qingling Shu' from the master Yu Ji and used it to attract hundreds of thousands of followers through faith healing — using talismans, incantations, and confession of sins to cure disease. He organized his followers into 36 groups with military leadership, declaring himself the 'Great Wise and Excellent Teacher.' In 184 CE, during a devastating plague, he launched his rebellion with the battle cry: 'The Blue Heaven has perished, the Yellow Heaven shall rise!' (蒼天已死，黃天當立). He and his brothers Zhang Bao and Zhang Liang led forces as the Generals of Heaven, Earth, and Man. Though Zhang Jiao died that same year and the rebellion was suppressed, the chaos it unleashed ended the Han dynasty's effective rule."
@@ -309,7 +513,13 @@
     "id": "sun-jian",
     "name": { "cn": "孫堅", "en": "Sun Jian", "vi": "Tôn Kiên" },
     "kingdom": "other",
-    "stats": { "might": 90, "intelligence": 62, "politics": 55, "charisma": 80, "leadership": 82 },
+    "stats": {
+      "might": 90,
+      "intelligence": 62,
+      "politics": 55,
+      "charisma": 80,
+      "leadership": 82
+    },
     "weapon": "Ancient Forged Saber (古錠刀)",
     "hometown": "Phú Xuân, Ngô Quận",
     "bio": "Sun Jian (155–192 CE), courtesy name Wentai, was the 'Tiger of Jiangdong' and patriarch of the Sun family that would found Eastern Wu. Allegedly descended from the legendary strategist Sun Tzu, he rose from humble origins to become a renowned warrior. He suppressed the Yellow Turban Rebellion, conquered Wancheng, and was appointed Grand Administrator of Changsha. As a key member of the coalition against Dong Zhuo, he was one of the few commanders to actually engage Dong Zhuo's forces in battle, defeating the general Hua Xiong and being the first to breach the burning capital of Luoyang, where he reportedly discovered the Imperial Seal. He met his end in 192 CE while campaigning against Liu Biao, killed in an ambush by Huang Zu's soldiers. His legacy lived on through his sons Sun Ce and Sun Quan."
@@ -318,7 +528,13 @@
     "id": "yan-liang",
     "name": { "cn": "顏良", "en": "Yan Liang", "vi": "Nhan Lương" },
     "kingdom": "other",
-    "stats": { "might": 90, "intelligence": 35, "politics": 28, "charisma": 42, "leadership": 62 },
+    "stats": {
+      "might": 90,
+      "intelligence": 35,
+      "politics": 28,
+      "charisma": 42,
+      "leadership": 62
+    },
     "weapon": "Great Saber (大砍刀)",
     "hometown": "Ký Châu",
     "bio": "Yan Liang (died 200 CE) was one of Yuan Shao's two greatest generals, paired with Wen Chou as a fearsome duo. Yuan Shao frequently boasted of their prowess, claiming he would 'have nothing to fear' with them at his side. During the Guandu campaign, Yuan Shao dispatched Yan Liang to besiege Boma despite advisor Ju Shou's warning that he was 'valiant but too narrow-minded' for independent command. Cao Cao, advised by Xun You, led a surprise counter-attack. Guan Yu, then temporarily serving Cao Cao, spotted Yan Liang's commander banner, charged through the enemy army, and slew him with a single strike — one of the most famous kills in Chinese military history. His death caused the army at Boma to collapse."
@@ -327,7 +543,13 @@
     "id": "wen-chou",
     "name": { "cn": "文醜", "en": "Wen Chou", "vi": "Văn Xú" },
     "kingdom": "other",
-    "stats": { "might": 88, "intelligence": 30, "politics": 25, "charisma": 38, "leadership": 58 },
+    "stats": {
+      "might": 88,
+      "intelligence": 30,
+      "politics": 25,
+      "charisma": 38,
+      "leadership": 58
+    },
     "weapon": "Spear (長槍)",
     "hometown": "Ký Châu",
     "bio": "Wen Chou (died 200 CE) was Yuan Shao's other top general, whose reputation for ferocity matched Yan Liang's. After Yan Liang's death at Boma, Yuan Shao launched a full assault, sending Wen Chou and Liu Bei with over 5,000 cavalry to pursue Cao Cao's retreating forces. Cao Cao devised a cunning trap — releasing horses and supplies as bait. When Wen Chou's soldiers broke ranks to loot, Cao Cao's elite cavalry of fewer than 600 men counterattacked, catching them in disarray. Wen Chou was killed in the resulting chaos. While official records leave his killer unnamed, the novel attributes his death to Guan Yu, creating the legend that Guan Yu single-handedly eliminated both of Yuan Shao's greatest warriors."
@@ -336,7 +558,13 @@
     "id": "pang-de",
     "name": { "cn": "龐德", "en": "Pang De", "vi": "Bàng Đức" },
     "kingdom": "other",
-    "stats": { "might": 92, "intelligence": 48, "politics": 30, "charisma": 52, "leadership": 68 },
+    "stats": {
+      "might": 92,
+      "intelligence": 48,
+      "politics": 30,
+      "charisma": 52,
+      "leadership": 68
+    },
     "weapon": "Great Saber (大砍刀)",
     "hometown": "Nam An, Vũ Đô",
     "bio": "Pang De (died 219 CE), courtesy name Lingming, was a fearless warrior known as 'the bravest amongst Ma Teng's men.' He served Ma Teng and Ma Chao in the northwestern campaigns against Qiang and Di tribes. When Ma Chao defected to Liu Bei, Pang De stayed behind and eventually submitted to Cao Cao, declaring his unwavering loyalty despite his brother serving in Shu. He was granted the title General Establishing Righteousness. In 219 CE, at the Battle of Fancheng, he rode a white horse into combat against Guan Yu — earning the nickname 'White Horse General' — and even struck Guan Yu in the forehead with an arrow. He famously carried his own coffin to the battlefield to show he would fight to the death. When floods overwhelmed his camp, he was captured by Guan Yu but refused to surrender and was executed. His son Pang Hui later avenged him by exterminating Guan Yu's descendants after Shu's fall."

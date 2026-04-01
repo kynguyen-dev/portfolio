@@ -1,14 +1,15 @@
-import { Stack, Button, useTheme } from '@mui/material';
 import { useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import { PFTypography } from '@components/core';
+import { PFButton, PFTypography } from '@components/core';
 import { useEffect } from 'react';
+import { useThemeMode } from '@contexts/theme-mode';
+import { cn } from '@utils/core/cn';
 
 const NotFound = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { palette } = useTheme();
-  const isLight = palette.mode === 'light';
+  const { mode } = useThemeMode();
+  const isLight = mode === 'light';
 
   useEffect(() => {
     document.title = `${t('notFound.title')} | Ky Nguyen`;
@@ -18,44 +19,40 @@ const NotFound = () => {
   }, [t]);
 
   return (
-    <Stack
-      component='main'
-      flex={1}
-      alignItems='center'
-      justifyContent='center'
-      width='100%'
-      height='100vh'
-      spacing={3}
-      sx={{
-        background: isLight
-          ? 'linear-gradient(180deg, #FBF6EE 0%, #F5E6C8 40%, #EDD9A3 100%)'
-          : 'linear-gradient(180deg, #0B0D2E 0%, #1B1145 40%, #4A1942 100%)',
-      }}
+    <div
+      className={cn(
+        'flex flex-col items-center justify-center w-full min-h-screen gap-6',
+        isLight
+          ? 'bg-gradient-to-b from-[#FBF6EE] via-[#F5E6C8] to-[#EDD9A3]'
+          : 'bg-gradient-to-b from-[#0B0D2E] via-[#1B1145] to-[#4A1942]'
+      )}
     >
       <PFTypography
         variant='h1'
         fontWeight={600}
-        sx={{ color: isLight ? '#B8891F' : '#F5D060' }}
+        className={isLight ? 'text-[#B8891F]' : 'text-[#F5D060]'}
       >
         {t('notFound.title')}
       </PFTypography>
       <PFTypography
         variant='h5'
-        sx={{ color: isLight ? '#5C4A32' : '#FFE4B5' }}
+        className={isLight ? 'text-[#5C4A32]' : 'text-[#FFE4B5]'}
       >
         {t('notFound.message')}
       </PFTypography>
-      <Button
-        variant='contained'
-        sx={{
-          backgroundColor: isLight ? '#B8891F' : '#D4A843',
-          '&:hover': { backgroundColor: isLight ? '#D4A843' : '#E8C96A' },
-        }}
+      <PFButton
+        variant='solid'
+        className={cn(
+          'transition-colors duration-200',
+          isLight
+            ? 'bg-[#B8891F] hover:bg-[#D4A843]'
+            : 'bg-[#D4A843] hover:bg-[#E8C96A]'
+        )}
         onClick={() => navigate({ to: '/' })}
       >
         {t('notFound.goHome')}
-      </Button>
-    </Stack>
+      </PFButton>
+    </div>
   );
 };
 
